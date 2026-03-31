@@ -1,0 +1,24 @@
+.social-icons {
+    /* list-style: none;
+    /* padding: 0;
+    margin: 0; */
+    */ display: flex;
+    gap: 25px;
+}
+
+/* Styling the SVGs inside the links */
+.social-icons a svg {
+    width: 28px;
+    /* Icon size */
+    height: 28px;
+    fill: #ffffff;
+    /* White icons */
+    transition: all 0.3s ease;
+    /* Smooth hover effect */
+}
+
+/* Hover effect */
+.social-icons a:hover svg {
+    opacity: 0.7;
+    transform: scale(1.1);
+}
