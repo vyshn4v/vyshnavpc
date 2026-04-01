@@ -29,7 +29,7 @@ provide better dining experience to the users.`,
         url: "https://github.com/vyshnavpc/fooodZone",
       },
     ],
-    liveLink: "dsa",
+    liveLink: "#",
   },
   {
     title: "fitpeo dashboard",
