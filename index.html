@@ -2,1239 +2,379 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Personal Portfolio - Vyshnav P C</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Personal Portfolio of Vyshnav P C" />
-	<meta name="keywords" content="vyshnav p c, personal portfolio, developer, javascript, node.js" />
-	<meta name="author" content="Vyshnav P C" />
-
-	<!-- 
-	//////////////////////////////////////////////////////
-
-	FREE HTML5 TEMPLATE 
-	DESIGNED & DEVELOPED by FreeHTML5.co
-		
-	Website: 		http://freehtml5.co/
-	Email: 			info@freehtml5.co
-	Twitter: 		http://twitter.com/fh5co
-	Facebook: 		https://www.facebook.com/fh5co
-
-	//////////////////////////////////////////////////////
-	 -->
-
-	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content="" />
-	<meta property="og:image" content="" />
-	<meta property="og:url" content="" />
-	<meta property="og:site_name" content="" />
-	<meta property="og:description" content="" />
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
-
-	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
-
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/educationTimeline.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.css">
-
-	<link rel="stylesheet" href="css/socialIcons.css">
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Vyshnav P C · Node.js Developer</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link
+		href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="./css/index.css" />
 
 </head>
 
 <body>
 
-	<div class="fh5co-loader"></div>
+	<canvas id="particles"></canvas>
 
-	<div id="page">
-		<header id="fh5co-header" class="fh5co-cover js-fullheight" role="banner"
-			style="background-image:url(images/cover_bg_3.jpg);" data-stellar-background-ratio="0.5">
-			<div class="overlay"></div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center">
-						<div class="display-t js-fullheight">
-							<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
-								<!-- <div class="profile-thumb" style="background: url(images/user-3.jpg);"></div> -->
-								<h1><span>Vyshnav p c</span></h1>
-								<h3><span>Node.js/JavaScript Developer</span></h3>
-								<p>
-								<ul class="fh5co-social-icons social-icons">
-									<li>
-										<a href="https://github.com/vyshn4v" target="_blank" aria-label="GitHub">
-											<svg viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg">
-												<path
-													d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
-											</svg>
-										</a>
-									</li>
-									<li>
-										<a href="https://www.linkedin.com/in/vyshnav-pc-5567ba242/" target="_blank"
-											aria-label="LinkedIn">
-											<svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-												<path
-													d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z" />
-											</svg>
-										</a>
-									</li>
-									<li>
-										<a href="https://wa.me/8086064478" target="_blank" aria-label="WhatsApp">
-											<svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-												<path
-													d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 436.8c-33.1 0-65.5-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
-											</svg>
-										</a>
-									</li>
-									<li>
-										<a href="mailto:vyshnavpcnaravoor@gmail.com" aria-label="Email">
-											<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-												<path
-													d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-											</svg>
-										</a>
-									</li>
-								</ul>
-								</p>
-							</div>
-						</div>
+	<!-- NAV -->
+	<nav class="z1">
+		<a href="#" class="nav-brand">vyshnav<span>.</span>pc</a>
+		<ul class="nav-links">
+			<li><a href="#about">About</a></li>
+			<li><a href="#experience">Experience</a></li>
+			<li><a href="#skills">Skills</a></li>
+			<li><a href="#contact">Contact</a></li>
+		</ul>
+		<div class="nav-status">
+			<div class="dot"></div>Open to work
+		</div>
+	</nav>
+
+	<!-- HERO -->
+	<div class="hero z1">
+		<div class="hero-inner">
+			<div class="hero-left">
+				<div class="hero-tag">&#9889; Node.js / JavaScript Developer</div>
+				<h1>
+					Vyshnav P C
+					<span class="sub">Backend Engineer &amp; <span class="accent">Cloud Native</span> Builder</span>
+				</h1>
+				<p class="hero-desc">
+					Backend-focused software engineer from Kannur, Kerala with ~2 years of experience building scalable
+					web applications. Specializing in Node.js, REST APIs, authentication systems, and Kubernetes-based
+					deployments.
+				</p>
+				<div class="hero-btns">
+					<a href="mailto:vyshnavpcnaravoor@gmail.com" class="btn btn-primary">Hire Me &rarr;</a>
+					<a href="#about" class="btn btn-outline">View Profile</a>
+				</div>
+				<div class="hero-meta">
+					<div class="meta-item"><strong>~2 Years</strong>Experience</div>
+					<div class="meta-item"><strong>Kannur, Kerala</strong>Location</div>
+					<div class="meta-item"><strong>SDE 1</strong>Current Role</div>
+				</div>
+			</div>
+			<div class="hero-right">
+				<div class="terminal">
+					<div class="t-bar">
+						<div class="td r"></div>
+						<div class="td y"></div>
+						<div class="td g"></div>
+						<span class="t-title">~/vyshnav &mdash; zsh</span>
+					</div>
+					<div class="t-body">
+						<div class="tl"><span class="tp">&#10095;</span><span class="tdir">~/</span><span
+								class="tcmd">cat profile.json</span></div>
+						<div class="tb"></div>
+						<div class="tl"><span class="tout p">{</span></div>
+						<div class="tl"><span class="tout">&nbsp;&nbsp;"name": <span class="tout g">"Vyshnav P
+									C"</span>,</span></div>
+						<div class="tl"><span class="tout">&nbsp;&nbsp;"role": <span class="tout g">"Node.js
+									Developer"</span>,</span></div>
+						<div class="tl"><span class="tout">&nbsp;&nbsp;"company": <span
+									class="tout g">"Neutrinos"</span>,</span></div>
+						<div class="tl"><span class="tout">&nbsp;&nbsp;"focus": [<span class="tout b">"APIs"</span>,
+								<span class="tout b">"DevOps"</span>, <span class="tout b">"Cloud"</span>],</span></div>
+						<div class="tl"><span class="tout">&nbsp;&nbsp;"location": <span class="tout g">"Kannur,
+									Kerala"</span>,</span></div>
+						<div class="tl"><span class="tout">&nbsp;&nbsp;"status": <span
+									class="tout g">"open_to_work"</span>,</span></div>
+						<div class="tl"><span class="tout">&nbsp;&nbsp;"email": <span
+									class="tout g">"vyshnavpcnaravoor@gmail.com"</span></span></div>
+						<div class="tl"><span class="tout p">}</span></div>
+						<div class="tb"></div>
+						<div class="tl"><span class="tp">&#10095;</span><span class="tdir">~/</span><span
+								class="tcmd">&nbsp;<span class="tcursor"></span></span></div>
 					</div>
 				</div>
 			</div>
-		</header>
+		</div>
+	</div>
 
-		<div id="fh5co-about" class="animate-box">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>About Me</h2>
+	<!-- ABOUT -->
+	<section class="section z1" id="about">
+		<div class="wrap">
+			<div class="about-grid">
+				<div>
+					<div class="sec-head reveal">
+						<div class="sec-label">// 01 &mdash; about</div>
+						<h2 class="sec-title">Hello There!</h2>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-5">
-						<ul class="info">
-							<li><span class="first-block">Full Name:</span><span class="second-block">Vyshnav p c</span>
-							</li>
-							<li><span class="first-block">Phone:</span><span class="second-block">+91 8086064478</span>
-							</li>
-							<li><span class="first-block">Email:</span><span
-									class="second-block">vyshnavpcnaravoor@gmail.com</span></li>
-							<!-- <li><span class="first-block">Website:</span><span
-									class="second-block">www.yoursite.com</span></li> -->
-							<li><span class="first-block">Address:</span><span class="second-block">Kannur,kerala</span>
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-7">
-						<h2>Hello There!</h2>
-						<p>I’m Vyshnav P C, a backend-focused software engineer from Kannur district, Kerala. I have
+					<div class="about-text reveal">
+						<p>I'm Vyshnav P C, a backend-focused software engineer from Kannur district, Kerala. I have
 							around 2 years of experience building scalable and reliable web applications using modern
 							JavaScript technologies.</p>
 						<p>I specialize in Node.js development and have strong experience designing backend
 							architectures, building REST APIs, and implementing secure authentication systems. Over the
-							past two years, I’ve also worked with Kubernetes and DevOps tools, gaining hands-on exposure
+							past two years, I've also worked with Kubernetes and DevOps tools, gaining hands-on exposure
 							to deploying and managing applications in production environments.</p>
-						<p>
-						<p>I’m passionate about building cloud-native applications, working with distributed systems,
+						<p>I'm passionate about building cloud-native applications, working with distributed systems,
 							and continuously improving system performance and reliability.</p>
-						<p>
-						<ul class="fh5co-social-icons social-icons">
-							<!-- <li><a href="#"><i class="icon-github"></i></a></li>
-									<li><a href="#"><i class="icon-linkedin2"></i></a></li>
-									<li><a href="#"><i class="icon-whatsapp"></i></a></li> -->
-							<li>
-								<a href="https://github.com/vyshn4v" target="_blank" aria-label="GitHub">
-									<svg viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg">
-										<path
-											d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
-									</svg>
-								</a>
-							</li>
-							<li>
-								<a href="https://www.linkedin.com/in/vyshnav-pc-5567ba242/" target="_blank"
-									aria-label="LinkedIn">
-									<svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-										<path
-											d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z" />
-									</svg>
-								</a>
-							</li>
-							<li>
-								<a href="https://wa.me/8086064478" target="_blank" aria-label="WhatsApp">
-									<svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-										<path
-											d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 436.8c-33.1 0-65.5-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
-									</svg>
-								</a>
-							</li>
-							<li>
-								<a href="mailto:vyshnavpcnaravoor@gmail.com" aria-label="Email">
-									<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-										<path
-											d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-									</svg>
-								</a>
-							</li>
-						</ul>
-						</p>
+					</div>
+					<div class="about-contact reveal">
+						<div class="ac-row"><span class="ac-label">Phone</span><span class="ac-val">+91
+								8086064478</span></div>
+						<div class="ac-row"><span class="ac-label">Email</span><span class="ac-val"><a
+									href="mailto:vyshnavpcnaravoor@gmail.com">vyshnavpcnaravoor@gmail.com</a></span>
+						</div>
+						<div class="ac-row"><span class="ac-label">Address</span><span class="ac-val">Kannur,
+								Kerala</span></div>
+					</div>
+				</div>
+				<div>
+					<div class="sec-head reveal" style="margin-bottom:1.5rem">
+						<div class="sec-label" style="margin-bottom:0">// achievements</div>
+					</div>
+					<div class="awards reveal">
+						<div class="award-card">
+							<div class="award-icon">&#127942;</div>
+							<div>
+								<div class="award-title">Team Player Award</div>
+								<div class="award-desc">Recognized for strong collaboration and consistent contribution
+									to project deliverables at Neutrinos.</div>
+							</div>
+						</div>
+						<div class="award-card">
+							<div class="award-icon">&#11088;</div>
+							<div>
+								<div class="award-title">Beyond the Call of Duty Award</div>
+								<div class="award-desc">Recognized for taking additional responsibilities and resolving
+									critical production issues beyond assigned tasks.</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</section>
 
-		<div id="fh5co-resume" class="fh5co-bg-color">
-			<div class="container">
-				<div class="row animate-box">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>My Resume</h2>
+	<!-- EXPERIENCE -->
+	<section class="section z1" id="experience">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<div class="sec-label">// 02 &mdash; experience</div>
+				<h2 class="sec-title">Work Experience</h2>
+				<p class="sec-sub">Professional experience building backend systems, REST APIs, and DevOps
+					infrastructure.</p>
+			</div>
+			<div class="timeline">
+				<div class="tl-item reveal">
+					<div class="tl-left">
+						<div class="tl-date">Mar 2024 &mdash; Mar 2026</div>
+						<div class="tl-company">Neutrinos</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 col-md-offset-0">
-						<ul class="timeline">
-							<li class="timeline-heading text-center animate-box">
-								<div>
-									<h3>Work Experience</h3>
-								</div>
-							</li>
-							<li class="animate-box timeline-inverted">
-								<div class="timeline-badge"><i class="icon-suitcase"></i></div>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h3 class="timeline-title">SDE 1/ Junior Software Engineer</h3>
-										<span class="company">Neutrinos - 2024-March - 2026-March</span>
-									</div>
-									<div class="timeline-body">
-										<div class="tl-section">
-											<div class="tl-section-header">
-												<div class="tl-section-icon">
-													<svg viewBox="0 0 24 24">
-														<rect x="2" y="7" width="20" height="14" rx="2" />
-														<path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-													</svg>
-												</div>
-												<h3 class="tl-section-title">Work Experience</h3>
-											</div>
-											<ul class="tl-list">
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Worked in a presales engineering environment, contributing to
-														both product capabilities and client solution implementations.
-													</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Developed and maintained backend services and REST APIs using
-														Node.js for insurance workflow applications.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Contributed to policy lifecycle automation systems supporting
-														underwriting and policy processing workflows.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Implemented secure authentication flows and handled API
-														integrations between frontend applications and backend services.
-													</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Collaborated with cross-functional teams to resolve production
-														issues and ensure system stability.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Participated in application deployment, release management, and
-														environment configuration.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Optimized API performance and improved reliability of backend
-														services. Debugged complex issues across distributed systems in
-														production environments.</p>
-												</li>
-											</ul>
-										</div>
-
-										<div class="tl-section">
-											<div class="tl-section-header">
-												<div class="tl-section-icon">
-													<svg viewBox="0 0 24 24">
-														<circle cx="12" cy="8" r="6" />
-														<path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
-													</svg>
-												</div>
-												<h3 class="tl-section-title">Achievements</h3>
-											</div>
-											<div class="tl-achievement-list">
-												<div class="tl-achievement-card">
-													<span class="tl-achievement-emoji">🏆</span>
-													<div>
-														<h4>Team Player Award</h4>
-														<p>Recognized for strong collaboration and consistent
-															contribution to project deliverables.</p>
-													</div>
-												</div>
-												<div class="tl-achievement-card">
-													<span class="tl-achievement-emoji">⭐</span>
-													<div>
-														<h4>Beyond the Call of Duty Award</h4>
-														<p>Recognized for taking additional responsibilities and
-															resolving critical production issues beyond assigned tasks.
-														</p>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-
-							<li class="timeline-heading text-center animate-box">
-								<div>
-									<h3>Education</h3>
-								</div>
-							</li>
-
-							<!-- ✅ li is now a direct child of ul, no div wrapper -->
-							<li class="timeline-unverted animate-box">
-								<div class="timeline-badge"><i class="icon-graduation-cap"></i></div>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h3 class="timeline-title">Mern Stack Development</h3>
-										<span class="company">Packapeer Academy - 2022-Dec - 2023-Nov</span>
-									</div>
-									<div class="timeline-body">
-										<div class="tl-section">
-											<div class="tl-section-header">
-												<div class="tl-section-icon">
-													<svg viewBox="0 0 24 24">
-														<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-														<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-													</svg>
-												</div>
-												<h3 class="tl-section-title">What I Learned</h3>
-											</div>
-											<ul class="tl-list">
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Got exposure on the practical aspects of the field through
-														hands-on project work.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Gained experience in React, Node.js, and MongoDB — building full
-														stack applications end to end.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Learned DevOps practices including deployment, containerization,
-														and CI/CD workflows.</p>
-												</li>
-											</ul>
-										</div>
-
-										<div class="tl-section">
-											<div class="tl-section-header">
-												<div class="tl-section-icon">
-													<svg viewBox="0 0 24 24">
-														<polyline points="16 18 22 12 16 6" />
-														<polyline points="8 6 2 12 8 18" />
-													</svg>
-												</div>
-												<h3 class="tl-section-title">Tech Stack</h3>
-											</div>
-											<div class="tl-tags">
-												<span class="tl-tag">React</span>
-												<span class="tl-tag">Node.js</span>
-												<span class="tl-tag">MongoDB</span>
-												<span class="tl-tag">Express.js</span>
-												<span class="tl-tag">DevOps</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li class="timeline-inverted animate-box">
-								<div class="timeline-badge"><i class="icon-graduation-cap"></i></div>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h3 class="timeline-title">DGD - Diploma in Graphic Design</h3>
-										<span class="company">Sree sankarachartya institute - 2018-Dec - 2020-Nov</span>
-									</div>
-									<div class="timeline-body">
-										<div class="tl-section">
-											<div class="tl-section-header">
-												<div class="tl-section-icon">
-													<svg viewBox="0 0 24 24">
-														<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-														<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-													</svg>
-												</div>
-												<h3 class="tl-section-title">What I Learned</h3>
-											</div>
-											<ul class="tl-list">
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Learned the fundamentals of graphic design, including color
-														theory, typography, and layout design.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Gained experience in design tools like Adobe Photoshop and
-														Illustrator.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Developed a strong portfolio showcasing my design skills and
-														creativity.</p>
-												</li>
-											</ul>
-										</div>
-
-										<div class="tl-section">
-											<div class="tl-section-header">
-												<div class="tl-section-icon">
-													<svg viewBox="0 0 24 24">
-														<polyline points="16 18 22 12 16 6" />
-														<polyline points="8 6 2 12 8 18" />
-													</svg>
-												</div>
-												<h3 class="tl-section-title">Tech Stack</h3>
-											</div>
-											<div class="tl-tags">
-												<span class="tl-tag">Photoshop</span>
-												<span class="tl-tag">Illustrator</span>
-												<span class="tl-tag">InDesign</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li class="timeline-unverted animate-box">
-								<div class="timeline-badge"><i class="icon-graduation-cap"></i></div>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h3 class="timeline-title">EET - Electrical and Electronics Technology</h3>
-										<span class="company">GVHSS Kadirur - 2017 - 2018</span>
-									</div>
-									<div class="timeline-body">
-										<div class="tl-section">
-											<div class="tl-section-header">
-												<div class="tl-section-icon">
-													<svg viewBox="0 0 24 24">
-														<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-														<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-													</svg>
-												</div>
-												<h3 class="tl-section-title">What I Learned</h3>
-											</div>
-											<ul class="tl-list">
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Learned the fundamentals of electrical and electronics
-														technology.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Gained experience in circuit design and analysis.</p>
-												</li>
-												<li class="tl-list-item">
-													<div class="tl-bullet"></div>
-													<p>Developed skills in troubleshooting and repairing electronic
-														devices.</p>
-												</li>
-											</ul>
-										</div>
-
-										<div class="tl-section">
-											<div class="tl-section-header">
-												<div class="tl-section-icon">
-													<svg viewBox="0 0 24 24">
-														<polyline points="16 18 22 12 16 6" />
-														<polyline points="8 6 2 12 8 18" />
-													</svg>
-												</div>
-												<h3 class="tl-section-title">Tech Stack</h3>
-											</div>
-											<div class="tl-tags">
-												<span class="tl-tag">Electrical Circuits</span>
-												<span class="tl-tag">Electronics</span>
-												<span class="tl-tag">Circuit Analysis</span>
-												<span class="tl-tag">Troubleshooting</span>
-												<span class="tl-tag">Repairing</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-
+					<div class="tl-right">
+						<div class="tl-role">SDE 1 &mdash; Junior Software Engineer</div>
+						<ul class="tl-list">
+							<li>Worked in a presales engineering environment, contributing to both product capabilities
+								and client solution implementations.</li>
+							<li>Developed and maintained backend services and REST APIs using Node.js for insurance
+								workflow applications.</li>
+							<li>Contributed to policy lifecycle automation systems supporting underwriting and policy
+								processing workflows.</li>
+							<li>Implemented secure authentication flows and handled API integrations between frontend
+								and backend services.</li>
+							<li>Collaborated with cross-functional teams to resolve production issues and ensure system
+								stability.</li>
+							<li>Participated in application deployment, release management, and environment
+								configuration.</li>
+							<li>Optimized API performance and debugged complex issues across distributed systems in
+								production environments.</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
+	</section>
 
-
-		<div id="fh5co-features" class="animate-box">
-			<div class="container">
-				<div class="services-padding">
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-							<h2>Skills</h2>
-						</div>
+	<!-- EDUCATION -->
+	<section class="section z1" id="education">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<div class="sec-label">// 03 &mdash; education</div>
+				<h2 class="sec-title">Education</h2>
+			</div>
+			<div class="edu-grid">
+				<div class="edu-card reveal">
+					<div class="edu-deg">MERN Stack Development</div>
+					<div class="edu-name">Full-Stack Bootcamp</div>
+					<div class="edu-inst">Packapeer Academy</div>
+					<div class="edu-period">Dec 2022 &mdash; Nov 2023</div>
+					<div class="edu-tags">
+						<span class="etag">React</span><span class="etag">Node.js</span><span
+							class="etag">MongoDB</span>
+						<span class="etag">Express.js</span><span class="etag">DevOps</span>
 					</div>
-					<div class="skills-grid">
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<polyline points="16 18 22 12 16 6" />
-									<polyline points="8 6 2 12 8 18" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Node.js</h3>
-								<p>Scalable backend APIs</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<path d="M4 5h16M4 12h16M4 19h16" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Express.js</h3>
-								<p>Lightweight API framework</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<circle cx="12" cy="12" r="3" />
-									<path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-									<path d="M4.93 4.93a10 10 0 0 0 0 14.14" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>NestJS</h3>
-								<p>Scalable backend architecture</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<rect x="3" y="11" width="18" height="11" rx="2" />
-									<path d="M7 11V7a5 5 0 0 1 10 0v4" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>JWT Auth</h3>
-								<p>Secure authentication systems</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<ellipse cx="12" cy="5" rx="9" ry="3" />
-									<path d="M3 5v14a9 3 0 0 0 18 0V5" />
-									<path d="M3 12a9 3 0 0 0 18 0" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>MySQL</h3>
-								<p>Relational database queries</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<ellipse cx="12" cy="5" rx="9" ry="3" />
-									<path d="M3 5v14a9 3 0 0 0 18 0V5" />
-									<path d="M3 12a9 3 0 0 0 18 0" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>MongoDB</h3>
-								<p>NoSQL flexible storage</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
-									<line x1="12" y1="22" x2="12" y2="15.5" />
-									<polyline points="22 8.5 12 15.5 2 8.5" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>React</h3>
-								<p>Dynamic UI applications</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<rect x="3" y="3" width="18" height="18" rx="2" />
-									<path d="M3 9h18" />
-									<path d="M9 21V9" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>CSS</h3>
-								<p>Responsive UI styling</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<polyline points="17 1 21 5 17 9" />
-									<path d="M3 11V9a4 4 0 0 1 4-4h14" />
-									<polyline points="7 23 3 19 7 15" />
-									<path d="M21 13v2a4 4 0 0 1-4 4H3" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Redux Toolkit</h3>
-								<p>State management solution</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<circle cx="12" cy="12" r="10" />
-									<path d="M12 8v4l3 3" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Kubernetes</h3>
-								<p>Container orchestration & scaling</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>AWS</h3>
-								<p>Cloud infrastructure & deployment</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<rect x="2" y="7" width="20" height="14" rx="2" />
-									<path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Docker</h3>
-								<p>Containerized applications</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<circle cx="12" cy="12" r="3" />
-									<path
-										d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Jenkins</h3>
-								<p>CI/CD automation pipelines</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<polyline points="4 17 10 11 4 5" />
-									<line x1="12" y1="19" x2="20" y2="19" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Terraform</h3>
-								<p>Infrastructure as code</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<path d="M12 20h9" />
-									<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Ansible</h3>
-								<p>Automation & config management</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<line x1="6" y1="3" x2="6" y2="15" />
-									<circle cx="18" cy="6" r="3" />
-									<circle cx="6" cy="18" r="3" />
-									<path d="M18 9a9 9 0 0 1-9 9" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Git & GitHub</h3>
-								<p>Version control workflows</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<polyline points="4 7 4 4 20 4 20 7" />
-									<line x1="9" y1="20" x2="15" y2="20" />
-									<line x1="12" y1="4" x2="12" y2="20" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>TypeScript</h3>
-								<p>Type-safe JavaScript code</p>
-							</div>
-						</div>
-
-						<div class="skill-card">
-							<div class="skill-icon">
-								<svg viewBox="0 0 24 24">
-									<rect x="2" y="3" width="20" height="14" rx="2" />
-									<line x1="8" y1="21" x2="16" y2="21" />
-									<line x1="12" y1="17" x2="12" y2="21" />
-								</svg>
-							</div>
-							<div class="skill-info">
-								<h3>Nginx</h3>
-								<p>Reverse proxy server</p>
-							</div>
-						</div>
-
+				</div>
+				<div class="edu-card reveal">
+					<div class="edu-deg">DGD</div>
+					<div class="edu-name">Diploma in Graphic Design</div>
+					<div class="edu-inst">Sree Sankaracharya Institute</div>
+					<div class="edu-period">Dec 2018 &mdash; Nov 2020</div>
+					<div class="edu-tags">
+						<span class="etag">Photoshop</span><span class="etag">Illustrator</span><span
+							class="etag">InDesign</span>
+					</div>
+				</div>
+				<div class="edu-card reveal">
+					<div class="edu-deg">EET</div>
+					<div class="edu-name">Electrical &amp; Electronics Technology</div>
+					<div class="edu-inst">GVHSS Kadirur</div>
+					<div class="edu-period">2017 &mdash; 2018</div>
+					<div class="edu-tags">
+						<span class="etag">Circuits</span><span class="etag">Electronics</span><span
+							class="etag">Troubleshooting</span>
 					</div>
 				</div>
 			</div>
 		</div>
+	</section>
 
-		<div id="fh5co-skills" class="animate-box">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>Certificates</h2>
+	<!-- SKILLS -->
+	<section class="section z1" id="skills">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<div class="sec-label">// 04 &mdash; skills</div>
+				<h2 class="sec-title">Tech Stack</h2>
+				<p class="sec-sub">Technologies I use to build, deploy, and maintain production-grade applications.</p>
+			</div>
+			<div class="skills-outer">
+				<div class="skill-category reveal">
+					<div class="skill-cat-title">Backend &amp; APIs</div>
+					<div class="skill-row">
+						<div class="skill-pill"><span class="sdot g"></span>Node.js</div>
+						<div class="skill-pill"><span class="sdot g"></span>Express.js</div>
+						<div class="skill-pill"><span class="sdot g"></span>NestJS</div>
+						<div class="skill-pill"><span class="sdot g"></span>JWT Auth</div>
+						<div class="skill-pill"><span class="sdot g"></span>TypeScript</div>
 					</div>
 				</div>
-				<div class="cert-grid" id="cert-grid">
-
-					<!-- <div class="cert-card">
-						<div class="cert-icon">
-							<svg viewBox="0 0 24 24">
-								<circle cx="12" cy="8" r="6" />
-								<path
-									d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32" />
-							</svg>
-						</div>
-						<div class="cert-info">
-							<h3>Learn DevOps: Docker, Kubernetes, Terraform and Azure DevOps</h3>
-							<p>Udemy</p>
-							<a href="https://www.udemy.com/certificate/UC-933697a4-c053-41f7-8f42-93b9907ce4e3/"
-								target="_blank" class="cert-link">Certificate</a>
-						</div>
+				<div class="skill-category reveal">
+					<div class="skill-cat-title">Databases</div>
+					<div class="skill-row">
+						<div class="skill-pill"><span class="sdot b"></span>MySQL</div>
+						<div class="skill-pill"><span class="sdot b"></span>MongoDB</div>
+						<div class="skill-pill"><span class="sdot b"></span>Redis</div>
 					</div>
-
-					<div class="cert-card">
-						<div class="cert-icon">
-							<svg viewBox="0 0 24 24">
-								<polyline points="16 18 22 12 16 6" />
-								<polyline points="8 6 2 12 8 18" />
-							</svg>
-						</div>
-						<div class="cert-info">
-							<h3>Namaste Javascript</h3>
-							<p>Namaste Dev</p>
-							<a href="https://namastedev.com/vyshnavpcnaravoor/certificates/namaste-javascript"
-								target="_blank" class="cert-link">Certificate</a>
-						</div>
+				</div>
+				<div class="skill-category reveal">
+					<div class="skill-cat-title">Frontend</div>
+					<div class="skill-row">
+						<div class="skill-pill"><span class="sdot p"></span>React</div>
+						<div class="skill-pill"><span class="sdot p"></span>Redux Toolkit</div>
+						<div class="skill-pill"><span class="sdot p"></span>CSS</div>
 					</div>
-
-					<div class="cert-card">
-						<div class="cert-icon">
-							<svg viewBox="0 0 24 24">
-								<rect x="2" y="3" width="20" height="14" rx="2" />
-								<path d="M8 21h8M12 17v4" />
-								<path d="M7 10l3 3 5-5" />
-							</svg>
-						</div>
-						<div class="cert-info">
-							<h3>Claude Code in Action</h3>
-							<p>Anthropic</p>
-							<a href="https://verify.skilljar.com/c/9a6yubtowdsk" target="_blank"
-								class="cert-link">Certificate</a>
-						</div>
-					</div> -->
-
+				</div>
+				<div class="skill-category reveal">
+					<div class="skill-cat-title">DevOps &amp; Cloud</div>
+					<div class="skill-row">
+						<div class="skill-pill"><span class="sdot y"></span>Kubernetes</div>
+						<div class="skill-pill"><span class="sdot y"></span>Docker</div>
+						<div class="skill-pill"><span class="sdot y"></span>AWS</div>
+						<div class="skill-pill"><span class="sdot y"></span>Jenkins</div>
+						<div class="skill-pill"><span class="sdot y"></span>Terraform</div>
+						<div class="skill-pill"><span class="sdot y"></span>Ansible</div>
+						<div class="skill-pill"><span class="sdot y"></span>Nginx</div>
+						<div class="skill-pill"><span class="sdot y"></span>Git &amp; GitHub</div>
+					</div>
 				</div>
 			</div>
 		</div>
+	</section>
 
-		<div id="fh5co-work" class="fh5co-bg-dark">
-			<div class="container">
-				<div class="row animate-box">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>Work</h2>
-					</div>
-				</div>
-				<div class="work-grid" id="work-grid">
-
-					<!-- <div class="work-card">
-						<div class="work-icon">
-							<svg viewBox="0 0 24 24">
-								<rect x="3" y="3" width="18" height="18" rx="2" />
-								<path d="M3 9h18" />
-								<path d="M9 21V9" />
-							</svg>
-						</div>
-						<h3>Project Title One</h3>
-						<p>Short description of what this project does and the problem it solves.</p>
-						<div class="tech-stack">
-							<span class="tech-tag">React</span>
-							<span class="tech-tag">Node.js</span>
-							<span class="tech-tag">MongoDB</span>
-						</div>
-						<div class="work-links">
-							<a href="#" class="work-link link-git">
-								<svg viewBox="0 0 24 24">
-									<path
-										d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-								</svg>
-								GitHub
-							</a>
-							<a href="#" class="work-link link-live">
-								<svg viewBox="0 0 24 24">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-									<polyline points="15 3 21 3 21 9" />
-									<line x1="10" y1="14" x2="21" y2="3" />
-								</svg>
-								Live
-							</a>
-						</div>
-					</div>
-
-					<div class="work-card">
-						<div class="work-icon">
-							<svg viewBox="0 0 24 24">
-								<ellipse cx="12" cy="5" rx="9" ry="3" />
-								<path d="M3 5v14a9 3 0 0 0 18 0V5" />
-								<path d="M3 12a9 3 0 0 0 18 0" />
-							</svg>
-						</div>
-						<h3>Project Title Two</h3>
-						<p>Short description of what this project does and the problem it solves.</p>
-						<div class="tech-stack">
-							<span class="tech-tag">NestJS</span>
-							<span class="tech-tag">MySQL</span>
-							<span class="tech-tag">Docker</span>
-						</div>
-						<div class="work-links">
-							<a href="#" class="work-link link-git">
-								<svg viewBox="0 0 24 24">
-									<path
-										d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-								</svg>
-								GitHub
-							</a>
-							<a href="#" class="work-link link-live">
-								<svg viewBox="0 0 24 24">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-									<polyline points="15 3 21 3 21 9" />
-									<line x1="10" y1="14" x2="21" y2="3" />
-								</svg>
-								Live
-							</a>
-						</div>
-					</div>
-
-					<div class="work-card">
-						<div class="work-icon">
-							<svg viewBox="0 0 24 24">
-								<polyline points="16 18 22 12 16 6" />
-								<polyline points="8 6 2 12 8 18" />
-							</svg>
-						</div>
-						<h3>Project Title Three</h3>
-						<p>Short description of what this project does and the problem it solves.</p>
-						<div class="tech-stack">
-							<span class="tech-tag">TypeScript</span>
-							<span class="tech-tag">Redux</span>
-							<span class="tech-tag">AWS</span>
-						</div>
-						<div class="work-links">
-							<a href="#" class="work-link link-git">
-								<svg viewBox="0 0 24 24">
-									<path
-										d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-								</svg>
-								GitHub
-							</a>
-							<a href="#" class="work-link link-live">
-								<svg viewBox="0 0 24 24">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-									<polyline points="15 3 21 3 21 9" />
-									<line x1="10" y1="14" x2="21" y2="3" />
-								</svg>
-								Live
-							</a>
-						</div>
-					</div>
-
-					<div class="work-card">
-						<div class="work-icon">
-							<svg viewBox="0 0 24 24">
-								<rect x="2" y="7" width="20" height="14" rx="2" />
-								<path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-							</svg>
-						</div>
-						<h3>Project Title Four</h3>
-						<p>Short description of what this project does and the problem it solves.</p>
-						<div class="tech-stack">
-							<span class="tech-tag">Kubernetes</span>
-							<span class="tech-tag">Nginx</span>
-							<span class="tech-tag">Jenkins</span>
-						</div>
-						<div class="work-links">
-							<a href="#" class="work-link link-git">
-								<svg viewBox="0 0 24 24">
-									<path
-										d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-								</svg>
-								GitHub
-							</a>
-							<a href="#" class="work-link link-live">
-								<svg viewBox="0 0 24 24">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-									<polyline points="15 3 21 3 21 9" />
-									<line x1="10" y1="14" x2="21" y2="3" />
-								</svg>
-								Live
-							</a>
-						</div>
-					</div>
-
-					<div class="work-card">
-						<div class="work-icon">
-							<svg viewBox="0 0 24 24">
-								<path d="M12 20h9" />
-								<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-							</svg>
-						</div>
-						<h3>Project Title Five</h3>
-						<p>Short description of what this project does and the problem it solves.</p>
-						<div class="tech-stack">
-							<span class="tech-tag">Terraform</span>
-							<span class="tech-tag">Ansible</span>
-							<span class="tech-tag">Git</span>
-						</div>
-						<div class="work-links">
-							<a href="#" class="work-link link-git">
-								<svg viewBox="0 0 24 24">
-									<path
-										d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-								</svg>
-								GitHub
-							</a>
-							<a href="#" class="work-link link-live">
-								<svg viewBox="0 0 24 24">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-									<polyline points="15 3 21 3 21 9" />
-									<line x1="10" y1="14" x2="21" y2="3" />
-								</svg>
-								Live
-							</a>
-						</div>
-					</div>
-
-					<div class="work-card">
-						<div class="work-icon">
-							<svg viewBox="0 0 24 24">
-								<circle cx="12" cy="12" r="10" />
-								<path d="M12 8v4l3 3" />
-							</svg>
-						</div>
-						<h3>Project Title Six</h3>
-						<p>Short description of what this project does and the problem it solves.</p>
-						<div class="tech-stack">
-							<span class="tech-tag">Express.js</span>
-							<span class="tech-tag">React</span>
-							<span class="tech-tag">CSS</span>
-						</div>
-						<div class="work-links">
-							<a href="#" class="work-link link-git">
-								<svg viewBox="0 0 24 24">
-									<path
-										d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-								</svg>
-								GitHub
-							</a>
-							<a href="#" class="work-link link-live">
-								<svg viewBox="0 0 24 24">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-									<polyline points="15 3 21 3 21 9" />
-									<line x1="10" y1="14" x2="21" y2="3" />
-								</svg>
-								Live
-							</a>
-						</div>
-					</div> -->
-
-				</div>
+	<!-- CONTACT -->
+	<section class="section z1" id="contact">
+		<div class="wrap">
+			<div class="sec-head reveal">
+				<div class="sec-label">// 05 &mdash; contact</div>
+				<h2 class="sec-title">Hire Me!</h2>
 			</div>
-		</div>
-
-		<!-- <div id="fh5co-blog">
-			<div class="container">
-				<div class="row animate-box">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>Post on Medium</h2>
-						<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-							provident. Odit ab aliquam dolor eius.</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="fh5co-blog animate-box">
-							<a href="#" class="blog-bg" style="background-image: url(images/portfolio-1.jpg);"></a>
-							<div class="blog-text">
-								<span class="posted_on">Mar. 15th 2016</span>
-								<h3><a href="#">Photoshoot On The Street</a></h3>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and
-									Consonantia, there live the blind texts.</p>
-								<ul class="stuff">
-									<li><i class="icon-heart2"></i>249</li>
-									<li><i class="icon-eye2"></i>308</li>
-									<li><a href="#">Read More<i class="icon-arrow-right22"></i></a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="fh5co-blog animate-box">
-							<a href="#" class="blog-bg" style="background-image: url(images/portfolio-2.jpg);"></a>
-							<div class="blog-text">
-								<span class="posted_on">Mar. 15th 2016</span>
-								<h3><a href="#">Surfing at Philippines</a></h3>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and
-									Consonantia, there live the blind texts.</p>
-								<ul class="stuff">
-									<li><i class="icon-heart2"></i>249</li>
-									<li><i class="icon-eye2"></i>308</li>
-									<li><a href="#">Read More<i class="icon-arrow-right22"></i></a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="fh5co-blog animate-box">
-							<a href="#" class="blog-bg" style="background-image: url(images/portfolio-3.jpg);"></a>
-							<div class="blog-text">
-								<span class="posted_on">Mar. 15th 2016</span>
-								<h3><a href="#">Capture Living On Uderwater</a></h3>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and
-									Consonantia, there live the blind texts.</p>
-								<ul class="stuff">
-									<li><i class="icon-heart2"></i>249</li>
-									<li><i class="icon-eye2"></i>308</li>
-									<li><a href="#">Read More<i class="icon-arrow-right22"></i></a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
-
-		<div id="fh5co-started" class="fh5co-bg-dark">
-			<div class="overlay"></div>
-			<div class="container">
-				<div class="row animate-box">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>Hire Me!</h2>
+			<div class="contact-grid">
+				<div class="contact-intro">
+					<div class="reveal">
 						<p>I'm a Node.js developer who can handle everything from building solid backend APIs to clean
 							UIs and full deployments. Got a project? Let's ship it together!</p>
-						<p><a href="#fh5co-consult" class="btn btn-default btn-lg">Contact Me</a></p>
+						<p>Feel free to reach out &mdash; I'd love to connect and discuss how I can contribute to your
+							team or project.</p>
+						<br>
+						<a href="mailto:vyshnavpcnaravoor@gmail.com" class="btn btn-primary">Send an Email &rarr;</a>
+					</div>
+					<div class="clinks reveal" style="margin-top:2rem">
+						<a href="https://github.com/vyshn4v" class="clink" target="_blank">
+							<div class="cl-l"><span class="cl-ico">&#9672;</span>
+								<div>
+									<div class="cl-name">GitHub</div>
+									<div class="cl-handle">@vyshn4v</div>
+								</div>
+							</div>
+							<span class="cl-arr">&#8599;</span>
+						</a>
+						<a href="https://www.linkedin.com/in/vyshnav-pc-5567ba242/" class="clink" target="_blank">
+							<div class="cl-l"><span class="cl-ico">&#9636;</span>
+								<div>
+									<div class="cl-name">LinkedIn</div>
+									<div class="cl-handle">vyshnav-pc-5567ba242</div>
+								</div>
+							</div>
+							<span class="cl-arr">&#8599;</span>
+						</a>
+						<a href="https://wa.me/8086064478" class="clink" target="_blank">
+							<div class="cl-l"><span class="cl-ico">&#128172;</span>
+								<div>
+									<div class="cl-name">WhatsApp</div>
+									<div class="cl-handle">+91 8086064478</div>
+								</div>
+							</div>
+							<span class="cl-arr">&#8599;</span>
+						</a>
+						<a href="mailto:vyshnavpcnaravoor@gmail.com" class="clink">
+							<div class="cl-l"><span class="cl-ico">&#9993;</span>
+								<div>
+									<div class="cl-name">Email</div>
+									<div class="cl-handle">vyshnavpcnaravoor@gmail.com</div>
+								</div>
+							</div>
+							<span class="cl-arr">&#8599;</span>
+						</a>
+					</div>
+				</div>
+				<div class="reveal">
+					<div class="terminal" style="min-height:0">
+						<div class="t-bar">
+							<div class="td r"></div>
+							<div class="td y"></div>
+							<div class="td g"></div>
+							<span class="t-title">~/contact &mdash; zsh</span>
+						</div>
+						<div class="t-body" style="min-height:0">
+							<div class="tl"><span class="tp">&#10095;</span><span class="tcmd">node hire-me.js</span>
+							</div>
+							<div class="tb"></div>
+							<div class="tl"><span class="tout g">&#10003; Ready to take on new challenges</span></div>
+							<div class="tl"><span class="tout g">&#10003; 2 years production experience</span></div>
+							<div class="tl"><span class="tout g">&#10003; Node.js + DevOps + Cloud</span></div>
+							<div class="tl"><span class="tout g">&#10003; Available for full-time / contract</span>
+							</div>
+							<div class="tb"></div>
+							<div class="tl"><span class="tout p">Awaiting your message...</span></div>
+							<div class="tb"></div>
+							<div class="tl"><span class="tp">&#10095;</span><span class="tcmd">&nbsp;<span
+										class="tcursor"></span></span></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</section>
 
-		<div id="fh5co-consult">
-			<div class="video fh5co-video"
-				style="background-image: url(images/StockCake-Tech_Workspace_Setup-935865-medium.jpg);">
-				<div class="overlay"></div>
-			</div>
-			<div class="choose animate-box">
-				<h2>Contact</h2>
-				<form id="contact-form">
-					<div class="row form-group">
-						<div class="col-md-6">
-							<input type="text" id="fname" class="form-control" placeholder="Your firstname">
-						</div>
-					</div>
-					<div class="row form-group">
-						<div class="col-md-6">
-							<input type="text" id="lname" class="form-control" placeholder="Your lastname">
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-md-12">
-							<input type="text" id="email" class="form-control" placeholder="Your email address">
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-md-12">
-							<input type="text" id="subject" class="form-control"
-								placeholder="Your subject of this message">
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-md-12">
-							<textarea name="message" id="message" cols="30" rows="10" class="form-control"
-								placeholder="Say something about us"></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<input type="submit" value="Send Message" class="btn btn-primary">
-					</div>
-
-				</form>
-			</div>
-		</div>
-
-		<!-- <div id="map" class="fh5co-map"></div> -->
+	<div class="z1">
+		<footer>
+			<p class="ft">&copy; 2026 Vyshnav P C &mdash; All rights reserved</p>
+			<p class="ft">Kannur, Kerala &middot; <span>Open to work</span></p>
+		</footer>
 	</div>
-
-	<footer id="fh5co-footer">
-		<div class="container">
-
-			<p class="footer-thank">Thanks for visiting! 🙌</p>
-			<p class="footer-tagline">Feel free to reach out — I'd love to connect.</p>
-
-			<div class="footer-links">
-				<a href="https://github.com/vyshn4v" target="_blank">
-					<svg viewBox="0 0 24 24">
-						<path
-							d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-					</svg>
-					GitHub
-				</a>
-				<a href="https://www.linkedin.com/in/vyshnav-pc-5567ba242/" target="_blank">
-					<svg viewBox="0 0 24 24">
-						<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-						<rect x="2" y="9" width="4" height="12" />
-						<circle cx="4" cy="4" r="2" />
-					</svg>
-					LinkedIn
-				</a>
-				<a href="https://wa.me/8086064478" target="_blank">
-					<svg viewBox="0 0 24 24">
-						<path
-							d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-						<path
-							d="M12 0C5.373 0 0 5.373 0 12c0 2.138.564 4.14 1.534 5.876L0 24l6.29-1.508A11.933 11.933 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.877 9.877 0 0 1-5.031-1.376l-.361-.214-3.733.895.944-3.62-.235-.374A9.853 9.853 0 0 1 2.118 12C2.118 6.533 6.533 2.118 12 2.118c5.466 0 9.882 4.415 9.882 9.882 0 5.466-4.416 9.882-9.882 9.882z" />
-					</svg>
-					WhatsApp
-				</a>
-				<a href="mailto:vyshnavpcnaravoor@gmail.com">
-					<svg viewBox="0 0 24 24">
-						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-						<polyline points="22,6 12,13 2,6" />
-					</svg>
-					Email
-				</a>
-			</div>
-
-			<div class="footer-divider"></div>
-
-			<p class="footer-credit">
-				Design inspired by <a
-					href="https://themewagon.com/themes/best-quality-free-portfolio-resume-bootstrap-template-download-profile/"
-					target="_blank">Freehtml5</a> &mdash; Refactored &amp; customized by
-				<strong>Vyshnav p c</strong>
-			</p>
-			<p class="footer-copy">
-				&copy; 2026 <span>Vyshnav p c</span>. All rights reserved.
-			</p>
-
-		</div>
-	</footer>
-
-	<div class="gototop js-top">
-		<a href="#" class="js-gotop"><i class="icon-arrow-up22"></i></a>
-	</div>
-
-	<!-- jQuery -->
-	<script src="js/jquery.min.js"></script>
-	<!-- Add Work -->
-	<script src="js/addWork.js"></script>
-	<!-- Add Certificates -->
-	<script src="js/fetchCertificates.js"></script>
-	<!-- jQuery Easing -->
-	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="js/jquery.waypoints.min.js"></script>
-	<!-- Stellar Parallax -->
-	<script src="js/jquery.stellar.min.js"></script>
-	<!-- Easy PieChart -->
-	<script src="js/jquery.easypiechart.min.js"></script>
-	<!-- Contact Form -->
-	<script src="js/contact.js"></script>
-	<!-- Google Map -->
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="js/google_map.js"></script>
-
-	<!-- Main -->
-	<script src="js/main.js"></script>
-
+	<script src="./js/index.js"></script>
 </body>
 
 </html>
