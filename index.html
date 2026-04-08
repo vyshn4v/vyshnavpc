@@ -14,94 +14,119 @@
 </head>
 
 <body>
-
-	<canvas id="particles"></canvas>
-
-	<!-- NAV -->
+	<canvas id="sky"></canvas>
 	<nav class="z1">
-		<a href="#" class="nav-brand">vyshnav<span>.</span>pc</a>
-		<ul class="nav-links">
+		<a href="#" class="nbrand">vyshnav<span>.</span>pc</a>
+		<ul class="nlinks">
 			<li><a href="#about">About</a></li>
 			<li><a href="#experience">Experience</a></li>
+			<li><a href="#education">Education</a></li>
 			<li><a href="#skills">Skills</a></li>
 			<li><a href="#contact">Contact</a></li>
 		</ul>
-		<div class="nav-status">
-			<div class="dot"></div>Open to work
+		<div class="nstatus">
+			<div class="sdot"></div>Open to work
 		</div>
 	</nav>
-
-	<!-- HERO -->
 	<div class="hero z1">
-		<div class="hero-inner">
-			<div class="hero-left">
-				<div class="hero-tag">&#9889; Node.js / JavaScript Developer</div>
-				<h1>
-					Vyshnav P C
-					<span class="sub">Backend Engineer &amp; <span class="accent">Cloud Native</span> Builder</span>
-				</h1>
-				<p class="hero-desc">
-					Backend-focused software engineer from Kannur, Kerala with ~2 years of experience building scalable
-					web applications. Specializing in Node.js, REST APIs, authentication systems, and Kubernetes-based
-					deployments.
-				</p>
-				<div class="hero-btns">
-					<a href="mailto:vyshnavpcnaravoor@gmail.com" class="btn btn-primary">Hire Me &rarr;</a>
-					<a href="#about" class="btn btn-outline">View Profile</a>
+		<div class="hwrap">
+			<div>
+				<div class="htag">&#9889; Node.js / JavaScript Developer</div>
+				<h1>Vyshnav P C<span class="sub">Backend Engineer &amp; <span class="acc">Cloud Native</span>
+						Builder</span></h1>
+				<p class="hdesc">Backend-focused software engineer from Kannur, Kerala with ~2 years of experience
+					building scalable web applications. Specializing in Node.js, REST APIs, authentication systems, and
+					Kubernetes-based deployments.</p>
+				<div class="hbtns">
+					<button class="btn bp" onclick="openModal()">Hire Me &#8594;</button>
+					<a href="#about" class="btn bo">View Profile</a>
 				</div>
-				<div class="hero-meta">
-					<div class="meta-item"><strong>~2 Years</strong>Experience</div>
-					<div class="meta-item"><strong>Kannur, Kerala</strong>Location</div>
-					<div class="meta-item"><strong>SDE 1</strong>Current Role</div>
+				<div class="hmeta">
+					<div class="mi"><strong>~2 Years</strong>Experience</div>
+					<div class="mi"><strong>Kannur, Kerala</strong>Location</div>
+					<div class="mi"><strong>SDE 1</strong>Current Role</div>
 				</div>
 			</div>
-			<div class="hero-right">
-				<div class="terminal">
-					<div class="t-bar">
-						<div class="td r"></div>
-						<div class="td y"></div>
-						<div class="td g"></div>
-						<span class="t-title">~/vyshnav &mdash; zsh</span>
+			<div class="hright">
+				<div class="mac-win">
+					<div class="mac-bar">
+						<div class="mac-btns">
+							<div class="mb cl"></div>
+							<div class="mb mn"></div>
+							<div class="mb mx"></div>
+						</div>
+						<div class="mac-title">
+							<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="2" y="3" width="20" height="14" rx="2" />
+								<line x1="8" y1="21" x2="16" y2="21" />
+								<line x1="12" y1="17" x2="12" y2="21" />
+							</svg>
+							vyshnav &mdash; zsh &mdash; 120&times;36
+						</div>
 					</div>
-					<div class="t-body">
-						<div class="tl"><span class="tp">&#10095;</span><span class="tdir">~/</span><span
-								class="tcmd">cat profile.json</span></div>
+					<div class="mac-tabs">
+						<div class="mac-tab act">
+							<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+								<circle cx="12" cy="7" r="4" />
+							</svg>
+							profile.json<span class="mac-tab-x">&#10005;</span>
+						</div>
+						<div class="mac-tab">
+							<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="16 18 22 12 16 6" />
+								<polyline points="8 6 2 12 8 18" />
+							</svg>
+							zsh<span class="mac-tab-x">&#10005;</span>
+						</div>
+						<div class="mac-tab">
+							<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+								stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="12" cy="12" r="3" />
+								<path
+									d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+							</svg>
+							node<span class="mac-tab-x">&#10005;</span>
+						</div>
+					</div>
+					<div class="mac-body">
+						<div class="tl"><span class="tp">&#10095;</span><span class="td">~/</span><span class="tc">cat
+								profile.json</span></div>
 						<div class="tb"></div>
-						<div class="tl"><span class="tout p">{</span></div>
-						<div class="tl"><span class="tout">&nbsp;&nbsp;"name": <span class="tout g">"Vyshnav P
+						<div class="tl"><span class="to p">{</span></div>
+						<div class="tl"><span class="to">&nbsp;&nbsp;"name":&nbsp;<span class="to g">"Vyshnav P
 									C"</span>,</span></div>
-						<div class="tl"><span class="tout">&nbsp;&nbsp;"role": <span class="tout g">"Node.js
+						<div class="tl"><span class="to">&nbsp;&nbsp;"role":&nbsp;<span class="to g">"Node.js
 									Developer"</span>,</span></div>
-						<div class="tl"><span class="tout">&nbsp;&nbsp;"company": <span
-									class="tout g">"Neutrinos"</span>,</span></div>
-						<div class="tl"><span class="tout">&nbsp;&nbsp;"focus": [<span class="tout b">"APIs"</span>,
-								<span class="tout b">"DevOps"</span>, <span class="tout b">"Cloud"</span>],</span></div>
-						<div class="tl"><span class="tout">&nbsp;&nbsp;"location": <span class="tout g">"Kannur,
+						<div class="tl"><span class="to">&nbsp;&nbsp;"exp":&nbsp;&nbsp;<span class="to g">"~2
+									years"</span>,</span></div>
+						<div class="tl"><span class="to">&nbsp;&nbsp;"focus":[<span class="to b">"APIs"</span>,<span
+									class="to b">"DevOps"</span>,<span class="to b">"Cloud"</span>],</span></div>
+						<div class="tl"><span class="to">&nbsp;&nbsp;"loc":&nbsp;&nbsp;<span class="to g">"Kannur,
 									Kerala"</span>,</span></div>
-						<div class="tl"><span class="tout">&nbsp;&nbsp;"status": <span
-									class="tout g">"open_to_work"</span>,</span></div>
-						<div class="tl"><span class="tout">&nbsp;&nbsp;"email": <span
-									class="tout g">"vyshnavpcnaravoor@gmail.com"</span></span></div>
-						<div class="tl"><span class="tout p">}</span></div>
+						<div class="tl"><span class="to">&nbsp;&nbsp;"status":<span
+									class="to g">"open_to_work"</span></span></div>
+						<div class="tl"><span class="to p">}</span></div>
 						<div class="tb"></div>
-						<div class="tl"><span class="tp">&#10095;</span><span class="tdir">~/</span><span
-								class="tcmd">&nbsp;<span class="tcursor"></span></span></div>
+						<div class="tl"><span class="tp">&#10095;</span><span class="td">~/</span><span class="tc"
+								id="cmd1">&nbsp;<span class="tcur" id="cur1"></span></span></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- ABOUT -->
-	<section class="section z1" id="about">
+	<section class="sec z1" id="about">
 		<div class="wrap">
-			<div class="about-grid">
+			<div class="agrid">
 				<div>
-					<div class="sec-head reveal">
-						<div class="sec-label">// 01 &mdash; about</div>
-						<h2 class="sec-title">Hello There!</h2>
+					<div class="shead reveal">
+						<div class="slbl">// 01 &mdash; about</div>
+						<h2 class="stitle">Hello There!</h2>
 					</div>
-					<div class="about-text reveal">
+					<div class="atext reveal">
 						<p>I'm Vyshnav P C, a backend-focused software engineer from Kannur district, Kerala. I have
 							around 2 years of experience building scalable and reliable web applications using modern
 							JavaScript technologies.</p>
@@ -112,34 +137,32 @@
 						<p>I'm passionate about building cloud-native applications, working with distributed systems,
 							and continuously improving system performance and reliability.</p>
 					</div>
-					<div class="about-contact reveal">
-						<div class="ac-row"><span class="ac-label">Phone</span><span class="ac-val">+91
-								8086064478</span></div>
-						<div class="ac-row"><span class="ac-label">Email</span><span class="ac-val"><a
+					<div class="acontact reveal">
+						<div class="acrow"><span class="aclbl">Phone</span><span class="acval">+91 8086064478</span>
+						</div>
+						<div class="acrow"><span class="aclbl">Email</span><span class="acval"><a
 									href="mailto:vyshnavpcnaravoor@gmail.com">vyshnavpcnaravoor@gmail.com</a></span>
 						</div>
-						<div class="ac-row"><span class="ac-label">Address</span><span class="ac-val">Kannur,
-								Kerala</span></div>
+						<div class="acrow"><span class="aclbl">Address</span><span class="acval">Kannur, Kerala</span>
+						</div>
 					</div>
 				</div>
 				<div>
-					<div class="sec-head reveal" style="margin-bottom:1.5rem">
-						<div class="sec-label" style="margin-bottom:0">// achievements</div>
-					</div>
-					<div class="awards reveal">
-						<div class="award-card">
-							<div class="award-icon">&#127942;</div>
+					<div class="slbl reveal" style="margin-bottom:1.2rem">// achievements</div>
+					<div class="awards">
+						<div class="acard reveal">
+							<div class="aico">&#127942;</div>
 							<div>
-								<div class="award-title">Team Player Award</div>
-								<div class="award-desc">Recognized for strong collaboration and consistent contribution
-									to project deliverables at Neutrinos.</div>
+								<div class="atitle">Team Player Award</div>
+								<div class="adesc">Recognized for strong collaboration and consistent contribution to
+									project deliverables at Neutrinos.</div>
 							</div>
 						</div>
-						<div class="award-card">
-							<div class="award-icon">&#11088;</div>
+						<div class="acard reveal">
+							<div class="aico">&#11088;</div>
 							<div>
-								<div class="award-title">Beyond the Call of Duty Award</div>
-								<div class="award-desc">Recognized for taking additional responsibilities and resolving
+								<div class="atitle">Beyond the Call of Duty Award</div>
+								<div class="adesc">Recognized for taking additional responsibilities and resolving
 									critical production issues beyond assigned tasks.</div>
 							</div>
 						</div>
@@ -148,27 +171,25 @@
 			</div>
 		</div>
 	</section>
-
-	<!-- EXPERIENCE -->
-	<section class="section z1" id="experience">
+	<section class="sec z1" id="experience">
 		<div class="wrap">
-			<div class="sec-head reveal">
-				<div class="sec-label">// 02 &mdash; experience</div>
-				<h2 class="sec-title">Work Experience</h2>
-				<p class="sec-sub">Professional experience building backend systems, REST APIs, and DevOps
-					infrastructure.</p>
+			<div class="shead reveal">
+				<div class="slbl">// 02 &mdash; experience</div>
+				<h2 class="stitle">Work Experience</h2>
+				<p class="ssub">Building backend systems, REST APIs, and DevOps infrastructure in production
+					environments.</p>
 			</div>
 			<div class="timeline">
-				<div class="tl-item reveal">
-					<div class="tl-left">
-						<div class="tl-date">Mar 2024 &mdash; Mar 2026</div>
-						<div class="tl-company">Neutrinos</div>
+				<div class="titem reveal">
+					<div class="tleft">
+						<div class="tdate">Mar 2024 &mdash; Mar 2026</div>
+						<div class="tco">Neutrinos</div>
 					</div>
-					<div class="tl-right">
-						<div class="tl-role">SDE 1 &mdash; Junior Software Engineer</div>
-						<ul class="tl-list">
-							<li>Worked in a presales engineering environment, contributing to both product capabilities
-								and client solution implementations.</li>
+					<div class="tright">
+						<div class="trole">SDE 1 &mdash; Junior Software Engineer</div>
+						<ul class="tlist">
+							<li>Worked in a presales engineering environment, contributing to product capabilities and
+								client solution implementations.</li>
 							<li>Developed and maintained backend services and REST APIs using Node.js for insurance
 								workflow applications.</li>
 							<li>Contributed to policy lifecycle automation systems supporting underwriting and policy
@@ -180,199 +201,314 @@
 							<li>Participated in application deployment, release management, and environment
 								configuration.</li>
 							<li>Optimized API performance and debugged complex issues across distributed systems in
-								production environments.</li>
+								production.</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<!-- EDUCATION -->
-	<section class="section z1" id="education">
+	<section class="sec z1" id="education">
 		<div class="wrap">
-			<div class="sec-head reveal">
-				<div class="sec-label">// 03 &mdash; education</div>
-				<h2 class="sec-title">Education</h2>
+			<div class="shead reveal">
+				<div class="slbl">// 03 &mdash; education</div>
+				<h2 class="stitle">Education</h2>
 			</div>
-			<div class="edu-grid">
-				<div class="edu-card reveal">
-					<div class="edu-deg">MERN Stack Development</div>
-					<div class="edu-name">Full-Stack Bootcamp</div>
-					<div class="edu-inst">Packapeer Academy</div>
-					<div class="edu-period">Dec 2022 &mdash; Nov 2023</div>
-					<div class="edu-tags">
-						<span class="etag">React</span><span class="etag">Node.js</span><span
-							class="etag">MongoDB</span>
-						<span class="etag">Express.js</span><span class="etag">DevOps</span>
+			<div class="edu-scroll">
+				<div class="egrid">
+					<div class="ecard reveal">
+						<div class="edeg">MERN Stack Development</div>
+						<div class="ename">Full-Stack Bootcamp</div>
+						<div class="einst">Packapeer Academy</div>
+						<div class="eperiod">Dec 2022 &mdash; Nov 2023</div>
+						<div class="etags"><span class="etag">React</span><span class="etag">Node.js</span><span
+								class="etag">MongoDB</span><span class="etag">Express.js</span><span
+								class="etag">DevOps</span></div>
 					</div>
-				</div>
-				<div class="edu-card reveal">
-					<div class="edu-deg">DGD</div>
-					<div class="edu-name">Diploma in Graphic Design</div>
-					<div class="edu-inst">Sree Sankaracharya Institute</div>
-					<div class="edu-period">Dec 2018 &mdash; Nov 2020</div>
-					<div class="edu-tags">
-						<span class="etag">Photoshop</span><span class="etag">Illustrator</span><span
-							class="etag">InDesign</span>
+					<div class="ecard reveal">
+						<div class="edeg">DGD</div>
+						<div class="ename">Diploma in Graphic Design</div>
+						<div class="einst">Sree Sankaracharya Institute</div>
+						<div class="eperiod">Dec 2018 &mdash; Nov 2020</div>
+						<div class="etags"><span class="etag">Photoshop</span><span class="etag">Illustrator</span><span
+								class="etag">InDesign</span></div>
 					</div>
-				</div>
-				<div class="edu-card reveal">
-					<div class="edu-deg">EET</div>
-					<div class="edu-name">Electrical &amp; Electronics Technology</div>
-					<div class="edu-inst">GVHSS Kadirur</div>
-					<div class="edu-period">2017 &mdash; 2018</div>
-					<div class="edu-tags">
-						<span class="etag">Circuits</span><span class="etag">Electronics</span><span
-							class="etag">Troubleshooting</span>
+					<div class="ecard reveal">
+						<div class="edeg">EET</div>
+						<div class="ename">Electrical &amp; Electronics Technology</div>
+						<div class="einst">GVHSS Kadirur</div>
+						<div class="eperiod">2017 &mdash; 2018</div>
+						<div class="etags"><span class="etag">Circuits</span><span class="etag">Electronics</span><span
+								class="etag">Troubleshooting</span></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<!-- SKILLS -->
-	<section class="section z1" id="skills">
+	<section class="sec z1" id="skills">
 		<div class="wrap">
-			<div class="sec-head reveal">
-				<div class="sec-label">// 04 &mdash; skills</div>
-				<h2 class="sec-title">Tech Stack</h2>
-				<p class="sec-sub">Technologies I use to build, deploy, and maintain production-grade applications.</p>
+			<div class="shead reveal">
+				<div class="slbl">// 04 &mdash; skills</div>
+				<h2 class="stitle">Tech Stack</h2>
+				<p class="ssub">Technologies I use to build, deploy, and maintain production-grade applications.</p>
 			</div>
-			<div class="skills-outer">
-				<div class="skill-category reveal">
-					<div class="skill-cat-title">Backend &amp; APIs</div>
-					<div class="skill-row">
-						<div class="skill-pill"><span class="sdot g"></span>Node.js</div>
-						<div class="skill-pill"><span class="sdot g"></span>Express.js</div>
-						<div class="skill-pill"><span class="sdot g"></span>NestJS</div>
-						<div class="skill-pill"><span class="sdot g"></span>JWT Auth</div>
-						<div class="skill-pill"><span class="sdot g"></span>TypeScript</div>
+			<div class="skouter">
+				<div class="reveal">
+					<div class="skcattitle">Backend &amp; APIs</div>
+					<div class="sk-track-outer">
+						<div class="sk-track" id="sk-backend"></div>
 					</div>
 				</div>
-				<div class="skill-category reveal">
-					<div class="skill-cat-title">Databases</div>
-					<div class="skill-row">
-						<div class="skill-pill"><span class="sdot b"></span>MySQL</div>
-						<div class="skill-pill"><span class="sdot b"></span>MongoDB</div>
-						<div class="skill-pill"><span class="sdot b"></span>Redis</div>
+				<div class="reveal">
+					<div class="skcattitle">Databases</div>
+					<div class="sk-track-outer">
+						<div class="sk-track rev" id="sk-db"></div>
 					</div>
 				</div>
-				<div class="skill-category reveal">
-					<div class="skill-cat-title">Frontend</div>
-					<div class="skill-row">
-						<div class="skill-pill"><span class="sdot p"></span>React</div>
-						<div class="skill-pill"><span class="sdot p"></span>Redux Toolkit</div>
-						<div class="skill-pill"><span class="sdot p"></span>CSS</div>
+				<div class="reveal">
+					<div class="skcattitle">Frontend</div>
+					<div class="sk-track-outer">
+						<div class="sk-track" id="sk-fe"></div>
 					</div>
 				</div>
-				<div class="skill-category reveal">
-					<div class="skill-cat-title">DevOps &amp; Cloud</div>
-					<div class="skill-row">
-						<div class="skill-pill"><span class="sdot y"></span>Kubernetes</div>
-						<div class="skill-pill"><span class="sdot y"></span>Docker</div>
-						<div class="skill-pill"><span class="sdot y"></span>AWS</div>
-						<div class="skill-pill"><span class="sdot y"></span>Jenkins</div>
-						<div class="skill-pill"><span class="sdot y"></span>Terraform</div>
-						<div class="skill-pill"><span class="sdot y"></span>Ansible</div>
-						<div class="skill-pill"><span class="sdot y"></span>Nginx</div>
-						<div class="skill-pill"><span class="sdot y"></span>Git &amp; GitHub</div>
+				<div class="reveal">
+					<div class="skcattitle">DevOps &amp; Cloud</div>
+					<div class="sk-track-outer">
+						<div class="sk-track rev" id="sk-devops"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<!-- CONTACT -->
-	<section class="section z1" id="contact">
+	<section class="sec z1" id="contact">
 		<div class="wrap">
-			<div class="sec-head reveal">
-				<div class="sec-label">// 05 &mdash; contact</div>
-				<h2 class="sec-title">Hire Me!</h2>
+			<div class="shead reveal">
+				<div class="slbl">// 05 &mdash; contact</div>
+				<h2 class="stitle">Hire Me!</h2>
 			</div>
-			<div class="contact-grid">
-				<div class="contact-intro">
-					<div class="reveal">
+			<div class="cgrid">
+				<div>
+					<div class="ctext reveal">
 						<p>I'm a Node.js developer who can handle everything from building solid backend APIs to clean
 							UIs and full deployments. Got a project? Let's ship it together!</p>
 						<p>Feel free to reach out &mdash; I'd love to connect and discuss how I can contribute to your
 							team or project.</p>
-						<br>
-						<a href="mailto:vyshnavpcnaravoor@gmail.com" class="btn btn-primary">Send an Email &rarr;</a>
 					</div>
-					<div class="clinks reveal" style="margin-top:2rem">
+					<div style="margin-top:1.4rem" class="reveal">
+						<button class="btn bp" onclick="openModal()">Send a Message &#8594;</button>
+					</div>
+					<div class="clinks reveal" style="margin-top:1.5rem">
 						<a href="https://github.com/vyshn4v" class="clink" target="_blank">
-							<div class="cl-l"><span class="cl-ico">&#9672;</span>
+							<div class="cll"><span class="cico cico-gh"><svg width="16" height="16" viewBox="0 0 24 24"
+										fill="#fff">
+										<path
+											d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
+									</svg></span>
 								<div>
-									<div class="cl-name">GitHub</div>
-									<div class="cl-handle">@vyshn4v</div>
+									<div class="cname">GitHub</div>
+									<div class="chandl">@vyshn4v</div>
 								</div>
-							</div>
-							<span class="cl-arr">&#8599;</span>
+							</div><span class="carr">&#8599;</span>
 						</a>
 						<a href="https://www.linkedin.com/in/vyshnav-pc-5567ba242/" class="clink" target="_blank">
-							<div class="cl-l"><span class="cl-ico">&#9636;</span>
+							<div class="cll"><span class="cico cico-li"><svg width="16" height="16" viewBox="0 0 24 24"
+										fill="#fff">
+										<path
+											d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+									</svg></span>
 								<div>
-									<div class="cl-name">LinkedIn</div>
-									<div class="cl-handle">vyshnav-pc-5567ba242</div>
+									<div class="cname">LinkedIn</div>
+									<div class="chandl">vyshnav-pc-5567ba242</div>
 								</div>
-							</div>
-							<span class="cl-arr">&#8599;</span>
+							</div><span class="carr">&#8599;</span>
 						</a>
 						<a href="https://wa.me/8086064478" class="clink" target="_blank">
-							<div class="cl-l"><span class="cl-ico">&#128172;</span>
+							<div class="cll"><span class="cico cico-wa"><svg width="16" height="16" viewBox="0 0 24 24"
+										fill="#fff">
+										<path
+											d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+									</svg></span>
 								<div>
-									<div class="cl-name">WhatsApp</div>
-									<div class="cl-handle">+91 8086064478</div>
+									<div class="cname">WhatsApp</div>
+									<div class="chandl">+91 8086064478</div>
 								</div>
-							</div>
-							<span class="cl-arr">&#8599;</span>
+							</div><span class="carr">&#8599;</span>
 						</a>
 						<a href="mailto:vyshnavpcnaravoor@gmail.com" class="clink">
-							<div class="cl-l"><span class="cl-ico">&#9993;</span>
+							<div class="cll"><span class="cico cico-em"><svg width="16" height="16" viewBox="0 0 24 24"
+										fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path
+											d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+										<polyline points="22,6 12,13 2,6" />
+									</svg></span>
 								<div>
-									<div class="cl-name">Email</div>
-									<div class="cl-handle">vyshnavpcnaravoor@gmail.com</div>
+									<div class="cname">Email</div>
+									<div class="chandl">vyshnavpcnaravoor@gmail.com</div>
 								</div>
-							</div>
-							<span class="cl-arr">&#8599;</span>
+							</div><span class="carr">&#8599;</span>
+						</a>
+						<a href="https://namastedev.com" class="clink" target="_blank">
+							<div class="cll"><span class="cico cico-nd"><svg width="16" height="16" viewBox="0 0 24 24"
+										fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round">
+										<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+										<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+									</svg></span>
+								<div>
+									<div class="cname">NamasteDev</div>
+									<div class="chandl">namastedev.com</div>
+								</div>
+							</div><span class="carr">&#8599;</span>
+						</a>
+						<a href="https://leetcode.com" class="clink" target="_blank">
+							<div class="cll"><span class="cico cico-lc"><svg width="16" height="16" viewBox="0 0 24 24"
+										fill="#fff">
+										<path
+											d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z" />
+									</svg></span>
+								<div>
+									<div class="cname">LeetCode</div>
+									<div class="chandl">leetcode.com</div>
+								</div>
+							</div><span class="carr">&#8599;</span>
 						</a>
 					</div>
 				</div>
 				<div class="reveal">
-					<div class="terminal" style="min-height:0">
-						<div class="t-bar">
-							<div class="td r"></div>
-							<div class="td y"></div>
-							<div class="td g"></div>
-							<span class="t-title">~/contact &mdash; zsh</span>
+					<div class="mac-win">
+						<div class="mac-bar">
+							<div class="mac-btns">
+								<div class="mb cl"></div>
+								<div class="mb mn"></div>
+								<div class="mb mx"></div>
+							</div>
+							<div class="mac-title">
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="2" y="3" width="20" height="14" rx="2" />
+									<line x1="8" y1="21" x2="16" y2="21" />
+									<line x1="12" y1="17" x2="12" y2="21" />
+								</svg>
+								contact &mdash; node &mdash; 80&times;24
+							</div>
 						</div>
-						<div class="t-body" style="min-height:0">
-							<div class="tl"><span class="tp">&#10095;</span><span class="tcmd">node hire-me.js</span>
+						<div class="mac-tabs">
+							<div class="mac-tab act" id="ctab-hire" onclick="switchTab('hire')">
+								<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+								</svg>
+								hire-me.js<span class="mac-tab-x">&#10005;</span>
+							</div>
+							<div class="mac-tab" id="ctab-contact" onclick="switchTab('contact')">
+								<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="8" r="4" />
+									<path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+								</svg>
+								contact.json<span class="mac-tab-x">&#10005;</span>
+							</div>
+						</div>
+						<!-- hire-me.js pane -->
+						<div class="mac-body" id="cpane-hire">
+							<div class="tl"><span class="tp">&#10095;</span><span class="tc">node hire-me.js</span>
 							</div>
 							<div class="tb"></div>
-							<div class="tl"><span class="tout g">&#10003; Ready to take on new challenges</span></div>
-							<div class="tl"><span class="tout g">&#10003; 2 years production experience</span></div>
-							<div class="tl"><span class="tout g">&#10003; Node.js + DevOps + Cloud</span></div>
-							<div class="tl"><span class="tout g">&#10003; Available for full-time / contract</span>
+							<div class="tl"><span class="to g">&#10003; Ready for new challenges</span></div>
+							<div class="tl"><span class="to g">&#10003; ~2 yrs production experience</span></div>
+							<div class="tl"><span class="to g">&#10003; Node.js + DevOps + Cloud</span></div>
+							<div class="tl"><span class="to g">&#10003; Full-time / contract available</span></div>
+							<div class="tb"></div>
+							<div class="tl"><span class="to p">Awaiting your message...</span></div>
+							<div class="tb"></div>
+							<div class="tl"><span class="tp">&#10095;</span><span class="tc" id="cmd2">&nbsp;<span
+										class="tcur" id="cur2"></span></span></div>
+						</div>
+						<!-- contact.json pane -->
+						<div class="mac-body" id="cpane-contact" style="display:none">
+							<div class="tl"><span class="tp">&#10095;</span><span class="tc">cat contact.json</span>
 							</div>
 							<div class="tb"></div>
-							<div class="tl"><span class="tout p">Awaiting your message...</span></div>
+							<div class="tl"><span class="to p">{</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"name":&nbsp;&nbsp;&nbsp;<span
+										class="to g">"Vyshnav P C"</span>,</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"phone":&nbsp;&nbsp;<span class="to g">"+91
+										8086064478"</span>,</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"email":&nbsp;&nbsp;<span
+										class="to g">"vyshnavpcnaravoor@gmail.com"</span>,</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"location":<span class="to g">"Kannur, Kerala,
+										India"</span>,</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"github":&nbsp;<span
+										class="to b">"github.com/vyshn4v"</span>,</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"linkedin":<span
+										class="to b">"linkedin.com/in/vyshnav-pc-5567ba242"</span>,</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"whatsapp":<span
+										class="to b">"wa.me/8086064478"</span>,</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"leetcode":<span
+										class="to b">"leetcode.com/vyshnav"</span>,</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"namastedev":<span
+										class="to b">"namastedev.com"</span>,</span></div>
+							<div class="tl"><span class="to">&nbsp;&nbsp;"status":&nbsp;<span
+										class="to g">"open_to_work"</span></span></div>
+							<div class="tl"><span class="to p">}</span></div>
 							<div class="tb"></div>
-							<div class="tl"><span class="tp">&#10095;</span><span class="tcmd">&nbsp;<span
-										class="tcursor"></span></span></div>
+							<div class="tl"><span class="tp">&#10095;</span><span class="tc">&nbsp;<span
+										class="tcur"></span></span></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
 	<div class="z1">
 		<footer>
 			<p class="ft">&copy; 2026 Vyshnav P C &mdash; All rights reserved</p>
 			<p class="ft">Kannur, Kerala &middot; <span>Open to work</span></p>
 		</footer>
+	</div>
+	<div class="modal-bg" id="modal" onclick="bgClick(event)">
+		<div class="modal">
+			<div class="modal-bar">
+				<div class="mac-btns">
+					<div class="mb cl" onclick="closeModal()"></div>
+					<div class="mb mn" onclick="closeModal()"></div>
+					<div class="mb mx"></div>
+				</div>
+				<span class="modal-title">New Message &mdash; Vyshnav P C</span>
+			</div>
+			<div class="modal-body">
+				<div id="fview">
+					<div class="mhead">
+						<h3>Let's work together &#128640;</h3>
+						<p>Fill in the details and I'll get back to you within 24 hours.</p>
+					</div>
+					<div class="frow2">
+						<div class="fgrp"><label class="flbl">First name</label><input class="finp" type="text" id="fn"
+								placeholder="John"></div>
+						<div class="fgrp"><label class="flbl">Last name</label><input class="finp" type="text" id="ln"
+								placeholder="Doe"></div>
+					</div>
+					<div class="fgrp"><label class="flbl">Email</label><input class="finp" type="email" id="em"
+							placeholder="you@company.com"></div>
+					<div class="fgrp"><label class="flbl">Subject</label><input class="finp" type="text" id="su"
+							placeholder="Job opportunity / Project / Collaboration"></div>
+					<div class="fgrp"><label class="flbl">Message</label><textarea class="finp" id="ms" rows="4"
+							placeholder="Tell me about your project or opportunity..."></textarea></div>
+					<div class="mfooter">
+						<button class="bcancel" onclick="closeModal()">Cancel</button>
+						<button class="bsend" onclick="sendMsg()">&#9993; Send Message</button>
+					</div>
+				</div>
+				<div class="fsuccess" id="fsuc">
+					<div class="ck">&#10004;&#65039;</div>
+					<h4>Message sent!</h4>
+					<p>Thanks for reaching out. Vyshnav will reply within 24 hours.</p>
+					<br>
+					<button class="bcancel" style="margin:auto;display:block" onclick="closeModal()">Close</button>
+				</div>
+			</div>
+		</div>
 	</div>
 	<script src="./js/index.js"></script>
 </body>
