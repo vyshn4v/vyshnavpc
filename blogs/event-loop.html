@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding the Node.js Event Loop — Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #111118;
+            --bg3: #18181f;
+            --border: rgba(255, 255, 255, 0.07);
+            --border2: rgba(255, 255, 255, 0.13);
+            --text: #e8e8f0;
+            --text2: #9090a8;
+            --text3: #5a5a70;
+            --accent: #7c6ef7;
+            --accent2: #a594ff;
+            --accent-glow: rgba(124, 110, 247, 0.18);
+            --green: #4ade80;
+            --amber: #fbbf24;
+            --blue: #60a5fa;
+            --coral: #f87171;
+            --teal: #2dd4bf;
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ─── Noise overlay ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: .5;
+        }
+
+        /* ─── Layout ─── */
+        .page {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── Header / Hero ─── */
+        .hero {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 80px 32px 60px;
+            position: relative;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--accent2);
+            background: var(--accent-glow);
+            border: 1px solid rgba(165, 148, 255, .18);
+            padding: 5px 14px;
+            border-radius: 999px;
+            margin-bottom: 28px;
+        }
+
+        .hero-tag .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .4;
+                transform: scale(.7)
+            }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -.03em;
+            color: #fff;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent2) 0%, #c0b2ff 50%, var(--teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: var(--text2);
+            margin-bottom: 32px;
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-meta .sep {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--text3);
+        }
+
+        .hero-lead {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--text2);
+            line-height: 1.7;
+            max-width: 600px;
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+            animation: fadeIn 1s ease both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* Glow blob behind hero */
+        .hero-glow {
+            position: absolute;
+            top: 0;
+            right: -80px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(124, 110, 247, .13) 0%, transparent 70%);
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        /* ─── Progress bar ─── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--teal));
+            width: 0%;
+            z-index: 100;
+            transition: width .1s linear;
+        }
+
+        /* ─── Nav breadcrumb ─── */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10, 10, 15, .85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 15px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            font-size: 13px;
+            color: var(--text2);
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        /* ─── Article body ─── */
+        .article {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 32px 100px;
+            animation: fadeIn .8s ease .3s both;
+        }
+
+        /* Section headings */
+        .article h2 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.65rem;
+            letter-spacing: -.02em;
+            color: #fff;
+            margin: 56px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .article h2::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .article h3 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: var(--text);
+            margin: 36px 0 12px;
+        }
+
+        .article p {
+            color: var(--text2);
+            margin-bottom: 18px;
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .article p strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* ─── Phase Cards ─── */
+        .phases-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        @media (max-width: 600px) {
+            .phases-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .phase-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 22px 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform .2s, border-color .2s;
+            cursor: default;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border2);
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--card-accent, var(--accent));
+        }
+
+        .phase-card .phase-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: .1em;
+            color: var(--card-color, var(--accent2));
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .phase-card .phase-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .phase-card p {
+            font-size: 13.5px;
+            color: var(--text2);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .phase-card .tag {
+            display: inline-block;
+            margin-top: 12px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            background: rgba(255, 255, 255, .05);
+            color: var(--card-color, var(--accent2));
+            border: 1px solid rgba(255, 255, 255, .07);
+            padding: 3px 10px;
+            border-radius: 6px;
+        }
+
+        /* ─── Code blocks ─── */
+        .code-block {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin: 28px 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, .02);
+        }
+
+        .code-header .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-header .dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .code-header .dots span:nth-child(1) {
+            background: #ff5f57;
+        }
+
+        .code-header .dots span:nth-child(2) {
+            background: #febc2e;
+        }
+
+        .code-header .dots span:nth-child(3) {
+            background: #28c840;
+        }
+
+        .code-header .lang {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text3);
+            letter-spacing: .08em;
+        }
+
+        .code-body {
+            padding: 22px 24px;
+            overflow-x: auto;
+        }
+
+        pre {
+            font-family: var(--font-mono);
+            font-size: 13.5px;
+            line-height: 1.8;
+            color: var(--text);
+            white-space: pre;
+        }
+
+        .kw {
+            color: #c792ea;
+        }
+
+        .fn {
+            color: #82aaff;
+        }
+
+        .str {
+            color: #c3e88d;
+        }
+
+        .num {
+            color: #f78c6c;
+        }
+
+        .cm {
+            color: var(--text3);
+            font-style: italic;
+        }
+
+        .punc {
+            color: var(--text2);
+        }
+
+        .tag-c {
+            color: var(--teal);
+        }
+
+        /* ─── Callout boxes ─── */
+        .callout {
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 28px 0;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            border: 1px solid;
+        }
+
+        .callout.info {
+            background: rgba(96, 165, 250, .07);
+            border-color: rgba(96, 165, 250, .2);
+        }
+
+        .callout.warn {
+            background: rgba(251, 191, 36, .07);
+            border-color: rgba(251, 191, 36, .2);
+        }
+
+        .callout.tip {
+            background: rgba(74, 222, 128, .07);
+            border-color: rgba(74, 222, 128, .2);
+        }
+
+        .callout-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .callout-body p {
+            margin: 0;
+            font-size: 14.5px;
+            line-height: 1.65;
+        }
+
+        .callout.info .callout-body p {
+            color: #93c5fd;
+        }
+
+        .callout.warn .callout-body p {
+            color: #fde68a;
+        }
+
+        .callout.tip .callout-body p {
+            color: #86efac;
+        }
+
+        .callout-body strong {
+            color: #fff;
+        }
+
+        /* ─── Interactive Loop Diagram ─── */
+        .diagram-wrap {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 24px;
+            margin: 36px 0;
+        }
+
+        .diagram-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text3);
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        /* Loop ring */
+        .loop-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 24px;
+        }
+
+        .loop-phase {
+            position: absolute;
+            width: 88px;
+            height: 52px;
+            border-radius: 10px;
+            border: 1px solid;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            transition: transform .2s, box-shadow .2s;
+            font-family: var(--font-body);
+        }
+
+        .loop-phase:hover {
+            transform: scale(1.08);
+        }
+
+        .loop-phase.active {
+            transform: scale(1.12);
+        }
+
+        .lp-icon {
+            font-size: 14px;
+        }
+
+        .lp-name {
+            font-size: 10px;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .loop-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .loop-center-title {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .loop-center-sub {
+            font-size: 11px;
+            color: var(--text3);
+            margin-top: 4px;
+        }
+
+        .detail-panel {
+            background: var(--bg3);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            padding: 20px 22px;
+            transition: opacity .2s;
+        }
+
+        .detail-phase-name {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .detail-phase-desc {
+            font-size: 14px;
+            color: var(--text2);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .detail-bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .detail-bullets li {
+            font-size: 13px;
+            color: var(--text2);
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .bullet-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .phase-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .phase-nav button {
+            background: var(--bg3);
+            border: 1px solid var(--border2);
+            color: var(--text2);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            cursor: pointer;
+            transition: background .2s, color .2s;
+        }
+
+        .phase-nav button:hover {
+            background: var(--bg);
+            color: #fff;
+        }
+
+        .phase-dots {
+            display: flex;
+            gap: 7px;
+        }
+
+        .phase-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--border2);
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        /* ─── Comparison table ─── */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        .compare-table th {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--text3);
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .compare-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text2);
+            vertical-align: top;
+        }
+
+        .compare-table tr:hover td {
+            background: rgba(255, 255, 255, .02);
+        }
+
+        .compare-table .fn-name {
+            font-family: var(--font-mono);
+            color: var(--accent2);
+            font-size: 13px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 5px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        .badge.fast {
+            background: rgba(74, 222, 128, .12);
+            color: var(--green);
+            border: 1px solid rgba(74, 222, 128, .2);
+        }
+
+        .badge.med {
+            background: rgba(251, 191, 36, .12);
+            color: var(--amber);
+            border: 1px solid rgba(251, 191, 36, .2);
+        }
+
+        .badge.slow {
+            background: rgba(248, 113, 113, .12);
+            color: var(--coral);
+            border: 1px solid rgba(248, 113, 113, .2);
+        }
+
+        /* ─── Microtask highlight ─── */
+        .microtask-banner {
+            background: linear-gradient(135deg, rgba(124, 110, 247, .12), rgba(45, 212, 191, .08));
+            border: 1px solid rgba(124, 110, 247, .25);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin: 32px 0;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .microtask-banner .icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .microtask-banner h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .microtask-banner p {
+            font-size: 14px;
+            color: var(--text2);
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .microtask-banner strong {
+            color: var(--accent2);
+        }
+
+        /* ─── Footer ─── */
+        .post-footer {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 40px 32px 60px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .post-footer p {
+            font-size: 13px;
+            color: var(--text3);
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag-pill {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            background: var(--bg2);
+            border: 1px solid var(--border2);
+            color: var(--text2);
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+
+        /* ─── Scroll animation ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="progress" class="progress-bar"></div>
+
+    <nav class="top-nav">
+        <a href="#" class="nav-brand">← Back to Blog</a>
+        <div class="nav-links">
+            <a href="#overview">Overview</a>
+            <a href="#phases">Phases</a>
+            <a href="#demo">Demo</a>
+            <a href="#microtasks">Microtasks</a>
+        </div>
+    </nav>
+
+    <div class="page">
+        <header class="hero">
+            <div class="hero-glow"></div>
+            <div class="hero-tag"><span class="dot"></span> Node.js Internals</div>
+            <h1>Understanding the<br><span class="highlight">Event Loop</span></h1>
+            <div class="hero-meta">
+                <span>📅 2025</span>
+                <span class="sep"></span>
+                <span>⏱ 8 min read</span>
+                <span class="sep"></span>
+                <span>🏷 JavaScript · Node.js · Async</span>
+            </div>
+            <p class="hero-lead">
+                The event loop is what allows Node.js to perform non-blocking I/O despite JavaScript being
+                single-threaded. Here's a deep dive into every phase — and exactly what runs when.
+            </p>
+        </header>
+
+        <article class="article">
+
+            <!-- OVERVIEW -->
+            <section id="overview">
+                <h2>What is the Event Loop?</h2>
+                <p>
+                    When you run a Node.js program, it starts executing your script top to bottom. Once the initial
+                    execution is done, instead of quitting, Node enters the <strong>event loop</strong> — a continuous
+                    cycle that checks for pending work, processes it, and loops again.
+                </p>
+                <p>
+                    This is what makes Node "non-blocking": while waiting for a file to read or a network response, Node
+                    can handle other events instead of sitting idle. The event loop is the engine that orchestrates
+                    this.
+                </p>
+
+                <div class="callout info reveal">
+                    <div class="callout-icon">💡</div>
+                    <div class="callout-body">
+                        <p><strong>Key insight:</strong> JavaScript is single-threaded, but Node uses the OS and libuv's
+                            thread pool under the hood for I/O. The event loop is the glue that brings results back to
+                            your JS code.</p>
+                    </div>
+                </div>
+
+                <p>
+                    The loop has <strong>6 distinct phases</strong>, each with its own queue of callbacks. Understanding
+                    which phase runs what is the key to mastering async code in Node.js.
+                </p>
+            </section>
+
+            <!-- PHASES CARDS -->
+            <section id="phases">
+                <h2>The 6 Phases</h2>
+                <p>Each iteration of the loop moves through these phases in order:</p>
+
+                <div class="phases-grid reveal">
+                    <div class="phase-card" style="--card-accent:#7c6ef7;--card-color:#a594ff">
+                        <div class="phase-num">Phase 01</div>
+                        <div class="phase-title">⏱ Timers</div>
+                        <p>Runs callbacks scheduled by <code>setTimeout()</code> and <code>setInterval()</code> whose
+                            delay threshold has been reached.</p>
+                        <span class="tag">setTimeout / setInterval</span>
+                    </div>
+                    <div class="phase-card" style="--card-accent:#2dd4bf;--card-color:#5eead4">
+                        <div class="phase-num">Phase 02</div>
+                        <div class="phase-title">🔄 Pending I/O</div>
+                        <p>Handles I/O callbacks deferred from the previous loop tick — mostly system-level errors like
+                            TCP socket errors.</p>
+                        <span class="tag">deferred callbacks</span>
+                    </div>
+                    <div class="phase-card" style="--card-accent:#9090a8;--card-color:#b0b0c4">
+                        <div class="phase-num">Phase 03</div>
+                        <div class="phase-title">💤 Idle / Prepare</div>
+                        <p>Internal Node.js use only. Prepares state before entering the most important phase. Your code
+                            never runs here.</p>
+                        <span class="tag">internal only</span>
+                    </div>
+                    <div class="phase-card" style="--card-accent:#60a5fa;--card-color:#93c5fd">
+                        <div class="phase-num">Phase 04</div>
+                        <div class="phase-title">👂 Poll</div>
+                        <p>Retrieves and executes new I/O events. If the queue is empty and no timers are ready, the
+                            loop <strong>blocks here</strong> waiting.</p>
+                        <span class="tag">fs / net / http</span>
+                    </div>
+                    <div class="phase-card" style="--card-accent:#4ade80;--card-color:#86efac">
+                        <div class="phase-num">Phase 05</div>
+                        <div class="phase-title">✅ Check</div>
+                        <p>Runs <code>setImmediate()</code> callbacks — always fires right after the Poll phase, even if
+                            the poll queue isn't empty.</p>
+                        <span class="tag">setImmediate</span>
+                    </div>
+                    <div class="phase-card" style="--card-accent:#f87171;--card-color:#fca5a5">
+                        <div class="phase-num">Phase 06</div>
+                        <div class="phase-title">🔒 Close Events</div>
+                        <p>Executes close callbacks like <code>socket.on('close')</code> and
+                            <code>process.on('exit')</code>. Cleans up before the next iteration.</p>
+                        <span class="tag">socket.on('close')</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INTERACTIVE DIAGRAM -->
+            <section id="demo">
+                <h2>Interactive Demo</h2>
+                <p>Click any phase to explore what runs there. Step through the loop with the Prev / Next buttons.</p>
+
+                <div class="diagram-wrap reveal">
+                    <div class="diagram-label">// Node.js event loop — click a phase to inspect</div>
+                    <div class="loop-container" id="loopRing"></div>
+
+                    <div class="detail-panel" id="detailPanel">
+                        <div class="detail-phase-name" id="dpName"></div>
+                        <div class="detail-phase-desc" id="dpDesc"></div>
+                        <ul class="detail-bullets" id="dpBullets"></ul>
+                    </div>
+
+                    <div class="phase-nav">
+                        <button onclick="movePhase(-1)">← Prev</button>
+                        <div class="phase-dots" id="phaseDots"></div>
+                        <button onclick="movePhase(1)">Next →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CODE EXAMPLE -->
+            <section id="code">
+                <h2>See It in Code</h2>
+                <p>Here's a snippet that exercises every scheduling mechanism. Can you predict the output order before
+                    running it?</p>
+
+                <div class="code-block reveal">
+                    <div class="code-header">
+                        <div class="dots"><span></span><span></span><span></span></div>
+                        <div class="lang">javascript</div>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="cm">// What's the output order?</span>
+
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'1. script start'</span>);
+
+<span class="fn">setTimeout</span>(<span class="punc">()</span> <span class="kw">=></span> <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'4. setTimeout'</span>), <span class="num">0</span>);
+
+<span class="fn">setImmediate</span>(<span class="punc">()</span> <span class="kw">=></span> <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'5. setImmediate'</span>));
+
+<span class="fn">Promise</span>.<span class="fn">resolve</span>().<span class="fn">then</span>(<span class="punc">()</span> <span class="kw">=></span> <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'3. Promise microtask'</span>));
+
+<span class="fn">process</span>.<span class="fn">nextTick</span>(<span class="punc">()</span> <span class="kw">=></span> <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'2. nextTick'</span>));
+
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'1. script end'</span>);</pre>
+                    </div>
+                </div>
+
+                <div class="callout tip reveal">
+                    <div class="callout-icon">✅</div>
+                    <div class="callout-body">
+                        <p><strong>Output:</strong> script start → script end → nextTick → Promise → setTimeout →
+                            setImmediate. Microtasks always flush before the loop moves on!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPARISON TABLE -->
+            <section>
+                <h2>setTimeout vs setImmediate vs nextTick</h2>
+                <p>These three are the most commonly confused. Here's a clear comparison:</p>
+
+                <table class="compare-table reveal">
+                    <thead>
+                        <tr>
+                            <th>Function</th>
+                            <th>Runs in</th>
+                            <th>Priority</th>
+                            <th>Use when</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="fn-name">process.nextTick()</span></td>
+                            <td>Between any two phases</td>
+                            <td><span class="badge fast">Highest</span></td>
+                            <td>You want to defer but stay before any I/O</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fn-name">Promise.then()</span></td>
+                            <td>Microtask queue</td>
+                            <td><span class="badge fast">High</span></td>
+                            <td>Standard async/await patterns</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fn-name">setImmediate()</span></td>
+                            <td>Check phase</td>
+                            <td><span class="badge med">Medium</span></td>
+                            <td>After Poll — great inside I/O callbacks</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fn-name">setTimeout(fn, 0)</span></td>
+                            <td>Timers phase</td>
+                            <td><span class="badge slow">Lower</span></td>
+                            <td>Delay by at least N ms (not exactly)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- MICROTASKS -->
+            <section id="microtasks">
+                <h2>Microtasks: The Hidden Layer</h2>
+                <p>
+                    Microtasks don't belong to any phase of the event loop — they run <strong>between every phase
+                        transition</strong>. This means a resolved Promise callback always runs before the loop can move
+                    on, no matter what.
+                </p>
+
+                <div class="microtask-banner reveal">
+                    <div class="icon">⚡</div>
+                    <div>
+                        <h3>Microtask Queue</h3>
+                        <p>After each phase (and after each individual task within a phase), Node drains the entire
+                            microtask queue before moving to the next phase. <strong>process.nextTick()</strong> runs
+                            first — before Promise callbacks — making it the highest-priority async mechanism in Node.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="callout warn reveal">
+                    <div class="callout-icon">⚠️</div>
+                    <div class="callout-body">
+                        <p><strong>Watch out:</strong> Starving the event loop. If you recursively call
+                            <code>process.nextTick()</code>, you can prevent I/O callbacks from ever running, because
+                            the microtask queue never empties.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TLDR -->
+            <section>
+                <h2>TL;DR</h2>
+                <div class="code-block reveal">
+                    <div class="code-header">
+                        <div class="dots"><span></span><span></span><span></span></div>
+                        <div class="lang">text</div>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="cm">Each loop iteration:</span>
+
+  <span class="tag-c">1. Timers</span>        <span class="cm">→ setTimeout / setInterval callbacks</span>
+  <span class="tag-c">2. Pending I/O</span>   <span class="cm">→ deferred system callbacks</span>
+  <span class="tag-c">3. Idle/Prepare</span>  <span class="cm">→ internal, skip</span>
+  <span class="tag-c">4. Poll</span>          <span class="cm">→ I/O events; may block waiting</span>
+  <span class="tag-c">5. Check</span>         <span class="cm">→ setImmediate callbacks</span>
+  <span class="tag-c">6. Close</span>         <span class="cm">→ socket.on('close') etc.</span>
+
+  <span class="kw">⚡ Between EVERY phase:</span> drain microtasks (nextTick, then Promises)</pre>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+
+        <footer class="post-footer">
+            <p>Written for developers who want to understand Node.js deeply.</p>
+            <div class="tags">
+                <span class="tag-pill">Node.js</span>
+                <span class="tag-pill">JavaScript</span>
+                <span class="tag-pill">async</span>
+                <span class="tag-pill">event-loop</span>
+                <span class="tag-pill">libuv</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ─── Progress bar ───
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement;
+            const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+            document.getElementById('progress').style.width = pct + '%';
+        });
+
+        // ─── Reveal on scroll ───
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ─── Interactive Loop ───
+        const phases = [
+            {
+                name: '① Timers', icon: '⏱', color: '#a594ff', bg: 'rgba(124,110,247,.12)', border: 'rgba(165,148,255,.25)', glow: '#7c6ef7',
+                desc: 'Executes callbacks scheduled by setTimeout() and setInterval() whose delay has expired.',
+                bullets: ['Runs if delay threshold has passed', 'setTimeout(fn,0) still waits until this phase', 'Does NOT guarantee exact timing']
+            },
+            {
+                name: '② Pending I/O', icon: '🔄', color: '#5eead4', bg: 'rgba(45,212,191,.1)', border: 'rgba(94,234,212,.2)', glow: '#2dd4bf',
+                desc: 'Handles I/O callbacks deferred from the previous iteration — e.g. TCP errors.',
+                bullets: ['System-level error callbacks', 'e.g. TCP ECONNREFUSED', 'Most I/O runs in Poll instead']
+            },
+            {
+                name: '③ Idle/Prepare', icon: '💤', color: '#9090a8', bg: 'rgba(144,144,168,.08)', border: 'rgba(144,144,168,.2)', glow: '#888',
+                desc: 'Internal Node.js housekeeping. Your JavaScript code never runs here.',
+                bullets: ['Internal bookkeeping only', 'Prepares for the Poll phase', 'Not accessible from userland JS']
+            },
+            {
+                name: '④ Poll', icon: '👂', color: '#93c5fd', bg: 'rgba(96,165,250,.1)', border: 'rgba(147,197,253,.2)', glow: '#60a5fa',
+                desc: 'Retrieves and runs I/O callbacks. The loop blocks here if nothing else is pending.',
+                bullets: ['Runs completed I/O callbacks', 'Blocks waiting if queue empty + no timers', 'Once timers ready, moves to Timers']
+            },
+            {
+                name: '⑤ Check', icon: '✅', color: '#86efac', bg: 'rgba(74,222,128,.1)', border: 'rgba(134,239,172,.2)', glow: '#4ade80',
+                desc: 'Runs setImmediate() callbacks — always fires right after Poll.',
+                bullets: ['setImmediate() runs here', 'Fires before setTimeout(fn,0) inside I/O', 'Predictable timing after Poll']
+            },
+            {
+                name: '⑥ Close Events', icon: '🔒', color: '#fca5a5', bg: 'rgba(248,113,113,.1)', border: 'rgba(252,165,165,.2)', glow: '#f87171',
+                desc: 'Fires close event callbacks and cleans up before the next loop iteration.',
+                bullets: ['socket.on("close") callbacks', 'process.on("exit") fires here', 'Loop repeats or exits after this']
+            }
+        ];
+
+        let activePhase = 0;
+        const R = 120, cx = 160, cy = 160;
+        const ring = document.getElementById('loopRing');
+        const dotsEl = document.getElementById('phaseDots');
+
+        phases.forEach((p, i) => {
+            const angle = (i / phases.length) * 2 * Math.PI - Math.PI / 2;
+            const x = cx + R * Math.cos(angle) - 44;
+            const y = cy + R * Math.sin(angle) - 26;
+            const btn = document.createElement('div');
+            btn.className = 'loop-phase'; btn.id = 'lp' + i;
+            btn.style.left = x + 'px'; btn.style.top = y + 'px';
+            btn.style.background = p.bg; btn.style.borderColor = p.border;
+            btn.innerHTML = `<span class="lp-icon">${p.icon}</span><span class="lp-name" style="color:${p.color}">${p.name}</span>`;
+            btn.onclick = () => setPhase(i);
+            ring.appendChild(btn);
+
+            const dot = document.createElement('div');
+            dot.className = 'phase-dot'; dot.onclick = () => setPhase(i);
+            dot.style.setProperty('--col', p.color);
+            dotsEl.appendChild(dot);
+        });
+
+        ring.innerHTML += `<div class="loop-center"><div class="loop-center-title">Event Loop</div><div class="loop-center-sub">↻ repeats</div></div>`;
+
+        function setPhase(i) {
+            activePhase = i;
+            const p = phases[i];
+            document.querySelectorAll('.loop-phase').forEach((el, j) => {
+                el.classList.toggle('active', j === i);
+                if (j === i) el.style.boxShadow = `0 0 0 3px ${p.glow}44, 0 0 16px ${p.glow}33`;
+                else el.style.boxShadow = 'none';
+            });
+            document.querySelectorAll('.phase-dot').forEach((d, j) => {
+                d.style.background = j === i ? phases[j].color : 'var(--border2)';
+            });
+            document.getElementById('dpName').textContent = p.name;
+            document.getElementById('dpName').style.color = p.color;
+            document.getElementById('dpDesc').textContent = p.desc;
+            const bull = document.getElementById('dpBullets');
+            bull.innerHTML = '';
+            p.bullets.forEach(b => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="bullet-dot" style="background:${p.color}"></span><span>${b}</span>`;
+                bull.appendChild(li);
+            });
+        }
+
+        function movePhase(dir) { setPhase((activePhase + dir + phases.length) % phases.length); }
+        setPhase(0);
+    </script>
+</body>
+
+</html>
