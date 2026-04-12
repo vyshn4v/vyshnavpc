@@ -1,0 +1,124 @@
+{{#section "styles"}}
+  <link rel="stylesheet" href="/css/blogs.css" />
+{{/section}}
+
+{{#section "scripts"}}
+  <script src="/js/blogs.js"></script>
+{{/section}}
+<div class="page">
+
+  <nav class="nav">
+    <a href="#" class="nav-brand"><span class="dot"></span> devnotes</a>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#" class="active">Blog</a>
+      <a href="#">Projects</a>
+      <a href="#">About</a>
+      <a href="#" class="nav-cta">Contact ↗</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-eyebrow">Writing &amp; Notes</div>
+    <h1>Things I've<br /><em>learned &amp; built</em></h1>
+    <p class="hero-sub">Deep dives into JavaScript internals, system design
+      patterns, and the craft of writing software that lasts.</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-num" id="statPosts">—</span><span
+          class="stat-label"
+        >Articles published</span></div>
+      <div class="stat"><span class="stat-num" id="statCats">—</span><span
+          class="stat-label"
+        >Topic categories</span></div>
+      <div class="stat"><span class="stat-num" id="statRead">—</span><span
+          class="stat-label"
+        >Avg. read time</span></div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input
+        class="search-input"
+        type="text"
+        id="searchInput"
+        placeholder="Search articles…"
+      />
+    </div>
+    <div class="filter-tags" id="filterTagsEl">
+      <div class="filter-tag on" data-tag="all">All</div>
+    </div>
+    <select class="sort-select" id="sortSelect">
+      <option value="newest">Newest first</option>
+      <option value="oldest">Oldest first</option>
+      <option value="read">Shortest read</option>
+    </select>
+  </div>
+
+  <main class="blog-section">
+
+    <!-- Featured slot (hidden until data loads) -->
+    <div id="featuredWrap" style="display:none">
+      <div class="section-heading reveal">
+        <h2>Featured</h2>
+        <span class="count-badge">Pinned post</span>
+      </div>
+      <div id="featuredCard"></div>
+    </div>
+
+    <!-- All articles -->
+    <div class="section-heading reveal" style="margin-top:56px">
+      <h2>All Articles</h2>
+      <span class="count-badge" id="postCount">loading…</span>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid">
+      <!-- skeleton placeholders -->
+      <div class="skeleton">
+        <div class="skel-art"></div>
+        <div class="skel-body">
+          <div class="skel-line s"></div>
+          <div class="skel-line m"></div>
+          <div class="skel-line f"></div>
+          <div class="skel-line s"></div>
+        </div>
+      </div>
+      <div class="skeleton">
+        <div class="skel-art"></div>
+        <div class="skel-body">
+          <div class="skel-line s"></div>
+          <div class="skel-line m"></div>
+          <div class="skel-line f"></div>
+          <div class="skel-line s"></div>
+        </div>
+      </div>
+      <div class="skeleton">
+        <div class="skel-art"></div>
+        <div class="skel-body">
+          <div class="skel-line s"></div>
+          <div class="skel-line m"></div>
+          <div class="skel-line f"></div>
+          <div class="skel-line s"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-results" id="noResults">
+      <span class="nr-icon">🔍</span>
+      No articles match your search. Try a different keyword or filter.
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 devnotes — built with ♥ and too much coffee</p>
+    <div class="footer-links">
+      <a href="#">GitHub</a>
+      <a href="#">Twitter</a>
+      <a href="#">RSS</a>
+    </div>
+  </footer>
+
+</div>

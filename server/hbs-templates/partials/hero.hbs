@@ -1,0 +1,140 @@
+<section class="hero z1" aria-label="Introduction">
+  <div class="hwrap">
+    <div>
+      <div class="htag" aria-hidden="true">&#9889; {{hero.tag}}</div>
+      <h1>{{personal.name}}<span class="sub">{{hero.subtitle}}
+          &amp;
+          <span class="acc">{{hero.accentText}}</span></span></h1>
+      <p class="hdesc">{{hero.description}}</p>
+      <div class="hbtns">
+        <button
+          class="btn bp"
+          onclick="openModal()"
+          type="button"
+        >{{hero.ctaPrimary}} &#8594;</button>
+        <a href="#about" class="btn bo">{{hero.ctaSecondary}}</a>
+      </div>
+      <div class="hmeta">
+        {{#each hero.meta}}
+          <div class="mi"><strong>{{this.value}}</strong>{{this.label}}</div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="hright" aria-hidden="true">
+      <div class="mac-win">
+        <div class="mac-bar">
+          <div class="mac-btns">
+            <div class="mb cl"></div>
+            <div class="mb mn"></div>
+            <div class="mb mx"></div>
+          </div>
+          <div class="mac-title">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            {{personal.username}}
+            &mdash; zsh &mdash; 120&times;36
+          </div>
+        </div>
+        <div class="mac-tabs">
+          <div class="mac-tab act">
+            <svg
+              width="10"
+              height="10"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            profile.json<span class="mac-tab-x">&#10005;</span>
+          </div>
+          <div class="mac-tab">
+            <svg
+              width="10"
+              height="10"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+            zsh<span class="mac-tab-x">&#10005;</span>
+          </div>
+          <div class="mac-tab">
+            <svg
+              width="10"
+              height="10"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"
+              />
+            </svg>
+            node<span class="mac-tab-x">&#10005;</span>
+          </div>
+        </div>
+        <div class="mac-body">
+          <div class="tl"><span class="tp">&#10095;</span><span
+              class="td"
+            >~/</span><span class="tc">cat profile.json</span></div>
+          <div class="tb"></div>
+          <div class="tl"><span class="to p">{</span></div>
+          <div class="tl"><span class="to">&nbsp;&nbsp;"name":&nbsp;<span
+                class="to g"
+              >"{{personal.name}}"</span>,</span></div>
+          <div class="tl"><span class="to">&nbsp;&nbsp;"role":&nbsp;<span
+                class="to g"
+              >"{{hero.terminalRole}}"</span>,</span></div>
+          <div class="tl"><span class="to">&nbsp;&nbsp;"exp":&nbsp;&nbsp;<span
+                class="to g"
+              >"{{hero.terminalExp}}"</span>,</span></div>
+          <div class="tl"><span class="to">&nbsp;&nbsp;"focus":[{{#each
+                hero.terminalFocus
+              }}<span class="to b">"{{this}}"</span>{{#unless
+                  @last
+                }},{{/unless}}{{/each}}],</span></div>
+          <div class="tl"><span class="to">&nbsp;&nbsp;"loc":&nbsp;&nbsp;<span
+                class="to g"
+              >"{{personal.location}}"</span>,</span></div>
+          <div class="tl"><span class="to">&nbsp;&nbsp;"status":<span
+                class="to g"
+              >"{{hero.terminalStatus}}"</span></span></div>
+          <div class="tl"><span class="to p">}</span></div>
+          <div class="tb"></div>
+          <div class="tl"><span class="tp">&#10095;</span><span
+              class="td"
+            >~/</span><span class="tc" id="cmd1">&nbsp;<span
+                class="tcur"
+                id="cur1"
+              ></span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

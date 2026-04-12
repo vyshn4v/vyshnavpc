@@ -1,0 +1,31 @@
+<section class="sec z1" id="experience" aria-labelledby="exp-title">
+  <div class="wrap">
+    <div class="shead reveal">
+      <div class="slbl">// 02 &mdash; experience</div>
+      <h2 class="stitle" id="exp-title">{{experience.heading}}</h2>
+      <p class="ssub">{{experience.subheading}}</p>
+    </div>
+    <div class="timeline">
+      {{#each experience.jobs}}
+        <article class="titem reveal">
+          <div class="tleft">
+            <div class="tdate">
+              <time datetime="{{this.startDatetime}}">{{this.startLabel}}</time>
+              &mdash;
+              <time datetime="{{this.endDatetime}}">{{this.endLabel}}</time>
+            </div>
+            <div class="tco">{{this.company}}</div>
+          </div>
+          <div class="tright">
+            <div class="trole">{{this.role}}</div>
+            <ul class="tlist">
+              {{#each this.bullets}}
+                <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+  </div>
+</section>
