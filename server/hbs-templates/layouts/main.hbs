@@ -1,0 +1,41 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{{meta.title}}</title>
+    <meta name="description" content="{{meta.description}}" />
+    <meta name="keywords" content="{{meta.keywords}}" />
+    <meta name="author" content="{{meta.author}}" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="{{meta.canonical}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{meta.ogTitle}}" />
+    <meta property="og:description" content="{{meta.ogDescription}}" />
+    <meta property="og:url" content="{{meta.canonical}}" />
+    <meta property="og:site_name" content="{{meta.siteName}}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{meta.ogTitle}}" />
+    <meta name="twitter:description" content="{{meta.ogDescription}}" />
+    <meta name="theme-color" content="{{meta.themeColor}}" />
+    <script type="application/ld+json">{{{meta.schemaJSON}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap"
+      />
+    </noscript>
+    {{{_sections.styles}}}
+  </head>
+  <body>
+    {{{body}}}
+    {{{_sections.scripts}}}
+  </body>
+</html>
