@@ -1,0 +1,45 @@
+<section class="sec z1" id="about" aria-labelledby="about-title">
+  <div class="wrap">
+    <div class="agrid">
+      <div>
+        <div class="shead reveal">
+          <div class="slbl">// 01 &mdash; about</div>
+          <h2 class="stitle" id="about-title">{{about.heading}}</h2>
+        </div>
+        <div class="atext reveal">
+          {{#each about.paragraphs}}
+            <p>{{this}}</p>
+          {{/each}}
+        </div>
+        <address class="acontact reveal" style="font-style:normal">
+          {{#each about.contact}}
+            <div class="acrow">
+              <span class="aclbl">{{this.label}}</span>
+              <span class="acval">
+                {{#if this.href}}
+                  <a href="{{this.href}}">{{this.value}}</a>
+                {{else}}
+                  {{this.value}}
+                {{/if}}
+              </span>
+            </div>
+          {{/each}}
+        </address>
+      </div>
+      <div>
+        <div class="slbl reveal" style="margin-bottom:1.2rem">// achievements</div>
+        <div class="awards">
+          {{#each about.achievements}}
+            <div class="acard reveal">
+              <div class="aico" aria-hidden="true">{{this.icon}}</div>
+              <div>
+                <div class="atitle">{{this.title}}</div>
+                <div class="adesc">{{this.description}}</div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,36 @@
+<nav class="z1" role="navigation" aria-label="Main navigation">
+  <a href="#" class="nbrand" aria-label="{{personal.name}} – Home">
+    {{nav.brand.text}}<span>{{nav.brand.accent}}</span>
+  </a>
+  <ul class="nlinks" role="list">
+    {{#each nav.links}}
+      <li><a href="{{this.href}}">{{this.label}}</a></li>
+    {{/each}}
+  </ul>
+  <div class="nright">
+    <div class="nstatus" aria-label="Employment status: {{nav.status}}">
+      <div class="sdot" aria-hidden="true"></div>{{nav.status}}
+    </div>
+    <button
+      class="hamburger"
+      id="hamburger"
+      aria-label="Toggle menu"
+      type="button"
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile drawer -->
+<div class="mobile-drawer" id="mobileDrawer">
+  <ul role="list">
+    {{#each nav.links}}
+      <li><a href="{{this.href}}" class="mobile-link">{{this.label}}</a></li>
+    {{/each}}
+  </ul>
+  <div class="mobile-status">
+    <div class="sdot" aria-hidden="true"></div>{{nav.status}}
+  </div>
+</div>
+<div class="drawer-overlay" id="drawerOverlay"></div>

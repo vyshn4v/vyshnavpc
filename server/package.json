@@ -1,0 +1,20 @@
+{
+  "name": "personalwebsite",
+  "version": "3.0.3",
+  "description": "an hbs server for personal website for mr.vyshnav p c",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "node --watch index.js --env environment=development",
+    "start:prod": "node index.js --env environment=production"
+  },
+  "keywords": [
+    "personal-website"
+  ],
+  "author": "vyshnav p c",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-handlebars": "^8.0.1"
+  }
+}
