@@ -30,7 +30,6 @@ const hbs = create({
 
 // setting up the static files directory
 app.use(express.static(path.join(__dirname, "public")));
-
 // setting up the view engine and views directory
 app.get("/", (req, res) => {
   const clientData = {
@@ -51,6 +50,10 @@ app.get("/blogs", (req, res) => {
     ...portfolio,
     skillsJSON: JSON.stringify(clientData),
   });
+});
+// handling 404 errors for undefined routes
+app.use((req, res) => {
+  return res.status(404).json({ error: "Route not found" });
 });
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
