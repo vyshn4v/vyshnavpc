@@ -1,36 +1,15 @@
-<nav class="z1" role="navigation" aria-label="Main navigation">
-  <a href="#" class="nbrand" aria-label="{{personal.name}} – Home">
-    {{nav.brand.text}}<span>{{nav.brand.accent}}</span>
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-brand">
+    <span class="dot"></span>
+    <span>{{site.name}}</span>
   </a>
-  <ul class="nlinks" role="list">
-    {{#each nav.links}}
-      <li><a href="{{this.href}}">{{this.label}}</a></li>
+  <div class="nav-links">
+    {{#each nav}}
+    <a href="{{this.href}}"{{#if this.active}} class="active"{{/if}}>{{this.label}}</a>
     {{/each}}
-  </ul>
-  <div class="nright">
-    <div class="nstatus" aria-label="Employment status: {{nav.status}}">
-      <div class="sdot" aria-hidden="true"></div>{{nav.status}}
-    </div>
-    <button
-      class="hamburger"
-      id="hamburger"
-      aria-label="Toggle menu"
-      type="button"
-    >
-      <span></span><span></span><span></span>
-    </button>
+    <a href="{{site.github}}" class="nav-cta" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
-
-<!-- Mobile drawer -->
-<div class="mobile-drawer" id="mobileDrawer">
-  <ul role="list">
-    {{#each nav.links}}
-      <li><a href="{{this.href}}" class="mobile-link">{{this.label}}</a></li>
-    {{/each}}
-  </ul>
-  <div class="mobile-status">
-    <div class="sdot" aria-hidden="true"></div>{{nav.status}}
-  </div>
-</div>
-<div class="drawer-overlay" id="drawerOverlay"></div>

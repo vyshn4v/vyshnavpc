@@ -1,19 +1,24 @@
-<section class="sec z1" id="skills" aria-labelledby="skills-title">
-    <div class="wrap">
-        <div class="shead reveal">
-            <div class="slbl">// 04 &mdash; skills</div>
-            <h2 class="stitle" id="skills-title">{{skills.heading}}</h2>
-            <p class="ssub">{{skills.subheading}}</p>
-        </div>
-        <div class="skouter">
-            {{#each skills.categories}}
-            <div class="reveal">
-                <div class="skcattitle">{{this.label}}</div>
-                <div class="sk-track-outer">
-                    <div class="sk-track{{#if this.reverse}} rev{{/if}}" id="sk-{{this.id}}"></div>
-                </div>
-            </div>
-            {{/each}}
-        </div>
+<section class="section section--alt" id="skills">
+  <div class="container">
+
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Tech Stack</div>
+      <h2 class="section-title">Things I <em>work with</em></h2>
     </div>
+
+    <div class="skills-grid">
+      {{#each skills}}
+        <div class="skill-card reveal" style="--clr:{{this.color}}">
+          <div class="skill-icon-wrap">
+            {{{skillIcon this.icon this.color}}}
+          </div>
+          <div class="skill-info">
+            <span class="skill-name">{{this.name}}</span>
+            <span class="skill-desc">{{this.desc}}</span>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+
+  </div>
 </section>
