@@ -1,45 +1,60 @@
-<section class="sec z1" id="about" aria-labelledby="about-title">
-  <div class="wrap">
-    <div class="agrid">
-      <div>
-        <div class="shead reveal">
-          <div class="slbl">// 01 &mdash; about</div>
-          <h2 class="stitle" id="about-title">{{about.heading}}</h2>
-        </div>
-        <div class="atext reveal">
-          {{#each about.paragraphs}}
-            <p>{{this}}</p>
+<section class="section" id="about">
+  <div class="container">
+
+    <div class="section-head reveal">
+      <div class="section-eyebrow">About Me</div>
+      <h2 class="section-title">Who I <em>am</em></h2>
+    </div>
+
+    <div class="about-grid">
+
+      <div class="about-text reveal">
+        <p class="about-bio">{{about.bio}}</p>
+        <div class="about-details">
+          {{#each about.details}}
+          <div class="about-row">
+            <span class="about-icon">{{this.icon}}</span>
+            <span class="about-key">{{this.label}}</span>
+            <span class="about-val">{{this.value}}</span>
+          </div>
           {{/each}}
         </div>
-        <address class="acontact reveal" style="font-style:normal">
-          {{#each about.contact}}
-            <div class="acrow">
-              <span class="aclbl">{{this.label}}</span>
-              <span class="acval">
-                {{#if this.href}}
-                  <a href="{{this.href}}">{{this.value}}</a>
-                {{else}}
-                  {{this.value}}
-                {{/if}}
-              </span>
-            </div>
-          {{/each}}
-        </address>
+        <a href="#contact" class="btn btn--primary mt-btn">Get in Touch</a>
       </div>
-      <div>
-        <div class="slbl reveal" style="margin-bottom:1.2rem">// achievements</div>
-        <div class="awards">
-          {{#each about.achievements}}
-            <div class="acard reveal">
-              <div class="aico" aria-hidden="true">{{this.icon}}</div>
-              <div>
-                <div class="atitle">{{this.title}}</div>
-                <div class="adesc">{{this.description}}</div>
+
+      <div class="about-card reveal">
+        <div class="exp-timeline">
+          {{#each experience}}
+          <div class="exp-item">
+            <div class="exp-dot {{#if (eq this.type 'edu')}}exp-dot--edu{{/if}}"></div>
+            <div class="exp-content">
+              <div class="exp-period">{{this.period}}</div>
+              <div class="exp-role">{{this.role}}</div>
+              <div class="exp-company">{{this.company}}</div>
+              <ul class="exp-list">
+                {{#each this.highlights}}
+                <li>{{this}}</li>
+                {{/each}}
+              </ul>
+              {{#if this.awards}}
+              <div class="exp-awards">
+                {{#each this.awards}}
+                <div class="award">
+                  <span class="award-icon">{{this.icon}}</span>
+                  <div>
+                    <div class="award-title">{{this.title}}</div>
+                    <div class="award-desc">{{this.desc}}</div>
+                  </div>
+                </div>
+                {{/each}}
               </div>
+              {{/if}}
             </div>
+          </div>
           {{/each}}
         </div>
       </div>
+
     </div>
   </div>
 </section>

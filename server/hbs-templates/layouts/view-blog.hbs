@@ -1,0 +1,245 @@
+<div id="progress"></div>
+
+  <nav class="top-nav">
+    <a href="#" class="nav-brand">← Back to Blog</a>
+    <div class="nav-links">
+      {{#each nav}}
+        <a href="{{href}}">{{label}}</a>
+      {{/each}}
+    </div>
+  </nav>
+
+  <div class="page">
+
+    {{!-- ── HERO ── --}}
+    <header class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-tag"><span class="dot"></span> {{meta.category}}</div>
+      <h1>{{meta.titleLine1}}<br><span class="highlight">{{meta.titleLine2}}</span></h1>
+      <div class="hero-meta">
+        <span>📅 {{meta.year}}</span>
+        <span class="sep"></span>
+        <span>⏱ {{meta.readTime}}</span>
+        <span class="sep"></span>
+        <span>🏷 {{meta.tags}}</span>
+      </div>
+      <p class="hero-lead">{{meta.lead}}</p>
+    </header>
+
+    <article class="article">
+
+      {{!-- ── OVERVIEW ── --}}
+      <section id="overview">
+        <h2>What is the Event Loop?</h2>
+        {{#each overview.paragraphs}}
+          <p>{{{this}}}</p>
+        {{/each}}
+
+        <div class="callout info">
+          <div class="callout-icon">{{overview.callout.icon}}</div>
+          <div class="callout-body">
+            <p><strong>{{overview.callout.label}}</strong> {{overview.callout.text}}</p>
+          </div>
+        </div>
+
+        <p>The loop has <strong>{{overview.phaseCount}} distinct phases</strong>, each with its own queue of callbacks. Understanding which phase runs what is the key to mastering async code in Node.js.</p>
+      </section>
+
+      {{!-- ── PHASES ── --}}
+      <section id="phases">
+        <h2>The 6 Phases</h2>
+        <p>Each iteration of the loop moves through these phases in order:</p>
+
+        <div class="phases-grid">
+          {{#each phases}}
+            <div class="phase-card" style="--card-accent:{{accent}};--card-color:{{color}}">
+              <div class="phase-num">Phase {{num}}</div>
+              <div class="phase-title">{{icon}} {{title}}</div>
+              <p>{{{desc}}}</p>
+              <span class="tag">{{tag}}</span>
+            </div>
+          {{/each}}
+        </div>
+      </section>
+
+      {{!-- ── INTERACTIVE DIAGRAM (CSS-only tabs) ── --}}
+      <section id="demo">
+        <h2>Interactive Demo</h2>
+        <p>Click any phase to explore what runs there.</p>
+
+        <div class="diagram-wrap">
+          <div class="diagram-label">// Node.js event loop — click a phase to inspect</div>
+
+          {{!--
+            CSS-only tab pattern:
+            • Hidden radio inputs live OUTSIDE .loop-ring so sibling selectors can reach both
+              the ring labels AND the detail panels.
+            • All inside .loop-tabs so the :checked ~ selectors scope correctly.
+          --}}
+          <div class="loop-tabs">
+
+            {{!-- Radio inputs --}}
+            {{#each phases}}
+              <input type="radio" name="loop-phase" id="ph-{{@index}}"{{#if @first}} checked{{/if}}>
+            {{/each}}
+
+            {{!-- Ring of label buttons --}}
+            <div class="loop-ring">
+              {{#each phases}}
+                <label for="ph-{{@index}}" class="lp"
+                  style="left:{{pos.x}}px;top:{{pos.y}}px;background:{{bg}};border-color:{{border}};">
+                  <span class="lp-icon">{{icon}}</span>
+                  <span class="lp-name" style="color:{{color}}">{{shortName}}</span>
+                </label>
+              {{/each}}
+
+              <div class="loop-center">
+                <div class="loop-center-title">Event Loop</div>
+                <div class="loop-center-sub">↻ repeats</div>
+              </div>
+            </div>
+
+            {{!-- Detail panels — one per phase --}}
+            <div class="loop-tabs-body">
+              {{#each phases}}
+                <div class="detail-panel" id="dp-{{@index}}">
+                  <div class="detail-phase-name" style="color:{{color}}">{{name}}</div>
+                  <div class="detail-phase-desc">{{detailDesc}}</div>
+                  <ul class="detail-bullets">
+                    {{#each bullets}}
+                      <li>
+                        <span class="bullet-dot" style="background:{{../color}}"></span>
+                        <span>{{this}}</span>
+                      </li>
+                    {{/each}}
+                  </ul>
+                </div>
+              {{/each}}
+            </div>
+
+            {{!-- Prev / Next nav using labels --}}
+            <div class="phase-nav">
+              {{!-- Prev: label targets the previous radio --}}
+              {{#each phases}}
+                {{#unless @first}}
+                  {{!-- only render matching prev label when THIS phase is active --}}
+                {{/unless}}
+              {{/each}}
+
+              {{!--
+                Because CSS-only prev/next requires :has() or JS, we provide dot navigation
+                (pure CSS labels) and a minimal one-liner JS for the prev/next buttons only.
+              --}}
+              <button id="btn-prev" onclick="stepPhase(-1)">← Prev</button>
+
+              <div class="phase-dots">
+                {{#each phases}}
+                  <label for="ph-{{@index}}" class="phase-dot" title="{{name}}"></label>
+                {{/each}}
+              </div>
+
+              <button id="btn-next" onclick="stepPhase(1)">Next →</button>
+            </div>
+
+          </div>{{!-- /.loop-tabs --}}
+        </div>{{!-- /.diagram-wrap --}}
+      </section>
+
+      {{!-- ── CODE EXAMPLE ── --}}
+      <section id="code">
+        <h2>See It in Code</h2>
+        <p>{{codeSection.intro}}</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <div class="lang">{{codeSection.lang}}</div>
+          </div>
+          <div class="code-body">
+            <pre>{{{codeSection.html}}}</pre>
+          </div>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-icon">{{codeSection.callout.icon}}</div>
+          <div class="callout-body">
+            <p><strong>{{codeSection.callout.label}}</strong> {{codeSection.callout.text}}</p>
+          </div>
+        </div>
+      </section>
+
+      {{!-- ── COMPARISON TABLE ── --}}
+      <section>
+        <h2>{{tableSection.heading}}</h2>
+        <p>{{tableSection.intro}}</p>
+
+        <table class="compare-table">
+          <thead>
+            <tr>
+              {{#each tableSection.headers}}
+                <th>{{this}}</th>
+              {{/each}}
+            </tr>
+          </thead>
+          <tbody>
+            {{#each tableSection.rows}}
+              <tr>
+                <td><span class="fn-name">{{fn}}</span></td>
+                <td>{{runsIn}}</td>
+                <td><span class="badge {{badgeClass}}">{{priority}}</span></td>
+                <td>{{useWhen}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </section>
+
+      {{!-- ── MICROTASKS ── --}}
+      <section id="microtasks">
+        <h2>Microtasks: The Hidden Layer</h2>
+        {{#each microtasks.paragraphs}}
+          <p>{{{this}}}</p>
+        {{/each}}
+
+        <div class="microtask-banner">
+          <div class="icon">{{microtasks.banner.icon}}</div>
+          <div>
+            <h3>{{microtasks.banner.title}}</h3>
+            <p>{{{microtasks.banner.text}}}</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <div class="callout-icon">{{microtasks.warning.icon}}</div>
+          <div class="callout-body">
+            <p><strong>{{microtasks.warning.label}}</strong> {{{microtasks.warning.text}}}</p>
+          </div>
+        </div>
+      </section>
+
+      {{!-- ── TL;DR ── --}}
+      <section>
+        <h2>TL;DR</h2>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <div class="lang">text</div>
+          </div>
+          <div class="code-body">
+            <pre>{{{tldr.html}}}</pre>
+          </div>
+        </div>
+      </section>
+
+    </article>
+
+    <footer class="post-footer">
+      <p>{{footer.credit}}</p>
+      <div class="tags">
+        {{#each footer.tags}}
+          <span class="tag-pill">{{this}}</span>
+        {{/each}}
+      </div>
+    </footer>
+
+  </div>

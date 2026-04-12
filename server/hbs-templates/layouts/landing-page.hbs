@@ -1,31 +1,19 @@
-    {{#section "styles"}}
-    <link rel="stylesheet" href="/css/landing-page.css" />
-    {{/section}}
+{{#section "styles"}}
+  <link rel="stylesheet" href="/css/landing-page.css" />
+{{/section}}
 
+{{#section "scripts"}}
+  <script src="/js/landing-page.js"></script>
+{{/section}}
 
-    {{#section "scripts"}}
-    <script>window.__DATA__ = {{{skillsJSON}}};</script>
-    <script src="/js/landing-page.js"></script>
-    {{/section}}
+  <div class="noise"></div>
+  <div class="grid-bg"></div>
 
-    <canvas id="sky" aria-hidden="true"></canvas>
+  {{> nav}}
+  {{> hero}}
+  {{> about}}
+  {{> skills}}
+  {{> work}}
+  {{> contact}}
+  {{> footer}}
 
-    {{> nav}}
-
-    <main>
-        {{> hero}}
-        {{> about}}
-        {{> experience}}
-        {{> education}}
-        {{> skills}}
-        {{> contact}}
-    </main>
-
-    <div class="z1">
-        <footer>
-            <p class="ft">&copy; {{footer.year}} {{personal.name}} &mdash; All rights reserved</p>
-            <p class="ft">{{personal.location}} &middot; <span>Open to work</span></p>
-        </footer>
-    </div>
-
-    {{> modal}}
