@@ -1,0 +1,34 @@
+<section class="section" id="work">
+  <div class="container">
+
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Portfolio</div>
+      <h2 class="section-title">Things I've <em>shipped</em></h2>
+    </div>
+
+    <div class="projects-grid">
+      {{#each projects}}
+        <a
+          class="project-card reveal"
+          href="{{this.href}}"
+          style="--clr:{{this.color}}"
+        >
+          <div class="project-glow"></div>
+          <div class="project-body">
+            <div class="project-tags">
+              {{#each this.tags}}
+                <span class="ptag">{{this}}</span>
+              {{/each}}
+            </div>
+            <h3 class="project-title">{{this.title}}</h3>
+            <p class="project-desc">{{this.desc}}</p>
+          </div>
+          <div class="project-footer">
+            <span class="project-link">View project ↗</span>
+          </div>
+        </a>
+      {{/each}}
+    </div>
+
+  </div>
+</section>

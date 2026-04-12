@@ -1,95 +1,42 @@
-<section class="sec z1" id="contact" aria-labelledby="contact-title">
-    <div class="wrap">
-        <div class="shead reveal">
-            <div class="slbl">// 05 &mdash; contact</div>
-            <h2 class="stitle" id="contact-title">{{contact.heading}}</h2>
-        </div>
-        <div class="cgrid">
-            <div>
-                <div class="ctext reveal">
-                    {{#each contact.paragraphs}}
-                    <p>{{this}}</p>
-                    {{/each}}
-                </div>
-                <div style="margin-top:1.4rem" class="reveal">
-                    <button class="btn bp" onclick="openModal()" type="button">{{contact.ctaLabel}} &#8594;</button>
-                </div>
-                <div class="clinks reveal" style="margin-top:1.5rem">
-                    {{#each contact.links}}
-                    <a href="{{this.href}}" class="clink"
-                        {{#if this.external}}target="_blank" rel="noopener noreferrer"{{/if}}
-                        aria-label="{{this.ariaLabel}}">
-                        <div class="cll">
-                            <span class="cico cico-{{this.iconKey}}">{{{this.iconSVG}}}</span>
-                            <div>
-                                <div class="cname">{{this.name}}</div>
-                                <div class="chandl">{{this.handle}}</div>
-                            </div>
-                        </div>
-                        <span class="carr" aria-hidden="true">&#8599;</span>
-                    </a>
-                    {{/each}}
-                </div>
-            </div>
-            <div class="reveal" aria-hidden="true">
-                <div class="mac-win">
-                    <div class="mac-bar">
-                        <div class="mac-btns">
-                            <div class="mb cl"></div>
-                            <div class="mb mn"></div>
-                            <div class="mb mx"></div>
-                        </div>
-                        <div class="mac-title">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="3" width="20" height="14" rx="2" />
-                                <line x1="8" y1="21" x2="16" y2="21" />
-                                <line x1="12" y1="17" x2="12" y2="21" />
-                            </svg>
-                            contact &mdash; node &mdash; 80&times;24
-                        </div>
-                    </div>
-                    <div class="mac-tabs">
-                        <div class="mac-tab act" id="ctab-hire" onclick="switchTab('hire')">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                            </svg>
-                            hire-me.js<span class="mac-tab-x">&#10005;</span>
-                        </div>
-                        <div class="mac-tab" id="ctab-contact" onclick="switchTab('contact')">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="8" r="4" />
-                                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                            </svg>
-                            contact.json<span class="mac-tab-x">&#10005;</span>
-                        </div>
-                    </div>
-                    <div class="mac-body" id="cpane-hire">
-                        <div class="tl"><span class="tp">&#10095;</span><span class="tc">node hire-me.js</span></div>
-                        <div class="tb"></div>
-                        {{#each contact.terminalHire}}
-                        <div class="tl"><span class="to g">&#10003; {{this}}</span></div>
-                        {{/each}}
-                        <div class="tb"></div>
-                        <div class="tl"><span class="to p">{{contact.terminalAwaiting}}</span></div>
-                        <div class="tb"></div>
-                        <div class="tl"><span class="tp">&#10095;</span><span class="tc" id="cmd2">&nbsp;<span class="tcur" id="cur2"></span></span></div>
-                    </div>
-                    <div class="mac-body" id="cpane-contact" style="display:none">
-                        <div class="tl"><span class="tp">&#10095;</span><span class="tc">cat contact.json</span></div>
-                        <div class="tb"></div>
-                        <div class="tl"><span class="to p">{</span></div>
-                        {{#each contact.terminalJSON}}
-                        <div class="tl"><span class="to">&nbsp;&nbsp;"{{this.key}}":&nbsp;&nbsp;<span class="to {{this.color}}">"{{this.value}}"</span>{{#unless @last}},{{/unless}}</span></div>
-                        {{/each}}
-                        <div class="tl"><span class="to p">}</span></div>
-                        <div class="tb"></div>
-                        <div class="tl"><span class="tp">&#10095;</span><span class="tc">&nbsp;<span class="tcur"></span></span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section class="section section--alt" id="contact">
+  <div class="container">
+
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Let's Talk</div>
+      <h2 class="section-title">Hire <em>me!</em></h2>
     </div>
+
+    <div class="contact-wrap reveal">
+      <p class="contact-lead">{{contact.lead}}</p>
+      <div class="contact-links">
+        <a href="mailto:{{site.email}}" class="clink">
+          <span class="clink-icon">✉️</span>
+          <span>{{site.email}}</span>
+        </a>
+        <a
+          href="{{site.whatsapp}}"
+          target="_blank"
+          rel="noopener"
+          class="clink"
+        >
+          <span class="clink-icon">📱</span>
+          <span>{{site.phone}}</span>
+        </a>
+        <a
+          href="{{site.linkedin}}"
+          target="_blank"
+          rel="noopener"
+          class="clink"
+        >
+          <span class="clink-icon">💼</span>
+          <span>LinkedIn</span>
+        </a>
+        <a href="{{site.github}}" target="_blank" rel="noopener" class="clink">
+          <span class="clink-icon">⌨️</span>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
 </section>
