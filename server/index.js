@@ -1,28 +1,25 @@
-// importing necessary modules
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
 import initializeHbsEngine from "./config/hbsEngine.js";
 import blogsRouter from "./routes/blogs.js";
-// importing the portfolio data
-import portfolio from "./data/portfolio.js";
-import { buildContext } from "./data/blogs.js";
-
-// __dirname is not available in ES modules, so we need to create it manually
-const file_name = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(file_name);
+import initializeDb from "./config/initializeDb.js";
+import landingpageSchema from "./config/schema/landingpages.js";
 
 // creating an instance of express
 const app = express();
 initializeHbsEngine(express, app);
+initializeDb();
 // setting up the static files directory
 
 // setting up the view engine and views directory
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  const portfolio = await landingpageSchema.findOne();
   res.render("landing-page", {
-    ...portfolio,
+    ...portfolio?.data,
   });
 });
+
 app.use("/blogs", blogsRouter);
 // handling 404 errors for undefined routes
 app.use((req, res) => {
