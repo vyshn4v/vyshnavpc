@@ -1,42 +1,121 @@
-<section class="section section--alt" id="contact">
+<section class="section" id="contact">
   <div class="container">
 
     <div class="section-head reveal">
-      <div class="section-eyebrow">Let's Talk</div>
-      <h2 class="section-title">Hire <em>me!</em></h2>
+      <div class="section-eyebrow">// 05 — contact</div>
+      <h2 class="section-title">Hire <em>Me!</em></h2>
     </div>
 
-    <div class="contact-wrap reveal">
-      <p class="contact-lead">{{contact.lead}}</p>
-      <div class="contact-links">
-        <a href="mailto:{{site.email}}" class="clink">
-          <span class="clink-icon">✉️</span>
-          <span>{{site.email}}</span>
-        </a>
-        <a
-          href="{{site.whatsapp}}"
-          target="_blank"
-          rel="noopener"
-          class="clink"
-        >
-          <span class="clink-icon">📱</span>
-          <span>{{site.phone}}</span>
-        </a>
-        <a
-          href="{{site.linkedin}}"
-          target="_blank"
-          rel="noopener"
-          class="clink"
-        >
-          <span class="clink-icon">💼</span>
-          <span>LinkedIn</span>
-        </a>
-        <a href="{{site.github}}" target="_blank" rel="noopener" class="clink">
-          <span class="clink-icon">⌨️</span>
-          <span>GitHub</span>
-        </a>
+    <div class="contact-layout">
+
+      <div class="contact-left reveal">
+        <p class="contact-lead">{{contact.lead}}</p>
+        <p class="contact-sub">{{contact.sub}}</p>
+        <button class="btn btn--primary contact-modal-btn" id="openContact">✉
+          Send a Message →</button>
+        <div class="contact-links">
+          {{#each contact.links}}
+            <a
+              href="{{this.href}}"
+              target="_blank"
+              rel="noopener"
+              class="clink"
+            >
+              <span class="clink-label">{{this.label}}</span>
+              <span class="clink-handle">{{this.handle}}</span>
+              <span class="clink-arrow">↗</span>
+            </a>
+          {{/each}}
+        </div>
       </div>
-    </div>
 
+      <div class="contact-right reveal">
+        <div class="terminal terminal--contact">
+          <div class="terminal-bar">
+            <span class="tb tb--red"></span>
+            <span class="tb tb--yellow"></span>
+            <span class="tb tb--green"></span>
+            <span class="terminal-title">contact — node — 80×24</span>
+          </div>
+          <div class="terminal-body">
+            <p class="t-tab"><span class="tk-prompt">hire-me.js</span><span
+                class="tk-x"
+              >✕</span>
+              <span class="tk-inactive">contact.json</span><span
+                class="tk-x"
+              >✕</span></p>
+            <p class="mt"><span class="tk-prompt">❯</span><span class="tk-str">
+                node hire-me.js</span></p>
+            <p class="mt"><span class="tk-bool">✓</span>
+              Ready for new challenges</p>
+            <p><span class="tk-bool">✓</span> ~2 yrs production experience</p>
+            <p><span class="tk-bool">✓</span> Node.js + DevOps + Cloud</p>
+            <p><span class="tk-bool">✓</span> Full-time / contract available</p>
+            <p class="mt tk-str">Awaiting your message...</p>
+            <p class="mt"><span class="tk-prompt">❯</span></p>
+            <p class="mt"><span class="tk-prompt">❯</span><span class="tk-str">
+                cat contact.json</span></p>
+            <p>{</p>
+            <p class="indent"><span class="tk-key">"name"</span>:
+              <span class="tk-str">"{{site.name}}"</span>,</p>
+            <p class="indent"><span class="tk-key">"phone"</span>:
+              <span class="tk-str">"{{site.phone}}"</span>,</p>
+            <p class="indent"><span class="tk-key">"email"</span>:
+              <span class="tk-str">"{{site.email}}"</span>,</p>
+            <p class="indent"><span class="tk-key">"location"</span>:
+              <span class="tk-str">"{{site.location}}, India"</span>,</p>
+            <p class="indent"><span class="tk-key">"status"</span>:
+              <span class="tk-str">"open_to_work"</span></p>
+            <p>}</p>
+            <p class="mt"><span class="tk-prompt">❯</span>
+              <span class="cursor">▋</span></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
+
+{{! ── Contact modal ── }}
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Let's work together 🚀</h3>
+      <p>Fill in the details and I'll get back to you within 24 hours.</p>
+      <button class="modal-close" id="closeContact">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First name</label>
+          <input type="text" id="fname" placeholder="John" />
+        </div>
+        <div class="form-group">
+          <label>Last name</label>
+          <input type="text" id="lname" placeholder="Doe" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="femail" placeholder="john@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <input type="text" id="fsubject" placeholder="Project inquiry" />
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea
+          id="fmessage"
+          rows="4"
+          placeholder="Tell me about your project..."
+        ></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn--ghost" id="cancelContact">Cancel</button>
+        <button class="btn btn--primary" id="sendContact">✉ Send Message</button>
+      </div>
+    </div>
+  </div>
+</div>

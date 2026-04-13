@@ -1,0 +1,29 @@
+<section class="section" id="education">
+  <div class="container">
+
+    <div class="section-head reveal">
+      <div class="section-eyebrow">// 03 — education</div>
+      <h2 class="section-title"><em>Education</em></h2>
+    </div>
+
+    <div class="edu-grid">
+      {{#each education}}
+        <div class="edu-card reveal">
+          <div class="edu-abbr" style="--clr:var(--accent2)">{{this.abbr}}</div>
+          <div class="edu-body">
+            <div class="edu-title">{{this.title}}</div>
+            <div class="edu-sub">{{this.subtitle}}</div>
+            <div class="edu-institution">{{this.institution}}</div>
+            <div class="edu-period">{{this.period}}</div>
+            <div class="edu-tags">
+              {{#each this.tags}}
+                <span class="edu-tag">{{this}}</span>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+
+  </div>
+</section>

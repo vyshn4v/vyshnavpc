@@ -2,23 +2,30 @@
   <div class="container">
 
     <div class="section-head reveal">
-      <div class="section-eyebrow">Tech Stack</div>
-      <h2 class="section-title">Things I <em>work with</em></h2>
+      <div class="section-eyebrow">// 04 — skills</div>
+      <h2 class="section-title">Tech <em>Stack</em></h2>
+      <p class="section-sub">Technologies I use to build, deploy, and maintain
+        production-grade applications.</p>
     </div>
 
-    <div class="skills-grid">
-      {{#each skills}}
-        <div class="skill-card reveal" style="--clr:{{this.color}}">
-          <div class="skill-icon-wrap">
-            {{{this.icon}}}
-          </div>
-          <div class="skill-info">
-            <span class="skill-name">{{this.name}}</span>
-            <span class="skill-desc">{{this.desc}}</span>
-          </div>
+    {{#each skills.groups}}
+      <div class="skill-group reveal">
+        <div class="skill-group-label">{{this.label}}</div>
+        <div class="skills-grid">
+          {{#each this.items}}
+            <div class="skill-card" style="--clr:{{this.color}}">
+              <div class="skill-icon-wrap">
+                {{{this.icon}}}
+              </div>
+              <div class="skill-info">
+                <span class="skill-name">{{this.name}}</span>
+                <span class="skill-desc">{{this.desc}}</span>
+              </div>
+            </div>
+          {{/each}}
         </div>
-      {{/each}}
-    </div>
+      </div>
+    {{/each}}
 
   </div>
 </section>
