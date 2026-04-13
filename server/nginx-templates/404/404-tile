@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0d0f14;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 24px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* corner coords like a map */
+        .corner {
+            position: fixed;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.07);
+            letter-spacing: 0.1em;
+        }
+
+        .corner.tl {
+            top: 20px;
+            left: 24px
+        }
+
+        .corner.tr {
+            top: 20px;
+            right: 24px;
+            text-align: right
+        }
+
+        .corner.bl {
+            bottom: 20px;
+            left: 24px
+        }
+
+        .corner.br {
+            bottom: 20px;
+            right: 24px;
+            text-align: right
+        }
+
+        /* crosshair center */
+        .crosshair {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+        }
+
+        .crosshair::before,
+        .crosshair::after {
+            content: '';
+            position: absolute;
+            background: rgba(61, 214, 140, 0.12);
+        }
+
+        .crosshair::before {
+            width: 1px;
+            height: 100%;
+            left: 50%;
+            top: 0
+        }
+
+        .crosshair::after {
+            height: 1px;
+            width: 100%;
+            top: 50%;
+            left: 0
+        }
+
+        /* main */
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* status pill */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(61, 214, 140, 0.05);
+            border: 1px solid rgba(61, 214, 140, 0.15);
+            border-radius: 999px;
+            padding: 5px 14px;
+            font-size: 11px;
+            color: rgba(61, 214, 140, 0.7);
+            letter-spacing: 0.12em;
+            margin-bottom: 36px;
+        }
+
+        .pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #3dd68c;
+            box-shadow: 0 0 6px #3dd68c;
+        }
+
+        /* the number — outline only */
+        .num {
+            font-size: clamp(120px, 28vw, 220px);
+            font-weight: 700;
+            letter-spacing: -10px;
+            line-height: 0.85;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            user-select: none;
+        }
+
+        /* slash through the middle */
+        .slash {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-18deg);
+            width: 110%;
+            height: 1px;
+            background: rgba(61, 214, 140, 0.2);
+        }
+
+        /* message block */
+        .msg {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: auto 1px auto;
+            gap: 0 28px;
+            align-items: start;
+        }
+
+        .msg-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: right;
+        }
+
+        .msg-key {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .msg-val {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .msg-sep {
+            background: rgba(255, 255, 255, 0.07);
+            height: 48px;
+            align-self: center;
+        }
+
+        .msg-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .msg-right .big {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .msg-right .small {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.2);
+            font-style: italic;
+        }
+
+        /* bottom bar */
+        .bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 36px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.12);
+            letter-spacing: 0.1em;
+        }
+
+        .bar-green {
+            color: rgba(61, 214, 140, 0.35)
+        }
+
+        @media(max-width:480px) {
+            .msg {
+                grid-template-columns: 1fr;
+                gap: 16px 0
+            }
+
+            .msg-sep {
+                display: none
+            }
+
+            .msg-left {
+                text-align: left
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <span class="corner tl">x:0000 y:0000</span>
+    <span class="corner tr">404.html</span>
+    <span class="corner bl">© vyshnavpc</span>
+    <span class="corner br">ERR_NOT_FOUND</span>
+    <div class="crosshair"></div>
+
+    <div class="main">
+
+        <div class="pill">
+            <div class="pill-dot"></div>
+            HTTP STATUS
+        </div>
+
+        <div class="num">
+            404
+            <div class="slash"></div>
+        </div>
+
+        <div class="msg">
+            <div class="msg-left">
+                <span class="msg-key">path</span>
+                <span class="msg-val">/$unknown</span>
+            </div>
+            <div class="msg-sep"></div>
+            <div class="msg-right">
+                <span class="big">This page doesn't exist.</span>
+                <span class="small">and it never did — check the url.</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bar">
+        <span>vyshnavpc — zsh</span>
+        <span class="bar-green">● route unresolved</span>
+        <span>utf-8</span>
+    </div>
+
+</body>
+
+</html>
