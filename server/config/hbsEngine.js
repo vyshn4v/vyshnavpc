@@ -26,18 +26,18 @@ export default function initializeHbsEngine(express, app) {
       //   for (let i = 0; i < n; i++) result += options.fn(i);
       //   return result;
       // },
-      // renderArt: function (art) {
-      //   return new Handlebars.SafeString(renderArtFn(art));
-      // },
-      // fmtDate: function (iso) {
-      //   return new Date(iso).toLocaleDateString("en-GB", {
-      //     month: "short",
-      //     year: "numeric",
-      //   });
-      // },
-      // lowerCase: function (str) {
-      //   return (str || "").toLowerCase();
-      // },
+      renderArt: function (art) {
+        return new Handlebars.SafeString(renderArtFn(art));
+      },
+      fmtDate: function (iso) {
+        return new Date(iso).toLocaleDateString("en-GB", {
+          month: "short",
+          year: "numeric",
+        });
+      },
+      lowerCase: function (str) {
+        return (str || "").toLowerCase();
+      },
       eq: function (a, b) {
         return a === b;
       },
