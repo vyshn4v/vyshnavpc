@@ -1,0 +1,209 @@
+{{!-- views/post.hbs --}}
+ {{#section "styles"}}
+  <link rel="stylesheet" href="/css/post.css" />
+  <link rel="stylesheet" href="/css/blogs.css" />
+  {{!-- <link rel="stylesheet" href="/css/view-blog.css" /> --}}
+{{/section}}
+ {{#section "scripts"}}
+  <script src="/js/post.js"></script>
+  <script src="/js/main.js"></script>
+{{/section}}
+{{!-- ── Hero ── --}}
+<header class="post-hero">
+  <div class="hero-glow"></div>
+  <div class="post-hero__inner">
+    <a href="/" class="back-link">← All posts</a>
+
+    <div class="hero-tag" style="--cat-color:{{category.color}};--cat-bg:{{category.bg}}">
+      <span class="dot"></span> {{category.icon}} {{category.label}}
+    </div>
+
+    <h1 class="post-hero__title">
+      {{#if titleLine2}}
+        {{titleLine1}}<br><span class="highlight">{{titleLine2}}</span>
+      {{else}}
+        {{title}}
+      {{/if}}
+    </h1>
+
+    <div class="post-hero__meta">
+      <span>📅 {{date}}</span>
+      <span class="sep"></span>
+      <span>⏱ {{readTime}}</span>
+      <span class="sep"></span>
+      <span>🏷 {{meta.tags}}</span>
+    </div>
+
+    <p class="post-hero__lead">{{lead}}</p>
+  </div>
+</header>
+
+{{!-- ── Article body ── --}}
+<article class="post-article">
+
+  {{!-- Overview section --}}
+  {{#if overview}}
+    <section id="overview">
+      <h2>{{overview.heading}}</h2>
+      {{#each overview.paragraphs}}
+        <p>{{{this}}}</p>
+      {{/each}}
+
+      {{#if overview.callout}}
+        {{> callout overview.callout}}
+      {{/if}}
+
+      {{#if overview.closing}}
+        <p>{{{overview.closing}}}</p>
+      {{/if}}
+    </section>
+  {{/if}}
+
+  {{!-- Dynamic sections --}}
+  {{#each sections}}
+    <section {{#if id}}id="{{id}}"{{/if}}>
+      {{#if heading}}<h2>{{heading}}</h2>{{/if}}
+      {{#if intro}}<p>{{intro}}</p>{{/if}}
+
+      {{!-- Phase cards grid --}}
+      {{#if phases}}
+        <div class="phases-grid">
+          {{#each phases}}
+            <div class="phase-card" style="--card-accent:{{accent}};--card-color:{{color}}">
+              <div class="phase-num">Phase {{num}}</div>
+              <div class="phase-title">{{icon}} {{title}}</div>
+              <p>{{{desc}}}</p>
+              <span class="tag">{{tag}}</span>
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+
+      {{!-- Interactive loop diagram --}}
+      {{#if loopDiagram}}
+        <div class="diagram-wrap">
+          <div class="diagram-label">// {{loopDiagram.label}}</div>
+          <div class="loop-tabs">
+            {{#each loopDiagram.phases}}
+              <input type="radio" name="loop-phase" id="ph-{{@index}}"{{#if @first}} checked{{/if}}>
+            {{/each}}
+
+            <div class="loop-ring">
+              {{#each loopDiagram.phases}}
+                <label for="ph-{{@index}}" class="lp"
+                  style="left:{{pos.x}}px;top:{{pos.y}}px;background:{{bg}};border-color:{{border}};">
+                  <span class="lp-icon">{{icon}}</span>
+                  <span class="lp-name" style="color:{{color}}">{{shortName}}</span>
+                </label>
+              {{/each}}
+              <div class="loop-center">
+                <div class="loop-center-title">Event Loop</div>
+                <div class="loop-center-sub">↻ repeats</div>
+              </div>
+            </div>
+
+            <div class="loop-tabs-body">
+              {{#each loopDiagram.phases}}
+                <div class="detail-panel" id="dp-{{@index}}">
+                  <div class="detail-phase-name" style="color:{{color}}">{{name}}</div>
+                  <div class="detail-phase-desc">{{detailDesc}}</div>
+                  <ul class="detail-bullets">
+                    {{#each bullets}}
+                      <li>
+                        <span class="bullet-dot" style="background:{{../color}}"></span>
+                        <span>{{this}}</span>
+                      </li>
+                    {{/each}}
+                  </ul>
+                </div>
+              {{/each}}
+            </div>
+
+            <div class="phase-nav">
+              <button id="btn-prev" onclick="stepPhase(-1)">← Prev</button>
+              <div class="phase-dots">
+                {{#each loopDiagram.phases}}
+                  <label for="ph-{{@index}}" class="phase-dot" title="{{name}}"></label>
+                {{/each}}
+              </div>
+              <button id="btn-next" onclick="stepPhase(1)">Next →</button>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+
+      {{!-- Code block --}}
+      {{#if codeBlock}}
+        {{> code-block codeBlock}}
+      {{/if}}
+
+      {{!-- Callout --}}
+      {{#if callout}}
+        {{> callout callout}}
+      {{/if}}
+
+      {{!-- Comparison table --}}
+      {{#if table}}
+        <table class="compare-table">
+          <thead>
+            <tr>
+              {{#each table.headers}}
+                <th>{{this}}</th>
+              {{/each}}
+            </tr>
+          </thead>
+          <tbody>
+            {{#each table.rows}}
+              <tr>
+                <td><span class="fn-name">{{fn}}</span></td>
+                <td>{{runsIn}}</td>
+                <td><span class="badge {{badgeClass}}">{{priority}}</span></td>
+                <td>{{useWhen}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/if}}
+
+      {{!-- Microtask banner --}}
+      {{#if banner}}
+        <div class="microtask-banner">
+          <div class="icon">{{banner.icon}}</div>
+          <div>
+            <h3>{{banner.title}}</h3>
+            <p>{{{banner.text}}}</p>
+          </div>
+        </div>
+      {{/if}}
+
+      {{!-- Paragraphs --}}
+      {{#each paragraphs}}
+        <p>{{{this}}}</p>
+      {{/each}}
+
+    </section>
+  {{/each}}
+
+</article>
+
+{{!-- ── Post footer ── --}}
+<div class="post-footer">
+  <p>{{footer.credit}}</p>
+  <div class="tags">
+    {{#each footer.tags}}
+      <span class="tag-pill">{{this}}</span>
+    {{/each}}
+  </div>
+</div>
+
+{{!-- ── Related posts ── --}}
+{{#if related}}
+  <section class="related-posts">
+    <h3 class="related-posts__heading">Related posts</h3>
+    <div class="related-posts__grid">
+      {{#each related}}
+        {{> blog-card this}}
+      {{/each}}
+    </div>
+  </section>
+{{/if}}

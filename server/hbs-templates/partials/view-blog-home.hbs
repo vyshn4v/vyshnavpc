@@ -1,0 +1,48 @@
+{{!-- views/home.hbs --}}
+
+{{!-- ── Hero ── --}}
+<section class="home-hero">
+  <div class="home-hero__inner">
+    <div class="home-hero__tag"><span class="dot"></span> Engineering Blog</div>
+    <h1 class="home-hero__title">
+      Code, concepts<br>
+      <span class="highlight">& deep dives</span>
+    </h1>
+    <p class="home-hero__lead">
+      Practical write-ups on JavaScript, Node.js internals, CSS, and the tools that make the modern web tick.
+    </p>
+
+    {{!-- Filter bar --}}
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-filter="all">All posts</button>
+      {{#each categories}}
+        <button class="filter-btn" data-filter="{{slug}}" style="--cat-color:{{color}}">
+          {{icon}} {{label}}
+        </button>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+{{!-- ── Featured post ── --}}
+{{#if featured}}
+  <section class="featured-section">
+    <div class="featured-label">✦ Featured post</div>
+    {{> blog-card featured}}
+  </section>
+{{/if}}
+
+{{!-- ── All posts grid ── --}}
+<section class="posts-section">
+  <div class="posts-grid" id="postsGrid">
+    {{#each posts}}
+      {{> blog-card this}}
+    {{/each}}
+  </div>
+
+  {{#unless posts}}
+    <div class="empty-state">
+      <p>No posts yet. Check back soon.</p>
+    </div>
+  {{/unless}}
+</section>

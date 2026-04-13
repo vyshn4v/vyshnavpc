@@ -1,4 +1,4 @@
-/* app.js — minimal JS: scroll reveal, skill bars, nav highlight, mobile menu */
+/* app.js — scroll reveal, nav highlight, mobile menu, contact modal */
 (function () {
   "use strict";
 
@@ -11,40 +11,40 @@
           io.unobserve(e.target);
         }
       }),
-    { threshold: 0.1 },
+    { threshold: 0.08 },
   );
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
-  /* ── Skill bars fire when card is visible ── */
-  const sio = new IntersectionObserver(
-    (entries) =>
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add("v");
-          sio.unobserve(e.target);
-        }
-      }),
-    { threshold: 0.2 },
-  );
-  document.querySelectorAll(".skill-card").forEach((el) => sio.observe(el));
-
-  /* ── Active nav link on scroll ── */
+  /* ── Active nav on scroll ── */
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".nav-links a");
-  const sectionObserver = new IntersectionObserver(
+  new IntersectionObserver(
     (entries) =>
       entries.forEach((e) => {
         if (e.isIntersecting) {
           navLinks.forEach((a) => a.classList.remove("active"));
-          const active = document.querySelector(
+          const a = document.querySelector(
             `.nav-links a[href="#${e.target.id}"]`,
           );
-          if (active) active.classList.add("active");
+          if (a) a.classList.add("active");
         }
       }),
     { rootMargin: "-40% 0px -55% 0px" },
-  );
-  sections.forEach((s) => sectionObserver.observe(s));
+  ).observe &&
+    sections.forEach((s) =>
+      new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            navLinks.forEach((a) => a.classList.remove("active"));
+            const a = document.querySelector(
+              `.nav-links a[href="#${e.target.id}"]`,
+            );
+            if (a) a.classList.add("active");
+          }),
+        { rootMargin: "-40% 0px -55% 0px" },
+      ).observe(s),
+    );
 
   /* ── Mobile nav toggle ── */
   const toggle = document.getElementById("navToggle");
@@ -56,7 +56,7 @@
     });
   }
 
-  /* ── Sticky nav shadow on scroll ── */
+  /* ── Sticky nav shadow ── */
   const nav = document.getElementById("nav");
   window.addEventListener(
     "scroll",
@@ -66,4 +66,48 @@
     },
     { passive: true },
   );
+
+  /* ── Contact modal ── */
+  const backdrop = document.getElementById("modalBackdrop");
+  const openBtn = document.getElementById("openContact");
+  const closeBtn = document.getElementById("closeContact");
+  const cancelBtn = document.getElementById("cancelContact");
+  const sendBtn = document.getElementById("sendContact");
+
+  function openModal() {
+    if (backdrop) backdrop.classList.add("open");
+  }
+  function closeModal() {
+    if (backdrop) backdrop.classList.remove("open");
+  }
+
+  if (openBtn) openBtn.addEventListener("click", openModal);
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+  if (backdrop)
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop) closeModal();
+    });
+
+  if (sendBtn) {
+    sendBtn.addEventListener("click", () => {
+      const fname = document.getElementById("fname")?.value.trim();
+      const email = document.getElementById("femail")?.value.trim();
+      const message = document.getElementById("fmessage")?.value.trim();
+      if (!fname || !email || !message) {
+        sendBtn.textContent = "⚠ Fill required fields";
+        setTimeout(() => {
+          sendBtn.innerHTML = "✉ Send Message";
+        }, 2000);
+        return;
+      }
+      sendBtn.innerHTML = "✔️ Sent!";
+      sendBtn.disabled = true;
+      setTimeout(closeModal, 1400);
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
 })();

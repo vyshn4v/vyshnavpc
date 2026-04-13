@@ -1,0 +1,30 @@
+<article class="blog-card {{#if featured}}blog-card--featured{{/if}}" data-category="{{category.slug}}">
+  <a href="/blogs/{{slug}}" class="blog-card__link" aria-label="Read {{title}}"></a>
+
+  <div class="blog-card__top">
+    <span class="blog-card__category" style="--cat-color: {{category.color}}; --cat-bg: {{category.bg}}">
+      {{category.icon}} {{category.label}}
+    </span>
+    {{#if featured}}
+      <span class="blog-card__badge">Featured</span>
+    {{/if}}
+  </div>
+
+  <div class="blog-card__body">
+    <h2 class="blog-card__title">{{title}}</h2>
+    <p class="blog-card__excerpt">{{excerpt}}</p>
+  </div>
+
+  <div class="blog-card__footer">
+    <div class="blog-card__meta">
+      <span class="blog-card__date">{{date}}</span>
+      <span class="sep"></span>
+      <span class="blog-card__read">{{readTime}}</span>
+    </div>
+    <div class="blog-card__tags">
+      {{#each tags}}
+        <span class="tag-pill">{{this}}</span>
+      {{/each}}
+    </div>
+  </div>
+</article>
