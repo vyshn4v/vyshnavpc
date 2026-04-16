@@ -84,10 +84,11 @@ module.exports = (bot, GROUP_CHAT_ID) => {
         const exists = await Video.findOne({ sourceUrl: url?.link });
         console.log("🔍 Exists in DB:", !!exists);
         if (exists) continue;
-
+        let filePath = null,
+          sentMsg = null;
         try {
-          const filePath = await downloadVideo(url);
-          const sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
+          filePath = await downloadVideo(url);
+          sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
             caption: `${url?.title || "Watch video"}`,
           });
         } catch (err) {
@@ -95,11 +96,11 @@ module.exports = (bot, GROUP_CHAT_ID) => {
         }
 
         await Video.create({
-          messageId: sentMsg.message_id,
-          fileId: sentMsg.video.file_id,
+          messageId: sentMsg?.message_id,
+          fileId: sentMsg?.video?.file_id,
           caption: `${url?.title || "Watch video"}`,
           tags: "video",
-          sourceUrl: url,
+          sourceUrl: url?.link,
           isNew: true,
         });
 
