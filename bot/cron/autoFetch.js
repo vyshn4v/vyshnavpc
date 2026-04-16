@@ -99,7 +99,6 @@ module.exports = (bot, GROUP_CHAT_ID) => {
       console.log("🔍 Fetched URLs:", urls);
       selectedQuery = Math.floor(Math.random() * query.length);
       console.log("⚠️ No videos found, skipping this cycle.");
-      return;
 
       for (const url of urls) {
         console.log("🔄 Processing:", url?.link);
