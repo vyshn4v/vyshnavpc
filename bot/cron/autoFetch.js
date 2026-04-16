@@ -92,61 +92,55 @@ module.exports = (bot, GROUP_CHAT_ID) => {
       console.log("🔍 Fetched URLs:", urls);
 
       for (const url of urls) {
-        console.log("🔄 Processing URL:", url?.link);
+        console.log("🔄 Processing:", url?.link);
+
+        // ✅ If already exists → skip completely
+        const exists = await Video.findOne({ sourceUrl: url?.link });
+        if (exists) {
+          console.log("⏭ Already processed, skipping");
+          continue;
+        }
+
+        let filePath = null;
+        let sentMsg = null;
+        let status = "success";
+        let errorMessage = null;
 
         try {
-          // ✅ Skip duplicates
-          const exists = await Video.findOne({ sourceUrl: url?.link });
-          if (exists) {
-            console.log("⏭ Skipped (already exists)");
-            continue;
-          }
+          // ✅ Download
+          filePath = await downloadVideo(url);
 
-          let filePath = null;
-          let sentMsg = null;
-          let status = "success";
-          let errorMessage = null;
-
-          try {
-            // ✅ Download
-            filePath = await downloadVideo(url);
-
-            // ✅ Send to Telegram
-            sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
-              caption: titleFromUrl(url?.link) || "Watch video",
-            });
-          } catch (err) {
-            console.error("❌ Processing error:", err.message);
-            status = "error";
-            errorMessage = err.message;
-          }
-
-          // ✅ Save to DB (always)
-          await Video.create({
-            messageId: sentMsg?.message_id || null,
-            fileId: sentMsg?.video?.file_id || null,
+          // ✅ Send
+          sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
             caption: titleFromUrl(url?.link) || "Watch video",
-            tags: "video",
-            sourceUrl: url?.link,
-            isNew: true,
-            status,
-            errorMessage,
           });
-
-          // ✅ Cleanup file
-          if (filePath) {
-            try {
-              await fs.remove(filePath);
-            } catch (cleanupErr) {
-              console.warn("⚠️ File cleanup failed:", cleanupErr.message);
-            }
-          }
-
-          console.log(`✅ Done: ${url?.link} | Status: ${status}`);
-        } catch (loopErr) {
-          // 🔥 Safety: prevents loop crash
-          console.error("❌ Loop-level error:", loopErr.message);
+        } catch (err) {
+          console.error("❌ Failed:", err.message);
+          status = "error";
+          errorMessage = err.message;
         }
+
+        // 🔥 ALWAYS INSERT (success OR failure)
+        await Video.create({
+          messageId: sentMsg?.message_id || null,
+          fileId: sentMsg?.video?.file_id || null,
+          caption: titleFromUrl(url?.link) || "Watch video",
+          sourceUrl: url?.link,
+          status,
+          errorMessage,
+          createdAt: new Date(),
+        });
+
+        // ✅ Cleanup
+        if (filePath) {
+          try {
+            await fs.remove(filePath);
+          } catch (e) {
+            console.warn("⚠️ Cleanup failed:", e.message);
+          }
+        }
+
+        console.log(`✅ Stored: ${url?.link} | Status: ${status}`);
       }
     } catch (err) {
       console.error("❌ Cron error:", err.message);
