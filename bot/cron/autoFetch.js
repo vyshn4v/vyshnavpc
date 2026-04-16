@@ -61,7 +61,7 @@ function searchTwitterVideos(query) {
     });
     console.log(videos);
     console.log(`🔍 Found ${videos.length} videos for query "${query}"`);
-    return videos.slice(0, 5);
+    return resolve(videos.slice(0, 5));
   });
 }
 
@@ -71,7 +71,7 @@ module.exports = (bot, GROUP_CHAT_ID) => {
     console.log("🔄 Running auto-fetch cron...");
 
     try {
-      const urls = await searchTwitterVideos(item.query);
+      const urls = await searchTwitterVideos();
       console.log(urls);
       for (const url of urls) {
         console.log("🔄 URL:", url);
