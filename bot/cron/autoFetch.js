@@ -85,8 +85,8 @@ module.exports = (bot, GROUP_CHAT_ID) => {
         console.log("🔍 Exists in DB:", !!exists);
         if (exists) continue;
 
-        const filePath = await downloadVideo(url);
         try {
+          const filePath = await downloadVideo(url);
           const sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
             caption: `${url?.title || "Watch video"}`,
           });
