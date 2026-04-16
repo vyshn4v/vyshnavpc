@@ -153,8 +153,12 @@ module.exports = (bot, GROUP_CHAT_ID) => {
         // ✅ Cleanup
         if (filePath) {
           try {
+            console.log("🔄 Removing file:", filePath);
             await fs.remove(filePath);
-          } catch {}
+            console.log("✅ File removed:", filePath);
+          } catch {
+            console.error("❌ Failed to remove file:", filePath);
+          }
         }
       }
       page++;
