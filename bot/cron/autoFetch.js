@@ -34,9 +34,9 @@ function downloadVideo(url) {
   });
 }
 
-function searchTwitterVideos(query) {
+function searchTwitterVideos(query, page) {
   return new Promise(async (resolve, reject) => {
-    const url = process.env.SEARCH_URL;
+    const url = `${process.env.SEARCH_URL}/${query}?page=${page}`;
 
     const { data } = await axios.get(url, {
       headers: {
@@ -81,16 +81,24 @@ function titleFromUrl(url) {
     .replace(/\d+/g, "") // remove numbers (optional)
     .trim();
 }
-
+let page = 1,
+  query = process.env.QUERY,
+  selectedQuery = 0;
 module.exports = (bot, GROUP_CHAT_ID) => {
   // Runs every 6 hours
   cron.schedule("* * * * *", async () => {
     console.log("🔄 Running auto-fetch cron...");
 
     try {
-      const urls = await searchTwitterVideos();
+      const urls = await searchTwitterVideos(query, page);
       console.log("🔍 Fetched URLs:", urls);
-
+      if (urls.length === 0) {
+        if (selectedQuery >= query?.length) selectedQuery = -1;
+        selectedQuery++;
+        page = 1;
+        console.log("⚠️ No videos found, skipping this cycle.");
+        return;
+      }
       for (const url of urls) {
         console.log("🔄 Processing:", url?.link);
 
@@ -149,6 +157,7 @@ module.exports = (bot, GROUP_CHAT_ID) => {
           } catch {}
         }
       }
+      page++;
     } catch (err) {
       console.error("❌ Cron error:", err.message);
     }
