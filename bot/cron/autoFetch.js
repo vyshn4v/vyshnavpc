@@ -15,14 +15,17 @@ const AUTO_FETCH_QUERIES = [
 
 function downloadVideo(url) {
   return new Promise((resolve, reject) => {
+    console.log("🔄 Downloading video from URL:", url);
     const filename = `video_${Date.now()}.mp4`;
     const filePath = path.join(__dirname, "../downloads", filename);
     fs.ensureDirSync(path.join(__dirname, "../downloads"));
     const cmd = `yt-dlp -o "${filePath}" --merge-output-format mp4 "${url}"`;
+    console.log("🔄 Executing command:", cmd);
     exec(cmd, (error, stdout, stderr) => {
       if (error) reject(new Error(stderr || error.message));
       else resolve(filePath);
     });
+    console.log("🔄 Download command executed, waiting for completion...");
   });
 }
 
@@ -67,35 +70,35 @@ module.exports = (bot, GROUP_CHAT_ID) => {
   cron.schedule("* * * * *", async () => {
     console.log("🔄 Running auto-fetch cron...");
 
-    for (const item of AUTO_FETCH_QUERIES) {
-      try {
-        const urls = await searchTwitterVideos(item.query);
-        console.log(urls);
-        for (const url of urls) {
-          // Skip if already exists
-          const exists = await Video.findOne({ sourceUrl: url?.link });
-          if (exists) continue;
+    try {
+      const urls = await searchTwitterVideos(item.query);
+      console.log(urls);
+      for (const url of urls) {
+        console.log("🔄 URL:", url);
+        // Skip if already exists
+        const exists = await Video.findOne({ sourceUrl: url?.link });
+        console.log("🔍 Exists in DB:", !!exists);
+        if (exists) continue;
 
-          const filePath = await downloadVideo(url);
-          const sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
-            caption: `${url?.title || "Watch video"}`,
-          });
+        const filePath = await downloadVideo(url);
+        const sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
+          caption: `${url?.title || "Watch video"}`,
+        });
 
-          await Video.create({
-            messageId: sentMsg.message_id,
-            fileId: sentMsg.video.file_id,
-            caption: `${url?.title || "Watch video"}`,
-            tags: item.tags,
-            sourceUrl: url,
-            isNew: true,
-          });
+        await Video.create({
+          messageId: sentMsg.message_id,
+          fileId: sentMsg.video.file_id,
+          caption: `${url?.title || "Watch video"}`,
+          tags: item.tags,
+          sourceUrl: url,
+          isNew: true,
+        });
 
-          await fs.remove(filePath);
-          console.log(`✅ Auto-fetched: ${url}`);
-        }
-      } catch (err) {
-        console.error(`❌ Cron error for "${item.query}":`, err.message);
+        await fs.remove(filePath);
+        console.log(`✅ Auto-fetched: ${url}`);
       }
+    } catch (err) {
+      console.error(`❌ Cron error for "${item.query}":`, err.message);
     }
   });
 };
