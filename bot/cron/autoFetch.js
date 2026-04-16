@@ -64,6 +64,11 @@ function searchTwitterVideos(query, page) {
         });
       }
     });
+    if (videos.length === 0) {
+      return searchTwitterVideos(query, page + 1)
+        .then(resolve)
+        .catch(reject);
+    }
     console.log(videos);
     console.log(`🔍 Found ${videos.length} videos for query "${query}"`);
     return resolve(videos);
@@ -92,13 +97,10 @@ module.exports = (bot, GROUP_CHAT_ID) => {
     try {
       const urls = await searchTwitterVideos(query, page);
       console.log("🔍 Fetched URLs:", urls);
-      if (urls.length === 0) {
-        if (selectedQuery >= query?.length) selectedQuery = -1;
-        selectedQuery++;
-        page = 1;
-        console.log("⚠️ No videos found, skipping this cycle.");
-        return;
-      }
+      selectedQuery = Math.randomInt(0, query?.length);
+      console.log("⚠️ No videos found, skipping this cycle.");
+      return;
+
       for (const url of urls) {
         console.log("🔄 Processing:", url?.link);
 
