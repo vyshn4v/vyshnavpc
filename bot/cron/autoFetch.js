@@ -94,10 +94,11 @@ module.exports = (bot, GROUP_CHAT_ID) => {
       for (const url of urls) {
         console.log("🔄 Processing:", url?.link);
 
-        // ✅ If already exists → skip completely
+        // ✅ Check if already exists
         const exists = await Video.findOne({ sourceUrl: url?.link });
+
         if (exists) {
-          console.log("⏭ Already processed, skipping");
+          console.log("⏭ In DB, skipping");
           continue;
         }
 
@@ -120,27 +121,33 @@ module.exports = (bot, GROUP_CHAT_ID) => {
           errorMessage = err.message;
         }
 
-        // 🔥 ALWAYS INSERT (success OR failure)
-        await Video.create({
-          messageId: sentMsg?.message_id || null,
-          fileId: sentMsg?.video?.file_id || null,
-          caption: titleFromUrl(url?.link) || "Watch video",
-          sourceUrl: url?.link,
-          status,
-          errorMessage,
-          createdAt: new Date(),
-        });
+        // ✅ Insert ONLY ONCE (success OR error)
+        try {
+          await Video.create({
+            messageId: sentMsg?.message_id || null,
+            fileId: sentMsg?.video?.file_id || null,
+            caption: titleFromUrl(url?.link) || "Watch video",
+            sourceUrl: url?.link,
+            status,
+            errorMessage,
+            createdAt: new Date(),
+          });
+
+          console.log(`✅ Saved: ${url?.link} | Status: ${status}`);
+        } catch (dbErr) {
+          if (dbErr.code === 11000) {
+            console.log("⚠️ Duplicate (race condition), ignored");
+          } else {
+            console.error("❌ DB error:", dbErr.message);
+          }
+        }
 
         // ✅ Cleanup
         if (filePath) {
           try {
             await fs.remove(filePath);
-          } catch (e) {
-            console.warn("⚠️ Cleanup failed:", e.message);
-          }
+          } catch {}
         }
-
-        console.log(`✅ Stored: ${url?.link} | Status: ${status}`);
       }
     } catch (err) {
       console.error("❌ Cron error:", err.message);
