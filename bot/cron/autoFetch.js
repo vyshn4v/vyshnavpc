@@ -66,7 +66,7 @@ function searchTwitterVideos(query, page) {
     });
     console.log(videos);
     console.log(`🔍 Found ${videos.length} videos for query "${query}"`);
-    return resolve(videos.slice(0, 5));
+    return resolve(videos);
   });
 }
 
