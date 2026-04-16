@@ -86,7 +86,7 @@ let page = 1,
   selectedQuery = 0;
 module.exports = (bot, GROUP_CHAT_ID) => {
   // Runs every 6 hours
-  cron.schedule("* * * * *", async () => {
+  cron.schedule(process.env.CRON_SCHEDULE, async () => {
     console.log("🔄 Running auto-fetch cron...");
 
     try {
