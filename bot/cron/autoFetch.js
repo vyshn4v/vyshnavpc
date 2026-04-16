@@ -23,7 +23,12 @@ function downloadVideo(url) {
     console.log("🔄 Executing command:", cmd);
     exec(cmd, (error, stdout, stderr) => {
       console.log("🔄 Download completed:", filePath);
-      resolve(filePath);
+      if (error) {
+        console.error("❌ Download error:", stderr || error.message);
+        reject(new Error(stderr || error.message));
+      } else {
+        resolve(filePath);
+      }
     });
     console.log("🔄 Download command executed, waiting for completion...");
   });
@@ -81,9 +86,13 @@ module.exports = (bot, GROUP_CHAT_ID) => {
         if (exists) continue;
 
         const filePath = await downloadVideo(url);
-        const sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
-          caption: `${url?.title || "Watch video"}`,
-        });
+        try {
+          const sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
+            caption: `${url?.title || "Watch video"}`,
+          });
+        } catch (err) {
+          console.error("❌ Error sending message:", err.message);
+        }
 
         await Video.create({
           messageId: sentMsg.message_id,
