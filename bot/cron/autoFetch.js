@@ -98,7 +98,7 @@ module.exports = (bot, GROUP_CHAT_ID) => {
         console.log(`✅ Auto-fetched: ${url}`);
       }
     } catch (err) {
-      console.error(`❌ Cron error for "${item.query}":`, err.message);
+      console.error(`❌ Cron error for":`, err.message);
     }
   });
 };
