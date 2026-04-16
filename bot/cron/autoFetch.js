@@ -70,6 +70,18 @@ function searchTwitterVideos(query) {
   });
 }
 
+function titleFromUrl(url) {
+  if (!url) return "Watch video";
+
+  return url
+    .split("/") // split path
+    .pop() // last part
+    .split("?")[0] // remove query params
+    .replace(/[-_]/g, " ") // replace - and _
+    .replace(/\d+/g, "") // remove numbers (optional)
+    .trim();
+}
+
 module.exports = (bot, GROUP_CHAT_ID) => {
   // Runs every 6 hours
   cron.schedule("* * * * *", async () => {
@@ -89,7 +101,7 @@ module.exports = (bot, GROUP_CHAT_ID) => {
         try {
           filePath = await downloadVideo(url);
           sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
-            caption: `${url?.title || "Watch video"}`,
+            caption: `${titleFromUrl(url?.link) || "Watch video"}`,
           });
         } catch (err) {
           console.error("❌ Error sending message:", err.message);
