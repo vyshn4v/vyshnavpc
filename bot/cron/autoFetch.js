@@ -19,7 +19,7 @@ function downloadVideo(url) {
     const filename = `video_${Date.now()}.mp4`;
     const filePath = path.join(__dirname, "../downloads", filename);
     fs.ensureDirSync(path.join(__dirname, "../downloads"));
-    const cmd = `yt-dlp -o "${filePath}" --merge-output-format mp4 "${url}"`;
+    const cmd = `yt-dlp -o "${filePath}" --merge-output-format mp4 "${url?.link}"`;
     console.log("🔄 Executing command:", cmd);
     exec(cmd, (error, stdout, stderr) => {
       if (error) reject(new Error(stderr || error.message));
