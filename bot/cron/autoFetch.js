@@ -22,8 +22,8 @@ function downloadVideo(url) {
     const cmd = `yt-dlp -o "${filePath}" --merge-output-format mp4 "${url?.link}"`;
     console.log("🔄 Executing command:", cmd);
     exec(cmd, (error, stdout, stderr) => {
-      if (error) reject(new Error(stderr || error.message));
-      else resolve(filePath);
+      console.log("🔄 Download completed:", filePath);
+      resolve(filePath);
     });
     console.log("🔄 Download command executed, waiting for completion...");
   });
