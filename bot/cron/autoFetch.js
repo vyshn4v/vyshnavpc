@@ -97,7 +97,7 @@ module.exports = (bot, GROUP_CHAT_ID) => {
     try {
       const urls = await searchTwitterVideos(query, page);
       console.log("🔍 Fetched URLs:", urls);
-      selectedQuery = Math.randomInt(0, query?.length);
+      selectedQuery = Math.floor(Math.random() * query.length);
       console.log("⚠️ No videos found, skipping this cycle.");
       return;
 
