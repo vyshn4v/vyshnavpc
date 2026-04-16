@@ -89,7 +89,7 @@ module.exports = (bot, GROUP_CHAT_ID) => {
           messageId: sentMsg.message_id,
           fileId: sentMsg.video.file_id,
           caption: `${url?.title || "Watch video"}`,
-          tags: item.tags,
+          tags: "video",
           sourceUrl: url,
           isNew: true,
         });
