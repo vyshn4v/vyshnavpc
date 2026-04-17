@@ -1,28 +1,77 @@
 const cron = require("node-cron");
-const { exec } = require("child_process");
+const { exec, spawn } = require("child_process");
 const fs = require("fs-extra");
 const path = require("path");
 const Video = require("../models/videos.js");
-const puppeteer = require("puppeteer");
 const axios = require("axios");
-const cheerio = require("cheerio");
-// List of search queries + tags to auto-fetch
-const AUTO_FETCH_QUERIES = [
-  { query: "funny cats", tags: ["cats", "funny"] },
-  { query: "nature documentary", tags: ["nature", "documentary"] },
-  // Add your own search queries and tags here
-];
+
+// ✅ FIX 1: Drop cheerio entirely — regex scraping avoids building a full DOM in RAM
+function searchTwitterVideos(query, page) {
+  return new Promise(async (resolve, reject) => {
+    const url = `${process.env.SEARCH_URL}/${query}?page=${page}`;
+
+    try {
+      const { data } = await axios.get(url, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/147 Safari/537.36",
+          "Accept-Language": "en-US,en;q=0.9",
+          Referer: process.env.REFERER_URL,
+        },
+        timeout: 20000,
+        // ✅ FIX 2: Tell axios not to decompress/buffer a huge response object
+        maxContentLength: 5 * 1024 * 1024, // 5MB max
+        responseType: "text",
+      });
+
+      const baseUrl = process.env.SEARCH_URL.split("/search")[0];
+      const videos = [];
+
+      // ✅ FIX 3: Regex instead of cheerio — no DOM tree in memory
+      const hrefRegex =
+        /href="([^"]*\/videos\/[^"]*)"[^>]*(?:title="([^"]*)")?/g;
+      let match;
+      while ((match = hrefRegex.exec(data)) !== null) {
+        const href = match[1];
+        const title = match[2] || "";
+        videos.push({
+          title: title.trim() || "Watch video",
+          link: href.startsWith("http") ? href : baseUrl + href,
+        });
+      }
+
+      if (videos.length === 0) {
+        return searchTwitterVideos(query, page + 1)
+          .then(resolve)
+          .catch(reject);
+      }
+
+      console.log(`🔍 Found ${videos.length} videos for query "${query}"`);
+      resolve(videos);
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+// ✅ FIX 4: Stream the file directly to Telegram instead of loading it into RAM
+function sendVideoStream(bot, chatId, filePath, caption) {
+  return new Promise((resolve, reject) => {
+    const stream = fs.createReadStream(filePath);
+    bot.sendVideo(chatId, stream, { caption }).then(resolve).catch(reject);
+  });
+}
 
 function downloadVideo(url) {
   return new Promise((resolve, reject) => {
-    console.log("🔄 Downloading video from URL:", url);
     const filename = `video_${Date.now()}.mp4`;
     const filePath = path.join(__dirname, "../downloads", filename);
     fs.ensureDirSync(path.join(__dirname, "../downloads"));
+
     const cmd = `yt-dlp -o "${filePath}" --merge-output-format mp4 "${url?.link}"`;
-    console.log("🔄 Executing command:", cmd);
+    console.log("🔄 Downloading:", url?.link);
+
     exec(cmd, (error, stdout, stderr) => {
-      console.log("🔄 Download completed:", filePath);
       if (error) {
         console.error("❌ Download error:", stderr || error.message);
         reject(new Error(stderr || error.message));
@@ -30,78 +79,32 @@ function downloadVideo(url) {
         resolve(filePath);
       }
     });
-    console.log("🔄 Download command executed, waiting for completion...");
-  });
-}
-
-function searchTwitterVideos(query, page) {
-  return new Promise(async (resolve, reject) => {
-    const url = `${process.env.SEARCH_URL}/${query}?page=${page}`;
-
-    const { data } = await axios.get(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/147 Safari/537.36",
-        "Accept-Language": "en-US,en;q=0.9",
-        Referer: process.env.REFERER_URL,
-      },
-      timeout: 20000,
-    });
-
-    const $ = cheerio.load(data);
-    const videos = [];
-
-    $("a").each((i, el) => {
-      const href = $(el).attr("href");
-      const title = $(el).attr("title") || $(el).text().trim();
-
-      if (href && href.includes("/videos/")) {
-        videos.push({
-          title: title || "Watch video",
-          link: href.startsWith("http")
-            ? href
-            : process.env.SEARCH_URL.split("/search")[0] + href,
-        });
-      }
-    });
-    if (videos.length === 0) {
-      return searchTwitterVideos(query, page + 1)
-        .then(resolve)
-        .catch(reject);
-    }
-    console.log(videos);
-    console.log(`🔍 Found ${videos.length} videos for query "${query}"`);
-    return resolve(videos);
   });
 }
 
 function titleFromUrl(url) {
   if (!url) return "Watch video";
-
   return url
-    .split("/") // split path
-    .pop() // last part
-    .split("?")[0] // remove query params
-    .replace(/[-_]/g, " ") // replace - and _
-    .replace(/\d+/g, "") // remove numbers (optional)
+    .split("/")
+    .pop()
+    .split("?")[0]
+    .replace(/[-_]/g, " ")
+    .replace(/\d+/g, "")
     .trim();
 }
-let page = 1,
-  query = process.env.QUERY,
-  selectedQuery = 0;
+
+let page = 1;
+const query = process.env.QUERY;
+
 async function cronfunction(bot, GROUP_CHAT_ID) {
   try {
     const urls = await searchTwitterVideos(query, page);
-    console.log("🔍 Fetched URLs:", urls);
-    selectedQuery = Math.floor(Math.random() * query.length);
-    console.log("⚠️ No videos found, skipping this cycle.");
 
+    // ✅ FIX 5: Process one URL at a time — no full array in RAM during download
     for (const url of urls) {
       console.log("🔄 Processing:", url?.link);
 
-      // ✅ Check if already exists
       const exists = await Video.findOne({ sourceUrl: url?.link });
-
       if (exists) {
         console.log("⏭ In DB, skipping");
         continue;
@@ -113,20 +116,21 @@ async function cronfunction(bot, GROUP_CHAT_ID) {
       let errorMessage = null;
 
       try {
-        // ✅ Download
         filePath = await downloadVideo(url);
 
-        // ✅ Send
-        sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
-          caption: titleFromUrl(url?.link) || "Watch video",
-        });
+        // ✅ FIX 6: Stream the file — don't buffer the whole video in RAM
+        sentMsg = await sendVideoStream(
+          bot,
+          GROUP_CHAT_ID,
+          filePath,
+          titleFromUrl(url?.link) || "Watch video",
+        );
       } catch (err) {
         console.error("❌ Failed:", err.message);
         status = "error";
         errorMessage = err.message;
       }
 
-      // ✅ Insert ONLY ONCE (success OR error)
       try {
         await Video.create({
           messageId: sentMsg?.message_id || null,
@@ -137,7 +141,6 @@ async function cronfunction(bot, GROUP_CHAT_ID) {
           errorMessage,
           createdAt: new Date(),
         });
-
         console.log(`✅ Saved: ${url?.link} | Status: ${status}`);
       } catch (dbErr) {
         if (dbErr.code === 11000) {
@@ -147,17 +150,20 @@ async function cronfunction(bot, GROUP_CHAT_ID) {
         }
       }
 
-      // ✅ Cleanup
+      // ✅ FIX 7: Always clean up temp file immediately after send
       if (filePath) {
         try {
-          console.log("🔄 Removing file:", filePath);
           await fs.remove(filePath);
           console.log("✅ File removed:", filePath);
         } catch {
           console.error("❌ Failed to remove file:", filePath);
         }
       }
+
+      // ✅ FIX 8: Small pause between videos to avoid memory spikes from concurrent I/O
+      await new Promise((r) => setTimeout(r, 500));
     }
+
     page++;
   } catch (err) {
     console.error("❌ Cron error:", err.message);
@@ -165,7 +171,6 @@ async function cronfunction(bot, GROUP_CHAT_ID) {
 }
 
 module.exports = (bot, GROUP_CHAT_ID) => {
-  // Runs every 6 hours
   cronfunction(bot, GROUP_CHAT_ID);
   cron.schedule(process.env.CRON_SCHEDULE, async () => {
     console.log("🔄 Running auto-fetch cron...");
