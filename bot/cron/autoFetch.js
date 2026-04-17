@@ -86,15 +86,9 @@ function titleFromUrl(url) {
     .replace(/\d+/g, "") // remove numbers (optional)
     .trim();
 }
-let page = 1,
-  query = process.env.QUERY,
-  selectedQuery = 0;
-module.exports = (bot, GROUP_CHAT_ID) => {
-  // Runs every 6 hours
-  cron.schedule(process.env.CRON_SCHEDULE, async () => {
-    console.log("🔄 Running auto-fetch cron...");
 
-    try {
+function cronfunction(bot, GROUP_CHAT_ID) {
+  try {
       const urls = await searchTwitterVideos(query, page);
       console.log("🔍 Fetched URLs:", urls);
       selectedQuery = Math.floor(Math.random() * query.length);
@@ -166,5 +160,15 @@ module.exports = (bot, GROUP_CHAT_ID) => {
     } catch (err) {
       console.error("❌ Cron error:", err.message);
     }
+}
+let page = 1,
+  query = process.env.QUERY,
+  selectedQuery = 0;
+module.exports = (bot, GROUP_CHAT_ID) => {
+  // Runs every 6 hours
+  cronfunction(bot, GROUP_CHAT_ID);
+  cron.schedule(process.env.CRON_SCHEDULE, async () => {
+    console.log("🔄 Running auto-fetch cron...");
+    cronfunction(bot, GROUP_CHAT_ID);
   });
 };
