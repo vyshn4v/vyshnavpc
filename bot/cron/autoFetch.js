@@ -1,15 +1,34 @@
 const cron = require("node-cron");
-const { exec, spawn } = require("child_process");
+const { exec } = require("child_process");
 const fs = require("fs-extra");
 const path = require("path");
 const Video = require("../models/videos.js");
 const axios = require("axios");
 
-// ✅ FIX 1: Drop cheerio entirely — regex scraping avoids building a full DOM in RAM
+const DOWNLOADS_DIR = path.join(__dirname, "../downloads");
+
+// ✅ Purge stale/partial files on startup and before each run
+async function cleanDownloadsDir() {
+  try {
+    await fs.ensureDir(DOWNLOADS_DIR);
+    const files = await fs.readdir(DOWNLOADS_DIR);
+    for (const file of files) {
+      const filePath = path.join(DOWNLOADS_DIR, file);
+      try {
+        await fs.remove(filePath);
+        console.log("🧹 Cleaned leftover file:", file);
+      } catch (e) {
+        console.error("❌ Could not remove:", file, e.message);
+      }
+    }
+  } catch (e) {
+    console.error("❌ cleanDownloadsDir error:", e.message);
+  }
+}
+
 function searchTwitterVideos(query, page) {
   return new Promise(async (resolve, reject) => {
     const url = `${process.env.SEARCH_URL}/${query}?page=${page}`;
-
     try {
       const { data } = await axios.get(url, {
         headers: {
@@ -19,15 +38,12 @@ function searchTwitterVideos(query, page) {
           Referer: process.env.REFERER_URL,
         },
         timeout: 20000,
-        // ✅ FIX 2: Tell axios not to decompress/buffer a huge response object
-        maxContentLength: 5 * 1024 * 1024, // 5MB max
+        maxContentLength: 5 * 1024 * 1024,
         responseType: "text",
       });
 
       const baseUrl = process.env.SEARCH_URL.split("/search")[0];
       const videos = [];
-
-      // ✅ FIX 3: Regex instead of cheerio — no DOM tree in memory
       const hrefRegex =
         /href="([^"]*\/videos\/[^"]*)"[^>]*(?:title="([^"]*)")?/g;
       let match;
@@ -54,7 +70,20 @@ function searchTwitterVideos(query, page) {
   });
 }
 
-// ✅ FIX 4: Stream the file directly to Telegram instead of loading it into RAM
+// ✅ Check free disk space before attempting download (in bytes)
+function getFreeDiskSpace() {
+  return new Promise((resolve) => {
+    exec(
+      `df -k "${DOWNLOADS_DIR}" | tail -1 | awk '{print $4}'`,
+      (err, stdout) => {
+        if (err) return resolve(Infinity); // can't check, allow it
+        const freeKB = parseInt(stdout.trim(), 10);
+        resolve(isNaN(freeKB) ? Infinity : freeKB * 1024);
+      },
+    );
+  });
+}
+
 function sendVideoStream(bot, chatId, filePath, caption) {
   return new Promise((resolve, reject) => {
     const stream = fs.createReadStream(filePath);
@@ -65,19 +94,25 @@ function sendVideoStream(bot, chatId, filePath, caption) {
 function downloadVideo(url) {
   return new Promise((resolve, reject) => {
     const filename = `video_${Date.now()}.mp4`;
-    const filePath = path.join(__dirname, "../downloads", filename);
-    fs.ensureDirSync(path.join(__dirname, "../downloads"));
+    const filePath = path.join(DOWNLOADS_DIR, filename);
 
     const cmd = `yt-dlp -o "${filePath}" --merge-output-format mp4 "${url?.link}"`;
     console.log("🔄 Downloading:", url?.link);
 
-    exec(cmd, (error, stdout, stderr) => {
+    exec(cmd, async (error, stdout, stderr) => {
       if (error) {
+        // ✅ Always delete partial file on failure
+        try {
+          await fs.remove(filePath);
+        } catch {}
+        // Also remove any yt-dlp temp fragments (e.g. .mp4.part, .ytdl)
+        try {
+          await fs.remove(filePath + ".part");
+        } catch {}
         console.error("❌ Download error:", stderr || error.message);
-        reject(new Error(stderr || error.message));
-      } else {
-        resolve(filePath);
+        return reject(new Error(stderr || error.message));
       }
+      resolve(filePath);
     });
   });
 }
@@ -96,11 +131,24 @@ function titleFromUrl(url) {
 let page = 1;
 const query = process.env.QUERY;
 
+// ✅ Minimum 200MB free space required before downloading
+const MIN_FREE_BYTES = 200 * 1024 * 1024;
+
 async function cronfunction(bot, GROUP_CHAT_ID) {
   try {
+    // ✅ Clean any leftover files before starting
+    await cleanDownloadsDir();
+
+    const freeSpace = await getFreeDiskSpace();
+    if (freeSpace < MIN_FREE_BYTES) {
+      console.error(
+        `❌ Not enough disk space: ${Math.round(freeSpace / 1024 / 1024)}MB free. Skipping cycle.`,
+      );
+      return;
+    }
+
     const urls = await searchTwitterVideos(query, page);
 
-    // ✅ FIX 5: Process one URL at a time — no full array in RAM during download
     for (const url of urls) {
       console.log("🔄 Processing:", url?.link);
 
@@ -110,6 +158,13 @@ async function cronfunction(bot, GROUP_CHAT_ID) {
         continue;
       }
 
+      // ✅ Re-check space before each individual download
+      const spaceNow = await getFreeDiskSpace();
+      if (spaceNow < MIN_FREE_BYTES) {
+        console.error("❌ Disk space too low mid-cycle, stopping.");
+        break;
+      }
+
       let filePath = null;
       let sentMsg = null;
       let status = "success";
@@ -117,8 +172,6 @@ async function cronfunction(bot, GROUP_CHAT_ID) {
 
       try {
         filePath = await downloadVideo(url);
-
-        // ✅ FIX 6: Stream the file — don't buffer the whole video in RAM
         sentMsg = await sendVideoStream(
           bot,
           GROUP_CHAT_ID,
@@ -129,6 +182,16 @@ async function cronfunction(bot, GROUP_CHAT_ID) {
         console.error("❌ Failed:", err.message);
         status = "error";
         errorMessage = err.message;
+      } finally {
+        // ✅ Always delete in finally — runs even if sendVideo throws
+        if (filePath) {
+          try {
+            await fs.remove(filePath);
+            console.log("✅ File removed:", filePath);
+          } catch {
+            console.error("❌ Failed to remove file:", filePath);
+          }
+        }
       }
 
       try {
@@ -150,17 +213,6 @@ async function cronfunction(bot, GROUP_CHAT_ID) {
         }
       }
 
-      // ✅ FIX 7: Always clean up temp file immediately after send
-      if (filePath) {
-        try {
-          await fs.remove(filePath);
-          console.log("✅ File removed:", filePath);
-        } catch {
-          console.error("❌ Failed to remove file:", filePath);
-        }
-      }
-
-      // ✅ FIX 8: Small pause between videos to avoid memory spikes from concurrent I/O
       await new Promise((r) => setTimeout(r, 500));
     }
 
