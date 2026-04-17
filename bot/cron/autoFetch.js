@@ -86,84 +86,84 @@ function titleFromUrl(url) {
     .replace(/\d+/g, "") // remove numbers (optional)
     .trim();
 }
-
-function cronfunction(bot, GROUP_CHAT_ID) {
-  try {
-      const urls = await searchTwitterVideos(query, page);
-      console.log("🔍 Fetched URLs:", urls);
-      selectedQuery = Math.floor(Math.random() * query.length);
-      console.log("⚠️ No videos found, skipping this cycle.");
-
-      for (const url of urls) {
-        console.log("🔄 Processing:", url?.link);
-
-        // ✅ Check if already exists
-        const exists = await Video.findOne({ sourceUrl: url?.link });
-
-        if (exists) {
-          console.log("⏭ In DB, skipping");
-          continue;
-        }
-
-        let filePath = null;
-        let sentMsg = null;
-        let status = "success";
-        let errorMessage = null;
-
-        try {
-          // ✅ Download
-          filePath = await downloadVideo(url);
-
-          // ✅ Send
-          sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
-            caption: titleFromUrl(url?.link) || "Watch video",
-          });
-        } catch (err) {
-          console.error("❌ Failed:", err.message);
-          status = "error";
-          errorMessage = err.message;
-        }
-
-        // ✅ Insert ONLY ONCE (success OR error)
-        try {
-          await Video.create({
-            messageId: sentMsg?.message_id || null,
-            fileId: sentMsg?.video?.file_id || null,
-            caption: titleFromUrl(url?.link) || "Watch video",
-            sourceUrl: url?.link,
-            status,
-            errorMessage,
-            createdAt: new Date(),
-          });
-
-          console.log(`✅ Saved: ${url?.link} | Status: ${status}`);
-        } catch (dbErr) {
-          if (dbErr.code === 11000) {
-            console.log("⚠️ Duplicate (race condition), ignored");
-          } else {
-            console.error("❌ DB error:", dbErr.message);
-          }
-        }
-
-        // ✅ Cleanup
-        if (filePath) {
-          try {
-            console.log("🔄 Removing file:", filePath);
-            await fs.remove(filePath);
-            console.log("✅ File removed:", filePath);
-          } catch {
-            console.error("❌ Failed to remove file:", filePath);
-          }
-        }
-      }
-      page++;
-    } catch (err) {
-      console.error("❌ Cron error:", err.message);
-    }
-}
 let page = 1,
   query = process.env.QUERY,
   selectedQuery = 0;
+async function cronfunction(bot, GROUP_CHAT_ID) {
+  try {
+    const urls = await searchTwitterVideos(query, page);
+    console.log("🔍 Fetched URLs:", urls);
+    selectedQuery = Math.floor(Math.random() * query.length);
+    console.log("⚠️ No videos found, skipping this cycle.");
+
+    for (const url of urls) {
+      console.log("🔄 Processing:", url?.link);
+
+      // ✅ Check if already exists
+      const exists = await Video.findOne({ sourceUrl: url?.link });
+
+      if (exists) {
+        console.log("⏭ In DB, skipping");
+        continue;
+      }
+
+      let filePath = null;
+      let sentMsg = null;
+      let status = "success";
+      let errorMessage = null;
+
+      try {
+        // ✅ Download
+        filePath = await downloadVideo(url);
+
+        // ✅ Send
+        sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
+          caption: titleFromUrl(url?.link) || "Watch video",
+        });
+      } catch (err) {
+        console.error("❌ Failed:", err.message);
+        status = "error";
+        errorMessage = err.message;
+      }
+
+      // ✅ Insert ONLY ONCE (success OR error)
+      try {
+        await Video.create({
+          messageId: sentMsg?.message_id || null,
+          fileId: sentMsg?.video?.file_id || null,
+          caption: titleFromUrl(url?.link) || "Watch video",
+          sourceUrl: url?.link,
+          status,
+          errorMessage,
+          createdAt: new Date(),
+        });
+
+        console.log(`✅ Saved: ${url?.link} | Status: ${status}`);
+      } catch (dbErr) {
+        if (dbErr.code === 11000) {
+          console.log("⚠️ Duplicate (race condition), ignored");
+        } else {
+          console.error("❌ DB error:", dbErr.message);
+        }
+      }
+
+      // ✅ Cleanup
+      if (filePath) {
+        try {
+          console.log("🔄 Removing file:", filePath);
+          await fs.remove(filePath);
+          console.log("✅ File removed:", filePath);
+        } catch {
+          console.error("❌ Failed to remove file:", filePath);
+        }
+      }
+    }
+    page++;
+  } catch (err) {
+    console.error("❌ Cron error:", err.message);
+  }
+}
+
 module.exports = (bot, GROUP_CHAT_ID) => {
   // Runs every 6 hours
   cronfunction(bot, GROUP_CHAT_ID);
