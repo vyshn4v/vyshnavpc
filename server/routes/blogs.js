@@ -89,4 +89,58 @@ router.get("/:blogId", async (req, res, next) => {
     next(); // fall through to 404
   }
 });
+router.get("/:blogId/json", async (req, res, next) => {
+  try {
+    const postData = await blogContentSchema.aggregate([
+      {
+        $match: {
+          blogId: new mongoose.Types.ObjectId(req.params.blogId),
+        },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "slug",
+          as: "category",
+        },
+      },
+      {
+        $lookup: {
+          from: "blog-sections",
+          localField: "blogId",
+          foreignField: "blogId",
+          as: "sections",
+        },
+      },
+      {
+        $lookup: {
+          from: "blog-overviews",
+          localField: "blogId",
+          foreignField: "blogId",
+          as: "overview",
+        },
+      },
+      {
+        $unwind: {
+          path: "$category",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $unwind: {
+          path: "$overview",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+    ]);
+    const data = postData?.[0];
+    if (!data) {
+      throw new Error("Post not found");
+    }
+    res.json(data);
+  } catch (err) {
+    next(); // fall through to 404
+  }
+});
 export default router;
