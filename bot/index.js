@@ -58,6 +58,12 @@ function downloadVideo(url) {
     const filePath = path.join(__dirname, "downloads", filename);
     fs.ensureDirSync(path.join(__dirname, "downloads"));
 
+    // Use proxy if set in .env to bypass India/region restrictions
+    // PROXY_URL=socks5://127.0.0.1:1080  or  http://user:pass@host:port
+    const proxyFlag = process.env.PROXY_URL
+      ? `--proxy "${process.env.PROXY_URL}"`
+      : "";
+
     const cmd = [
       "yt-dlp",
       "--no-playlist",
@@ -66,9 +72,13 @@ function downloadVideo(url) {
       "--merge-output-format mp4",
       '--add-header "User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"',
       '--add-header "Accept-Language:en-US,en;q=0.9"',
+      "--geo-bypass-country US",
+      proxyFlag,
       `-o "${filePath}"`,
       `"${url}"`,
-    ].join(" ");
+    ]
+      .filter(Boolean)
+      .join(" ");
 
     exec(cmd, { timeout: 120000 }, (error, stdout, stderr) => {
       if (error) {
