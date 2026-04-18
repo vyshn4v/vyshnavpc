@@ -40,7 +40,6 @@ function downloadVideo(url) {
       "--merge-output-format mp4",
       '--add-header "User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"',
       '--add-header "Accept-Language:en-US,en;q=0.9"',
-      `--cookies-from-browser chrome`, // Optional: remove if not needed
       `-o "${filePath}"`,
       `"${url}"`,
     ].join(" ");
