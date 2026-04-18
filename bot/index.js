@@ -25,7 +25,33 @@ mongoose
 // ─── User sessions ───
 let userSessions = {};
 
-// ─── Download video ───
+// ─── Clean Twitter/X URL ───
+function cleanTwitterUrl(raw) {
+  let url = raw.trim();
+  try {
+    const parsed = new URL(url);
+    // Remove /video/N suffix (e.g. /video/1) — yt-dlp doesn't support it
+    const cleanPath = parsed.pathname.replace(/\/video\/\d+$/, "");
+    return `${parsed.origin}${cleanPath}`;
+  } catch {
+    return url.split("?")[0].replace(/\/video\/\d+$/, "");
+  }
+}
+
+// ─── Validate Twitter/X URL ───
+function validateTwitterUrl(url) {
+  const match = url.match(/\/status\/(\d+)$/);
+  if (!match) return { valid: false, reason: "no_status" };
+
+  // Twitter snowflake IDs are based on a 41-bit timestamp — max ~1.9 trillion
+  const tweetId = BigInt(match[1]);
+  if (tweetId > 1999999999999999999n)
+    return { valid: false, reason: "fake_id" };
+
+  return { valid: true };
+}
+
+// ─── Download video via yt-dlp ───
 function downloadVideo(url) {
   return new Promise((resolve, reject) => {
     const filename = `video_${Date.now()}.mp4`;
@@ -49,17 +75,33 @@ function downloadVideo(url) {
         console.error("yt-dlp error:", stderr || error.message);
         return reject(new Error(stderr || error.message));
       }
-
-      // Verify file actually exists and has content
       if (!fs.existsSync(filePath) || fs.statSync(filePath).size === 0) {
         return reject(
           new Error("Download failed: output file is empty or missing."),
         );
       }
-
       resolve(filePath);
     });
   });
+}
+
+// ─── Friendly error message for yt-dlp failures ───
+function getFriendlyError(err) {
+  const msg = err.message || "";
+  if (msg.includes("login") || msg.includes("age") || msg.includes("private")) {
+    return "❌ Download failed.\n\n⚠️ This tweet may be private, age-restricted, or requires login.";
+  }
+  if (msg.includes("rate") || msg.includes("429")) {
+    return "❌ Download failed.\n\n⚠️ Twitter rate limit hit. Please try again in a few minutes.";
+  }
+  if (
+    msg.includes("No video") ||
+    msg.includes("no formats") ||
+    msg.includes("Unsupported URL")
+  ) {
+    return "❌ Download failed.\n\n⚠️ No downloadable video found in this tweet.";
+  }
+  return `❌ Error: ${msg}`;
 }
 
 // ─── Build paginated keyboard ───
@@ -101,11 +143,11 @@ function sendMainMenu(chatId) {
   });
 }
 
-// ─── /start ───
+// ─── /start and /menu ───
 bot.onText(/\/start/, (msg) => sendMainMenu(msg.chat.id));
 bot.onText(/\/menu/, (msg) => sendMainMenu(msg.chat.id));
 
-// ─── Index group videos ───
+// ─── Index videos posted in group ───
 bot.on("video", async (msg) => {
   if (String(msg.chat.id) === String(GROUP_CHAT_ID)) {
     const exists = await Video.findOne({ messageId: msg.message_id });
@@ -121,14 +163,14 @@ bot.on("video", async (msg) => {
   }
 });
 
-// ─── Handle messages ───
+// ─── Handle all text messages ───
 bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text?.trim();
 
   if (!text) return;
 
-  // ─── Handle awaiting input (search/tag) ───
+  // ── Awaiting search/tag input ──
   if (userSessions[chatId]?.awaitingInput) {
     const type = userSessions[chatId].awaitingInput;
     userSessions[chatId].awaitingInput = null;
@@ -141,29 +183,36 @@ bot.on("message", async (msg) => {
 
       if (!results.length)
         return bot.sendMessage(chatId, `🔍 No results for "${text}"`);
+
       userSessions[chatId] = { results, page: 0, type: "search" };
       return bot.sendMessage(
         chatId,
         `🔍 ${results.length} result(s) for "${text}":`,
-        { reply_markup: buildKeyboard(results, 0, results.length) },
+        {
+          reply_markup: buildKeyboard(results, 0, results.length),
+        },
       );
     }
 
     if (type === "tag") {
       const results = await Video.find({ tags: { $in: [text.toLowerCase()] } });
+
       if (!results.length)
         return bot.sendMessage(chatId, `🏷 No videos with tag "${text}"`);
+
       userSessions[chatId] = { results, page: 0, type: "tag" };
       return bot.sendMessage(
         chatId,
         `🏷 ${results.length} video(s) tagged "${text}":`,
-        { reply_markup: buildKeyboard(results, 0, results.length) },
+        {
+          reply_markup: buildKeyboard(results, 0, results.length),
+        },
       );
     }
     return;
   }
 
-  // ─── Handle Twitter/X URL ───
+  // ── Handle Twitter/X URLs ──
   if (!text.startsWith("http")) return;
 
   if (!text.includes("twitter.com") && !text.includes("x.com")) {
@@ -173,16 +222,20 @@ bot.on("message", async (msg) => {
     );
   }
 
-  // Strip query params, tracking junk, and /video/N suffix that yt-dlp doesn't support
-  let cleanUrl = text;
-  try {
-    const parsed = new URL(text);
-    // Remove /video/1 or /video/2 etc. suffix, then drop query params
-    const cleanPath = parsed.pathname.replace(/\/video\/\d+$/, "");
-    cleanUrl = `${parsed.origin}${cleanPath}`;
-  } catch {
-    // If URL parsing fails, strip manually
-    cleanUrl = text.split("?")[0].replace(/\/video\/\d+$/, "");
+  const cleanUrl = cleanTwitterUrl(text);
+  const validation = validateTwitterUrl(cleanUrl);
+
+  if (!validation.valid) {
+    if (validation.reason === "fake_id") {
+      return bot.sendMessage(
+        chatId,
+        "❌ This tweet ID does not exist. The URL appears to be invalid or fabricated.",
+      );
+    }
+    return bot.sendMessage(
+      chatId,
+      "⚠️ Invalid Twitter/X URL. Please send a direct tweet link like:\nhttps://x.com/username/status/123456789",
+    );
   }
 
   const statusMsg = await bot.sendMessage(
@@ -219,27 +272,7 @@ bot.on("message", async (msg) => {
     await fs.remove(filePath);
   } catch (err) {
     console.error("Download/upload error:", err);
-
-    let errorMsg = "❌ Error: " + err.message;
-
-    // Provide helpful hints for common yt-dlp failures
-    if (
-      err.message.includes("login") ||
-      err.message.includes("age") ||
-      err.message.includes("private")
-    ) {
-      errorMsg +=
-        "\n\n⚠️ This tweet may be private, age-restricted, or requires login.";
-    } else if (err.message.includes("rate") || err.message.includes("429")) {
-      errorMsg +=
-        "\n\n⚠️ Twitter rate limit hit. Please try again in a few minutes.";
-    } else if (
-      err.message.includes("No video") ||
-      err.message.includes("no formats")
-    ) {
-      errorMsg += "\n\n⚠️ No downloadable video found in this tweet.";
-    }
-
+    const errorMsg = getFriendlyError(err);
     await bot
       .editMessageText(errorMsg, {
         chat_id: chatId,
@@ -249,7 +282,7 @@ bot.on("message", async (msg) => {
   }
 });
 
-// ─── Handle all callbacks ───
+// ─── Handle all callback queries ───
 bot.on("callback_query", async (query) => {
   const chatId = query.message.chat.id;
   const data = query.data;
@@ -257,7 +290,6 @@ bot.on("callback_query", async (query) => {
 
   if (data === "noop") return;
 
-  // Main menu buttons
   if (data === "search_prompt") {
     userSessions[chatId] = { awaitingInput: "search" };
     return bot.sendMessage(chatId, "🔍 Type your search keyword:");
@@ -271,7 +303,7 @@ bot.on("callback_query", async (query) => {
     );
   }
 
-  // List all
+  // List all videos
   if (data.startsWith("list_")) {
     const page = parseInt(data.split("_")[1]);
     const total = await Video.countDocuments();
@@ -323,6 +355,7 @@ bot.on("callback_query", async (query) => {
         .skip(page * VIDEOS_PER_PAGE)
         .limit(VIDEOS_PER_PAGE);
     } else {
+      // search/tag results are already in session
       results = session.results;
       total = results.length;
       results = results.slice(
@@ -346,8 +379,6 @@ bot.on("callback_query", async (query) => {
       return bot.sendMessage(chatId, "❌ Video not found in database.");
 
     await bot.sendVideo(chatId, video.fileId, { caption: video.caption });
-
-    // Mark as not new after viewing
     await Video.updateOne({ messageId }, { isNew: false });
   }
 });
