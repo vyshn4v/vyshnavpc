@@ -31,10 +31,34 @@ function downloadVideo(url) {
     const filename = `video_${Date.now()}.mp4`;
     const filePath = path.join(__dirname, "downloads", filename);
     fs.ensureDirSync(path.join(__dirname, "downloads"));
-    const cmd = `yt-dlp -o "${filePath}" --merge-output-format mp4 "${url}"`;
-    exec(cmd, (error, stdout, stderr) => {
-      if (error) reject(new Error(stderr || error.message));
-      else resolve(filePath);
+
+    const cmd = [
+      "yt-dlp",
+      "--no-playlist",
+      "--no-warnings",
+      '--format "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"',
+      "--merge-output-format mp4",
+      '--add-header "User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"',
+      '--add-header "Accept-Language:en-US,en;q=0.9"',
+      `--cookies-from-browser chrome`, // Optional: remove if not needed
+      `-o "${filePath}"`,
+      `"${url}"`,
+    ].join(" ");
+
+    exec(cmd, { timeout: 120000 }, (error, stdout, stderr) => {
+      if (error) {
+        console.error("yt-dlp error:", stderr || error.message);
+        return reject(new Error(stderr || error.message));
+      }
+
+      // Verify file actually exists and has content
+      if (!fs.existsSync(filePath) || fs.statSync(filePath).size === 0) {
+        return reject(
+          new Error("Download failed: output file is empty or missing."),
+        );
+      }
+
+      resolve(filePath);
     });
   });
 }
@@ -98,14 +122,14 @@ bot.on("video", async (msg) => {
   }
 });
 
-// ─── Handle Twitter/X URL ───
+// ─── Handle messages ───
 bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
-  const text = msg.text;
+  const text = msg.text?.trim();
 
   if (!text) return;
 
-  // Handle search/tag input from session
+  // ─── Handle awaiting input (search/tag) ───
   if (userSessions[chatId]?.awaitingInput) {
     const type = userSessions[chatId].awaitingInput;
     userSessions[chatId].awaitingInput = null;
@@ -140,7 +164,9 @@ bot.on("message", async (msg) => {
     return;
   }
 
+  // ─── Handle Twitter/X URL ───
   if (!text.startsWith("http")) return;
+
   if (!text.includes("twitter.com") && !text.includes("x.com")) {
     return bot.sendMessage(
       chatId,
@@ -148,30 +174,78 @@ bot.on("message", async (msg) => {
     );
   }
 
-  await bot.sendMessage(chatId, "⏳ Downloading Twitter video...");
+  // Strip query params / tracking junk that can confuse yt-dlp
+  let cleanUrl = text;
+  try {
+    const parsed = new URL(text);
+    // Keep only the pathname (removes ?s=... tracking params)
+    cleanUrl = `${parsed.origin}${parsed.pathname}`;
+  } catch {
+    // If URL parsing fails, use as-is
+    cleanUrl = text.split("?")[0];
+  }
+
+  const statusMsg = await bot.sendMessage(
+    chatId,
+    "⏳ Downloading Twitter/X video...",
+  );
 
   try {
-    const filePath = await downloadVideo(text);
-    await bot.sendMessage(chatId, "📤 Uploading to group...");
+    const filePath = await downloadVideo(cleanUrl);
+
+    await bot.editMessageText("📤 Uploading to group...", {
+      chat_id: chatId,
+      message_id: statusMsg.message_id,
+    });
 
     const sentMsg = await bot.sendVideo(GROUP_CHAT_ID, filePath, {
-      caption: `📹 ${text}`,
+      caption: `📹 ${cleanUrl}`,
     });
 
     await Video.create({
       messageId: sentMsg.message_id,
       fileId: sentMsg.video.file_id,
-      caption: text,
+      caption: cleanUrl,
       tags: [],
-      sourceUrl: text,
+      sourceUrl: cleanUrl,
       isNew: true,
     });
 
-    await bot.sendMessage(chatId, "✅ Uploaded and saved to database!");
+    await bot.editMessageText("✅ Uploaded and saved to database!", {
+      chat_id: chatId,
+      message_id: statusMsg.message_id,
+    });
+
     await fs.remove(filePath);
   } catch (err) {
-    console.error(err);
-    await bot.sendMessage(chatId, "❌ Error: " + err.message);
+    console.error("Download/upload error:", err);
+
+    let errorMsg = "❌ Error: " + err.message;
+
+    // Provide helpful hints for common yt-dlp failures
+    if (
+      err.message.includes("login") ||
+      err.message.includes("age") ||
+      err.message.includes("private")
+    ) {
+      errorMsg +=
+        "\n\n⚠️ This tweet may be private, age-restricted, or requires login.";
+    } else if (err.message.includes("rate") || err.message.includes("429")) {
+      errorMsg +=
+        "\n\n⚠️ Twitter rate limit hit. Please try again in a few minutes.";
+    } else if (
+      err.message.includes("No video") ||
+      err.message.includes("no formats")
+    ) {
+      errorMsg += "\n\n⚠️ No downloadable video found in this tweet.";
+    }
+
+    await bot
+      .editMessageText(errorMsg, {
+        chat_id: chatId,
+        message_id: statusMsg.message_id,
+      })
+      .catch(() => bot.sendMessage(chatId, errorMsg));
   }
 });
 
