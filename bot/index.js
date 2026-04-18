@@ -173,15 +173,16 @@ bot.on("message", async (msg) => {
     );
   }
 
-  // Strip query params / tracking junk that can confuse yt-dlp
+  // Strip query params, tracking junk, and /video/N suffix that yt-dlp doesn't support
   let cleanUrl = text;
   try {
     const parsed = new URL(text);
-    // Keep only the pathname (removes ?s=... tracking params)
-    cleanUrl = `${parsed.origin}${parsed.pathname}`;
+    // Remove /video/1 or /video/2 etc. suffix, then drop query params
+    const cleanPath = parsed.pathname.replace(/\/video\/\d+$/, "");
+    cleanUrl = `${parsed.origin}${cleanPath}`;
   } catch {
-    // If URL parsing fails, use as-is
-    cleanUrl = text.split("?")[0];
+    // If URL parsing fails, strip manually
+    cleanUrl = text.split("?")[0].replace(/\/video\/\d+$/, "");
   }
 
   const statusMsg = await bot.sendMessage(
