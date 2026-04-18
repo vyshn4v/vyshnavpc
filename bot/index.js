@@ -58,8 +58,21 @@ function downloadVideo(url) {
     const filePath = path.join(__dirname, "downloads", filename);
     fs.ensureDirSync(path.join(__dirname, "downloads"));
 
-    // Use proxy if set in .env to bypass India/region restrictions
-    // PROXY_URL=socks5://127.0.0.1:1080  or  http://user:pass@host:port
+    // ── Auth: username/password (recommended, no cookie file needed) ──
+    // Set TWITTER_USERNAME and TWITTER_PASSWORD in your .env file
+    const authFlag =
+      process.env.TWITTER_USERNAME && process.env.TWITTER_PASSWORD
+        ? `-u "${process.env.TWITTER_USERNAME}" -p "${process.env.TWITTER_PASSWORD}"`
+        : "";
+
+    // ── Fallback: cookies.txt (if you have it) ──
+    const cookiesPath = path.join(__dirname, "cookies.txt");
+    const cookiesFlag =
+      !authFlag && fs.existsSync(cookiesPath)
+        ? `--cookies "${cookiesPath}"`
+        : "";
+
+    // ── Optional proxy (set PROXY_URL in .env) ──
     const proxyFlag = process.env.PROXY_URL
       ? `--proxy "${process.env.PROXY_URL}"`
       : "";
@@ -73,6 +86,8 @@ function downloadVideo(url) {
       '--add-header "User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"',
       '--add-header "Accept-Language:en-US,en;q=0.9"',
       "--geo-bypass-country US",
+      authFlag,
+      cookiesFlag,
       proxyFlag,
       `-o "${filePath}"`,
       `"${url}"`,
