@@ -5,12 +5,12 @@ import { getRedisClient } from "../config/initializeRedis.js";
 
 router.get("/", async (req, res) => {
   const redis = getRedisClient();
-  const cachedData = await redis.get("landingPage");
+  const cachedData = await redis.get("Portfolio:landingPage");
   if (cachedData) {
     return res.render("landing-page", JSON.parse(cachedData));
   }
   const portfolio = await getLandingPageModel().findOne();
-  redis.set("landingPage", JSON.stringify(portfolio?.data), {
+  redis.set("Portfolio:landingPage", JSON.stringify(portfolio?.data), {
     EX: process.env.REDIS_CACHE_TIME, // Cache for 60 seconds
   });
   res.render("landing-page", {
