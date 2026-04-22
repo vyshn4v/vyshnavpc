@@ -1,0 +1,22 @@
+{
+  "name": "personalwebsite",
+  "version": "3.0.3",
+  "description": "an hbs server for personal website for mr.vyshnav p c",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "node --env-file=./src/.dev.env --watch ./src/index.js --env environment=development",
+    "start:prod": "node ./src/index.js --env environment=production"
+  },
+  "keywords": [
+    "personal-website"
+  ],
+  "author": "vyshnav p c",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-handlebars": "^8.0.1",
+    "mongoose": "^9.4.1",
+    "redis": "^5.12.1"
+  }
+}

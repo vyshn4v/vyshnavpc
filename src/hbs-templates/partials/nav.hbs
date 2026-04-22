@@ -1,0 +1,39 @@
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-brand">
+    <span class="dot"></span>
+    <span>{{site.name}}</span>
+  </a>
+
+  {{!-- Always-visible mobile CTA + toggle group --}}
+  <div class="nav-right">
+    <a href="mailto:{{site.email}}" class="nav-cta">Hire Me ↗</a>
+
+    <button
+      class="nav-toggle"
+      id="navToggle"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      aria-controls="navLinks"
+    >
+      <span class="bar bar--1"></span>
+      <span class="bar bar--2"></span>
+      <span class="bar bar--3"></span>
+    </button>
+  </div>
+
+  {{!-- Drawer --}}
+  <div class="nav-links" id="navLinks" role="navigation" aria-label="Main">
+    {{#each nav}}
+    <a
+      href="{{this.href}}"
+      class="nav-link{{#if this.active}} active{{/if}}"
+    >{{this.label}}</a>
+    {{/each}}
+
+    {{!-- Repeat CTA inside drawer for desktop layout --}}
+    <a href="mailto:{{site.email}}" class="nav-cta nav-cta--desktop">Hire Me ↗</a>
+  </div>
+
+  {{!-- Backdrop overlay (closes menu on tap) --}}
+  <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+</nav>
