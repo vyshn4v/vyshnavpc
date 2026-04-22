@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "node --env-file=./src/.dev.env --watch ./src/index.js --env environment=development",
-    "start:prod": "node ./src/index.js --env environment=production"
+    "start:prod": "node ./src/index.js --env-file=.env"
   },
   "keywords": [
     "personal-website"
