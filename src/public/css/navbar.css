@@ -1,0 +1,418 @@
+/* ============================================================
+   navbar.css — Vyshnav P C Portfolio
+   BEM: .navbar / .navbar__* / .navbar--*
+   Terminal-green accent, mobile-first, fully accessible
+   ============================================================ */
+
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+    --nav-height: 68px;
+    --nav-height-sm: 56px;
+    --nav-bg: rgba(10, 10, 15, 0.88);
+    --nav-bg-scrolled: rgba(10, 10, 10, 0.97);
+    --nav-border: rgba(255, 255, 255, 0.06);
+    --nav-border-hover: rgba(0, 255, 136, 0.22);
+    --nav-accent: #00ff88;
+    /* terminal green */
+    --nav-accent-dim: rgba(0, 255, 136, 0.10);
+    --nav-text: #c8c8c8;
+    --nav-text-hover: #ffffff;
+    --nav-mobile-bg: rgba(10, 10, 15, 0.97);
+    --nav-font: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --nav-radius: 6px;
+    --nav-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Base bar ────────────────────────────────────────────── */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: var(--nav-height);
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--nav-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition:
+        background var(--nav-transition),
+        height var(--nav-transition),
+        box-shadow var(--nav-transition),
+        border-color var(--nav-transition);
+}
+
+.navbar--scrolled {
+    height: var(--nav-height-sm);
+    background: var(--nav-bg-scrolled);
+    box-shadow: 0 1px 32px rgba(0, 0, 0, 0.55);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Container ───────────────────────────────────────────── */
+.navbar__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+/* ── Logo ────────────────────────────────────────────────── */
+.navbar__logo {
+    font-family: var(--nav-font);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    flex-shrink: 0;
+    z-index: 1001;
+    transition: color var(--nav-transition);
+}
+
+.navbar__logo:hover {
+    color: var(--nav-accent);
+}
+
+/* ── Desktop nav links ───────────────────────────────────── */
+.navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0 0 0 auto;
+    /* push to right */
+    padding: 0;
+}
+
+.navbar__link {
+    font-family: var(--nav-font);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--nav-text);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    padding: 6px 12px;
+    border-radius: var(--nav-radius);
+    border: 1px solid transparent;
+    position: relative;
+    transition:
+        color var(--nav-transition),
+        background var(--nav-transition),
+        border-color var(--nav-transition);
+}
+
+/* Underline bar on hover / active */
+.navbar__link::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 4px;
+    height: 1px;
+    background: var(--nav-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--nav-transition);
+}
+
+.navbar__link:hover {
+    color: var(--nav-text-hover);
+    background: var(--nav-accent-dim);
+    border-color: var(--nav-border-hover);
+}
+
+.navbar__link:hover::after {
+    transform: scaleX(1);
+}
+
+.navbar__link.is-active {
+    color: var(--nav-accent);
+    background: var(--nav-accent-dim);
+    border-color: var(--nav-border-hover);
+}
+
+.navbar__link.is-active::after {
+    transform: scaleX(1);
+}
+
+/* ── Actions (CTA + hamburger wrapper) ───────────────────── */
+.navbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    z-index: 1001;
+}
+
+/* ── CTA button ──────────────────────────────────────────── */
+.navbar__cta {
+    font-family: var(--nav-font);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #0a0a0e;
+    background: var(--nav-accent);
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: var(--nav-radius);
+    border: 1px solid var(--nav-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    transition:
+        background var(--nav-transition),
+        color var(--nav-transition),
+        box-shadow var(--nav-transition),
+        transform var(--nav-transition);
+}
+
+.navbar__cta:hover {
+    background: transparent;
+    color: var(--nav-accent);
+    box-shadow: 0 0 18px rgba(0, 255, 136, 0.28);
+    transform: translateY(-1px);
+}
+
+.navbar__cta:active {
+    transform: translateY(0);
+}
+
+/* Mobile CTA (inside the drawer) */
+.navbar__cta--mobile {
+    margin-top: 20px;
+    align-self: flex-start;
+    font-size: 0.85rem;
+}
+
+/* ── Hamburger ───────────────────────────────────────────── */
+.navbar__hamburger {
+    display: none;
+    /* hidden on desktop */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    background: transparent;
+    border: 1px solid var(--nav-border);
+    border-radius: var(--nav-radius);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition:
+        border-color var(--nav-transition),
+        background var(--nav-transition);
+}
+
+.navbar__hamburger:hover {
+    border-color: var(--nav-accent);
+    background: var(--nav-accent-dim);
+}
+
+.navbar__hamburger-bar {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: var(--nav-text);
+    border-radius: 2px;
+    transform-origin: center;
+    transition:
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        background 0.2s ease;
+}
+
+/* Bars → X when open */
+.navbar__hamburger.is-open .navbar__hamburger-bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+    background: var(--nav-accent);
+}
+
+.navbar__hamburger.is-open .navbar__hamburger-bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.navbar__hamburger.is-open .navbar__hamburger-bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+    background: var(--nav-accent);
+}
+
+/* ── Mobile drawer ───────────────────────────────────────── */
+.navbar__mobile-menu {
+    display: none;
+    /* switched to flex on mobile via media query */
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 20px 28px;
+    background: var(--nav-mobile-bg);
+    border-bottom: 1px solid var(--nav-border);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    /* Hidden state — slide + fade */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition:
+        opacity var(--nav-transition),
+        transform var(--nav-transition);
+}
+
+/* When navbar is scrolled, drawer top tracks shrunken bar */
+.navbar--scrolled+.navbar__mobile-menu {
+    top: var(--nav-height-sm);
+}
+
+.navbar__mobile-menu.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* Mobile link list */
+.navbar__mobile-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.navbar__mobile-link {
+    font-family: var(--nav-font);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--nav-text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    min-height: 44px;
+    /* accessible tap target */
+    border-radius: var(--nav-radius);
+    border-bottom: 1px solid var(--nav-border);
+    transition:
+        color var(--nav-transition),
+        background var(--nav-transition);
+}
+
+.navbar__mobile-link:last-child {
+    border-bottom: none;
+}
+
+.navbar__mobile-link:hover {
+    color: var(--nav-accent);
+    background: var(--nav-accent-dim);
+}
+
+.navbar__mobile-link.is-active {
+    color: var(--nav-accent);
+}
+
+/* Staggered entrance for drawer links */
+.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(1) {
+    transition-delay: 0.04s;
+}
+
+.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(2) {
+    transition-delay: 0.07s;
+}
+
+.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(3) {
+    transition-delay: 0.10s;
+}
+
+.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(4) {
+    transition-delay: 0.13s;
+}
+
+.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(5) {
+    transition-delay: 0.16s;
+}
+
+.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(6) {
+    transition-delay: 0.19s;
+}
+
+/* ── Backdrop overlay ────────────────────────────────────── */
+.navbar__overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 998;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity var(--nav-transition);
+}
+
+.navbar__overlay.is-open {
+    display: block;
+    opacity: 1;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .navbar__container {
+        padding: 0 20px;
+    }
+
+    /* Desktop links hidden — drawer takes over */
+    .navbar__links {
+        display: none;
+    }
+
+    /* Desktop CTA hidden — appears inside drawer */
+    .navbar__actions>.navbar__cta {
+        display: none;
+    }
+
+    .navbar__hamburger {
+        display: flex;
+    }
+
+    .navbar__mobile-menu {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar__container {
+        padding: 0 16px;
+    }
+
+    .navbar__logo {
+        font-size: 0.95rem;
+    }
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+    .navbar,
+    .navbar__link,
+    .navbar__cta,
+    .navbar__hamburger-bar,
+    .navbar__mobile-menu,
+    .navbar__overlay {
+        transition: none !important;
+        animation: none !important;
+    }
+}

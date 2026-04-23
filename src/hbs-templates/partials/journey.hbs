@@ -1,0 +1,72 @@
+<section class="journey" id="journey">
+  <div class="journey__container">
+
+    {{!-- Section Header --}}
+    <div class="journey__header">
+      <span class="journey__label">// 06 — journey</span>
+      <h2 class="journey__title">How I Got <em>Here</em></h2>
+      <p class="journey__subtitle">
+        A path built on curiosity, consistency, and shipping real things.
+      </p>
+    </div>
+
+    {{!-- Timeline --}}
+    <div class="journey__timeline">
+
+      {{#each journey.steps}}
+      <div class="journey__item {{#if this.highlight}}journey__item--highlight{{/if}}" data-index="{{@index}}">
+
+        {{!-- Left: year + connector dot --}}
+        <div class="journey__left">
+          <span class="journey__year">{{this.year}}</span>
+          <div class="journey__dot">
+            <span class="journey__dot-inner"></span>
+          </div>
+        </div>
+
+        {{!-- Center: vertical line (rendered via CSS) --}}
+        <div class="journey__line-col" aria-hidden="true"></div>
+
+        {{!-- Right: content box --}}
+        <div class="journey__box">
+          <div class="journey__box-top">
+            <span class="journey__icon">{{this.icon}}</span>
+            <span class="journey__tag">{{this.tag}}</span>
+          </div>
+          <h3 class="journey__box-title">{{this.title}}</h3>
+          <p class="journey__box-desc">{{this.description}}</p>
+
+          {{#if this.metrics}}
+          <ul class="journey__metrics">
+            {{#each this.metrics}}
+            <li class="journey__metric">
+              <span class="journey__metric-value">{{this.value}}</span>
+              <span class="journey__metric-label">{{this.label}}</span>
+            </li>
+            {{/each}}
+          </ul>
+          {{/if}}
+
+          {{#if this.skills}}
+          <div class="journey__skills">
+            {{#each this.skills}}
+            <span class="journey__skill-tag">{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </div>
+
+      </div>
+      {{/each}}
+
+      {{!-- Terminal end cap --}}
+      <div class="journey__end">
+        <div class="journey__end-dot"></div>
+        <div class="journey__end-label">
+          <span class="journey__cursor">▋</span> present
+        </div>
+      </div>
+
+    </div>{{!-- /.journey__timeline --}}
+  </div>{{!-- /.journey__container --}}
+</section>

@@ -47,14 +47,14 @@
     );
 
   /* ── Mobile nav toggle ── */
-  const toggle = document.getElementById("navToggle");
-  const links = document.querySelector(".nav-links");
-  if (toggle && links) {
-    toggle.addEventListener("click", () => links.classList.toggle("open"));
-    links.addEventListener("click", (e) => {
-      if (e.target.tagName === "A") links.classList.remove("open");
-    });
-  }
+  // const toggle = document.getElementById("navToggle");
+  // const links = document.querySelector(".nav-links");
+  // if (toggle && links) {
+  //   toggle.addEventListener("click", () => links.classList.toggle("open"));
+  //   links.addEventListener("click", (e) => {
+  //     if (e.target.tagName === "A") links.classList.remove("open");
+  //   });
+  // }
 
   /* ── Sticky nav shadow ── */
   const nav = document.getElementById("nav");
@@ -110,4 +110,53 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal();
   });
+})();
+
+// nav bar
+(() => {
+  const navbar = document.getElementById("navbar");
+  const hamburger = document.getElementById("hamburgerBtn");
+  const navLinks = document.getElementById("navLinks");
+  const links = navLinks.querySelectorAll(".navbar__link");
+  /* Scroll-shrink */
+  window.addEventListener(
+    "scroll",
+    () => {
+      navbar.classList.toggle("navbar--scrolled", window.scrollY > 40);
+    },
+    {
+      passive: true,
+    },
+  );
+  /* Mobile toggle */
+  hamburger.addEventListener("click", () => {
+    const open = navLinks.classList.toggle("navbar__links--open");
+    hamburger.classList.toggle("navbar__hamburger--open", open);
+    hamburger.setAttribute("aria-expanded", open);
+  });
+  /* Close on link click (mobile) */
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("navbar__links--open");
+      hamburger.classList.remove("navbar__hamburger--open");
+      hamburger.setAttribute("aria-expanded", false);
+    });
+  });
+  /* Active-section highlight */
+  const sections = document.querySelectorAll("section[id]");
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          links.forEach((l) => l.classList.remove("navbar__link--active"));
+          const active = navLinks.querySelector(
+            `a[href="#${entry.target.id}"]`,
+          );
+          if (active) active.classList.add("navbar__link--active");
+        }
+      });
+    },
+    { threshold: 0.4 },
+  );
+  sections.forEach((s) => observer.observe(s));
 })();

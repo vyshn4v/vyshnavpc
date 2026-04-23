@@ -8,7 +8,9 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const redis = getRedisClient();
 
-  const cachedData = await redis.get("Portfolio:blogIndexPage");
+  const cachedData = await redis.get(
+    process.env.REDIS_CACHE_KEY + ":blogIndexPage",
+  );
   if (cachedData) {
     return res.render("blogs", JSON.parse(cachedData));
   }
@@ -39,15 +41,21 @@ router.get("/", async (req, res) => {
     featured,
     posts: rest,
   };
-  redis.set("Portfolio:blogIndexPage", JSON.stringify(data), {
-    EX: process.env.REDIS_CACHE_TIME, // Cache for 60 seconds
-  });
+  redis.set(
+    process.env.REDIS_CACHE_KEY + ":blogIndexPage",
+    JSON.stringify(data),
+    {
+      EX: process.env.REDIS_CACHE_TIME, // Cache for 60 seconds
+    },
+  );
   res.render("blogs", data);
 });
 router.get("/:blogId", async (req, res, next) => {
   try {
     const redis = getRedisClient();
-    const cachedData = await redis.get(`Portfolio:blog:${req.params.blogId}`);
+    const cachedData = await redis.get(
+      `${process.env.REDIS_CACHE_KEY}:blog:${req.params.blogId}`,
+    );
     if (cachedData) {
       return res.render("post", JSON.parse(cachedData));
     }
@@ -98,9 +106,13 @@ router.get("/:blogId", async (req, res, next) => {
     if (!data) {
       throw new Error("Post not found");
     }
-    redis.set(`Portfolio:blog:${req.params.blogId}`, JSON.stringify(data), {
-      EX: process.env.REDIS_CACHE_TIME, // Cache for 60 seconds
-    });
+    redis.set(
+      `${process.env.REDIS_CACHE_KEY}:blog:${req.params.blogId}`,
+      JSON.stringify(data),
+      {
+        EX: process.env.REDIS_CACHE_TIME, // Cache for 60 seconds
+      },
+    );
     res.render("post", data);
   } catch (err) {
     next(); // fall through to 404

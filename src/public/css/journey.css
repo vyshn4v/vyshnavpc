@@ -1,0 +1,434 @@
+/* ============================================================
+   journey.css — Vyshnav P C Portfolio
+   Structure from design spec; all tokens remapped to
+   site :root vars (style.css) to match section-know-more.css
+   ============================================================ */
+
+/* ── Section wrapper ─────────────────────────────────────── */
+.journey {
+    background: var(--bg);
+    padding: 120px 0 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle grid background */
+.journey::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.journey__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.journey__header {
+    margin-bottom: 72px;
+}
+
+.journey__label {
+    display: block;
+    font-family: var(--fm);
+    font-size: 0.75rem;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+
+.journey__title {
+    font-family: var(--fd);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin: 0 0 12px;
+}
+
+.journey__title em {
+    background: linear-gradient(135deg, var(--accent2) 0%, #c4b5fd 45%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.journey__subtitle {
+    font-family: var(--fb);
+    font-size: 1rem;
+    color: var(--text2);
+    max-width: 480px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ── Timeline wrapper ────────────────────────────────────── */
+.journey__timeline {
+    position: relative;
+    padding-left: 0;
+}
+
+/* Continuous vertical line */
+.journey__timeline::before {
+    content: '';
+    position: absolute;
+    left: 88px;
+    top: 0;
+    bottom: 60px;
+    width: 1px;
+    background: linear-gradient(to bottom,
+            transparent,
+            rgba(165, 148, 255, 0.20) 8%,
+            rgba(165, 148, 255, 0.20) 92%,
+            transparent);
+}
+
+/* ── Single timeline item ────────────────────────────────── */
+.journey__item {
+    display: grid;
+    grid-template-columns: 80px 16px 1fr;
+    gap: 0 24px;
+    margin-bottom: 40px;
+    align-items: flex-start;
+    position: relative;
+}
+
+/* ── Left: year ──────────────────────────────────────────── */
+.journey__left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 20px;
+    gap: 0;
+}
+
+.journey__year {
+    font-family: var(--fm);
+    font-size: 0.72rem;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+/* ── Dot column ──────────────────────────────────────────── */
+.journey__line-col {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    position: relative;
+}
+
+.journey__dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(165, 148, 255, 0.20);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    transition: border-color 0.3s var(--transition), box-shadow 0.3s var(--transition);
+}
+
+.journey__dot-inner {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text3);
+    transition: background 0.3s var(--transition), transform 0.3s var(--transition);
+}
+
+.journey__item:hover .journey__dot {
+    border-color: var(--accent2);
+    box-shadow: 0 0 12px var(--glow);
+}
+
+.journey__item:hover .journey__dot-inner {
+    background: var(--accent2);
+    transform: scale(1.3);
+}
+
+/* Highlighted dot is always accent */
+.journey__item--highlight .journey__dot {
+    border-color: var(--accent2);
+}
+
+.journey__item--highlight .journey__dot-inner {
+    background: var(--accent2);
+}
+
+/* ── Box ─────────────────────────────────────────────────── */
+.journey__box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r8);
+    padding: 20px 24px;
+    position: relative;
+    transition:
+        border-color 0.3s var(--transition),
+        background 0.3s var(--transition),
+        transform 0.3s var(--transition),
+        box-shadow 0.3s var(--transition);
+}
+
+/* Left connector from line to box */
+.journey__box::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 24px;
+    width: 8px;
+    height: 1px;
+    background: rgba(165, 148, 255, 0.20);
+    transition: background 0.3s var(--transition);
+}
+
+.journey__item:hover .journey__box {
+    border-color: rgba(165, 148, 255, 0.30);
+    background: var(--glow);
+    transform: translateX(4px);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(165, 148, 255, 0.08);
+}
+
+.journey__item:hover .journey__box::before {
+    background: var(--accent2);
+}
+
+.journey__item--highlight .journey__box {
+    border-color: rgba(165, 148, 255, 0.30);
+    background: var(--glow);
+}
+
+/* ── Box top row: icon + tag ─────────────────────────────── */
+.journey__box-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.journey__icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.journey__tag {
+    font-family: var(--fm);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: var(--glow);
+    border: 1px solid rgba(165, 148, 255, 0.18);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* ── Box title ───────────────────────────────────────────── */
+.journey__box-title {
+    font-family: var(--fd);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 8px;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+/* ── Box description ─────────────────────────────────────── */
+.journey__box-desc {
+    font-family: var(--fb);
+    font-size: 0.875rem;
+    color: var(--text2);
+    line-height: 1.7;
+    margin: 0 0 14px;
+}
+
+/* ── Metrics row ─────────────────────────────────────────── */
+.journey__metrics {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.journey__metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 16px;
+    min-width: 80px;
+}
+
+.journey__metric-value {
+    font-family: var(--fm);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent2);
+    line-height: 1;
+    margin-bottom: 3px;
+}
+
+.journey__metric-label {
+    font-family: var(--fm);
+    font-size: 0.6rem;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* ── Skill tags ──────────────────────────────────────────── */
+.journey__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.journey__skill-tag {
+    font-family: var(--fm);
+    font-size: 0.65rem;
+    color: var(--text3);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.journey__item:hover .journey__skill-tag {
+    color: var(--text2);
+    border-color: var(--border2);
+}
+
+/* ── End cap ─────────────────────────────────────────────── */
+.journey__end {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-left: 80px;
+    margin-top: 8px;
+}
+
+.journey__end-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent2);
+    box-shadow: 0 0 16px var(--glow), 0 0 40px rgba(124, 110, 247, 0.12);
+    flex-shrink: 0;
+    animation: journey-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes journey-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 16px var(--glow);
+    }
+
+    50% {
+        box-shadow: 0 0 28px rgba(165, 148, 255, 0.5), 0 0 60px rgba(124, 110, 247, 0.18);
+    }
+}
+
+.journey__end-label {
+    font-family: var(--fm);
+    font-size: 0.75rem;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.journey__cursor {
+    animation: jrny-blink 1.1s step-end infinite;
+}
+
+@keyframes jrny-blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ── Reveal animation ────────────────────────────────────── */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.v {
+    opacity: 1;
+    transform: none;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .journey {
+        padding: 80px 0 72px;
+    }
+
+    .journey__timeline::before {
+        left: 56px;
+    }
+
+    .journey__item {
+        grid-template-columns: 48px 16px 1fr;
+        gap: 0 16px;
+        margin-bottom: 28px;
+    }
+
+    .journey__year {
+        font-size: 0.65rem;
+    }
+
+    .journey__box {
+        padding: 16px 18px;
+    }
+
+    .journey__box-title {
+        font-size: 0.9rem;
+    }
+
+    .journey__end {
+        padding-left: 48px;
+    }
+
+    .journey__metrics {
+        gap: 6px;
+    }
+
+    .journey__metric {
+        padding: 6px 12px;
+        min-width: 64px;
+    }
+}
