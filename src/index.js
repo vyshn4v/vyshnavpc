@@ -11,13 +11,7 @@ initializeHbsEngine(express, app);
 // setting up the static files directory
 
 // setting up the view engine and views directory
-app.get("/", portfolioRoute);
-app.get("/about", async (req, res) => {
-  res.render("about", {
-    title: "About Me",
-  });
-});
-
+app.use("/", portfolioRoute);
 app.use("/blogs", blogsRouter);
 // handling 404 errors for undefined routes
 app.use((req, res) => {

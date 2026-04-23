@@ -19,13 +19,13 @@
 })();
 
 // ─── Mobile nav toggle ───
-(function () {
-  const btn = document.getElementById("menuBtn");
-  const links = document.querySelector(".nav-links");
-  if (!btn || !links) return;
+// (function () {
+//   const btn = document.getElementById("menuBtn");
+//   const links = document.querySelector(".nav-links");
+//   if (!btn || !links) return;
 
-  btn.addEventListener("click", () => {
-    const open = links.classList.toggle("nav-links--open");
-    btn.setAttribute("aria-expanded", open);
-  });
-})();
+//   btn.addEventListener("click", () => {
+//     const open = links.classList.toggle("nav-links--open");
+//     btn.setAttribute("aria-expanded", open);
+//   });
+// })();

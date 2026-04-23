@@ -1,39 +1,55 @@
-<nav class="nav" id="nav">
-  <a href="#home" class="nav-brand">
-    <span class="dot"></span>
-    <span>{{site.name}}</span>
-  </a>
+<nav class="navbar" id="navbar">
+  <div class="navbar__container">
 
-  {{!-- Always-visible mobile CTA + toggle group --}}
-  <div class="nav-right">
-    <a href="mailto:{{site.email}}" class="nav-cta">Hire Me ↗</a>
+    <!-- Logo -->
+    <a href="/#home" class="navbar__logo">Vyshnav P C</a>
 
-    <button
-      class="nav-toggle"
-      id="navToggle"
-      aria-label="Toggle menu"
-      aria-expanded="false"
-      aria-controls="navLinks"
-    >
-      <span class="bar bar--1"></span>
-      <span class="bar bar--2"></span>
-      <span class="bar bar--3"></span>
-    </button>
+    <!-- Desktop Nav Links -->
+    <ul class="navbar__links" id="navLinks">
+      <li><a href="#about" class="navbar__link">About</a></li>
+      <li><a href="#experience" class="navbar__link">Experience</a></li>
+      <li><a href="#education" class="navbar__link">Education</a></li>
+      <li><a href="#skills" class="navbar__link">Skills</a></li>
+      <li><a href="#know-more" class="navbar__link">Know More</a></li>
+      <li><a href="#contact" class="navbar__link">Contact</a></li>
+      <li><a href="/blogs" class="navbar__link">Blogs</a></li>
+    </ul>
+
+    <!-- Right side: CTA + Hamburger -->
+    <div class="navbar__actions">
+      <a href="mailto:vyshnavpcnaravoor@gmail.com" class="navbar__cta">
+        Hire Me ↗
+      </a>
+      <button
+        class="navbar__hamburger"
+        id="hamburgerBtn"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+      >
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+        <span class="navbar__hamburger-bar"></span>
+      </button>
+    </div>
+
   </div>
 
-  {{!-- Drawer --}}
-  <div class="nav-links" id="navLinks" role="navigation" aria-label="Main">
-    {{#each nav}}
+  <!-- Mobile Menu (revealed by hamburger) -->
+  <div class="navbar__mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul class="navbar__mobile-links">
+      <li><a href="#about" class="navbar__mobile-link">About</a></li>
+      <li><a href="#experience" class="navbar__mobile-link">Experience</a></li>
+      <li><a href="#education" class="navbar__mobile-link">Education</a></li>
+      <li><a href="#skills" class="navbar__mobile-link">Skills</a></li>
+      <li><a href="#contact" class="navbar__mobile-link">Contact</a></li>
+      <li><a href="/blogs" class="navbar__mobile-link">Blogs</a></li>
+    </ul>
     <a
-      href="{{this.href}}"
-      class="nav-link{{#if this.active}} active{{/if}}"
-    >{{this.label}}</a>
-    {{/each}}
-
-    {{!-- Repeat CTA inside drawer for desktop layout --}}
-    <a href="mailto:{{site.email}}" class="nav-cta nav-cta--desktop">Hire Me ↗</a>
+      href="mailto:vyshnavpcnaravoor@gmail.com"
+      class="navbar__cta navbar__cta--mobile"
+    >
+      Hire Me ↗
+    </a>
   </div>
-
-  {{!-- Backdrop overlay (closes menu on tap) --}}
-  <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
 </nav>
