@@ -4,18 +4,18 @@
     <!-- Logo -->
     <a href="/#home" class="navbar__logo">Vyshnav P C</a>
 
-    <!-- Desktop Nav Links -->
+    <!-- Desktop nav links -->
     <ul class="navbar__links" id="navLinks">
-      <li><a href="/#about" class="navbar__link">About</a></li>
-      <li><a href="/#experience" class="navbar__link">Experience</a></li>
-      <li><a href="/#education" class="navbar__link">Education</a></li>
-      <li><a href="/#skills" class="navbar__link">Skills</a></li>
+      <li><a href="/#about" class="navbar__link">about</a></li>
+      <li><a href="/#experience" class="navbar__link">experience</a></li>
+      <li><a href="/#education" class="navbar__link">education</a></li>
+      <li><a href="/#skills" class="navbar__link">skills</a></li>
       <li><a href="/#know-more" class="navbar__link">Know More</a></li>
-      <li><a href="/#contact" class="navbar__link">Contact</a></li>
-      <li><a href="/blogs" class="navbar__link">Blogs</a></li>
+      <li><a href="/#contact" class="navbar__link">contact</a></li>
+      <li><a href="/blogs" class="navbar__link">blogs</a></li>
     </ul>
 
-    <!-- Right side: CTA + Hamburger -->
+    <!-- Desktop CTA + hamburger -->
     <div class="navbar__actions">
       <a href="mailto:vyshnavpcnaravoor@gmail.com" class="navbar__cta">
         Hire Me ↗
@@ -34,22 +34,27 @@
     </div>
 
   </div>
-
-  <!-- Mobile Menu (revealed by hamburger) -->
-  <div class="navbar__mobile-menu" id="mobileMenu" aria-hidden="true">
-    <ul class="navbar__mobile-links">
-      <li><a href="#about" class="navbar__mobile-link">About</a></li>
-      <li><a href="#experience" class="navbar__mobile-link">Experience</a></li>
-      <li><a href="#education" class="navbar__mobile-link">Education</a></li>
-      <li><a href="#skills" class="navbar__mobile-link">Skills</a></li>
-      <li><a href="#contact" class="navbar__mobile-link">Contact</a></li>
-      <li><a href="/blogs" class="navbar__mobile-link">Blogs</a></li>
-    </ul>
-    <a
-      href="mailto:vyshnavpcnaravoor@gmail.com"
-      class="navbar__cta navbar__cta--mobile"
-    >
-      Hire Me ↗
-    </a>
-  </div>
 </nav>
+
+<!-- Mobile drawer — sibling of .navbar so scrolled selector works -->
+<div class="navbar__mobile-menu" id="mobileMenu" aria-hidden="true">
+  <ul class="navbar__mobile-links">
+    <li><a href="/#about" class="navbar__mobile-link">about</a></li>
+    <li><a href="/#experience" class="navbar__mobile-link">experience</a></li>
+    <li><a href="/#education" class="navbar__mobile-link">education</a></li>
+    <li><a href="/#skills" class="navbar__mobile-link">skills</a></li>
+    <li><a href="/#know-more" class="navbar__mobile-link">Know More</a></li>
+    <li><a href="/#contact" class="navbar__mobile-link">contact</a></li>
+    <li><a href="/blogs" class="navbar__mobile-link">blogs</a></li>
+  </ul>
+  <!-- Ghost CTA inside drawer -->
+  <a
+    href="mailto:vyshnavpcnaravoor@gmail.com"
+    class="navbar__cta navbar__cta--mobile"
+  >
+    Hire Me ↗
+  </a>
+</div>
+
+<!-- Backdrop overlay -->
+<div class="navbar__overlay" id="navOverlay"></div>
