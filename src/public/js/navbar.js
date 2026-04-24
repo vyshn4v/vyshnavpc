@@ -1,6 +1,7 @@
 /**
  * navbar.js — Vyshnav P C Portfolio
- * Handles: mobile menu toggle, scroll effects, active link spy, outside-click close
+ * Handles: mobile menu toggle, overlay, scroll effects,
+ *          active link spy, outside-click close, smooth scroll
  */
 
 (function () {
@@ -10,10 +11,12 @@
   const navbar = document.getElementById("navbar");
   const hamburger = document.getElementById("hamburgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
+  const overlay = document.getElementById("navOverlay");
 
-  if (!navbar || !hamburger || !mobileMenu) return; // guard: exit if navbar not in DOM
+  if (!navbar || !hamburger || !mobileMenu) return;
 
   const mobileLinks = mobileMenu.querySelectorAll(".navbar__mobile-link");
+  const mobileCta = mobileMenu.querySelector(".navbar__cta--mobile");
   const desktopLinks = navbar.querySelectorAll(".navbar__link");
 
   // ── Helpers ───────────────────────────────────────────────────────────────
@@ -22,7 +25,8 @@
     hamburger.classList.add("is-open");
     hamburger.setAttribute("aria-expanded", "true");
     mobileMenu.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden"; // prevent background scroll
+    if (overlay) overlay.classList.add("is-open");
+    document.documentElement.classList.add("nav-open");
   }
 
   function closeMenu() {
@@ -30,7 +34,8 @@
     hamburger.classList.remove("is-open");
     hamburger.setAttribute("aria-expanded", "false");
     mobileMenu.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
+    if (overlay) overlay.classList.remove("is-open");
+    document.documentElement.classList.remove("nav-open");
   }
 
   function isMenuOpen() {
@@ -43,19 +48,31 @@
     isMenuOpen() ? closeMenu() : openMenu();
   });
 
-  // Close when any mobile nav link is clicked
+  // Close on mobile link click
   mobileLinks.forEach(function (link) {
     link.addEventListener("click", closeMenu);
   });
 
-  // Close on outside click
+  // Close on mobile CTA click
+  if (mobileCta) {
+    mobileCta.addEventListener("click", closeMenu);
+  }
+
+  // Close on overlay click
+  if (overlay) {
+    overlay.addEventListener("click", closeMenu);
+  }
+
+  // ── Outside click ─────────────────────────────────────────────────────────
+  // mobileMenu is a SIBLING of navbar — must check both
   document.addEventListener("click", function (e) {
-    if (isMenuOpen() && !navbar.contains(e.target)) {
+    if (!isMenuOpen()) return;
+    if (!navbar.contains(e.target) && !mobileMenu.contains(e.target)) {
       closeMenu();
     }
   });
 
-  // Close on Escape key
+  // Close on Escape
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && isMenuOpen()) {
       closeMenu();
@@ -63,16 +80,14 @@
     }
   });
 
-  // ── Scroll: navbar shadow + active link spy ───────────────────────────────
+  // ── Scroll: shadow + active link spy ─────────────────────────────────────
   var allSections = Array.from(
     document.querySelectorAll("section[id], div[id]"),
   );
 
   function updateNavbar() {
-    // Scrolled shadow
     navbar.classList.toggle("navbar--scrolled", window.scrollY > 20);
 
-    // Active section highlight
     var scrollPos = window.scrollY + navbar.offsetHeight + 48;
 
     allSections.forEach(function (sec) {
@@ -80,7 +95,6 @@
       var bottom = top + sec.offsetHeight;
       var id = sec.id;
 
-      // Update desktop links
       desktopLinks.forEach(function (link) {
         if (link.getAttribute("href") === "#" + id) {
           link.classList.toggle(
@@ -90,7 +104,6 @@
         }
       });
 
-      // Update mobile links
       mobileLinks.forEach(function (link) {
         if (link.getAttribute("href") === "#" + id) {
           link.classList.toggle(
@@ -103,11 +116,27 @@
   }
 
   window.addEventListener("scroll", updateNavbar, { passive: true });
-  window.addEventListener("resize", updateNavbar, { passive: true });
-  updateNavbar(); // run once on load
+  window.addEventListener(
+    "resize",
+    function () {
+      // Close menu if viewport expands past mobile breakpoint
+      if (window.innerWidth > 768 && isMenuOpen()) {
+        closeMenu();
+      }
+      updateNavbar();
+    },
+    { passive: true },
+  );
 
-  // ── Smooth scroll for hash links (fallback for older browsers) ─────────────
-  navbar.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+  updateNavbar();
+
+  // ── Smooth scroll ─────────────────────────────────────────────────────────
+  // Query both navbar AND mobileMenu (sibling) for hash links
+  var allHashLinks = Array.from(
+    document.querySelectorAll('#navbar a[href^="#"], #mobileMenu a[href^="#"]'),
+  );
+
+  allHashLinks.forEach(function (anchor) {
     anchor.addEventListener("click", function (e) {
       var targetId = anchor.getAttribute("href").slice(1);
       var target = document.getElementById(targetId);
@@ -119,7 +148,6 @@
       var offsetTop = target.offsetTop - navbar.offsetHeight - 8;
       window.scrollTo({ top: offsetTop, behavior: "smooth" });
 
-      // Update URL hash without jump
       history.pushState(null, "", "#" + targetId);
     });
   });

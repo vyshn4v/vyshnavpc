@@ -13,15 +13,17 @@
     --nav-border: rgba(255, 255, 255, 0.06);
     --nav-border-hover: rgba(0, 255, 136, 0.22);
     --nav-accent: #00ff88;
-    /* terminal green */
     --nav-accent-dim: rgba(0, 255, 136, 0.10);
     --nav-text: #c8c8c8;
     --nav-text-hover: #ffffff;
-    --nav-mobile-bg: rgba(10, 10, 15, 0.97);
+    --nav-mobile-bg: rgba(10, 10, 15, 0.98);
     --nav-font: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
     --nav-radius: 6px;
     --nav-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ── viewport meta guard — ensure page doesn't overflow ──── */
+/* (add <meta name="viewport" content="width=device-width, initial-scale=1"> to your <head> if not present) */
 
 /* ── Base bar ────────────────────────────────────────────── */
 .navbar {
@@ -54,7 +56,7 @@
     max-width: 1200px;
     margin: 0 auto;
     height: 100%;
-    padding: 0 24px;
+    padding: 0 40px;
     display: flex;
     align-items: center;
     gap: 32px;
@@ -85,7 +87,6 @@
     gap: 4px;
     list-style: none;
     margin: 0 0 0 auto;
-    /* push to right */
     padding: 0;
 }
 
@@ -101,13 +102,13 @@
     border-radius: var(--nav-radius);
     border: 1px solid transparent;
     position: relative;
+    white-space: nowrap;
     transition:
         color var(--nav-transition),
         background var(--nav-transition),
         border-color var(--nav-transition);
 }
 
-/* Underline bar on hover / active */
 .navbar__link::after {
     content: '';
     position: absolute;
@@ -127,7 +128,8 @@
     border-color: var(--nav-border-hover);
 }
 
-.navbar__link:hover::after {
+.navbar__link:hover::after,
+.navbar__link.is-active::after {
     transform: scaleX(1);
 }
 
@@ -137,20 +139,18 @@
     border-color: var(--nav-border-hover);
 }
 
-.navbar__link.is-active::after {
-    transform: scaleX(1);
-}
-
-/* ── Actions (CTA + hamburger wrapper) ───────────────────── */
+/* ── Actions (CTA + hamburger) ───────────────────────────── */
 .navbar__actions {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
     z-index: 1001;
+    /* Desktop: links already push via margin-left:auto, so no push needed here */
+    margin-left: 0;
 }
 
-/* ── CTA button ──────────────────────────────────────────── */
+/* ── CTA — desktop (solid green) ────────────────────────── */
 .navbar__cta {
     font-family: var(--nav-font);
     font-size: 0.78rem;
@@ -185,24 +185,16 @@
     transform: translateY(0);
 }
 
-/* Mobile CTA (inside the drawer) */
-.navbar__cta--mobile {
-    margin-top: 20px;
-    align-self: flex-start;
-    font-size: 0.85rem;
-}
-
-/* ── Hamburger ───────────────────────────────────────────── */
+/* ── Hamburger — hidden by default (desktop) ─────────────── */
 .navbar__hamburger {
     display: none;
-    /* hidden on desktop */
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    width: 44px;
-    height: 44px;
-    padding: 8px;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
     background: transparent;
     border: 1px solid var(--nav-border);
     border-radius: var(--nav-radius);
@@ -220,18 +212,17 @@
 
 .navbar__hamburger-bar {
     display: block;
-    width: 18px;
+    width: 16px;
     height: 1.5px;
     background: var(--nav-text);
     border-radius: 2px;
     transform-origin: center;
     transition:
-        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
         background 0.2s ease;
 }
 
-/* Bars → X when open */
 .navbar__hamburger.is-open .navbar__hamburger-bar:nth-child(1) {
     transform: translateY(6.5px) rotate(45deg);
     background: var(--nav-accent);
@@ -247,73 +238,83 @@
     background: var(--nav-accent);
 }
 
-/* ── Mobile drawer ───────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   MOBILE DRAWER
+   Base state: always display:none (truly hidden, out of flow)
+   Open state: JS adds .is-open → display:flex + visible
+   ══════════════════════════════════════════════════════════ */
 .navbar__mobile-menu {
+    /* Truly hidden — not just invisible */
     display: none;
-    /* switched to flex on mobile via media query */
     position: fixed;
     top: var(--nav-height);
     left: 0;
     right: 0;
     z-index: 999;
     flex-direction: column;
-    gap: 4px;
-    padding: 16px 20px 28px;
+    padding: 8px 16px 20px;
     background: var(--nav-mobile-bg);
     border-bottom: 1px solid var(--nav-border);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-
-    /* Hidden state — slide + fade */
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-8px);
-    transition:
-        opacity var(--nav-transition),
-        transform var(--nav-transition);
 }
 
-/* When navbar is scrolled, drawer top tracks shrunken bar */
+/* JS toggles .is-open to show the drawer */
+.navbar__mobile-menu.is-open {
+    display: flex;
+    animation: drawerIn 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes drawerIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tracks shrunk navbar when scrolled */
 .navbar--scrolled+.navbar__mobile-menu {
     top: var(--nav-height-sm);
 }
 
-.navbar__mobile-menu.is-open {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-}
-
-/* Mobile link list */
+/* ── Mobile link list ────────────────────────────────────── */
 .navbar__mobile-links {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+}
+
+.navbar__mobile-links li {
+    border-bottom: 1px solid var(--nav-border);
+}
+
+.navbar__mobile-links li:last-child {
+    border-bottom: none;
 }
 
 .navbar__mobile-link {
     font-family: var(--nav-font);
-    font-size: 0.95rem;
+    font-size: 0.82rem;
     font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
     color: var(--nav-text);
     text-decoration: none;
     display: flex;
     align-items: center;
-    padding: 12px 14px;
+    padding: 11px 10px;
     min-height: 44px;
-    /* accessible tap target */
     border-radius: var(--nav-radius);
-    border-bottom: 1px solid var(--nav-border);
     transition:
         color var(--nav-transition),
         background var(--nav-transition);
-}
-
-.navbar__mobile-link:last-child {
-    border-bottom: none;
 }
 
 .navbar__mobile-link:hover {
@@ -325,70 +326,106 @@
     color: var(--nav-accent);
 }
 
-/* Staggered entrance for drawer links */
+/* Staggered entrance */
 .navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(1) {
-    transition-delay: 0.04s;
+    animation-delay: 0.04s;
 }
 
 .navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(2) {
-    transition-delay: 0.07s;
+    animation-delay: 0.07s;
 }
 
 .navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(3) {
-    transition-delay: 0.10s;
+    animation-delay: 0.10s;
 }
 
 .navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(4) {
-    transition-delay: 0.13s;
+    animation-delay: 0.13s;
 }
 
 .navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(5) {
-    transition-delay: 0.16s;
+    animation-delay: 0.16s;
 }
 
 .navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(6) {
-    transition-delay: 0.19s;
+    animation-delay: 0.19s;
+}
+
+/* ── Mobile CTA — ghost style inside drawer ──────────────── */
+.navbar__cta--mobile {
+    color: var(--nav-accent);
+    background: transparent;
+    border-color: rgba(0, 255, 136, 0.30);
+    font-size: 0.75rem;
+    padding: 7px 16px;
+    margin-top: 12px;
+    align-self: flex-start;
+    box-shadow: none;
+    /* Reset desktop dark text */
+    -webkit-text-fill-color: unset;
+}
+
+.navbar__cta--mobile:hover {
+    background: var(--nav-accent-dim);
+    color: var(--nav-accent);
+    box-shadow: 0 0 14px rgba(0, 255, 136, 0.18);
+    transform: none;
 }
 
 /* ── Backdrop overlay ────────────────────────────────────── */
 .navbar__overlay {
+    /* Always hidden — JS toggles is-open */
     display: none;
     position: fixed;
     inset: 0;
     z-index: 998;
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.50);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
-    opacity: 0;
-    transition: opacity var(--nav-transition);
 }
 
 .navbar__overlay.is-open {
     display: block;
-    opacity: 1;
+    animation: fadeIn 0.22s ease both;
 }
 
-/* ── Responsive ──────────────────────────────────────────── */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Mobile (≤ 768px): hide desktop elements, show hamburger  */
 @media (max-width: 768px) {
     .navbar__container {
         padding: 0 20px;
     }
 
-    /* Desktop links hidden — drawer takes over */
+    /* Hide desktop nav links */
     .navbar__links {
-        display: none;
+        display: none !important;
     }
 
-    /* Desktop CTA hidden — appears inside drawer */
-    .navbar__actions>.navbar__cta {
-        display: none;
+    /* Hide desktop CTA — the mobile ghost CTA is in the drawer */
+    .navbar__cta:not(.navbar__cta--mobile) {
+        display: none !important;
     }
 
+    /* Push actions (hamburger) to the far right */
+    .navbar__actions {
+        margin-left: auto;
+    }
+
+    /* Show hamburger */
     .navbar__hamburger {
-        display: flex;
-    }
-
-    .navbar__mobile-menu {
         display: flex;
     }
 }

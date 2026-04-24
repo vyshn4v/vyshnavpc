@@ -33,11 +33,25 @@
       />
     </noscript>
     <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/scroll-bar.css" />
+
+    <style>
+      :root {
+        --nav-h: 64px; /* match the height in navbar.css */
+      }
+
+      main {
+        padding-top: var(--nav-h);
+      }
+    </style>
+
     {{{_sections.styles}}}
   </head>
   <body>
     {{> nav}}
-    {{{body}}}
+    <main>
+      {{{body}}}
+    </main>
     {{{_sections.scripts}}}
     <script src="/js/navbar.js"></script>
   </body>
