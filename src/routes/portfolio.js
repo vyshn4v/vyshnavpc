@@ -29,13 +29,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get(["/login", "/.fgvsdf"], (req, res) => {
-  res.render("login", {
-    layout: "main",
-    title: "Login | Vyshnav P C",
-  });
-});
-
 router.get("/journey", async (req, res, next) => {
   try {
     const redis = getRedisClient();
