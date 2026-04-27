@@ -6,4 +6,4 @@ node_modules/
 env
 .key
 key
-.dev.env
+dev.env

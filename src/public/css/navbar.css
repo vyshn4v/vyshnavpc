@@ -1,13 +1,12 @@
 /* ============================================================
    navbar.css — Vyshnav P C Portfolio
-   BEM: .navbar / .navbar__* / .navbar--*
-   Terminal-green accent, mobile-first, fully accessible
+   Priority+ overflow nav — hamburger appears only when
+   links don't fit, one by one as screen shrinks
    ============================================================ */
 
-/* ── Tokens ──────────────────────────────────────────────── */
 :root {
-    --nav-height: 68px;
-    --nav-height-sm: 56px;
+    --nav-height: 64px;
+    --nav-height-sm: 52px;
     --nav-bg: rgba(10, 10, 15, 0.88);
     --nav-bg-scrolled: rgba(10, 10, 10, 0.97);
     --nav-border: rgba(255, 255, 255, 0.06);
@@ -21,9 +20,6 @@
     --nav-radius: 6px;
     --nav-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* ── viewport meta guard — ensure page doesn't overflow ──── */
-/* (add <meta name="viewport" content="width=device-width, initial-scale=1"> to your <head> if not present) */
 
 /* ── Base bar ────────────────────────────────────────────── */
 .navbar {
@@ -40,8 +36,7 @@
     transition:
         background var(--nav-transition),
         height var(--nav-transition),
-        box-shadow var(--nav-transition),
-        border-color var(--nav-transition);
+        box-shadow var(--nav-transition);
 }
 
 .navbar--scrolled {
@@ -56,23 +51,28 @@
     max-width: 1200px;
     margin: 0 auto;
     height: 100%;
-    padding: 0 40px;
+    padding: 0 32px;
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 0;
+    /* no gap — spacing handled per element */
+    overflow: hidden;
+    /* critical: clips overflowing links */
+    position: relative;
 }
 
 /* ── Logo ────────────────────────────────────────────────── */
 .navbar__logo {
     font-family: var(--nav-font);
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #fff;
     text-decoration: none;
     letter-spacing: -0.02em;
     white-space: nowrap;
     flex-shrink: 0;
-    z-index: 1001;
+    /* never shrinks */
+    margin-right: 24px;
     transition: color var(--nav-transition);
 }
 
@@ -84,25 +84,43 @@
 .navbar__links {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     list-style: none;
-    margin: 0 0 0 auto;
+    margin: 0;
     padding: 0;
+    flex: 0 1 auto;
+    /* don't force-grow — just take what links need */
+    overflow: hidden;
+    min-width: 0;
+}
+
+.navbar__links li {
+    flex-shrink: 0;
+    /* each item stays full width — JS hides them */
+}
+
+/* JS adds this class to hide overflow items from desktop bar */
+.navbar__links li.is-hidden {
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+    /* take out of flow so it doesn't push layout */
 }
 
 .navbar__link {
     font-family: var(--nav-font);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 500;
     color: var(--nav-text);
     text-decoration: none;
     letter-spacing: 0.04em;
     text-transform: lowercase;
-    padding: 6px 12px;
+    padding: 5px 10px;
     border-radius: var(--nav-radius);
     border: 1px solid transparent;
     position: relative;
     white-space: nowrap;
+    display: block;
     transition:
         color var(--nav-transition),
         background var(--nav-transition),
@@ -112,9 +130,9 @@
 .navbar__link::after {
     content: '';
     position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 4px;
+    left: 10px;
+    right: 10px;
+    bottom: 3px;
     height: 1px;
     background: var(--nav-accent);
     transform: scaleX(0);
@@ -139,18 +157,17 @@
     border-color: var(--nav-border-hover);
 }
 
-/* ── Actions (CTA + hamburger) ───────────────────────────── */
+/* ── Actions ─────────────────────────────────────────────── */
 .navbar__actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     flex-shrink: 0;
-    z-index: 1001;
-    /* Desktop: links already push via margin-left:auto, so no push needed here */
-    margin-left: 0;
+    margin-left: auto;
+    /* pushes CTA + hamburger to far right */
 }
 
-/* ── CTA — desktop (solid green) ────────────────────────── */
+/* ── CTA ─────────────────────────────────────────────────── */
 .navbar__cta {
     font-family: var(--nav-font);
     font-size: 0.78rem;
@@ -167,6 +184,7 @@
     align-items: center;
     gap: 4px;
     white-space: nowrap;
+    flex-shrink: 0;
     transition:
         background var(--nav-transition),
         color var(--nav-transition),
@@ -177,7 +195,7 @@
 .navbar__cta:hover {
     background: transparent;
     color: var(--nav-accent);
-    box-shadow: 0 0 18px rgba(0, 255, 136, 0.28);
+    box-shadow: 0 0 16px rgba(0, 255, 136, 0.28);
     transform: translateY(-1px);
 }
 
@@ -185,15 +203,15 @@
     transform: translateY(0);
 }
 
-/* ── Hamburger — hidden by default (desktop) ─────────────── */
+/* ── Hamburger — hidden by default, JS shows when needed ─── */
 .navbar__hamburger {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     padding: 6px;
     background: transparent;
     border: 1px solid var(--nav-border);
@@ -205,6 +223,11 @@
         background var(--nav-transition);
 }
 
+/* [hidden] attribute hides it — JS removes [hidden] when overflow exists */
+.navbar__hamburger[hidden] {
+    display: none !important;
+}
+
 .navbar__hamburger:hover {
     border-color: var(--nav-accent);
     background: var(--nav-accent-dim);
@@ -212,7 +235,7 @@
 
 .navbar__hamburger-bar {
     display: block;
-    width: 16px;
+    width: 15px;
     height: 1.5px;
     background: var(--nav-text);
     border-radius: 2px;
@@ -238,31 +261,45 @@
     background: var(--nav-accent);
 }
 
-/* ══════════════════════════════════════════════════════════
-   MOBILE DRAWER
-   Base state: always display:none (truly hidden, out of flow)
-   Open state: JS adds .is-open → display:flex + visible
-   ══════════════════════════════════════════════════════════ */
+/* ── Overflow drawer ─────────────────────────────────────── */
 .navbar__mobile-menu {
-    /* Truly hidden — not just invisible */
     display: none;
     position: fixed;
     top: var(--nav-height);
-    left: 0;
     right: 0;
+    left: auto;
+    min-width: 200px;
     z-index: 999;
     flex-direction: column;
-    padding: 8px 16px 20px;
+    padding: 6px 12px 16px;
     background: var(--nav-mobile-bg);
-    border-bottom: 1px solid var(--nav-border);
+    border: 1px solid var(--nav-border);
+    border-top: none;
+    border-radius: 0 0 var(--nav-radius) var(--nav-radius);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* JS toggles .is-open to show the drawer */
+/* Full-width drawer on small screens */
+@media (max-width: 480px) {
+    .navbar__mobile-menu {
+        left: 0;
+        right: 0;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        min-width: unset;
+    }
+}
+
 .navbar__mobile-menu.is-open {
     display: flex;
-    animation: drawerIn 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: drawerIn 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.navbar--scrolled+.navbar__mobile-menu {
+    top: var(--nav-height-sm);
 }
 
 @keyframes drawerIn {
@@ -277,12 +314,7 @@
     }
 }
 
-/* Tracks shrunk navbar when scrolled */
-.navbar--scrolled+.navbar__mobile-menu {
-    top: var(--nav-height-sm);
-}
-
-/* ── Mobile link list ────────────────────────────────────── */
+/* ── Overflow link list ──────────────────────────────────── */
 .navbar__mobile-links {
     list-style: none;
     margin: 0;
@@ -301,7 +333,7 @@
 
 .navbar__mobile-link {
     font-family: var(--nav-font);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.04em;
     text-transform: lowercase;
@@ -309,9 +341,10 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-    padding: 11px 10px;
-    min-height: 44px;
+    padding: 10px 8px;
+    min-height: 40px;
     border-radius: var(--nav-radius);
+    white-space: nowrap;
     transition:
         color var(--nav-transition),
         background var(--nav-transition);
@@ -326,67 +359,35 @@
     color: var(--nav-accent);
 }
 
-/* Staggered entrance */
-.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(1) {
-    animation-delay: 0.04s;
-}
-
-.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(2) {
-    animation-delay: 0.07s;
-}
-
-.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(3) {
-    animation-delay: 0.10s;
-}
-
-.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(4) {
-    animation-delay: 0.13s;
-}
-
-.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(5) {
-    animation-delay: 0.16s;
-}
-
-.navbar__mobile-menu.is-open .navbar__mobile-links li:nth-child(6) {
-    animation-delay: 0.19s;
-}
-
-/* ── Mobile CTA — ghost style inside drawer ──────────────── */
+/* Mobile CTA — same size as bar CTA, ghost style only */
 .navbar__cta--mobile {
+    /* Dimensions identical to .navbar__cta — only visual style changes */
     color: var(--nav-accent);
     background: transparent;
-    border-color: rgba(0, 255, 136, 0.30);
-    font-size: 0.75rem;
-    padding: 7px 16px;
+    border-color: rgba(0, 255, 136, 0.35);
     margin-top: 12px;
-    align-self: flex-start;
-    box-shadow: none;
-    /* Reset desktop dark text */
     -webkit-text-fill-color: unset;
 }
 
 .navbar__cta--mobile:hover {
     background: var(--nav-accent-dim);
     color: var(--nav-accent);
-    box-shadow: 0 0 14px rgba(0, 255, 136, 0.18);
+    box-shadow: 0 0 14px rgba(0, 255, 136, 0.2);
     transform: none;
 }
 
 /* ── Backdrop overlay ────────────────────────────────────── */
 .navbar__overlay {
-    /* Always hidden — JS toggles is-open */
     display: none;
     position: fixed;
     inset: 0;
     z-index: 998;
-    background: rgba(0, 0, 0, 0.50);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.35);
 }
 
 .navbar__overlay.is-open {
     display: block;
-    animation: fadeIn 0.22s ease both;
+    animation: fadeIn 0.2s ease both;
 }
 
 @keyframes fadeIn {
@@ -399,45 +400,9 @@
     }
 }
 
-/* ══════════════════════════════════════════════════════════
-   RESPONSIVE
-   ══════════════════════════════════════════════════════════ */
-
-/* ── Mobile (≤ 768px): hide desktop elements, show hamburger  */
-@media (max-width: 768px) {
-    .navbar__container {
-        padding: 0 20px;
-    }
-
-    /* Hide desktop nav links */
-    .navbar__links {
-        display: none !important;
-    }
-
-    /* Hide desktop CTA — the mobile ghost CTA is in the drawer */
-    .navbar__cta:not(.navbar__cta--mobile) {
-        display: none !important;
-    }
-
-    /* Push actions (hamburger) to the far right */
-    .navbar__actions {
-        margin-left: auto;
-    }
-
-    /* Show hamburger */
-    .navbar__hamburger {
-        display: flex;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar__container {
-        padding: 0 16px;
-    }
-
-    .navbar__logo {
-        font-size: 0.95rem;
-    }
+/* ── Scroll lock ─────────────────────────────────────────── */
+html.nav-open {
+    overflow: hidden;
 }
 
 /* ── Reduced motion ──────────────────────────────────────── */
@@ -451,5 +416,16 @@
     .navbar__overlay {
         transition: none !important;
         animation: none !important;
+    }
+}
+
+/* ── Small screens: tighten container padding ────────────── */
+@media (max-width: 480px) {
+    .navbar__container {
+        padding: 0 16px;
+    }
+
+    .navbar__logo {
+        font-size: 0.92rem;
     }
 }

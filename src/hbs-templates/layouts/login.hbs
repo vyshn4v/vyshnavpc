@@ -1,0 +1,85 @@
+{{#section "styles"}}
+  <link rel="stylesheet" href="/css/login.css" />
+{{/section}}
+
+{{#section "scripts"}}
+  <script src="/js/login.js"></script>
+{{/section}}
+
+<section class="login-page" aria-labelledby="login-title">
+  <div class="login-grid" aria-hidden="true"></div>
+  <div class="login-noise" aria-hidden="true"></div>
+
+  <div class="login-shell">
+    <div class="login-card">
+      <div class="login-card__header">
+        <span class="login-kicker">Secure access</span>
+        <h1 id="login-title">Welcome back</h1>
+        <p>Sign in to continue to the portfolio dashboard.</p>
+      </div>
+
+      <form class="login-form" id="loginForm" action="#" method="post" novalidate>
+        <label class="login-field" for="email">
+          <span>Email address</span>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="name@example.com"
+            required
+          />
+        </label>
+
+        <label class="login-field" for="password">
+          <span>Password</span>
+          <span class="password-wrap">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              required
+              minlength="6"
+            />
+            <button
+              class="password-toggle"
+              type="button"
+              aria-label="Show password"
+              aria-pressed="false"
+            >
+              View
+            </button>
+          </span>
+        </label>
+
+        <div class="login-row">
+          <label class="remember">
+            <input type="checkbox" name="remember" />
+            <span>Remember me</span>
+          </label>
+          <a href="mailto:vyshnavpcnaravoor@gmail.com">Need access?</a>
+        </div>
+
+        <button class="login-submit" type="submit">Login</button>
+        <p class="login-message" id="loginMessage" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <aside class="login-panel" aria-label="Access status">
+      <div class="terminal">
+        <div class="terminal__bar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="terminal__body">
+          <p><span>$</span> auth status</p>
+          <p class="terminal__line">checking credentials...</p>
+          <p class="terminal__ok">ready for secure login</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
