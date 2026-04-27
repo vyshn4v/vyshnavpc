@@ -4,28 +4,64 @@
     <!-- Logo -->
     <a href="/#home" class="navbar__logo">Vyshnav P C</a>
 
-    <!-- Desktop nav links -->
-    <ul class="navbar__links" id="navLinks">
-      <li><a href="/#about" class="navbar__link">about</a></li>
-      <li><a href="/#experience" class="navbar__link">experience</a></li>
-      <li><a href="/#education" class="navbar__link">education</a></li>
-      <li><a href="/#skills" class="navbar__link">skills</a></li>
-      <li><a href="/#know-more" class="navbar__link">Know More</a></li>
-      <li><a href="/#contact" class="navbar__link">contact</a></li>
-      <li><a href="/blogs" class="navbar__link">blogs</a></li>
+    <!-- Desktop nav links — JS hides overflow items into drawer -->
+    <ul class="navbar__links" id="navLinks" aria-label="Primary navigation">
+      <li><a
+          href="/#about"
+          class="navbar__link"
+          data-label="about"
+        >about</a></li>
+      <li><a
+          href="/#experience"
+          class="navbar__link"
+          data-label="experience"
+        >experience</a></li>
+      <li><a
+          href="/#certificates"
+          class="navbar__link"
+          data-label="certificates"
+        >certificates</a></li>
+      <li><a
+          href="/#education"
+          class="navbar__link"
+          data-label="education"
+        >education</a></li>
+      <li><a
+          href="/#skills"
+          class="navbar__link"
+          data-label="skills"
+        >skills</a></li>
+      <li><a href="/#know-more" class="navbar__link" data-label="know more">know
+          more</a></li>
+      <li><a
+          href="/#contact"
+          class="navbar__link"
+          data-label="contact"
+        >contact</a></li>
+      <li><a
+          href="/blogs"
+          class="navbar__link"
+          data-label="blogs"
+        >blogs</a></li>
     </ul>
 
-    <!-- Desktop CTA + hamburger -->
+    <!-- Actions: CTA + overflow hamburger (shown only when items overflow) -->
     <div class="navbar__actions">
-      <a href="mailto:vyshnavpcnaravoor@gmail.com" class="navbar__cta">
+      <a
+        href="mailto:vyshnavpcnaravoor@gmail.com"
+        class="navbar__cta"
+        id="navCta"
+      >
         Hire Me ↗
       </a>
+      <!-- Hamburger — hidden until at least one link overflows -->
       <button
         class="navbar__hamburger"
         id="hamburgerBtn"
-        aria-label="Toggle navigation menu"
+        aria-label="More navigation links"
         aria-expanded="false"
         aria-controls="mobileMenu"
+        hidden
       >
         <span class="navbar__hamburger-bar"></span>
         <span class="navbar__hamburger-bar"></span>
@@ -36,18 +72,11 @@
   </div>
 </nav>
 
-<!-- Mobile drawer — sibling of .navbar so scrolled selector works -->
+<!-- Overflow drawer — populated dynamically by JS with hidden links -->
 <div class="navbar__mobile-menu" id="mobileMenu" aria-hidden="true">
-  <ul class="navbar__mobile-links">
-    <li><a href="/#about" class="navbar__mobile-link">about</a></li>
-    <li><a href="/#experience" class="navbar__mobile-link">experience</a></li>
-    <li><a href="/#education" class="navbar__mobile-link">education</a></li>
-    <li><a href="/#skills" class="navbar__mobile-link">skills</a></li>
-    <li><a href="/#know-more" class="navbar__mobile-link">Know More</a></li>
-    <li><a href="/#contact" class="navbar__mobile-link">contact</a></li>
-    <li><a href="/blogs" class="navbar__mobile-link">blogs</a></li>
+  <ul class="navbar__mobile-links" id="overflowLinks">
+    <!-- JS clones overflow items here -->
   </ul>
-  <!-- Ghost CTA inside drawer -->
   <a
     href="mailto:vyshnavpcnaravoor@gmail.com"
     class="navbar__cta navbar__cta--mobile"

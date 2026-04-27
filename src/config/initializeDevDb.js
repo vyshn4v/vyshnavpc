@@ -5,7 +5,7 @@ async function connectDb() {
   if (connection) return connection;
   console.log("connection");
   const db1 = await mongoose.createConnection(process.env.MONGO_URI, {
-    dbName: "portfolio_local",
+    dbName: process.env.MONGODB_DB_NAME,
   });
   db1.on("connected", () => {
     console.log("Connected to MongoDB successfully");
