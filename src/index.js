@@ -4,6 +4,7 @@ import { initializeRedis } from "./config/initializeRedis.js";
 import initializeHbsEngine from "./config/hbsEngine.js";
 import blogsRouter from "./routes/blogs.js";
 import portfolioRoute from "./routes/portfolio.js";
+import { visitorTracker } from "./middleware/visitorTracker.js";
 
 // creating an instance of express
 const app = express();
@@ -11,6 +12,8 @@ initializeHbsEngine(express, app);
 // setting up the static files directory
 
 // setting up the view engine and views directory
+// Track visitor details (IP, country, device info) → Redis, 2-day TTL
+app.use(visitorTracker);
 app.use("/", portfolioRoute);
 app.use("/blogs", blogsRouter);
 // handling 404 errors for undefined routes

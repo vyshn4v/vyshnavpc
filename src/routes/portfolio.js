@@ -3,6 +3,7 @@ const router = express.Router();
 import { getLandingPageModel } from "../schema/landingpages.js";
 import { getRedisClient } from "../config/initializeRedis.js";
 import { getJourneyModel } from "../schema/journey.js";
+import dsaQuestions from "./dsa.questions.js";
 
 router.get("/", async (req, res, next) => {
   try {
@@ -51,6 +52,9 @@ router.get("/journey", async (req, res, next) => {
   } catch (err) {
     next();
   }
+});
+router.get("/hidden-dsa-guide", (req, res) => {
+  res.render("hidden-dsa-guide", dsaQuestions);
 });
 router.put("/portfolio-to-prod", (req, res) => {
   // Logic to move portfolio to production
