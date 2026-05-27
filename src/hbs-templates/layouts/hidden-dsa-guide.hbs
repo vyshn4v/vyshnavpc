@@ -1,0 +1,645 @@
+{{#section "styles"}}
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    :root {
+      --bg: #0d0d0d;
+      --bg1: #111;
+      --bg2: #161616;
+      --bg3: #1e1e1e;
+      --border: #252525;
+      --border2: #333;
+      --green: #4ade80;
+      --amber: #fbbf24;
+      --red: #f87171;
+      --cyan: #67e8f9;
+      --purple: #a78bfa;
+      --text: #e5e5e5;
+      --muted: #666;
+      --dim: #333;
+      --ff: "JetBrains Mono", monospace;
+      --fh: "Syne", sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--ff);
+      min-height: 100vh;
+    }
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 2px;
+    }
+
+    /* terminal bar */
+    .term-bar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 9px 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .dots {
+      display: flex;
+      gap: 5px;
+    }
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .term-title {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0 auto;
+    }
+    .live {
+      font-size: 10px;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    /* layout */
+    .wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 5rem;
+    }
+
+    /* hero */
+    .hero {
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .prompt {
+      font-size: 11px;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+    .prompt span {
+      color: var(--muted);
+    }
+    h1 {
+      font-family: var(--fh);
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    h1 em {
+      color: var(--green);
+      font-style: italic;
+    }
+    .hero-sub {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .hero-sub .path {
+      color: var(--amber);
+    }
+
+    /* stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+    .sc {
+      background: var(--bg1);
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .sl {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--dim);
+      margin-bottom: 4px;
+    }
+    .sv {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .sv.g {
+      color: var(--green);
+    }
+    .sv.a {
+      color: var(--amber);
+    }
+    .sv.r {
+      color: var(--red);
+    }
+    .sv.c {
+      color: var(--cyan);
+    }
+
+    /* progress */
+    .prog {
+      height: 2px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 1.75rem;
+    }
+    .prog-fill {
+      height: 100%;
+      background: var(--green);
+      border-radius: 99px;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 6px rgba(74, 222, 128, 0.4);
+    }
+
+    /* filters */
+    .filter-label {
+      font-size: 10px;
+      color: var(--dim);
+      margin-bottom: 8px;
+    }
+    .filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .fb {
+      font-family: var(--ff);
+      font-size: 10px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.2px;
+    }
+    .fb:hover,
+    .fb.active {
+      border-color: var(--green);
+      color: var(--green);
+    }
+    .fb.active {
+      background: rgba(74, 222, 128, 0.08);
+    }
+    .fb[data-f="intermediate"]:hover,
+    .fb[data-f="intermediate"].active {
+      border-color: var(--amber);
+      color: var(--amber);
+      background: rgba(251, 191, 36, 0.08);
+    }
+    .fb[data-f="advanced"]:hover,
+    .fb[data-f="advanced"].active {
+      border-color: var(--red);
+      color: var(--red);
+      background: rgba(248, 113, 113, 0.08);
+    }
+    .fb[data-f="done"]:hover,
+    .fb[data-f="done"].active {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(103, 232, 249, 0.08);
+    }
+
+    /* category */
+    .cat {
+      margin-bottom: 2.5rem;
+    }
+    .cat-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .cat-icon {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .cat-name {
+      font-family: var(--fh);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+    .cat-lvl {
+      font-size: 9px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      border: 1px solid;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    .lvl-beginner {
+      color: var(--green);
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+    .lvl-intermediate {
+      color: var(--amber);
+      border-color: rgba(251, 191, 36, 0.3);
+    }
+    .lvl-advanced {
+      color: var(--red);
+      border-color: rgba(248, 113, 113, 0.3);
+    }
+    .cat-progress {
+      font-size: 10px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+    .cat-pct {
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    /* grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 6px;
+    }
+
+    /* card */
+    .card {
+      background: var(--bg1);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      transition:
+        border-color 0.15s,
+        background 0.15s,
+        transform 0.1s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      transition: width 0.15s;
+      border-radius: 2px 0 0 2px;
+    }
+    .card:hover {
+      border-color: var(--border2);
+      background: var(--bg2);
+      transform: translateY(-1px);
+    }
+    .card.done {
+      background: var(--bg2);
+      border-color: var(--border);
+    }
+    .card.done::before {
+      width: 3px;
+      background: var(--green);
+    }
+
+    /* checkbox */
+    .cb {
+      width: 17px;
+      height: 17px;
+      min-width: 17px;
+      border-radius: 4px;
+      border: 1.5px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      transition: all 0.15s;
+    }
+    .cb svg {
+      display: none;
+      width: 9px;
+      height: 9px;
+    }
+    .card.done .cb {
+      background: rgba(74, 222, 128, 0.15);
+      border-color: var(--green);
+    }
+    .card.done .cb svg {
+      display: block;
+    }
+
+    .pinfo {
+      flex: 1;
+      min-width: 0;
+    }
+    .ptitle {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 5px;
+      transition: color 0.15s;
+    }
+    .card.done .ptitle {
+      color: var(--dim);
+      text-decoration: line-through;
+      text-decoration-color: var(--border2);
+    }
+    .pmeta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .diff {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 99px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+    .easy {
+      background: rgba(74, 222, 128, 0.1);
+      color: var(--green);
+      border: 1px solid rgba(74, 222, 128, 0.2);
+    }
+    .medium {
+      background: rgba(251, 191, 36, 0.1);
+      color: var(--amber);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+    }
+    .hard {
+      background: rgba(248, 113, 113, 0.1);
+      color: var(--red);
+      border: 1px solid rgba(248, 113, 113, 0.2);
+    }
+
+    .lc {
+      font-size: 9px;
+      color: var(--dim);
+      text-decoration: none;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      margin-left: auto;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .lc:hover {
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    /* footer */
+    .foot {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 10px;
+      color: var(--dim);
+    }
+    .foot a {
+      color: var(--green);
+      text-decoration: none;
+    }
+    .reset-btn {
+      font-family: var(--ff);
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .reset-btn:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    @media (max-width: 600px) {
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+{{/section}}
+
+<div class="term-bar">
+  <div class="dots">
+    <div class="dot" style="background:#ff5f57"></div>
+    <div class="dot" style="background:#febc2e"></div>
+    <div class="dot" style="background:#28c840"></div>
+  </div>
+  <span class="term-title">dsa-tracker — vyshnav — zsh — 120×36</span>
+  <span class="live"><span class="live-dot"></span>live</span>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <p class="prompt">❯ <span>~/cat dsa-roadmap.json</span></p>
+    <h1>DSA <em>Interview</em> Tracker</h1>
+    <p class="hero-sub">
+      <span class="path">beginner → intermediate → advanced</span>
+      &nbsp;·&nbsp;
+      {{meta.total}}
+      problems &nbsp;·&nbsp; curated for backend engineers
+    </p>
+  </div>
+
+  <div class="stats">
+    <div class="sc"><div class="sl">total</div><div
+        class="sv"
+        id="s-total"
+      >{{meta.total}}</div></div>
+    <div class="sc"><div class="sl">solved</div><div
+        class="sv g"
+        id="s-done"
+      >0</div></div>
+    <div class="sc"><div class="sl">remaining</div><div
+        class="sv c"
+        id="s-rem"
+      >{{meta.total}}</div></div>
+    <div class="sc"><div class="sl">easy</div><div
+        class="sv g"
+        id="s-easy"
+      >0</div></div>
+    <div class="sc"><div class="sl">medium</div><div
+        class="sv a"
+        id="s-med"
+      >0</div></div>
+    <div class="sc"><div class="sl">hard</div><div
+        class="sv r"
+        id="s-hard"
+      >0</div></div>
+  </div>
+
+  <div class="prog"><div
+      class="prog-fill"
+      id="prog"
+      style="width:0%"
+    ></div></div>
+
+  <div class="filter-label">// filter_by</div>
+  <div class="filters" id="filters">
+    <button class="fb active" data-f="all">all</button>
+    <button class="fb" data-f="beginner">beginner</button>
+    <button class="fb" data-f="intermediate">intermediate</button>
+    <button class="fb" data-f="advanced">advanced</button>
+    <button class="fb" data-f="done">✓ solved</button>
+    <button class="fb" data-f="todo">◯ remaining</button>
+  </div>
+
+  {{#each categories}}
+    <div class="cat" data-level="{{level}}">
+      <div class="cat-head">
+        <span class="cat-icon">{{icon}}</span>
+        <span class="cat-name">{{name}}</span>
+        <span class="cat-lvl lvl-{{level}}">{{level}}</span>
+        <span
+          class="cat-progress"
+          id="cp-{{slugify name}}"
+        >0/{{problems.length}}</span>
+        <span class="cat-pct lvl-{{level}}" id="cpct-{{slugify name}}">0%</span>
+      </div>
+      <div class="grid">
+        {{#each problems}}
+          <div
+            class="card"
+            id="card-{{id}}"
+            data-id="{{id}}"
+            onclick="toggle('{{id}}')"
+          >
+            <div class="cb" id="cb-{{id}}">
+              <svg viewBox="0 0 9 9" fill="none">
+                <path
+                  d="M1.5 4.5l2 2 4-4"
+                  stroke="#4ade80"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="pinfo">
+              <div class="ptitle" id="pt-{{id}}">{{title}}</div>
+              <div class="pmeta">
+                <span class="diff {{difficulty}}">{{difficulty}}</span>
+                <a
+                  class="lc"
+                  href="{{url}}"
+                  target="_blank"
+                  onclick="event.stopPropagation()"
+                >LC →</a>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  {{/each}}
+
+  <div class="foot">
+    <span>//
+      <a href="http://portfolio.vyshnavpc.com" target="_blank">vyshnavpc.com</a>
+      · dsa-tracker</span>
+    <button class="reset-btn" onclick="resetAll()">reset progress</button>
+  </div>
+
+</div>
+{{#section "scripts"}}
+  <script>
+    const TOTAL =
+    {{meta.total}}; const KEY = 'dsa_tracker_v1'; let done = new Set(); function
+    load() { try { const d = localStorage.getItem(KEY); if (d) done = new
+    Set(JSON.parse(d)); } catch(e) {} } function save() { try {
+    localStorage.setItem(KEY, JSON.stringify([...done])); } catch(e) {} }
+    function toggle(id) { done.has(id) ? done.delete(id) : done.add(id); save();
+    applyCard(id); updateStats(); updateCatCounters(); } function applyCard(id)
+    { const isDone = done.has(id); document.getElementById('card-' +
+    id)?.classList.toggle('done', isDone); } function updateStats() { const
+    solved = done.size; const pct = Math.round((solved / TOTAL) * 100);
+    document.getElementById('s-done').textContent = solved;
+    document.getElementById('s-rem').textContent = TOTAL - solved;
+    document.getElementById('prog').style.width = pct + '%'; let easy = 0, med =
+    0, hard = 0; document.querySelectorAll('.card').forEach(c => { if
+    (!done.has(c.dataset.id)) return; const diff = c.querySelector('.diff'); if
+    (diff.classList.contains('easy')) easy++; else if
+    (diff.classList.contains('medium')) med++; else hard++; });
+    document.getElementById('s-easy').textContent = easy;
+    document.getElementById('s-med').textContent = med;
+    document.getElementById('s-hard').textContent = hard; } function
+    updateCatCounters() { document.querySelectorAll('.cat').forEach(section => {
+    const cards = section.querySelectorAll('.card'); const catDone =
+    [...cards].filter(c => done.has(c.dataset.id)).length; const total =
+    cards.length; const name = section.querySelector('.cat-name').textContent
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-'); const cp =
+    document.getElementById('cp-' + name); const cpct =
+    document.getElementById('cpct-' + name); if (cp) cp.textContent = catDone +
+    '/' + total; if (cpct) cpct.textContent = Math.round((catDone / total) *
+    100) + '%'; }); } function applyFilter(f) {
+    document.querySelectorAll('.fb').forEach(b => b.classList.toggle('active',
+    b.dataset.f === f)); document.querySelectorAll('.cat').forEach(section => {
+    const level = section.dataset.level; const cards =
+    section.querySelectorAll('.card'); let sectionVisible = false;
+    cards.forEach(card => { const isDone = done.has(card.dataset.id); let show =
+    true; if (f === 'done') show = isDone; else if (f === 'todo') show =
+    !isDone; else if (f === 'beginner' || f === 'intermediate' || f ===
+    'advanced') show = (level === f); card.style.display = show ? '' : 'none';
+    if (show) sectionVisible = true; }); section.style.display = sectionVisible
+    ? '' : 'none'; }); } function resetAll() { if (!confirm('Reset all
+    progress?')) return; done.clear(); save();
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('done'));
+    updateStats(); updateCatCounters(); }
+    document.getElementById('filters').addEventListener('click', e => { if
+    (e.target.classList.contains('fb')) applyFilter(e.target.dataset.f); });
+    load(); [...done].forEach(id => applyCard(id)); updateStats();
+    updateCatCounters();
+  </script>
+{{/section}}

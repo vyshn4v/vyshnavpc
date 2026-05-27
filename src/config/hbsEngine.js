@@ -14,6 +14,7 @@ export default function initializeHbsEngine(express, app) {
       // json: function (value) {
       //   return JSON.stringify(value);
       // },
+      slugify: (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
       section: function (name, options) {
         if (!this._sections) this._sections = {};
         this._sections[name] = options.fn(this);
