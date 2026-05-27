@@ -1,11 +1,12 @@
 {
   "name": "personalwebsite",
   "version": "3.0.3",
+  "type": "module",
   "description": "an hbs server for personal website for mr.vyshnav p c",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "node --env-file=./src/dev.env --watch ./src/index.js",
+    "start:dev": "node --env-file=./src/.env.local --watch ./src/index.js",
     "start:prod": "node --env-file=./src/.env ./src/index.js "
   },
   "keywords": [

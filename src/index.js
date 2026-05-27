@@ -12,7 +12,6 @@ initializeHbsEngine(express, app);
 // setting up the static files directory
 
 // setting up the view engine and views directory
-// Track visitor details (IP, country, device info) → Redis, 2-day TTL
 app.use(visitorTracker);
 app.use("/", portfolioRoute);
 app.use("/blogs", blogsRouter);
