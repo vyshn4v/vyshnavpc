@@ -3,7 +3,8 @@
 /dist/
 node_modules/
 .env
-env
+env*
+.env*
 .key
 key
 dev.env

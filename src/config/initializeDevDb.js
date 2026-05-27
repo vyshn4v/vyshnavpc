@@ -6,6 +6,9 @@ async function connectDb() {
   console.log("connection");
   const db1 = await mongoose.createConnection(process.env.MONGO_URI, {
     dbName: process.env.MONGODB_DB_NAME,
+    tls: true,
+    tlsAllowInvalidCertificates: true,
+    serverSelectionTimeoutMS: 10000,
   });
   db1.on("connected", () => {
     console.log("Connected to MongoDB successfully");

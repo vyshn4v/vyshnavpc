@@ -2,7 +2,6 @@ import { getRedisClient } from "../config/initializeRedis.js";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const TWO_DAYS_IN_SECONDS = 2 * 24 * 60 * 60; // 172 800 s
-const VISITOR_LIST_KEY = (cacheKey) => `${cacheKey}:visitors`;
 const VISITOR_HASH_KEY = (cacheKey, visitorId) =>
   `${cacheKey}:visitor:${visitorId}`;
 
@@ -191,7 +190,6 @@ async function trackVisitor(req) {
   const visitorId = generateVisitorId(ip, ua);
   const cacheKey = process.env.REDIS_CACHE_KEY || "Portfolio";
   const hashKey = VISITOR_HASH_KEY(cacheKey, visitorId);
-  const listKey = VISITOR_LIST_KEY(cacheKey);
   const now = new Date().toISOString();
 
   // ── Check if visitor already exists ──────────────────────────────────────
@@ -260,12 +258,4 @@ async function trackVisitor(req) {
   // Store visitor data as a Redis Hash
   await redis.hSet(hashKey, visitorData);
   await redis.expire(hashKey, TWO_DAYS_IN_SECONDS);
-
-  // Add to the visitor index sorted set (score = unix timestamp for ordering)
-  await redis.zAdd(listKey, {
-    score: Date.now(),
-    value: visitorId,
-  });
-  // Keep the index alive for 2 days too
-  await redis.expire(listKey, TWO_DAYS_IN_SECONDS);
 }
