@@ -23,10 +23,10 @@ router.post("/", async (req, res) => {
     const sub   = subject?.trim() || "";
     const msg   = message?.trim() || "";
 
-    if (!fName || !em || !msg) {
+    if (!fName || !em || !sub || !msg) {
       return res.status(400).json({
         ok: false,
-        error: "First name, email, and message are required.",
+        error: "First name, email, subject, and message are required.",
       });
     }
 
