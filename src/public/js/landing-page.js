@@ -84,6 +84,16 @@
       setTimeout(() => {
         sendBtn.innerHTML = "✉ Send Message";
         sendBtn.disabled = false;
+        
+        // Clear red borders and error messages
+        ["fname","lname","femail","fsubject","fmessage"].forEach((id) => {
+          document.getElementById(id)?.classList.remove("error");
+          const errDiv = document.getElementById("err-" + id);
+          if (errDiv) {
+            errDiv.classList.remove("show");
+            errDiv.textContent = "";
+          }
+        });
       }, 300); // Wait for CSS transition
     }
   }
@@ -105,23 +115,49 @@
       const message   = document.getElementById("fmessage")?.value.trim();
 
       // ── Client-side validation ──────────────────────────────────────────
-      const showError = (msg) => {
-        sendBtn.textContent = `⚠ ${msg}`;
-        setTimeout(() => { sendBtn.innerHTML = "✉ Send Message"; }, 3000);
+      const clearErrors = () => {
+        ["fname","lname","femail","fsubject","fmessage"].forEach((id) => {
+          document.getElementById(id)?.classList.remove("error");
+          const errDiv = document.getElementById("err-" + id);
+          if (errDiv) {
+            errDiv.classList.remove("show");
+            errDiv.textContent = "";
+          }
+        });
       };
 
-      if (!firstName || !email || !message) {
-        return showError("Fill required fields");
-      }
-      if (firstName.length > 50) return showError("First name too long");
-      if (lastName.length > 50) return showError("Last name too long");
-      if (subject.length > 100) return showError("Subject too long");
-      if (message.length < 10) return showError("Message too short (min 10)");
-      if (message.length > 2000) return showError("Message too long (max 2000)");
+      const showFieldError = (id, msg) => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add("error");
+        const errDiv = document.getElementById("err-" + id);
+        if (errDiv) {
+          errDiv.textContent = msg;
+          errDiv.classList.add("show");
+        }
+      };
+
+      clearErrors();
+      let hasError = false;
+
+      if (!firstName) { showFieldError("fname", "First name is required."); hasError = true; }
+      else if (firstName.length > 50) { showFieldError("fname", "Max 50 characters allowed."); hasError = true; }
+
+      if (lastName.length > 50) { showFieldError("lname", "Max 50 characters allowed."); hasError = true; }
 
       const emailRe = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailRe.test(email) || email.length > 100) {
-        return showError("Enter a valid email");
+      if (!email) { showFieldError("femail", "Email is required."); hasError = true; }
+      else if (!emailRe.test(email) || email.length > 100) { showFieldError("femail", "Enter a valid email address."); hasError = true; }
+
+      if (subject.length > 100) { showFieldError("fsubject", "Max 100 characters allowed."); hasError = true; }
+
+      if (!message) { showFieldError("fmessage", "Message is required."); hasError = true; }
+      else if (message.length < 10) { showFieldError("fmessage", "Message must be at least 10 characters."); hasError = true; }
+      else if (message.length > 2000) { showFieldError("fmessage", "Max 2000 characters allowed."); hasError = true; }
+
+      if (hasError) {
+        sendBtn.textContent = "⚠ Check errors above";
+        setTimeout(() => { sendBtn.innerHTML = "✉ Send Message"; }, 3000);
+        return;
       }
 
       // ── Show Facebook-style scale-pulse loading animation ───────────────
