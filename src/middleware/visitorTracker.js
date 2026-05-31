@@ -10,7 +10,7 @@ const VISITOR_HASH_KEY = (cacheKey, visitorId) =>
 /**
  * Extract the real client IP, honoring common proxy headers.
  */
-function extractIp(req) {
+export function extractIp(req) {
   const forwarded = req.headers["x-forwarded-for"];
   if (forwarded) {
     // x-forwarded-for may contain a comma-separated list; first entry is client
@@ -29,7 +29,7 @@ function extractIp(req) {
  * Parse basic OS / browser / device info from a User-Agent string.
  * Keeps things dependency-free with simple regex heuristics.
  */
-function parseUserAgent(ua = "") {
+export function parseUserAgent(ua = "") {
   // ── OS ──────────────────────────────────────────────────────────────────
   let os = "Unknown OS";
   if (/windows nt 10/i.test(ua)) os = "Windows 10/11";
@@ -105,7 +105,7 @@ function parseUserAgent(ua = "") {
  * Returns an object with country, region, city, ISP, etc.
  * Returns null on any failure so the middleware degrades gracefully.
  */
-async function fetchGeoInfo(ip) {
+export async function fetchGeoInfo(ip) {
   if (!ip || ip === "unknown" || ip === "::1" || ip.startsWith("127.")) {
     // Loopback — skip lookup
     return { country: "Localhost", region: "-", city: "-", isp: "-", timezone: "-" };
