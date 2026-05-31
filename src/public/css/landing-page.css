@@ -1369,3 +1369,18 @@ em {
 .cert-card:hover .cert-link {
     letter-spacing: .04em;
 }
+
+/* ── Field Errors ── */
+.field-error {
+    color: #ef4444; /* Tailwind red-500 */
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: none;
+}
+.field-error.show {
+    display: block;
+}
+.form-group input.error,
+.form-group textarea.error {
+    border-color: #ef4444;
+}
