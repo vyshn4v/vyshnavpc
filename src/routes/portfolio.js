@@ -40,15 +40,28 @@ router.get("/journey", async (req, res, next) => {
       return res.render("journey-page", { journey: JSON.parse(cachedData) });
     }
     const journeyData = await getJourneyModel().findOne();
+    let journeyObj = journeyData ? journeyData.toObject() : {};
+    
+    // Normalization 1: If the user named the array "journey" instead of "steps" in the DB
+    if (journeyObj.journey && !journeyObj.steps) {
+      journeyObj.steps = journeyObj.journey;
+    }
+    
+    // Normalization 2: If the user seeded the DB with multiple flat documents instead of one array document
+    if (!journeyObj.steps && journeyObj.year) {
+      const allDocs = await getJourneyModel().find().sort({ order: 1 });
+      journeyObj = { steps: allDocs.map(d => d.toObject()) };
+    }
+
     redis.set(
       process.env.REDIS_CACHE_KEY + ":journeyPage",
-      JSON.stringify(journeyData?.toObject()),
+      JSON.stringify(journeyObj),
       {
         EX: parseInt(process.env.REDIS_CACHE_TIME) || 60, // Cache for 60 seconds
       },
     );
     // res.json({ journey: journeyData });
-    res.render("journey-page", { journey: journeyData ? journeyData.toObject() : {} });
+    res.render("journey-page", { journey: journeyObj });
   } catch (err) {
     next();
   }
