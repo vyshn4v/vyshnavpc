@@ -20,6 +20,7 @@
     "express-handlebars": "^8.0.1",
     "express-rate-limit": "^8.5.2",
     "mongoose": "^9.4.1",
+    "rate-limit-redis": "^5.0.0",
     "redis": "^5.12.1"
   }
 }

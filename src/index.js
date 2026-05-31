@@ -1,6 +1,6 @@
 import express from "express";
 import { connectDb } from "./config/initializeDevDb.js";
-import { initializeRedis } from "./config/initializeRedis.js";
+import { initializeRedis, getRedisClient } from "./config/initializeRedis.js";
 import initializeHbsEngine from "./config/hbsEngine.js";
 import blogsRouter from "./routes/blogs.js";
 import portfolioRoute from "./routes/portfolio.js";
@@ -8,6 +8,7 @@ import { visitorTracker } from "./middleware/visitorTracker.js";
 import { initializeAmqp } from "./config/amqp.js";
 import contactRouter from "./routes/contact.js";
 import rateLimit from "express-rate-limit";
+import { RedisStore } from "rate-limit-redis";
 
 // creating an instance of express
 const app = express();
@@ -20,7 +21,10 @@ const limiter = rateLimit({
   max: parseInt(process.env.RATE_LIMIT_MAX) || 100,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: "Too many requests from this IP, please try again later" }
+  message: { error: "Too many requests from this IP, please try again later" },
+  store: new RedisStore({
+    sendCommand: (...args) => getRedisClient().sendCommand(args),
+  }),
 });
 
 // Apply the rate limiting middleware to all requests
