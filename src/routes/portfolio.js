@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
       process.env.REDIS_CACHE_KEY + ":landingPage",
       JSON.stringify(portfolio?.data),
       {
-        EX: process.env.REDIS_CACHE_TIME, // Cache for 60 seconds
+        EX: parseInt(process.env.REDIS_CACHE_TIME) || 60, // Cache for 60 seconds
       },
     );
     res.render("landing-page", {
@@ -44,11 +44,11 @@ router.get("/journey", async (req, res, next) => {
       process.env.REDIS_CACHE_KEY + ":journeyPage",
       JSON.stringify(journeyData?.toObject()),
       {
-        EX: process.env.REDIS_CACHE_TIME, // Cache for 6
+        EX: parseInt(process.env.REDIS_CACHE_TIME) || 60, // Cache for 60 seconds
       },
     );
     // res.json({ journey: journeyData });
-    res.render("journey-page", { journey: journeyData.toObject() });
+    res.render("journey-page", { journey: journeyData ? journeyData.toObject() : {} });
   } catch (err) {
     next();
   }
