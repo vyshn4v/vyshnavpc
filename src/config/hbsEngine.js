@@ -49,4 +49,7 @@ export default function initializeHbsEngine(express, app) {
   app.set("view engine", "hbs");
   app.set("views", path.join(__dirname, "../hbs-templates/layouts"));
   app.use(express.static(path.join(__dirname, "../public")));
+  
+  // Expose env variables globally to all handlebars templates
+  app.locals.siteEmail = process.env.MAIL_TO || "vyshnavpcnaravoor@gmail.com";
 }
