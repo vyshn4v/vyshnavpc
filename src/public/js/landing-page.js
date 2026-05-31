@@ -79,6 +79,13 @@
   }
   function closeModal() {
     if (backdrop) backdrop.classList.remove("open");
+    // Ensure button resets its state anytime modal is closed
+    if (sendBtn) {
+      setTimeout(() => {
+        sendBtn.innerHTML = "✉ Send Message";
+        sendBtn.disabled = false;
+      }, 300); // Wait for CSS transition
+    }
   }
 
   if (openBtn) openBtn.addEventListener("click", openModal);
