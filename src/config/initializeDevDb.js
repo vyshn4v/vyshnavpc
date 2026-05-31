@@ -4,19 +4,19 @@ async function connectDb() {
   console.log("Connecting to MongoDB...");
   if (connection) return connection;
   console.log("connection");
-  const db1 = await mongoose.createConnection(process.env.MONGO_URI, {
+  const db = await mongoose.createConnection(process.env.MONGO_URI, {
     dbName: process.env.MONGODB_DB_NAME,
     tls: true,
     tlsAllowInvalidCertificates: true,
     serverSelectionTimeoutMS: 10000,
   });
-  db1.on("connected", () => {
+  db.on("connected", () => {
     console.log("Connected to MongoDB successfully");
   });
-  db1.on("error", (err) => {
+  db.on("error", (err) => {
     console.error("Error connecting to MongoDB:", err);
   });
-  connection = db1;
+  connection = db;
   return connection;
 }
 function getDbConnection() {
