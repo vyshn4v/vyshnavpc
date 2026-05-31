@@ -90,20 +90,73 @@
     });
 
   if (sendBtn) {
-    sendBtn.addEventListener("click", () => {
-      const fname = document.getElementById("fname")?.value.trim();
-      const email = document.getElementById("femail")?.value.trim();
-      const message = document.getElementById("fmessage")?.value.trim();
-      if (!fname || !email || !message) {
+    sendBtn.addEventListener("click", async () => {
+      const firstName = document.getElementById("fname")?.value.trim();
+      const lastName  = document.getElementById("lname")?.value.trim() || "";
+      const email     = document.getElementById("femail")?.value.trim();
+      const subject   = document.getElementById("fsubject")?.value.trim() || "";
+      const message   = document.getElementById("fmessage")?.value.trim();
+
+      // ── Client-side validation ──────────────────────────────────────────
+      if (!firstName || !email || !message) {
         sendBtn.textContent = "⚠ Fill required fields";
-        setTimeout(() => {
-          sendBtn.innerHTML = "✉ Send Message";
-        }, 2000);
+        setTimeout(() => { sendBtn.innerHTML = "✉ Send Message"; }, 2000);
         return;
       }
-      sendBtn.innerHTML = "✔️ Sent!";
+
+      // ── Show Facebook-style scale-pulse loading animation ───────────────
       sendBtn.disabled = true;
-      setTimeout(closeModal, 1400);
+      sendBtn.innerHTML = `<span class="fb-loader"></span>`;
+
+      // Inject keyframe CSS once
+      if (!document.getElementById("fb-loader-style")) {
+        const style = document.createElement("style");
+        style.id = "fb-loader-style";
+        style.textContent = `
+          .fb-loader {
+            display: inline-block;
+            width: 18px; height: 18px;
+            border-radius: 4px;
+            background: currentColor;
+            opacity: 0.9;
+            animation: fb-scale-pulse 0.75s ease-in-out infinite alternate;
+            vertical-align: middle;
+          }
+          @keyframes fb-scale-pulse {
+            0%   { transform: scale(0.35); opacity: 0.5; }
+            100% { transform: scale(1);    opacity: 1;   }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
+      // ── Call the API ────────────────────────────────────────────────────
+      try {
+        const res  = await fetch("/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ firstName, lastName, email, subject, message }),
+        });
+        const data = await res.json();
+
+        if (data.ok) {
+          sendBtn.innerHTML = "✅ Message Sent!";
+          // Clear the form fields
+          ["fname","lname","femail","fsubject","fmessage"].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.value = "";
+          });
+          setTimeout(closeModal, 1800);
+        } else {
+          sendBtn.innerHTML = `⚠ ${data.error || "Failed — try again"}`;
+          sendBtn.disabled = false;
+          setTimeout(() => { sendBtn.innerHTML = "✉ Send Message"; }, 3000);
+        }
+      } catch {
+        sendBtn.innerHTML = "⚠ Network error — try again";
+        sendBtn.disabled = false;
+        setTimeout(() => { sendBtn.innerHTML = "✉ Send Message"; }, 3000);
+      }
     });
   }
 
