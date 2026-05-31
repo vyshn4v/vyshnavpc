@@ -9,6 +9,7 @@ import { initializeAmqp } from "./config/amqp.js";
 import contactRouter from "./routes/contact.js";
 import rateLimit from "express-rate-limit";
 import { RedisStore } from "rate-limit-redis";
+initializeRedis();
 
 // creating an instance of express
 const app = express();
@@ -23,6 +24,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
   message: { error: "Too many requests from this IP, please try again later" },
   store: new RedisStore({
+    prefix: process.env.RATE_LIMITER_PREFIX,
     sendCommand: (...args) => getRedisClient().sendCommand(args),
   }),
 });
@@ -45,7 +47,6 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 3000;
 await connectDb()
   .then(async () => {
-    initializeRedis();
     try {
       await initializeAmqp();
     } catch (err) {
