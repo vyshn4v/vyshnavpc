@@ -105,10 +105,23 @@
       const message   = document.getElementById("fmessage")?.value.trim();
 
       // ── Client-side validation ──────────────────────────────────────────
+      const showError = (msg) => {
+        sendBtn.textContent = `⚠ ${msg}`;
+        setTimeout(() => { sendBtn.innerHTML = "✉ Send Message"; }, 3000);
+      };
+
       if (!firstName || !email || !message) {
-        sendBtn.textContent = "⚠ Fill required fields";
-        setTimeout(() => { sendBtn.innerHTML = "✉ Send Message"; }, 2000);
-        return;
+        return showError("Fill required fields");
+      }
+      if (firstName.length > 50) return showError("First name too long");
+      if (lastName.length > 50) return showError("Last name too long");
+      if (subject.length > 100) return showError("Subject too long");
+      if (message.length < 10) return showError("Message too short (min 10)");
+      if (message.length > 2000) return showError("Message too long (max 2000)");
+
+      const emailRe = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRe.test(email) || email.length > 100) {
+        return showError("Enter a valid email");
       }
 
       // ── Show Facebook-style scale-pulse loading animation ───────────────

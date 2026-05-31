@@ -17,18 +17,32 @@ router.post("/", async (req, res) => {
     const { firstName, lastName = "", email, subject = "", message } = req.body;
 
     // ── 1. Server-side validation ─────────────────────────────────────────
-    if (!firstName?.trim() || !email?.trim() || !message?.trim()) {
+    const fName = firstName?.trim() || "";
+    const lName = lastName?.trim() || "";
+    const em    = email?.trim() || "";
+    const sub   = subject?.trim() || "";
+    const msg   = message?.trim() || "";
+
+    if (!fName || !em || !msg) {
       return res.status(400).json({
         ok: false,
-        error: "firstName, email, and message are required.",
+        error: "First name, email, and message are required.",
       });
     }
 
-    // Basic email format check
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRe.test(email.trim())) {
-      return res.status(400).json({ ok: false, error: "Invalid email address." });
+    if (fName.length > 50) return res.status(400).json({ ok: false, error: "First name is too long (max 50 chars)." });
+    if (lName.length > 50) return res.status(400).json({ ok: false, error: "Last name is too long (max 50 chars)." });
+    if (sub.length > 100) return res.status(400).json({ ok: false, error: "Subject is too long (max 100 chars)." });
+    
+    if (msg.length < 10) return res.status(400).json({ ok: false, error: "Message must be at least 10 characters." });
+    if (msg.length > 2000) return res.status(400).json({ ok: false, error: "Message is too long (max 2000 chars)." });
+
+    // Strict email format check
+    const emailRe = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRe.test(em)) {
+      return res.status(400).json({ ok: false, error: "Please enter a valid email address." });
     }
+    if (em.length > 100) return res.status(400).json({ ok: false, error: "Email address is too long." });
 
     // ── 2. Enrich with geo + device data (best-effort, non-blocking) ──────
     const ip      = extractIp(req);
