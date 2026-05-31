@@ -148,7 +148,8 @@
       if (!email) { showFieldError("femail", "Email is required."); hasError = true; }
       else if (!emailRe.test(email) || email.length > 100) { showFieldError("femail", "Enter a valid email address."); hasError = true; }
 
-      if (subject.length > 100) { showFieldError("fsubject", "Max 100 characters allowed."); hasError = true; }
+      if (!subject) { showFieldError("fsubject", "Subject is required."); hasError = true; }
+      else if (subject.length > 100) { showFieldError("fsubject", "Max 100 characters allowed."); hasError = true; }
 
       if (!message) { showFieldError("fmessage", "Message is required."); hasError = true; }
       else if (message.length < 10) { showFieldError("fmessage", "Message must be at least 10 characters."); hasError = true; }
