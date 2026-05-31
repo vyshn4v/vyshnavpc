@@ -15,6 +15,7 @@
   "author": "vyshnav p c",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^2.0.1",
     "express": "^5.2.1",
     "express-handlebars": "^8.0.1",
     "express-rate-limit": "^8.5.2",
