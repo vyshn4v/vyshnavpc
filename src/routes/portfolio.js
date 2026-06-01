@@ -11,21 +11,23 @@ router.get("/", async (req, res, next) => {
     const cachedData = await redis.get(
       process.env.REDIS_CACHE_KEY + ":landingPage",
     );
+    let renderData;
     if (cachedData) {
-      return res.render("landing-page", JSON.parse(cachedData));
+      renderData = JSON.parse(cachedData);
+    } else {
+      const portfolio = await getLandingPageModel().findOne();
+      renderData = portfolio?.data || {};
+      redis.set(
+        process.env.REDIS_CACHE_KEY + ":landingPage",
+        JSON.stringify(renderData),
+        {
+          EX: parseInt(process.env.REDIS_CACHE_TIME) || 60,
+        },
+      );
     }
-    const portfolio = await getLandingPageModel().findOne();
-    redis.set(
-      process.env.REDIS_CACHE_KEY + ":landingPage",
-      JSON.stringify(portfolio?.data),
-      {
-        EX: parseInt(process.env.REDIS_CACHE_TIME) || 60, // Cache for 60 seconds
-      },
-    );
-    // Provide default projects if the database schema hasn't been updated yet
-    const data = portfolio?.data || {};
-    if (!data.projects || data.projects.length === 0) {
-      data.projects = [
+
+    if (!renderData.projects || renderData.projects.length === 0) {
+      renderData.projects = [
         {
           title: "Personal Portfolio",
           description: "A dark-themed, terminal-inspired portfolio website built with Express, Handlebars, and MongoDB.",
@@ -42,9 +44,7 @@ router.get("/", async (req, res, next) => {
       ];
     }
 
-    res.render("landing-page", {
-      ...data,
-    });
+    res.render("landing-page", renderData);
   } catch (err) {
     next();
   }
