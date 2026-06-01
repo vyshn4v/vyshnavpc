@@ -1,47 +1,38 @@
 /**
  * smooth-scroll.js — Vyshnav PC Portfolio
- * Adds momentum-based smooth scrolling to mouse wheel events.
- * Works on all browsers. Lightweight, no dependencies.
+ * Fluid momentum-based mouse wheel scrolling.
  */
 (function () {
-  const DURATION = 600;   // ms per scroll step
-  const EASE = 0.08;       // lower = smoother/slower momentum
+  const EASE = 0.055;   // lower = longer, silkier glide
 
   let currentY = window.scrollY;
-  let targetY = window.scrollY;
-  let rafId = null;
+  let targetY  = window.scrollY;
+  let rafId    = null;
 
-  function easeOutExpo(t) {
-    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-  }
-
-  function animate() {
+  function tick() {
     const diff = targetY - currentY;
-    if (Math.abs(diff) < 0.5) {
+    if (Math.abs(diff) < 0.3) {
       currentY = targetY;
-      window.scrollTo(0, currentY);
+      window.scrollTo(0, Math.round(currentY));
       rafId = null;
       return;
     }
     currentY += diff * EASE;
     window.scrollTo(0, currentY);
-    rafId = requestAnimationFrame(animate);
+    rafId = requestAnimationFrame(tick);
   }
 
   window.addEventListener("wheel", function (e) {
     e.preventDefault();
-    targetY = Math.max(0, Math.min(
-      document.body.scrollHeight - window.innerHeight,
-      targetY + e.deltaY * 1.2
-    ));
-    if (!rafId) rafId = requestAnimationFrame(animate);
+    const maxY = document.body.scrollHeight - window.innerHeight;
+    targetY = Math.max(0, Math.min(maxY, targetY + e.deltaY));
+    if (!rafId) rafId = requestAnimationFrame(tick);
   }, { passive: false });
 
-  // Keep currentY in sync when scrolled by other means (keyboard, navbar links etc.)
   window.addEventListener("scroll", function () {
     if (!rafId) {
       currentY = window.scrollY;
-      targetY = window.scrollY;
+      targetY  = window.scrollY;
     }
   }, { passive: true });
 })();
