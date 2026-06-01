@@ -26,25 +26,7 @@ router.get("/", async (req, res, next) => {
       );
     }
 
-    if (!renderData.projects || renderData.projects.length === 0) {
-      renderData.projects = [
-        {
-          title: "Personal Portfolio",
-          description: "A dark-themed, terminal-inspired portfolio website built with Express, Handlebars, and MongoDB.",
-          technologies: ["Node.js", "Express", "Handlebars", "MongoDB"],
-          github: "https://github.com/vyshn4v",
-          live: "https://vyshnavpc.com"
-        },
-        {
-          title: "Real-time Chat App",
-          description: "A scalable real-time chat application utilizing WebSockets and Redis for message brokering.",
-          technologies: ["React", "Socket.io", "Redis", "Docker"],
-          github: "https://github.com/vyshn4v",
-        }
-      ];
-    }
-    
-    renderData.hasManyProjects = renderData.projects.length >= 4;
+    renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;
 
     res.render("landing-page", renderData);
   } catch (err) {
