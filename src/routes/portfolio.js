@@ -43,6 +43,8 @@ router.get("/", async (req, res, next) => {
         }
       ];
     }
+    
+    renderData.hasManyProjects = renderData.projects.length >= 4;
 
     res.render("landing-page", renderData);
   } catch (err) {
