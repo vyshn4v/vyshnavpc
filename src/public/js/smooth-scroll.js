@@ -3,7 +3,7 @@
  * Fluid momentum-based mouse wheel scrolling.
  */
 (function () {
-  const EASE = 0.055;   // lower = longer, silkier glide
+  const EASE = 0.1;     // higher = faster catch-up
 
   let currentY = window.scrollY;
   let targetY  = window.scrollY;
@@ -25,7 +25,7 @@
   window.addEventListener("wheel", function (e) {
     e.preventDefault();
     const maxY = document.body.scrollHeight - window.innerHeight;
-    targetY = Math.max(0, Math.min(maxY, targetY + e.deltaY));
+    targetY = Math.max(0, Math.min(maxY, targetY + e.deltaY * 1.8));
     if (!rafId) rafId = requestAnimationFrame(tick);
   }, { passive: false });
 
