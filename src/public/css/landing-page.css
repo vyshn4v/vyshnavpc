@@ -49,6 +49,7 @@
 
 html {
     scroll-behavior: smooth;
+    overscroll-behavior-y: none; /* prevent rubber-band bounce at top/bottom */
 }
 
 body {
@@ -59,6 +60,7 @@ body {
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    overscroll-behavior-y: none;
 }
 
 a {
