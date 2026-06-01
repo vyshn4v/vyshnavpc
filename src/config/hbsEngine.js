@@ -15,6 +15,7 @@ export default function initializeHbsEngine(express, app) {
       //   return JSON.stringify(value);
       // },
       slugify: (str) => str.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      isGithubUrl: (url) => url && url.includes("github.com"),
       section: function (name, options) {
         if (!this._sections) this._sections = {};
         this._sections[name] = options.fn(this);
