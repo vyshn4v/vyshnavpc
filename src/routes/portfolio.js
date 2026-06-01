@@ -8,28 +8,30 @@ import dsaQuestions from "./dsa.questions.js";
 router.get("/", async (req, res, next) => {
   try {
     const redis = getRedisClient();
-    const cachedData = await redis.get(
-      process.env.REDIS_CACHE_KEY + ":landingPage",
-    );
+    const cacheKey = process.env.REDIS_CACHE_KEY + ":landingPage";
+    const cachedData = await redis.get(cacheKey);
     let renderData;
+
     if (cachedData) {
       renderData = JSON.parse(cachedData);
     } else {
-      const portfolio = await getLandingPageModel().findOne();
-      renderData = portfolio?.data || {};
-      redis.set(
-        process.env.REDIS_CACHE_KEY + ":landingPage",
-        JSON.stringify(renderData),
-        {
+      try {
+        const portfolio = await getLandingPageModel().findOne();
+        renderData = portfolio?.data || {};
+        redis.set(cacheKey, JSON.stringify(renderData), {
           EX: parseInt(process.env.REDIS_CACHE_TIME) || 60,
-        },
-      );
+        });
+      } catch (dbErr) {
+        console.error("[DB] Failed to fetch landing page data:", dbErr.message);
+        // DB is down but we have no cache — render an empty shell rather than crashing
+        renderData = {};
+      }
     }
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;
-
     res.render("landing-page", renderData);
   } catch (err) {
+    console.error("Error in portfolio route:", err);
     next();
   }
 });

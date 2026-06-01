@@ -45,18 +45,27 @@ app.use((req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-await connectDb()
-  .then(async () => {
+
+// Start the server immediately — don't wait for DB
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+// Connect to DB and AMQP in background with retry
+async function connectWithRetry(attempt = 1) {
+  try {
+    await connectDb();
+    console.log("[DB] Connected to MongoDB successfully");
     try {
       await initializeAmqp();
     } catch (err) {
       console.error("[AMQP] Failed to connect:", err.message);
     }
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error("Error connecting to the database:", error);
-    process.exit(1); // Exit the application if the database connection fails
-  });
+  } catch (error) {
+    const delay = Math.min(5000 * attempt, 30000);
+    console.error(`[DB] Connection failed (attempt ${attempt}), retrying in ${delay / 1000}s...`, error.message);
+    setTimeout(() => connectWithRetry(attempt + 1), delay);
+  }
+}
+
+connectWithRetry();
