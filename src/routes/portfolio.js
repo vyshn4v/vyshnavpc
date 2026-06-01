@@ -22,8 +22,28 @@ router.get("/", async (req, res, next) => {
         EX: parseInt(process.env.REDIS_CACHE_TIME) || 60, // Cache for 60 seconds
       },
     );
+    // Provide default projects if the database schema hasn't been updated yet
+    const data = portfolio?.data || {};
+    if (!data.projects || data.projects.length === 0) {
+      data.projects = [
+        {
+          title: "Personal Portfolio",
+          description: "A dark-themed, terminal-inspired portfolio website built with Express, Handlebars, and MongoDB.",
+          technologies: ["Node.js", "Express", "Handlebars", "MongoDB"],
+          github: "https://github.com/vyshn4v",
+          live: "https://vyshnavpc.com"
+        },
+        {
+          title: "Real-time Chat App",
+          description: "A scalable real-time chat application utilizing WebSockets and Redis for message brokering.",
+          technologies: ["React", "Socket.io", "Redis", "Docker"],
+          github: "https://github.com/vyshn4v",
+        }
+      ];
+    }
+
     res.render("landing-page", {
-      ...portfolio?.data,
+      ...data,
     });
   } catch (err) {
     next();
