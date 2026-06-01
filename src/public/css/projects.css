@@ -139,3 +139,40 @@
     padding: 60px 16px;
   }
 }
+
+/* ════════════════════════════════════════════════════════
+   MARQUEE AUTO-SCROLL
+   ════════════════════════════════════════════════════════ */
+.projects__marquee {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  margin-top: 48px;
+  padding: 10px 0; /* Add slight padding for hover effects */
+}
+
+.projects__track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: scroll-left 40s linear infinite;
+}
+
+.projects__track:hover {
+  animation-play-state: paused;
+}
+
+.projects__marquee .project-card {
+  width: 350px;
+  flex-shrink: 0;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Translate left by exactly half the track width minus half the gap */
+    transform: translateX(calc(-50% - 12px));
+  }
+}
