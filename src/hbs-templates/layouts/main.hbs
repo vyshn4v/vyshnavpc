@@ -3,6 +3,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="google-site-verification" content="cHS1LAjCCb3WtHmnmqgW7OsVMOQpwvWcnX_oCgXrUHM" />
+
+    {{!-- Google Analytics --}}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T3JV9SSWP5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T3JV9SSWP5');
+    </script>
     <title>{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Backend Developer{{/if}}</title>
     <meta name="description" content="{{#if meta.description}}{{meta.description}}{{else}}Backend Developer specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.{{/if}}" />
     <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, backend developer, Node.js, DevOps, cloud, APIs, portfolio{{/if}}" />
