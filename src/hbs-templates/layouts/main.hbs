@@ -2,23 +2,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{{#if title}}{{title}}{{else}}Vyshnav P C{{/if}}</title>
-    {{!-- <title>{{meta.title}}</title>
-    <meta name="description" content="{{meta.description}}" />
-    <meta name="keywords" content="{{meta.keywords}}" />
-    <meta name="author" content="{{meta.author}}" />
-    <meta name="robots" content="index,follow" />
-    <link rel="canonical" href="{{meta.canonical}}" />
+    <title>{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Backend Developer{{/if}}</title>
+    <meta name="description" content="{{#if meta.description}}{{meta.description}}{{else}}Backend Developer specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.{{/if}}" />
+    <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, backend developer, Node.js, DevOps, cloud, APIs, portfolio{{/if}}" />
+    <meta name="author" content="{{#if meta.author}}{{meta.author}}{{else}}Vyshnav P C{{/if}}" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0a0f" />
+    {{#if meta.canonical}}<link rel="canonical" href="{{meta.canonical}}" />{{/if}}
+
+    {{!-- Open Graph --}}
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{meta.ogTitle}}" />
-    <meta property="og:description" content="{{meta.ogDescription}}" />
-    <meta property="og:url" content="{{meta.canonical}}" />
-    <meta property="og:site_name" content="{{meta.siteName}}" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="{{meta.ogTitle}}" />
-    <meta name="twitter:description" content="{{meta.ogDescription}}" />
-    <meta name="theme-color" content="{{meta.themeColor}}" />
-    <script type="application/ld+json">{{{meta.schemaJSON}}}</script> --}}
+    <meta property="og:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Backend Developer{{/if}}" />
+    <meta property="og:description" content="{{#if meta.description}}{{meta.description}}{{else}}Backend Developer specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.{{/if}}" />
+    {{#if meta.canonical}}<meta property="og:url" content="{{meta.canonical}}" />{{/if}}
+    <meta property="og:site_name" content="{{#if meta.siteName}}{{meta.siteName}}{{else}}Vyshnav P C{{/if}}" />
+    {{#if meta.ogImage}}<meta property="og:image" content="{{meta.ogImage}}" />{{/if}}
+
+    {{!-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Backend Developer{{/if}}" />
+    <meta name="twitter:description" content="{{#if meta.description}}{{meta.description}}{{else}}Backend Developer specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.{{/if}}" />
+    {{#if meta.twitterHandle}}<meta name="twitter:site" content="{{meta.twitterHandle}}" />{{/if}}
+    {{#if meta.ogImage}}<meta name="twitter:image" content="{{meta.ogImage}}" />{{/if}}
+
+    {{!-- JSON-LD Person Schema --}}
+    {{#if meta.schemaJSON}}<script type="application/ld+json">{{{meta.schemaJSON}}}</script>{{/if}}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
