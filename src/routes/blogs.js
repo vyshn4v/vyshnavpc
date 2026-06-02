@@ -42,12 +42,12 @@ router.get("/", async (req, res) => {
     featured,
     posts: rest,
     meta: {
-      title: "DevBlog — Vyshnav P C",
-      description: "Articles on backend development, Node.js, DevOps, cloud infrastructure, and software engineering by Vyshnav P C.",
-      keywords: "Vyshnav PC blog, backend development, Node.js, DevOps, cloud, software engineering",
-      author: "Vyshnav P C",
+      title: "DevBlog | Vyshnav",
+      description: "Articles on backend development, Node.js, DevOps, cloud infrastructure, and software engineering by Vyshnav.",
+      keywords: "Vyshnav blog, Vyshnav, backend development, Node.js, DevOps, cloud, software engineering",
+      author: "Vyshnav",
       canonical: `${base}/blogs`,
-      siteName: "Vyshnav P C",
+      siteName: "Vyshnav",
     },
   };
   redis.set(
@@ -113,14 +113,14 @@ router.get("/:blogId", async (req, res, next) => {
     if (!data) {
       throw new Error("Post not found");
     }
-    const base = process.env.SITE_URL || "https://vyshnavpc.com";
+    const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
     data.meta = {
-      title: `${data.title || "Blog Post"} — Vyshnav P C`,
-      description: data.description || data.overview?.summary || "Read this post on backend development, DevOps, and software engineering by Vyshnav P C.",
-      keywords: data.tags ? data.tags.join(", ") : "Vyshnav PC, blog, backend development",
-      author: "Vyshnav P C",
+      title: `${data.title || "Blog Post"} | Vyshnav`,
+      description: data.description || data.overview?.summary || "Read this post on backend development, DevOps, and software engineering by Vyshnav.",
+      keywords: data.tags ? data.tags.join(", ") + ", Vyshnav, blog" : "Vyshnav, blog, backend development",
+      author: "Vyshnav",
       canonical: `${base}/blogs/${req.params.blogId}`,
-      siteName: "Vyshnav P C",
+      siteName: "Vyshnav",
       ogImage: data.coverImage || `${base}/images/og-image.png`,
     };
     redis.set(
