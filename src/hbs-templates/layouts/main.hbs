@@ -12,6 +12,14 @@
       gtag('js', new Date());
       gtag('config', 'G-T3JV9SSWP5');
     </script>
+    
+    {{!-- Google Tag Manager --}}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T4R9GT7H');</script>
+    <!-- End Google Tag Manager -->
     <title>{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Backend Developer{{/if}}</title>
     <meta name="description" content="{{#if meta.description}}{{meta.description}}{{else}}Backend Developer specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.{{/if}}" />
     <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, backend developer, Node.js, DevOps, cloud, APIs, portfolio{{/if}}" />
@@ -67,6 +75,10 @@
     {{{_sections.styles}}}
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T4R9GT7H"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     {{> nav}}
     <main>
       {{{body}}}
