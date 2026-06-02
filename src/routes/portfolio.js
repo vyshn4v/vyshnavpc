@@ -8,9 +8,10 @@ import dsaQuestions from "./dsa.questions.js";
 const BASE_URL = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
 
 function buildMeta(site = {}) {
-  const name   = site.name   || "Vyshnav P C";
+  const dbName = site.name || "Vyshnav";
+  const name   = "Vyshnav"; // Force the primary keyword
   const role   = site.role   || "Backend Developer";
-  const desc   = site.description || `${name} — ${role} specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.`;
+  const desc   = site.description || `Hi, I am Vyshnav — a ${role} specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.`;
   const url    = site.url    || BASE_URL;
   const image  = site.ogImage || `${BASE_URL}/images/og-image.png`;
   const twitter = site.twitter || "";
@@ -31,9 +32,9 @@ function buildMeta(site = {}) {
   });
 
   return {
-    title:          `${name} — ${role}`,
+    title:          `Vyshnav | ${role} Portfolio`,
     description:    desc,
-    keywords:       site.keywords || `${name}, backend developer, Node.js, DevOps, cloud, APIs, portfolio`,
+    keywords:       site.keywords || `Vyshnav, vyshnav pc, backend developer, Node.js, DevOps, cloud, APIs, software engineer`,
     author:         name,
     canonical:      url,
     siteName:       name,
@@ -105,14 +106,14 @@ router.get("/journey", async (req, res, next) => {
       },
     );
     // res.json({ journey: journeyData });
-    const base = process.env.SITE_URL || "https://vyshnavpc.com";
+    const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
     const journeyMeta = {
-      title: "My Journey — Vyshnav P C",
-      description: "A timeline of Vyshnav P C's career journey — education, projects, milestones, and growth as a backend developer.",
-      keywords: "Vyshnav PC journey, career timeline, backend developer, software engineering journey",
-      author: "Vyshnav P C",
+      title: "Vyshnav — My Career Journey",
+      description: "A timeline of Vyshnav's career journey — education, projects, milestones, and growth as a backend developer.",
+      keywords: "Vyshnav journey, Vyshnav career timeline, backend developer, software engineering journey",
+      author: "Vyshnav",
       canonical: `${base}/journey`,
-      siteName: "Vyshnav P C",
+      siteName: "Vyshnav",
     };
     res.render("journey-page", { journey: journeyObj, meta: journeyMeta });
   } catch (err) {
