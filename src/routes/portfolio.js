@@ -104,7 +104,16 @@ router.get("/journey", async (req, res, next) => {
       },
     );
     // res.json({ journey: journeyData });
-    res.render("journey-page", { journey: journeyObj });
+    const base = process.env.SITE_URL || "https://vyshnavpc.com";
+    const journeyMeta = {
+      title: "My Journey — Vyshnav P C",
+      description: "A timeline of Vyshnav P C's career journey — education, projects, milestones, and growth as a backend developer.",
+      keywords: "Vyshnav PC journey, career timeline, backend developer, software engineering journey",
+      author: "Vyshnav P C",
+      canonical: `${base}/journey`,
+      siteName: "Vyshnav P C",
+    };
+    res.render("journey-page", { journey: journeyObj, meta: journeyMeta });
   } catch (err) {
     next();
   }
