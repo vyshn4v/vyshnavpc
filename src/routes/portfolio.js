@@ -5,6 +5,7 @@ import { getRedisClient } from "../config/initializeRedis.js";
 import { getJourneyModel } from "../schema/journey.js";
 import dsaQuestions from "./dsa.questions.js";
 
+const BASE_URL = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
 
 function buildMeta(site = {}) {
   const name   = site.name   || "Vyshnav P C";
