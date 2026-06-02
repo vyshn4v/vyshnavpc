@@ -18,3 +18,4 @@ NODE_ENV = ""
 RATE_LIMIT_WINDOW_MS = ""
 RATE_LIMIT_MAX = ""
 RATE_LIMITER_PREFIX = ""
+SITE_URL = ""  # e.g. https://vyshnavpc.com — used for canonical URLs, sitemap, OG tags

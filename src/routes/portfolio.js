@@ -5,6 +5,43 @@ import { getRedisClient } from "../config/initializeRedis.js";
 import { getJourneyModel } from "../schema/journey.js";
 import dsaQuestions from "./dsa.questions.js";
 
+
+function buildMeta(site = {}) {
+  const name   = site.name   || "Vyshnav P C";
+  const role   = site.role   || "Backend Developer";
+  const desc   = site.description || `${name} — ${role} specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.`;
+  const url    = site.url    || BASE_URL;
+  const image  = site.ogImage || `${BASE_URL}/images/og-image.png`;
+  const twitter = site.twitter || "";
+
+  const schema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": name,
+    "url": url,
+    "jobTitle": role,
+    "sameAs": [
+      site.github  || "",
+      site.linkedin || "",
+      twitter ? `https://twitter.com/${twitter.replace("@","")}` : "",
+    ].filter(Boolean),
+    "image": image,
+    "description": desc,
+  });
+
+  return {
+    title:          `${name} — ${role}`,
+    description:    desc,
+    keywords:       site.keywords || `${name}, backend developer, Node.js, DevOps, cloud, APIs, portfolio`,
+    author:         name,
+    canonical:      url,
+    siteName:       name,
+    ogImage:        image,
+    twitterHandle:  twitter,
+    schemaJSON:     schema,
+  };
+}
+
 router.get("/", async (req, res, next) => {
   try {
     const redis = getRedisClient();
@@ -23,12 +60,12 @@ router.get("/", async (req, res, next) => {
         });
       } catch (dbErr) {
         console.error("[DB] Failed to fetch landing page data:", dbErr.message);
-        // DB is down but we have no cache — render an empty shell rather than crashing
         renderData = {};
       }
     }
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;
+    renderData.meta = buildMeta(renderData.site);
     res.render("landing-page", renderData);
   } catch (err) {
     console.error("Error in portfolio route:", err);
@@ -72,6 +109,27 @@ router.get("/journey", async (req, res, next) => {
     next();
   }
 });
+router.get("/sitemap.xml", (req, res) => {
+  const base = process.env.SITE_URL || "https://vyshnavpc.com";
+  const today = new Date().toISOString().split("T")[0];
+  const urls = [
+    { loc: `${base}/`,         priority: "1.0", changefreq: "weekly" },
+    { loc: `${base}/journey`,  priority: "0.8", changefreq: "monthly" },
+    { loc: `${base}/blogs`,    priority: "0.8", changefreq: "weekly" },
+  ];
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join("\n")}
+</urlset>`;
+  res.header("Content-Type", "application/xml");
+  res.send(xml);
+});
+
 router.get("/hidden-dsa-guide", (req, res) => {
   res.render("hidden-dsa-guide", dsaQuestions);
 });
