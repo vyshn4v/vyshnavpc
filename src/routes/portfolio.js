@@ -10,8 +10,8 @@ const BASE_URL = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
 function buildMeta(site = {}) {
   const dbName = site.name || "Vyshnav";
   const name   = "Vyshnav"; // Force the primary keyword
-  const role   = site.role   || "Backend Developer";
-  const desc   = site.description || `Hi, I am Vyshnav — a ${role} specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.`;
+  const role   = site.role   || "MERN / Fullstack Developer";
+  const desc   = site.description || `Hi, I am Vyshnav — a ${role} specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.`;
   const url    = site.url    || BASE_URL;
   const image  = site.ogImage || `${BASE_URL}/images/og-image.png`;
   const twitter = site.twitter || "";
@@ -34,7 +34,7 @@ function buildMeta(site = {}) {
   return {
     title:          `Vyshnav | ${role} Portfolio`,
     description:    desc,
-    keywords:       site.keywords || `Vyshnav, vyshnav pc, backend developer, Node.js, DevOps, cloud, APIs, software engineer`,
+    keywords:       site.keywords || `Vyshnav, vyshnav pc, fullstack developer, MERN stack, React, Node.js, DevOps, cloud, APIs, software engineer`,
     author:         name,
     canonical:      url,
     siteName:       name,
@@ -109,8 +109,8 @@ router.get("/journey", async (req, res, next) => {
     const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
     const journeyMeta = {
       title: "Vyshnav — My Career Journey",
-      description: "A timeline of Vyshnav's career journey — education, projects, milestones, and growth as a backend developer.",
-      keywords: "Vyshnav journey, Vyshnav career timeline, backend developer, software engineering journey",
+      description: "A timeline of Vyshnav's career journey — education, projects, milestones, and growth as a MERN / Fullstack Developer.",
+      keywords: "Vyshnav journey, Vyshnav career timeline, fullstack developer, software engineering journey",
       author: "Vyshnav",
       canonical: `${base}/journey`,
       siteName: "Vyshnav",

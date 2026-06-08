@@ -47,8 +47,8 @@ router.get("/", async (req, res) => {
     ],
     meta: {
       title: "DevBlog | Vyshnav",
-      description: "Articles on backend development, Node.js, DevOps, cloud infrastructure, and software engineering by Vyshnav.",
-      keywords: "Vyshnav blog, Vyshnav, backend development, Node.js, DevOps, cloud, software engineering",
+      description: "Articles on fullstack development, MERN stack, Node.js, DevOps, cloud infrastructure, and software engineering by Vyshnav.",
+      keywords: "Vyshnav blog, Vyshnav, fullstack development, MERN stack, Node.js, DevOps, cloud, software engineering",
       author: "Vyshnav",
       canonical: `${base}/blogs`,
       siteName: "Vyshnav",
@@ -120,8 +120,8 @@ router.get("/:blogId", async (req, res, next) => {
     const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
     data.meta = {
       title: `${data.title || "Blog Post"} | Vyshnav`,
-      description: data.description || data.overview?.summary || "Read this post on backend development, DevOps, and software engineering by Vyshnav.",
-      keywords: data.tags ? data.tags.join(", ") + ", Vyshnav, blog" : "Vyshnav, blog, backend development",
+      description: data.description || data.overview?.summary || "Read this post on MERN stack, fullstack development, DevOps, and software engineering by Vyshnav.",
+      keywords: data.tags ? data.tags.join(", ") + ", Vyshnav, blog" : "Vyshnav, blog, fullstack development, MERN",
       author: "Vyshnav",
       canonical: `${base}/blogs/${req.params.blogId}`,
       siteName: "Vyshnav",
