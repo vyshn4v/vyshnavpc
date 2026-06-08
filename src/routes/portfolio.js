@@ -115,7 +115,13 @@ router.get("/journey", async (req, res, next) => {
       canonical: `${base}/journey`,
       siteName: "Vyshnav",
     };
-    res.render("journey-page", { journey: journeyObj, meta: journeyMeta });
+    
+    const breadcrumbs = [
+      { name: "Home", url: "/", position: 1 },
+      { name: "Journey", url: `${base}/journey`, position: 2 }
+    ];
+
+    res.render("journey-page", { journey: journeyObj, meta: journeyMeta, breadcrumbs });
   } catch (err) {
     next();
   }
