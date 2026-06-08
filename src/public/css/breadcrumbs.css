@@ -1,0 +1,43 @@
+/* breadcrumbs.css */
+.breadcrumbs-container {
+  padding: 1rem 5vw; /* align with overall site padding */
+  max-width: var(--max-w, 1200px);
+  margin: 0 auto;
+  font-family: var(--fb, 'JetBrains Mono', monospace);
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.breadcrumbs-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-item a {
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--primary, #fff);
+  text-decoration: underline;
+}
+
+.breadcrumb-item.active span {
+  color: var(--primary, #fff);
+  font-weight: 500;
+}
+
+.breadcrumb-separator {
+  margin: 0 0.5rem;
+  color: #555;
+}

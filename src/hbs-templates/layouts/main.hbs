@@ -61,6 +61,7 @@
     </noscript>
     <link rel="stylesheet" href="/css/navbar.css" />
     <link rel="stylesheet" href="/css/scroll-bar.css" />
+    <link rel="stylesheet" href="/css/breadcrumbs.css" />
 
     <style>
       :root {
@@ -81,6 +82,7 @@
     <!-- End Google Tag Manager (noscript) -->
     {{> nav}}
     <main>
+      {{> breadcrumbs}}
       {{{body}}}
     </main>
     {{{_sections.scripts}}}
