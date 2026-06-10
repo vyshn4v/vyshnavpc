@@ -20,8 +20,8 @@ html.nav-open {
 
 /* ── Custom scrollbar — Webkit (Chrome, Safari, Edge) ───────  */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 14px;
+    height: 14px;
 }
 
 ::-webkit-scrollbar-track {
@@ -60,8 +60,8 @@ html.nav-open {
    ─────────────────────────────────────────────────────────── */
 pre::-webkit-scrollbar,
 .terminal-body::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
+    height: 10px;
+    width: 10px;
 }
 
 pre::-webkit-scrollbar-thumb,

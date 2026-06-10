@@ -20,9 +20,9 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-T4R9GT7H');</script>
     <!-- End Google Tag Manager -->
-    <title>{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Backend Developer{{/if}}</title>
-    <meta name="description" content="{{#if meta.description}}{{meta.description}}{{else}}Backend Developer specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.{{/if}}" />
-    <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, backend developer, Node.js, DevOps, cloud, APIs, portfolio{{/if}}" />
+    <title>{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — MERN / Fullstack Developer{{/if}}</title>
+    <meta name="description" content="{{#if meta.description}}{{meta.description}}{{else}}MERN / Fullstack Developer specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.{{/if}}" />
+    <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, fullstack developer, MERN stack, React, Node.js, DevOps, cloud, APIs, portfolio{{/if}}" />
     <meta name="author" content="{{#if meta.author}}{{meta.author}}{{else}}Vyshnav P C{{/if}}" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0a0a0f" />
@@ -30,16 +30,16 @@
 
     {{!-- Open Graph --}}
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Backend Developer{{/if}}" />
-    <meta property="og:description" content="{{#if meta.description}}{{meta.description}}{{else}}Backend Developer specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.{{/if}}" />
+    <meta property="og:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — MERN / Fullstack Developer{{/if}}" />
+    <meta property="og:description" content="{{#if meta.description}}{{meta.description}}{{else}}MERN / Fullstack Developer specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.{{/if}}" />
     {{#if meta.canonical}}<meta property="og:url" content="{{meta.canonical}}" />{{/if}}
     <meta property="og:site_name" content="{{#if meta.siteName}}{{meta.siteName}}{{else}}Vyshnav P C{{/if}}" />
     {{#if meta.ogImage}}<meta property="og:image" content="{{meta.ogImage}}" />{{/if}}
 
     {{!-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Backend Developer{{/if}}" />
-    <meta name="twitter:description" content="{{#if meta.description}}{{meta.description}}{{else}}Backend Developer specialising in Node.js, DevOps, cloud infrastructure and scalable APIs.{{/if}}" />
+    <meta name="twitter:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — MERN / Fullstack Developer{{/if}}" />
+    <meta name="twitter:description" content="{{#if meta.description}}{{meta.description}}{{else}}MERN / Fullstack Developer specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.{{/if}}" />
     {{#if meta.twitterHandle}}<meta name="twitter:site" content="{{meta.twitterHandle}}" />{{/if}}
     {{#if meta.ogImage}}<meta name="twitter:image" content="{{meta.ogImage}}" />{{/if}}
 
@@ -61,6 +61,7 @@
     </noscript>
     <link rel="stylesheet" href="/css/navbar.css" />
     <link rel="stylesheet" href="/css/scroll-bar.css" />
+    <link rel="stylesheet" href="/css/breadcrumbs.css" />
 
     <style>
       :root {
@@ -81,6 +82,7 @@
     <!-- End Google Tag Manager (noscript) -->
     {{> nav}}
     <main>
+      {{> breadcrumbs}}
       {{{body}}}
     </main>
     {{{_sections.scripts}}}

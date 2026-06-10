@@ -886,6 +886,7 @@ em {
     letter-spacing: .04em;
 }
 
+
 /* ── Contact ─────────────────────────────────────────── */
 .contact-layout {
     display: grid;
@@ -1104,11 +1105,19 @@ em {
 
 .footer-inner {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 20px;
 }
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
 
 .footer-name {
     font-family: var(--fd);
@@ -1193,8 +1202,13 @@ em {
 
     .footer-inner {
         flex-direction: column;
-        gap: 6px;
-        text-align: center;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .footer-map {
+        width: 100%;
+        height: 180px;
     }
 }
 
