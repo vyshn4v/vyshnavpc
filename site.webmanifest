@@ -1,0 +1,17 @@
+{
+  "name": "Vyshnav P C · Node.js Developer",
+  "short_name": "Vyshnav PC",
+  "description": "Node.js Developer & Backend Engineer from Kannur, Kerala. Open to work.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#00d4aa",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
