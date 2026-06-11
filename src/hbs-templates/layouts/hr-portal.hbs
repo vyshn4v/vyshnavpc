@@ -1,0 +1,514 @@
+{{#section "styles"}}
+<link rel="stylesheet" href="/css/landing-page.css" />
+<style>
+/* SaaS Two-Pane Layout */
+.saas-layout {
+  display: flex;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 100px);
+  padding: 40px 20px;
+}
+
+.composer-pane {
+  flex: 1;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.preview-pane {
+  flex: 1;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  min-height: 600px;
+}
+
+@media(max-width: 900px) {
+  .saas-layout {
+    flex-direction: column;
+  }
+}
+
+/* Composer Header */
+.composer-header {
+  padding: 24px 30px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.2);
+}
+
+.composer-header h2 {
+  font-family: var(--fd);
+  font-size: 1.5rem;
+  color: #fff;
+  margin: 0;
+}
+
+.composer-body {
+  padding: 30px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Custom Inputs */
+.form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.saas-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: var(--r8);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.saas-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124, 110, 247, 0.15);
+}
+
+/* Fix Autofill styling ruining the dark mode */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg3) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Chip System */
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 8px 12px;
+  border-radius: var(--r8);
+  min-height: 46px;
+  transition: all 0.2s;
+  cursor: text;
+}
+.chip-container:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124, 110, 247, 0.15);
+}
+
+.chip {
+  background: var(--glow);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: popIn 0.2s ease forwards;
+}
+
+.chip-close {
+  cursor: pointer;
+  color: var(--text3);
+  font-size: 14px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.chip-close:hover {
+  color: #ef4444;
+}
+
+.chip-input {
+  flex: 1;
+  min-width: 120px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Preview Area */
+.preview-placeholder {
+  color: var(--text3);
+  text-align: center;
+  padding: 40px;
+}
+.preview-placeholder svg {
+  width: 48px;
+  height: 48px;
+  opacity: 0.5;
+  margin-bottom: 16px;
+}
+
+.drive-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: none;
+}
+</style>
+{{/section}}
+
+<div class="saas-layout">
+  
+  <!-- Left Pane: Composer -->
+  <div class="composer-pane">
+    <div class="composer-header">
+      <h2>🚀 Campaign Composer</h2>
+    </div>
+    
+    <div class="composer-body">
+      <form id="hrForm" style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <div class="form-group">
+          <label for="adminKey">Admin Secret Key</label>
+          <input type="password" id="adminKey" class="saas-input" required placeholder="Enter authorization key" autocomplete="new-password" />
+        </div>
+
+        <div class="form-group">
+          <label>To (Press Enter to add)</label>
+          <div class="chip-container" id="toContainer">
+            <input type="text" class="chip-input" id="toInput" placeholder="hr1@company.com" autocomplete="off" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="form-group">
+            <label>CC</label>
+            <div class="chip-container" id="ccContainer">
+              <input type="text" class="chip-input" id="ccInput" placeholder="manager@company.com" autocomplete="off" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>BCC</label>
+            <div class="chip-container" id="bccContainer">
+              <input type="text" class="chip-input" id="bccInput" placeholder="hidden@example.com" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Email Subject</label>
+          <input type="text" id="subject" class="saas-input" required placeholder="Application for Fullstack Developer - Vyshnav P C" autocomplete="off" />
+        </div>
+
+        <div class="form-group">
+          <label for="driveLink">Resume Google Drive Link</label>
+          <input type="url" id="driveLink" class="saas-input" placeholder="https://drive.google.com/file/d/ID/view" autocomplete="off" />
+        </div>
+
+        <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
+          <label for="content">Email Body</label>
+          <textarea id="content" class="saas-input" style="flex: 1; min-height: 200px;" required placeholder="Hi Team,\n\nI am writing to express my interest..." autocomplete="off"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary" id="submitBtn" style="padding: 18px; font-size: 16px; width: 100%;">
+          ✉ Schedule Daily Campaign
+        </button>
+      </form>
+      
+      <div id="statusMessage" style="display: none; padding: 16px; border-radius: 8px; font-size: 14px; border: 1px solid var(--border2); background: var(--bg3); margin-bottom: 20px;"></div>
+      
+      <!-- Dashboard Table -->
+      <div id="dashboardSection" style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px; display: none;">
+        <h3 style="color: #fff; margin-bottom: 16px;">📅 Scheduled Campaigns</h3>
+        <button id="loadJobsBtn" class="btn btn--ghost" style="padding: 8px 12px; margin-bottom: 16px;">Refresh List (Requires Admin Key)</button>
+        <div id="jobsList" style="display: flex; flex-direction: column; gap: 12px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Pane: Preview -->
+  <div class="preview-pane" style="transition-delay: 0.1s;">
+    <div class="preview-placeholder" id="previewPlaceholder">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+      <h3>Resume Preview</h3>
+      <p>Paste a Google Drive link in the composer to instantly preview the attachment here.</p>
+    </div>
+    <iframe class="drive-iframe" id="driveIframe"></iframe>
+  </div>
+
+</div>
+
+{{#section "scripts"}}
+<script>
+// --- Chip Input System ---
+function setupChipInput(containerId, inputId) {
+  const container = document.getElementById(containerId);
+  const input = document.getElementById(inputId);
+  const chipsData = new Set(); // Store emails
+
+  // Focus input when clicking anywhere in container
+  container.addEventListener('click', () => input.focus());
+
+  function createChip(text) {
+    text = text.trim();
+    if (!text || chipsData.has(text)) return; // prevent empty or dupes
+    
+    // Basic email validation
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(text)) return; // ignore invalid formats visually
+
+    chipsData.add(text);
+
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.innerHTML = `
+      <span>${text}</span>
+      <span class="chip-close" aria-label="Remove">✕</span>
+    `;
+
+    chip.querySelector('.chip-close').addEventListener('click', (e) => {
+      e.stopPropagation();
+      chipsData.delete(text);
+      chip.remove();
+    });
+
+    container.insertBefore(chip, input);
+  }
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      createChip(input.value);
+      input.value = '';
+    } else if (e.key === 'Backspace' && input.value === '') {
+      // Remove last chip on backspace if input is empty
+      const chips = container.querySelectorAll('.chip');
+      if (chips.length > 0) {
+        const lastChip = chips[chips.length - 1];
+        const text = lastChip.querySelector('span').innerText;
+        chipsData.delete(text);
+        lastChip.remove();
+      }
+    }
+  });
+
+  input.addEventListener('blur', () => {
+    if (input.value.trim() !== '') {
+      createChip(input.value);
+      input.value = '';
+    }
+  });
+
+  return {
+    getValues: () => Array.from(chipsData).join(',')
+  };
+}
+
+const toChips = setupChipInput('toContainer', 'toInput');
+const ccChips = setupChipInput('ccContainer', 'ccInput');
+const bccChips = setupChipInput('bccContainer', 'bccInput');
+
+
+// --- Google Drive Live Preview ---
+const driveInput = document.getElementById('driveLink');
+const driveIframe = document.getElementById('driveIframe');
+const previewPlaceholder = document.getElementById('previewPlaceholder');
+
+driveInput.addEventListener('input', (e) => {
+  const url = e.target.value.trim();
+  const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  
+  if (match && match[1]) {
+    const fileId = match[1];
+    let previewUrl = '';
+    
+    // Check if it's a Google Doc or generic Drive file
+    if (url.includes('docs.google.com/document')) {
+      previewUrl = `https://docs.google.com/document/d/${fileId}/preview`;
+    } else {
+      previewUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+    }
+    
+    driveIframe.src = previewUrl;
+    driveIframe.style.display = 'block';
+    previewPlaceholder.style.display = 'none';
+  } else {
+    driveIframe.style.display = 'none';
+    driveIframe.src = '';
+    previewPlaceholder.style.display = 'block';
+  }
+});
+
+
+// --- Form Submission ---
+document.getElementById('hrForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  // If the user hasn't pressed Enter on their last email, convert it to a chip now!
+  document.getElementById('toInput').blur();
+  document.getElementById('ccInput').blur();
+  document.getElementById('bccInput').blur();
+  
+  const toEmails = toChips.getValues();
+  if (!toEmails) {
+    alert("Please add at least one valid 'To' email address (press Enter after typing).");
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  const statusBox = document.getElementById('statusMessage');
+  
+  btn.disabled = true;
+  btn.textContent = '⏳ Scheduling...';
+  statusBox.style.display = 'none';
+  
+  try {
+    const adminKey = document.getElementById('adminKey').value;
+    const payload = {
+      adminKey,
+      to: toEmails,
+      cc: ccChips.getValues(),
+      bcc: bccChips.getValues(),
+      subject: document.getElementById('subject').value,
+      driveLink: document.getElementById('driveLink').value,
+      content: document.getElementById('content').value
+    };
+    
+    const res = await fetch('/hr-portal/schedule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    
+    const data = await res.json();
+    
+    statusBox.style.display = 'block';
+    if (res.ok && data.ok) {
+      statusBox.innerHTML = `
+        <strong style="color: #2dd4bf;">✅ Campaign Scheduled!</strong><br/><br/>
+        <span style="color: #fff;">This campaign will automatically run every day at 9:00 AM.</span><br/>
+      `;
+      statusBox.style.borderColor = 'rgba(45, 212, 191, 0.3)';
+      document.getElementById('dashboardSection').style.display = 'block';
+      loadJobs(adminKey);
+    } else {
+      statusBox.innerHTML = `<strong style="color: #ef4444;">❌ Error:</strong> ${data.error || 'Failed'}`;
+      statusBox.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+    }
+  } catch (err) {
+    statusBox.style.display = 'block';
+    statusBox.innerHTML = `<strong style="color: #ef4444;">❌ Error:</strong> ${err.message}`;
+    statusBox.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✉ Schedule Daily Campaign';
+  }
+});
+
+// --- Dashboard Logic ---
+document.getElementById('adminKey').addEventListener('input', (e) => {
+  if(e.target.value.length > 3) {
+    document.getElementById('dashboardSection').style.display = 'block';
+  } else {
+    document.getElementById('dashboardSection').style.display = 'none';
+  }
+});
+
+document.getElementById('loadJobsBtn').addEventListener('click', () => {
+  const adminKey = document.getElementById('adminKey').value;
+  if(!adminKey) return alert("Please enter the Admin Key in the form first to view jobs.");
+  loadJobs(adminKey);
+});
+
+async function loadJobs(adminKey) {
+  const jobsList = document.getElementById('jobsList');
+  jobsList.innerHTML = '<span style="color: var(--text3);">Loading...</span>';
+  try {
+    const res = await fetch('/hr-portal/jobs', {
+      headers: { 'x-admin-key': adminKey }
+    });
+    const data = await res.json();
+    if (res.ok && data.ok) {
+      if(data.jobs.length === 0) {
+        jobsList.innerHTML = '<span style="color: var(--text3);">No scheduled campaigns.</span>';
+        return;
+      }
+      jobsList.innerHTML = data.jobs.map(job => `
+        <div style="background: var(--bg3); padding: 16px; border-radius: var(--r8); border: 1px solid var(--border2); display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: #fff;">${job.subject}</strong>
+            <span style="font-size: 12px; padding: 2px 8px; border-radius: 100px; background: ${job.status === 'active' ? 'rgba(45,212,191,0.2)' : job.status === 'completed' ? 'rgba(96,165,250,0.2)' : 'rgba(239,68,68,0.2)'}; color: ${job.status === 'active' ? '#2dd4bf' : job.status === 'completed' ? '#60a5fa' : '#ef4444'};">${job.status.toUpperCase()}</span>
+          </div>
+          <div style="font-size: 13px; color: var(--text3);">
+            <strong>To:</strong> ${job.to.length > 50 ? job.to.substring(0, 50) + '...' : job.to}<br/>
+            <strong>Created:</strong> ${new Date(job.createdAt).toLocaleString()}
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 8px;">
+            ${job.status !== 'completed' ? `<button onclick="toggleJob('${job._id}')" class="btn btn--ghost" style="padding: 4px 10px; font-size: 12px;">${job.status === 'active' ? 'Pause' : 'Resume'}</button>` : ''}
+            <button onclick="deleteJob('${job._id}')" class="btn btn--ghost" style="padding: 4px 10px; font-size: 12px; color: #ef4444; border-color: rgba(239,68,68,0.2);">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      jobsList.innerHTML = `<span style="color: #ef4444;">${data.error}</span>`;
+    }
+  } catch (err) {
+    jobsList.innerHTML = `<span style="color: #ef4444;">${err.message}</span>`;
+  }
+}
+
+window.toggleJob = async (id) => {
+  const adminKey = document.getElementById('adminKey').value;
+  try {
+    await fetch(`/hr-portal/jobs/${id}/toggle`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminKey })
+    });
+    loadJobs(adminKey);
+  } catch(e) { alert(e.message); }
+};
+
+window.deleteJob = async (id) => {
+  if(!confirm("Are you sure you want to delete this scheduled campaign?")) return;
+  const adminKey = document.getElementById('adminKey').value;
+  try {
+    await fetch(`/hr-portal/jobs/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminKey })
+    });
+    loadJobs(adminKey);
+  } catch(e) { alert(e.message); }
+};
+</script>
+{{/section}}
