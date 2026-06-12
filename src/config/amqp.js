@@ -11,7 +11,10 @@ export const initializeAmqp = async () => {
     const queue = process.env.CONTACT_QUEUE || "contact_messages";
     await channel.assertQueue(queue, { durable: true });
 
-    console.log("[AMQP] Connected and queue initialized");
+    const hrQueue = process.env.HR_QUEUE || "hr_jobs_queue";
+    await channel.assertQueue(hrQueue, { durable: true });
+
+    console.log("[AMQP] Connected and queues initialized");
   } catch (error) {
     console.error("[AMQP] Connection failed", error);
   }
@@ -28,3 +31,18 @@ export const publishContactMessage = (payload) => {
     persistent: true
   });
 };
+
+export const publishHrJob = (payload) => {
+  if (!channel) {
+    console.error("[AMQP] Channel not initialized, cannot publish HR job");
+    return false;
+  }
+  const hrQueue = process.env.HR_QUEUE || "hr_jobs_queue";
+  return channel.sendToQueue(hrQueue, Buffer.from(JSON.stringify(payload)), {
+    contentType: "application/json",
+    persistent: true
+  });
+};
+
+export const getChannel = () => channel;
+

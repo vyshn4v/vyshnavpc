@@ -7,8 +7,13 @@ import portfolioRoute from "./routes/portfolio.js";
 import { visitorTracker } from "./middleware/visitorTracker.js";
 import { initializeAmqp } from "./config/amqp.js";
 import contactRouter from "./routes/contact.js";
+import hrRouter from "./routes/hr.js";
+import { startHrWorker } from "./workers/hrWorker.js";
+import { startHrScheduler } from "./cron/hrScheduler.js";
 import rateLimit from "express-rate-limit";
 import { RedisStore } from "rate-limit-redis";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger.js";
 initializeRedis();
 
 // creating an instance of express
@@ -39,6 +44,11 @@ app.use(visitorTracker);
 app.use("/", portfolioRoute);
 app.use("/blogs", blogsRouter);
 app.use("/contact", contactRouter);
+app.use("/hr-portal", hrRouter); // HR application blasting route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customSiteTitle: "Vyshnav PC — API Docs",
+  customCss: `.swagger-ui .topbar { background: #0a0a0f; } .swagger-ui .topbar-wrapper img { content: none; } .swagger-ui .info .title { color: #7c6ef7; }`,
+}));
 // handling 404 errors for undefined routes
 app.use((req, res) => {
   return res.status(404).json({ error: "Route not found" });
@@ -58,6 +68,8 @@ async function connectWithRetry(attempt = 1) {
     console.log("[DB] Connected to MongoDB successfully");
     try {
       await initializeAmqp();
+      startHrWorker(); // Initialize the worker
+      startHrScheduler(); // Initialize the cron job
     } catch (err) {
       console.error("[AMQP] Failed to connect:", err.message);
     }
