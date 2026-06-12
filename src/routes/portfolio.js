@@ -13,7 +13,7 @@ function buildMeta(site = {}) {
   const role   = site.role   || "MERN / Fullstack Developer";
   const desc   = site.description || `Hi, I am Vyshnav — a ${role} specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.`;
   const url    = site.url    || BASE_URL;
-  const image  = site.ogImage || `${BASE_URL}/images/og-image.png`;
+  const image  = site.ogImage || `${BASE_URL}/og-preview.png`;
   const twitter = site.twitter || "";
 
   const schema = JSON.stringify({
@@ -130,9 +130,9 @@ router.get("/sitemap.xml", (req, res) => {
   const base = process.env.SITE_URL || "https://vyshnavpc.com";
   const today = new Date().toISOString().split("T")[0];
   const urls = [
-    { loc: `${base}/`,         priority: "1.0", changefreq: "weekly" },
-    { loc: `${base}/journey`,  priority: "0.8", changefreq: "monthly" },
-    { loc: `${base}/blogs`,    priority: "0.8", changefreq: "weekly" },
+    { loc: `${base}/`,         priority: "1.0", changefreq: "daily" },
+    { loc: `${base}/journey`,  priority: "0.8", changefreq: "daily" },
+    { loc: `${base}/blogs`,    priority: "0.8", changefreq: "daily" },
   ];
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
