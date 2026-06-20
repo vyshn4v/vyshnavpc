@@ -156,8 +156,9 @@
       else if (message.length > 2000) { showFieldError("fmessage", "Max 2000 characters allowed."); hasError = true; }
 
       // ── Turnstile captcha check ──────────────────────────────────────────
-      const turnstileToken = document.querySelector('[name="cf-turnstile-response"]')?.value;
+      const turnstileToken = typeof turnstile !== "undefined" ? turnstile.getResponse() : null;
       if (!turnstileToken) {
+        showFieldError("fmessage", "Please complete the captcha.");
         hasError = true;
       }
 
