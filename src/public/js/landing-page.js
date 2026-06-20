@@ -174,25 +174,24 @@
 
       // ── Show Facebook-style scale-pulse loading animation ───────────────
       sendBtn.disabled = true;
-      sendBtn.innerHTML = `<span class="fb-loader"></span>`;
+      sendBtn.innerHTML = `<span class="spinner"></span> &nbsp; Sending...`;
 
       // Inject keyframe CSS once
-      if (!document.getElementById("fb-loader-style")) {
+      if (!document.getElementById("spinner-style")) {
         const style = document.createElement("style");
-        style.id = "fb-loader-style";
+        style.id = "spinner-style";
         style.textContent = `
-          .fb-loader {
+          .spinner {
             display: inline-block;
             width: 18px; height: 18px;
-            border-radius: 4px;
-            background: currentColor;
-            opacity: 0.9;
-            animation: fb-scale-pulse 0.75s ease-in-out infinite alternate;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #ffffff;
+            animation: spin 0.8s linear infinite;
             vertical-align: middle;
           }
-          @keyframes fb-scale-pulse {
-            0%   { transform: scale(0.35); opacity: 0.5; }
-            100% { transform: scale(1);    opacity: 1;   }
+          @keyframes spin {
+            to { transform: rotate(360deg); }
           }
         `;
         document.head.appendChild(style);
