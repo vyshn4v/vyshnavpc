@@ -28,6 +28,16 @@ const limiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: "Too many requests from this IP, please try again later" },
+  skip: (req, res) => {
+    // Whitelist .well-known endpoints and agent markdown requests
+    if (req.path.startsWith('/.well-known/')) return true;
+    if (req.headers.accept && req.headers.accept.includes("text/markdown")) return true;
+    
+    const userAgent = (req.headers['user-agent'] || '').toLowerCase();
+    if (userAgent.includes('bot') || userAgent.includes('agent') || userAgent.includes('spider')) return true;
+    
+    return false;
+  },
   store: new RedisStore({
     prefix: process.env.RATE_LIMITER_PREFIX,
     sendCommand: (...args) => getRedisClient().sendCommand(args),
