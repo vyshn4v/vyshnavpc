@@ -44,6 +44,34 @@ router.post("/", async (req, res) => {
     }
     if (em.length > 100) return res.status(400).json({ ok: false, error: "Email address is too long." });
 
+    // ── 1b. Verify Cloudflare Turnstile captcha ───────────────────────────
+    const turnstileToken = req.body["cf-turnstile-response"];
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+
+    if (turnstileSecret) {
+      if (!turnstileToken) {
+        return res.status(400).json({ ok: false, error: "Captcha verification is required." });
+      }
+      try {
+        const cfRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            secret: turnstileSecret,
+            response: turnstileToken,
+            remoteip: extractIp(req),
+          }),
+        });
+        const cfData = await cfRes.json();
+        if (!cfData.success) {
+          return res.status(403).json({ ok: false, error: "Captcha verification failed. Please try again." });
+        }
+      } catch (err) {
+        console.error("[Turnstile] Verification error:", err.message);
+        // Fail open — don't block the user if Cloudflare is unreachable
+      }
+    }
+
     // ── 2. Enrich with geo + device data (best-effort, non-blocking) ──────
     const ip      = extractIp(req);
     const uaData  = parseUserAgent(req.headers["user-agent"] || "");

@@ -155,6 +155,12 @@
       else if (message.length < 10) { showFieldError("fmessage", "Message must be at least 10 characters."); hasError = true; }
       else if (message.length > 2000) { showFieldError("fmessage", "Max 2000 characters allowed."); hasError = true; }
 
+      // ── Turnstile captcha check ──────────────────────────────────────────
+      const turnstileToken = document.querySelector('[name="cf-turnstile-response"]')?.value;
+      if (!turnstileToken) {
+        hasError = true;
+      }
+
       if (hasError) {
         sendBtn.textContent = "⚠ Check errors above";
         setTimeout(() => { sendBtn.innerHTML = "✉ Send Message"; }, 3000);
@@ -192,7 +198,7 @@
         const res  = await fetch("/contact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ firstName, lastName, email, subject, message }),
+          body: JSON.stringify({ firstName, lastName, email, subject, message, "cf-turnstile-response": turnstileToken }),
         });
         const data = await res.json();
 
@@ -208,6 +214,7 @@
           sendBtn.innerHTML = `⚠ ${data.error || "Failed — try again"}`;
           sendBtn.disabled = false;
           setTimeout(() => { sendBtn.innerHTML = "✉ Send Message"; }, 3000);
+          if (typeof turnstile !== "undefined") turnstile.reset();
         }
       } catch {
         sendBtn.innerHTML = "⚠ Network error — try again";
