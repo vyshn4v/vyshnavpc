@@ -1,0 +1,14 @@
+{
+  "serverInfo": {
+    "name": "VyshnavPortfolioMCP",
+    "version": "1.0.0"
+  },
+  "transport": {
+    "type": "sse",
+    "url": "https://portfolio.vyshnavpc.com/.well-known/mcp/sse"
+  },
+  "capabilities": {
+    "resources": {},
+    "tools": {}
+  }
+}

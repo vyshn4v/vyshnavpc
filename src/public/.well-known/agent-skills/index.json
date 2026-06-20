@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agentskills.io/schema/index-v0.2.0.json",
+  "skills": [
+    {
+      "name": "portfolio-api",
+      "type": "api",
+      "description": "API to interact with the portfolio and contact the developer",
+      "url": "https://portfolio.vyshnavpc.com/api-docs",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
