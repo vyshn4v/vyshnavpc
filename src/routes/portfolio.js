@@ -19,16 +19,46 @@ function buildMeta(site = {}) {
   const schema = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": name,
+    "name": "Vyshnav P C",
+    "alternateName": ["Vyshnav", "Vyshnav PC", "vyshnavpc"],
     "url": url,
     "jobTitle": role,
+    "email": "vyshnavpcnaravoor@gmail.com",
+    "telephone": "+918086064478",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Kannur",
+      "addressRegion": "Kerala",
+      "addressCountry": "IN"
+    },
     "sameAs": [
-      site.github  || "",
-      site.linkedin || "",
+      site.github || "https://github.com/vyshn4v",
+      site.linkedin || "https://www.linkedin.com/in/vyshnav-p-c-5567ba242/",
+      "https://leetcode.com/u/vyshnavpcnaravoor/",
+      "https://namastedev.com/vyshnavpcnaravoor",
       twitter ? `https://twitter.com/${twitter.replace("@","")}` : "",
     ].filter(Boolean),
     "image": image,
     "description": desc,
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Neutrinos"
+    },
+    "alumniOf": [
+      {
+        "@type": "EducationalOrganization",
+        "name": "Packapeer Academy"
+      },
+      {
+        "@type": "EducationalOrganization",
+        "name": "Sree Sankaracharya Institute"
+      },
+      {
+        "@type": "EducationalOrganization",
+        "name": "GVHSS Kadirur"
+      }
+    ],
+    "knowsAbout": ["MERN Stack", "React.js", "Node.js", "MongoDB", "Express.js", "Kubernetes", "Docker", "DevOps"]
   });
 
   return {
