@@ -9,7 +9,7 @@
 <br/>
 
 [![Portfolio](https://img.shields.io/badge/🌐%20Portfolio-vyshnavpc.com-00ff88?style=flat-square)](https://vyshnavpc.com)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Vyshnav%20PC-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vyshnav-pc-5567ba242/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Vyshnav%20PC-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vyshnav-p-c-5567ba242/)
 [![GitHub](https://img.shields.io/badge/GitHub-vyshn4v-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/vyshn4v)
 [![Email](https://img.shields.io/badge/Email-vyshnavpcnaravoor@gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:vyshnavpcnaravoor@gmail.com)
 [![WhatsApp](https://img.shields.io/badge/WhatsApp-%2B91%208086064478-25D366?style=flat-square&logo=whatsapp&logoColor=white)](https://wa.me/8086064478)
