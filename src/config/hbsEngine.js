@@ -53,4 +53,5 @@ export default function initializeHbsEngine(express, app) {
   
   // Expose env variables globally to all handlebars templates
   app.locals.siteEmail = process.env.MAIL_TO || "vyshnavpcnaravoor@gmail.com";
+  app.locals.turnstileSiteKey = process.env.TURNSTILE_SITE_KEY || "";
 }
