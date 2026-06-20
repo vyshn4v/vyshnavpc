@@ -20,4 +20,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://vyshnavpc.com/sitemap.xml
+Sitemap: https://portfolio.vyshnavpc.com/sitemap.xml
