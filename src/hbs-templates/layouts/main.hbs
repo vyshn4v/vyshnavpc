@@ -94,5 +94,32 @@
     </main>
     {{{_sections.scripts}}}
     <script src="/js/navbar.js"></script>
+    <script>
+      // WebMCP Support for AI Agents
+      if (typeof navigator !== 'undefined' && navigator.modelContext) {
+        navigator.modelContext.provideContext({
+          tools: [
+            {
+              name: "contact_developer",
+              description: "Open the contact form to message the developer",
+              inputSchema: {
+                type: "object",
+                properties: {}
+              },
+              execute: async (args) => {
+                const navOverlay = document.getElementById("navOverlay");
+                const modalBackdrop = document.getElementById("modalBackdrop");
+                if (navOverlay && modalBackdrop) {
+                  navOverlay.classList.remove("open");
+                  modalBackdrop.classList.add("open");
+                  return { success: true, message: "Contact form opened." };
+                }
+                return { success: false, message: "Failed to open contact form." };
+              }
+            }
+          ]
+        });
+      }
+    </script>
   </body>
 </html>
