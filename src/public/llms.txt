@@ -1,0 +1,22 @@
+# Vyshnav P C - Portfolio
+
+> Hi, I am Vyshnav — a MERN / Fullstack Developer specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.
+
+## About Me
+I'm a MERN Stack developer who can handle everything from building solid full stack APIs to clean UIs and full deployments. I have ~2 years of production experience and am open to full-time or contract work.
+
+## Skills
+- **Frontend:** React, Next.js, HTML, CSS, JavaScript
+- **Backend:** Node.js, Express.js, MongoDB, Mongoose
+- **DevOps & Cloud:** Docker, AWS, CI/CD, Nginx, Redis, RabbitMQ
+- **Tools:** Git, GitHub, Postman, VS Code
+
+## Key Pages
+- [Home](https://portfolio.vyshnavpc.com/): Main portfolio page showing projects, skills, and experience.
+- [Journey](https://portfolio.vyshnavpc.com/journey): A timeline of my career journey, education, and milestones.
+- [DevBlog](https://portfolio.vyshnavpc.com/blogs): Articles on fullstack development, Node.js, DevOps, and software engineering.
+
+## Contact
+- **Email:** vyshnavpcnaravoor@gmail.com
+- **LinkedIn:** [vyshnav-p-c-5567ba242](https://www.linkedin.com/in/vyshnav-p-c-5567ba242)
+- **GitHub:** [vyshn4v](https://github.com/vyshn4v)

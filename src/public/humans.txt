@@ -1,0 +1,11 @@
+/* TEAM */
+  Developer: Vyshnav P C
+  Site: https://portfolio.vyshnavpc.com
+  Twitter: @vyshnavpc
+  Location: Kerala, India
+
+/* SITE */
+  Last update: 2026/06/20
+  Language: English
+  Doctype: HTML5
+  IDE: VS Code
