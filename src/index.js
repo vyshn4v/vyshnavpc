@@ -82,6 +82,32 @@ app.get("/.well-known/api-catalog", (req, res) => {
   });
 });
 
+// OAuth Discovery Metadata
+app.get("/.well-known/oauth-authorization-server", (req, res) => {
+  res.json({
+    issuer: process.env.SITE_URL || "https://portfolio.vyshnavpc.com",
+    authorization_endpoint: `${process.env.SITE_URL || "https://portfolio.vyshnavpc.com"}/oauth/authorize`,
+    token_endpoint: `${process.env.SITE_URL || "https://portfolio.vyshnavpc.com"}/oauth/token`,
+    jwks_uri: `${process.env.SITE_URL || "https://portfolio.vyshnavpc.com"}/.well-known/jwks.json`,
+    grant_types_supported: ["client_credentials"],
+    agent_auth: {
+      register_uri: `${process.env.SITE_URL || "https://portfolio.vyshnavpc.com"}/auth.md`,
+      supported_identity_types: ["none"]
+    }
+  });
+});
+
+// OAuth Protected Resource Metadata
+app.get("/.well-known/oauth-protected-resource", (req, res) => {
+  res.json({
+    resource: process.env.SITE_URL || "https://portfolio.vyshnavpc.com",
+    authorization_servers: [
+      process.env.SITE_URL || "https://portfolio.vyshnavpc.com"
+    ],
+    scopes_supported: ["public"]
+  });
+});
+
 app.use("/", portfolioRoute);
 app.use("/blogs", blogsRouter);
 app.use("/contact", contactRouter);
