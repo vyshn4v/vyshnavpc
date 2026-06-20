@@ -174,24 +174,28 @@
 
       // ── Show Facebook-style scale-pulse loading animation ───────────────
       sendBtn.disabled = true;
-      sendBtn.innerHTML = `<span class="spinner"></span> &nbsp; Sending...`;
+      sendBtn.innerHTML = `
+        <svg class="mail-fly" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+        &nbsp; Sending...
+      `;
 
       // Inject keyframe CSS once
       if (!document.getElementById("spinner-style")) {
         const style = document.createElement("style");
         style.id = "spinner-style";
         style.textContent = `
-          .spinner {
+          .mail-fly {
             display: inline-block;
             width: 18px; height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #ffffff;
-            animation: spin 0.8s linear infinite;
             vertical-align: middle;
+            animation: fly 1s ease-in-out infinite alternate;
           }
-          @keyframes spin {
-            to { transform: rotate(360deg); }
+          @keyframes fly {
+            0% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-3px) translateX(3px) rotate(5deg); opacity: 0.8; }
           }
         `;
         document.head.appendChild(style);
