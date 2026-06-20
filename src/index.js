@@ -29,6 +29,9 @@ const limiter = rateLimit({
   legacyHeaders: false,
   message: { error: "Too many requests from this IP, please try again later" },
   skip: (req, res) => {
+    // Whitelist root route for Link header scanning
+    if (req.path === '/' || req.path === '') return true;
+    
     // Whitelist .well-known endpoints and agent markdown requests
     if (req.path.startsWith('/.well-known/')) return true;
     if (req.headers.accept && req.headers.accept.includes("text/markdown")) return true;
