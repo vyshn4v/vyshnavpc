@@ -58,6 +58,35 @@ function buildMeta(site = {}) {
         "name": "GVHSS Kadirur"
       }
     ],
+    "hasCredential": [
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "Bootcamp",
+        "name": "MERN Stack Development",
+        "recognizedBy": {
+          "@type": "EducationalOrganization",
+          "name": "Packapeer Academy"
+        }
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "Diploma",
+        "name": "Diploma in Graphic Design",
+        "recognizedBy": {
+          "@type": "EducationalOrganization",
+          "name": "Sree Sankaracharya Institute"
+        }
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "High School",
+        "name": "Electrical & Electronics Technology",
+        "recognizedBy": {
+          "@type": "EducationalOrganization",
+          "name": "GVHSS Kadirur"
+        }
+      }
+    ],
     "knowsAbout": ["MERN Stack", "React.js", "Node.js", "MongoDB", "Express.js", "Kubernetes", "Docker", "DevOps"]
   });
 
