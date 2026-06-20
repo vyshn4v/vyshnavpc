@@ -41,6 +41,47 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(visitorTracker);
+
+// AI Agent Readiness Middleware
+app.use((req, res, next) => {
+  // 1. Link Headers for AI Discovery
+  if (req.path === "/" || req.path === "") {
+    res.append("Link", '</.well-known/api-catalog>; rel="api-catalog"');
+  }
+  
+  // 2. Markdown Content Negotiation
+  if (req.headers.accept && req.headers.accept.includes("text/markdown")) {
+    if (req.path === "/" || req.path === "") {
+      res.setHeader("Content-Type", "text/markdown; charset=utf-8");
+      // Use x-markdown-tokens header to signify AI-friendly format
+      res.setHeader("x-markdown-tokens", "true");
+      return res.sendFile("llms.txt", { root: "./src/public" });
+    }
+  }
+  next();
+});
+
+// Serve static well-known files
+app.use("/.well-known", express.static("./src/public/.well-known"));
+
+// API Catalog route
+app.get("/.well-known/api-catalog", (req, res) => {
+  res.setHeader("Content-Type", "application/linkset+json");
+  res.json({
+    linkset: [
+      {
+        anchor: `${process.env.SITE_URL || "https://portfolio.vyshnavpc.com"}/api-docs`,
+        "service-desc": [
+          { href: `${process.env.SITE_URL || "https://portfolio.vyshnavpc.com"}/api-docs`, type: "text/html" }
+        ],
+        "service-doc": [
+          { href: `${process.env.SITE_URL || "https://portfolio.vyshnavpc.com"}/api-docs`, type: "text/html" }
+        ]
+      }
+    ]
+  });
+});
+
 app.use("/", portfolioRoute);
 app.use("/blogs", blogsRouter);
 app.use("/contact", contactRouter);
