@@ -91,6 +91,25 @@ function buildMeta(site = {}) {
     "knowsAbout": ["MERN Stack", "React.js", "Node.js", "MongoDB", "Express.js", "Kubernetes", "Docker", "DevOps"]
   });
 
+  const schemaArray = JSON.stringify([
+    JSON.parse(schema),
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Vyshnav P C",
+      "url": url,
+      "description": desc
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": `Vyshnav | ${role} Portfolio`,
+      "url": url,
+      "description": desc,
+      "isPartOf": { "@type": "WebSite", "name": "Vyshnav P C", "url": url }
+    }
+  ]);
+
   return {
     title:          `Vyshnav | ${role} Portfolio`,
     description:    desc,
@@ -100,7 +119,7 @@ function buildMeta(site = {}) {
     siteName:       name,
     ogImage:        image,
     twitterHandle:  twitter,
-    schemaJSON:     schema,
+    schemaJSON:     schemaArray,
   };
 }
 
@@ -174,6 +193,15 @@ router.get("/journey", async (req, res, next) => {
       author: "Vyshnav",
       canonical: `${base}/journey`,
       siteName: "Vyshnav",
+      ogImage: `${base}/og-preview.png`,
+      schemaJSON: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Vyshnav — My Career Journey",
+        "description": "A timeline of Vyshnav's career journey — education, projects, milestones, and growth as a MERN / Fullstack Developer.",
+        "url": `${base}/journey`,
+        "isPartOf": { "@type": "WebSite", "name": "Vyshnav P C", "url": base }
+      }),
     };
     
     const breadcrumbs = [

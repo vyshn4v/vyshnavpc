@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -25,28 +26,34 @@
     <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, fullstack developer, MERN stack, React, Node.js, DevOps, cloud, APIs, portfolio{{/if}}" />
     <meta name="author" content="{{#if meta.author}}{{meta.author}}{{else}}Vyshnav P C{{/if}}" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="theme-color" content="#00d4aa" />
     {{#if meta.canonical}}<link rel="canonical" href="{{meta.canonical}}" />{{/if}}
 
     {{!-- Open Graph --}}
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="{{#if meta.ogType}}{{meta.ogType}}{{else}}website{{/if}}" />
+    <meta property="og:locale" content="en_IN" />
     <meta property="og:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — MERN / Fullstack Developer{{/if}}" />
     <meta property="og:description" content="{{#if meta.description}}{{meta.description}}{{else}}MERN / Fullstack Developer specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.{{/if}}" />
     {{#if meta.canonical}}<meta property="og:url" content="{{meta.canonical}}" />{{/if}}
     <meta property="og:site_name" content="{{#if meta.siteName}}{{meta.siteName}}{{else}}Vyshnav P C{{/if}}" />
-    {{#if meta.ogImage}}<meta property="og:image" content="{{meta.ogImage}}" />{{/if}}
+    <meta property="og:image" content="{{#if meta.ogImage}}{{meta.ogImage}}{{else}}https://portfolio.vyshnavpc.com/og-preview.png{{/if}}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Portfolio{{/if}}" />
 
     {{!-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — MERN / Fullstack Developer{{/if}}" />
     <meta name="twitter:description" content="{{#if meta.description}}{{meta.description}}{{else}}MERN / Fullstack Developer specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.{{/if}}" />
     {{#if meta.twitterHandle}}<meta name="twitter:site" content="{{meta.twitterHandle}}" />{{/if}}
-    {{#if meta.ogImage}}<meta name="twitter:image" content="{{meta.ogImage}}" />{{/if}}
+    <meta name="twitter:image" content="{{#if meta.ogImage}}{{meta.ogImage}}{{else}}https://portfolio.vyshnavpc.com/og-preview.png{{/if}}" />
+    <meta name="twitter:image:alt" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Portfolio{{/if}}" />
 
     {{!-- JSON-LD Person Schema --}}
     {{#if meta.schemaJSON}}<script type="application/ld+json">{{{meta.schemaJSON}}}</script>{{/if}}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://fonts.gstatic.com/s/syne/v22/8vIS7w4qzmVxsWxjBZRjr0FKM_04uT6kR47NCV5Z.woff2" as="font" type="font/woff2" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap"
