@@ -9,9 +9,14 @@
     <div class="about-grid">
 
       <div class="about-text reveal">
-        {{#each about.bio_paragraphs}}
-          <p class="about-bio">{{this}}</p>
-        {{/each}}
+        {{#if about.bio_paragraphs.length}}
+          {{#each about.bio_paragraphs}}
+            <p class="about-bio">{{this}}</p>
+          {{/each}}
+        {{else}}
+          <p class="about-bio">I am Vyshnav P C, a passionate freelance fullstack developer specializing in the MERN stack (MongoDB, Express, React, Node.js). I help businesses build scalable, performant web applications.</p>
+          <p class="about-bio">With expertise in both frontend React JS development and robust Node.js backend architectures, I deliver complete, end-to-end solutions as a dedicated freelancer.</p>
+        {{/if}}
         <div class="about-details">
           {{#each about.details}}
             <div class="about-row">
