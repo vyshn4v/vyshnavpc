@@ -53,7 +53,7 @@ router.get("/", async (req, res) => {
       author: "Vyshnav",
       canonical: `${base}/blogs`,
       siteName: "Vyshnav",
-      ogImage: `${base}/og-preview.png`,
+      ogImage: `${base}/og-preview.webp`,
       schemaJSON: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -275,7 +275,7 @@ router.get("/:slugOrId", async (req, res, next) => {
     }
     const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
     const postUrl = `${base}/blogs/${finalSlug}`;
-    const postImage = data.coverImage || `${base}/og-preview.png`;
+    const postImage = data.coverImage || `${base}/og-preview.webp`;
     const postDescription = data.description || data.overview?.summary || "Read this post on MERN stack, fullstack development, DevOps, and software engineering by Vyshnav.";
     data.meta = {
       title: `${data.title || "Blog Post"} | Vyshnav`,
