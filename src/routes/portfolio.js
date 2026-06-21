@@ -114,6 +114,15 @@ function buildMeta(site = {}) {
       "@id": `${url}/#service`,
       "name": `Vyshnav P C - Freelance Fullstack Developer`,
       "description": "Freelance fullstack development services specializing in React JS and Node.js. Available for hire.",
+      "telephone": "+918086064478",
+      "priceRange": "$$",
+      "image": image,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kannur",
+        "addressRegion": "Kerala",
+        "addressCountry": "IN"
+      },
       "provider": {
         "@type": "Person",
         "name": "Vyshnav P C"
