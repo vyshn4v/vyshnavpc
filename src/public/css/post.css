@@ -247,35 +247,61 @@
 
 .code-header-right {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
 }
 
 .copy-btn {
-    display: flex;
+    display: inline-flex;
+    flex-direction: row;
     align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, .06);
-    border: 1px solid rgba(255, 255, 255, .1);
-    color: var(--text3);
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-family: var(--font-mono);
+    gap: 0;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, .35);
+    padding: 4px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: all .2s ease;
+    transition: all .25s ease;
+    white-space: nowrap;
+    line-height: 1;
+    overflow: hidden;
+}
+
+.copy-btn svg {
+    flex-shrink: 0;
+}
+
+.copy-btn .copy-label {
+    display: block;
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    transition: max-width .25s ease, opacity .25s ease, margin .25s ease;
+    margin-left: 0;
 }
 
 .copy-btn:hover {
-    background: rgba(255, 255, 255, .12);
-    color: var(--text);
-    border-color: rgba(255, 255, 255, .2);
+    color: rgba(255, 255, 255, .7);
+}
+
+.copy-btn:hover .copy-label {
+    max-width: 50px;
+    opacity: 1;
+    margin-left: 5px;
 }
 
 .copy-btn.copied {
-    background: rgba(40, 200, 64, .15);
-    border-color: rgba(40, 200, 64, .3);
     color: #28c840;
+}
+
+.copy-btn.copied .copy-label {
+    max-width: 60px;
+    opacity: 1;
+    margin-left: 5px;
 }
 
 .code-header .dots {
@@ -320,6 +346,21 @@ pre {
     color: var(--text);
     white-space: pre;
     margin: 0;
+    border: none;
+    outline: none;
+}
+
+pre[contenteditable="true"] {
+    cursor: text;
+    caret-color: #fff;
+    outline: none !important;
+}
+
+pre[contenteditable="true"]:focus,
+pre[contenteditable="true"]:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 /* ─── Syntax colours ─── */
