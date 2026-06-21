@@ -14,7 +14,7 @@ function buildMeta(site = {}) {
   const role   = site.role   || "MERN / Fullstack Developer";
   const desc   = site.description || `Hi, I am Vyshnav — a ${role} specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.`;
   const url    = site.url    || BASE_URL;
-  const image  = site.ogImage || `${BASE_URL}/og-preview.png`;
+  const image  = site.ogImage || `${BASE_URL}/og-preview.webp`;
   const twitter = site.twitter || "";
 
   const schema = JSON.stringify({
@@ -225,7 +225,7 @@ router.get("/journey", async (req, res, next) => {
       author: "Vyshnav",
       canonical: `${base}/journey`,
       siteName: "Vyshnav",
-      ogImage: `${base}/og-preview.png`,
+      ogImage: `${base}/og-preview.webp`,
       schemaJSON: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebPage",
