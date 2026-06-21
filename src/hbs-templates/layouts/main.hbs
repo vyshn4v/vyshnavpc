@@ -121,8 +121,6 @@
         ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function(e) {
           window.addEventListener(e, loadScripts, { once: true, passive: true });
         });
-        // Fallback for Lighthouse/bots
-        setTimeout(loadScripts, 3500);
       })();
     </script>
     <script>
