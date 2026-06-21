@@ -5,22 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="google-site-verification" content="cHS1LAjCCb3WtHmnmqgW7OsVMOQpwvWcnX_oCgXrUHM" />
 
-    {{!-- Google Analytics --}}
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T3JV9SSWP5"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-T3JV9SSWP5');
-    </script>
-    
-    {{!-- Google Tag Manager --}}
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-T4R9GT7H');</script>
-    <!-- End Google Tag Manager -->
+
     <title>{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — MERN / Fullstack Developer{{/if}}</title>
     <meta name="description" content="{{#if meta.description}}{{meta.description}}{{else}}MERN / Fullstack Developer specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.{{/if}}" />
     <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, fullstack developer, MERN stack, React, Node.js, DevOps, cloud, APIs, portfolio{{/if}}" />
@@ -86,8 +71,7 @@
     </style>
 
     {{{_sections.styles}}}
-    <!-- Cloudflare Turnstile -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -100,7 +84,47 @@
       {{{body}}}
     </main>
     {{{_sections.scripts}}}
-    <script src="/js/navbar.js"></script>
+    <script defer src="/js/navbar.js"></script>
+    <script>
+      // Lazy-load heavy third-party scripts to boost Mobile PageSpeed
+      (function() {
+        let loaded = false;
+        function loadScripts() {
+          if (loaded) return;
+          loaded = true;
+          
+          // GA4
+          const ga = document.createElement('script');
+          ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-T3JV9SSWP5';
+          ga.async = true;
+          document.head.appendChild(ga);
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T3JV9SSWP5');
+          
+          // GTM
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-T4R9GT7H');
+
+          // Turnstile
+          const ts = document.createElement('script');
+          ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+          ts.async = true;
+          ts.defer = true;
+          document.head.appendChild(ts);
+        }
+        
+        ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function(e) {
+          window.addEventListener(e, loadScripts, { once: true, passive: true });
+        });
+        // Fallback for Lighthouse/bots
+        setTimeout(loadScripts, 3500);
+      })();
+    </script>
     <script>
       // WebMCP Support for AI Agents
       if (typeof navigator !== 'undefined' && navigator.modelContext) {
