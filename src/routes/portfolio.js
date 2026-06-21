@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import { getLandingPageModel } from "../schema/landingpages.js";
+import { getBlogModel } from "../schema/blogs.js";
 import { getRedisClient } from "../config/initializeRedis.js";
 import { getJourneyModel } from "../schema/journey.js";
 import dsaQuestions from "./dsa.questions.js";
@@ -185,19 +186,39 @@ router.get("/journey", async (req, res, next) => {
     next();
   }
 });
-router.get("/sitemap.xml", (req, res) => {
-  const base = process.env.SITE_URL || "https://vyshnavpc.com";
+router.get("/sitemap.xml", async (req, res) => {
+  const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
   const today = new Date().toISOString().split("T")[0];
+
+  // Static pages
   const urls = [
     { loc: `${base}/`,         priority: "1.0", changefreq: "daily" },
-    { loc: `${base}/journey`,  priority: "0.8", changefreq: "daily" },
-    { loc: `${base}/blogs`,    priority: "0.8", changefreq: "daily" },
+    { loc: `${base}/journey`,  priority: "0.8", changefreq: "weekly" },
+    { loc: `${base}/blogs`,    priority: "0.9", changefreq: "daily" },
   ];
+
+  // Dynamically add all blog posts
+  try {
+    const blogs = await getBlogModel().find({}, { _id: 1, updatedAt: 1 }).lean();
+    blogs.forEach((blog) => {
+      urls.push({
+        loc: `${base}/blogs/${blog._id}`,
+        priority: "0.7",
+        changefreq: "weekly",
+        lastmod: blog.updatedAt
+          ? new Date(blog.updatedAt).toISOString().split("T")[0]
+          : today,
+      });
+    });
+  } catch (err) {
+    console.error("[Sitemap] Failed to fetch blogs:", err.message);
+  }
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url>
     <loc>${u.loc}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${u.lastmod || today}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
   </url>`).join("\n")}
