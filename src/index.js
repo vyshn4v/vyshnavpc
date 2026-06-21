@@ -15,6 +15,7 @@ import { RedisStore } from "rate-limit-redis";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
 import helmet from "helmet";
+import compression from "compression";
 initializeRedis();
 
 // creating an instance of express
@@ -22,6 +23,7 @@ const app = express();
 app.set("trust proxy", 1); // Trust first proxy (useful for rate-limiting behind load balancers)
 
 // Add security headers via helmet, but configure CSP to allow your inline scripts and external assets
+app.use(compression()); // GZIP compress all outgoing responses
 app.use(helmet({
   contentSecurityPolicy: false, // Disabling CSP for now to prevent breaking existing inline scripts/styles (can be tightened later)
 }));
