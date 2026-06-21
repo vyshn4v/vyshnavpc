@@ -52,6 +52,15 @@ router.get("/", async (req, res) => {
       author: "Vyshnav",
       canonical: `${base}/blogs`,
       siteName: "Vyshnav",
+      ogImage: `${base}/og-preview.png`,
+      schemaJSON: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "DevBlog | Vyshnav",
+        "description": "Articles on fullstack development, MERN stack, Node.js, DevOps, cloud infrastructure, and software engineering by Vyshnav.",
+        "url": `${base}/blogs`,
+        "author": { "@type": "Person", "name": "Vyshnav P C" }
+      }),
     },
   };
   redis.set(
@@ -118,14 +127,42 @@ router.get("/:blogId", async (req, res, next) => {
       throw new Error("Post not found");
     }
     const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
+    const postUrl = `${base}/blogs/${req.params.blogId}`;
+    const postImage = data.coverImage || `${base}/og-preview.png`;
+    const postDescription = data.description || data.overview?.summary || "Read this post on MERN stack, fullstack development, DevOps, and software engineering by Vyshnav.";
     data.meta = {
       title: `${data.title || "Blog Post"} | Vyshnav`,
-      description: data.description || data.overview?.summary || "Read this post on MERN stack, fullstack development, DevOps, and software engineering by Vyshnav.",
+      description: postDescription,
       keywords: data.tags ? data.tags.join(", ") + ", Vyshnav, blog" : "Vyshnav, blog, fullstack development, MERN",
       author: "Vyshnav",
-      canonical: `${base}/blogs/${req.params.blogId}`,
+      canonical: postUrl,
       siteName: "Vyshnav",
-      ogImage: data.coverImage || `${base}/images/og-image.png`,
+      ogImage: postImage,
+      ogType: "article",
+      schemaJSON: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": data.title || "Blog Post",
+        "description": postDescription,
+        "image": postImage,
+        "url": postUrl,
+        "datePublished": data.createdAt || new Date().toISOString(),
+        "dateModified": data.updatedAt || data.createdAt || new Date().toISOString(),
+        "author": {
+          "@type": "Person",
+          "name": "Vyshnav P C",
+          "url": base
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Vyshnav P C",
+          "url": base
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": postUrl
+        }
+      }),
     };
     
     data.breadcrumbs = [
