@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { getRedisClient } from "../config/initializeRedis.js";
 import { getCategoryModel } from "../schema/categories.js";
 import { getBlogModel } from "../schema/blogs.js";
+import { getDbConnection } from "../config/initializeDevDb.js";
 const router = express.Router();
 router.get("/", async (req, res) => {
   const redis = getRedisClient();
@@ -33,7 +34,7 @@ router.get("/", async (req, res) => {
   let categories = await getCategoryModel().find();
   categories = categories.map((c) => c?.toObject());
   const featured = allPosts.find((p) => p.featured) || null;
-  const rest = allPosts.filter((p) => !p.featured);
+  const rest = allPosts.filter((p) => p !== featured);
   const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
   const data = {
     pageTitle: "DevBlog",
@@ -70,6 +71,129 @@ router.get("/", async (req, res) => {
   );
   res.render("blogs", data);
 });
+
+// Secure API endpoint to create a new blog
+router.post("/create", async (req, res, next) => {
+  try {
+    // 1. Auth check
+    const authHeader = req.headers.authorization;
+    if (!authHeader || authHeader !== (process.env.ADMIN_SECRET || "supersecret123")) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const { blog, content, overview, sections } = req.body;
+    if (!blog || !content) {
+      return res.status(400).json({ error: "Missing required fields: blog, content" });
+    }
+
+    const conn = getDbConnection();
+    const db = conn.db;
+    if (!db) throw new Error("Native db object is not available yet");
+    const blogId = new mongoose.Types.ObjectId();
+
+    // 2. Insert into blogs collection
+    await getBlogModel().create({
+      ...blog,
+      _id: blogId
+    });
+
+    // 3. Insert into blog-contents collection
+    await getBlogContentModel().create({
+      ...content,
+      blogId: blogId
+    });
+
+    // 4. Insert into blog-overviews
+    if (overview) {
+      await db.collection("blog-overviews").insertOne({
+        ...overview,
+        blogId: blogId
+      });
+    }
+
+    // 5. Insert into blog-sections
+    if (sections && Array.isArray(sections) && sections.length > 0) {
+      const sectionsWithId = sections.map(s => ({ ...s, blogId: blogId }));
+      await db.collection("blog-sections").insertMany(sectionsWithId);
+    }
+
+    // 6. Clear the Redis cache for the index page so the new blog shows up instantly
+    const redis = getRedisClient();
+    await redis.del(process.env.REDIS_CACHE_KEY + ":blogIndexPage");
+
+    res.status(201).json({ success: true, message: "Blog created successfully", blogId, slug: blog.slug });
+  } catch (err) {
+    console.error("Error creating blog:", err);
+    res.status(500).json({ error: "Failed to create blog", details: err.message });
+  }
+});
+
+// Secure API endpoint to update an existing blog
+router.put("/update/:slugOrId", async (req, res) => {
+  try {
+    // 1. Auth check
+    const authHeader = req.headers.authorization;
+    if (!authHeader || authHeader !== (process.env.ADMIN_SECRET || "supersecret123")) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const { slugOrId } = req.params;
+    const isObjectId = mongoose.Types.ObjectId.isValid(slugOrId);
+
+    // 2. Find the existing blog
+    let blogDoc = null;
+    if (isObjectId) {
+      blogDoc = await getBlogModel().findById(slugOrId);
+    } else {
+      blogDoc = await getBlogModel().findOne({ slug: slugOrId });
+    }
+
+    if (!blogDoc) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+
+    const blogId = blogDoc._id;
+    const conn = getDbConnection();
+    const db = conn.db;
+    if (!db) throw new Error("Native db object is not available yet");
+
+    const { blog, content, overview, sections } = req.body;
+
+    // 3. Update blogs collection
+    if (blog) {
+      await getBlogModel().updateOne({ _id: blogId }, { $set: blog });
+    }
+
+    // 4. Update blog-contents collection
+    if (content) {
+      await getBlogContentModel().updateOne({ blogId }, { $set: content }, { upsert: true });
+    }
+
+    // 5. Replace blog-overviews (delete old + insert new)
+    if (overview) {
+      await db.collection("blog-overviews").deleteMany({ blogId });
+      await db.collection("blog-overviews").insertOne({ ...overview, blogId });
+    }
+
+    // 6. Replace blog-sections (delete old + insert new)
+    if (sections && Array.isArray(sections) && sections.length > 0) {
+      await db.collection("blog-sections").deleteMany({ blogId });
+      const sectionsWithId = sections.map(s => ({ ...s, blogId }));
+      await db.collection("blog-sections").insertMany(sectionsWithId);
+    }
+
+    // 7. Clear Redis cache
+    const redis = getRedisClient();
+    await redis.del(process.env.REDIS_CACHE_KEY + ":blogIndexPage");
+    await redis.del(`${process.env.REDIS_CACHE_KEY}:blog:${blogId.toString()}`);
+
+    res.json({ success: true, message: "Blog updated successfully", blogId, slug: blogDoc.slug });
+  } catch (err) {
+    console.error("Error updating blog:", err);
+    res.status(500).json({ error: "Failed to update blog", details: err.message });
+  }
+});
+
 router.get("/:slugOrId", async (req, res, next) => {
   try {
     const slugOrId = req.params.slugOrId;

@@ -1,4 +1,4 @@
-@import url('post-mongo.css');
+@import url('post-mongo.css?v=2');
 
 /* ═══════════════════════════════════════════════
    post.css — individual blog post page
@@ -233,6 +233,7 @@
     border-radius: var(--radius-md);
     margin: 28px 0;
     overflow: hidden;
+    position: relative;
 }
 
 .code-header {
@@ -242,6 +243,65 @@
     padding: 12px 18px;
     border-bottom: 1px solid var(--border);
     background: rgba(255, 255, 255, .02);
+}
+
+.code-header-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.copy-btn {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, .35);
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .25s ease;
+    white-space: nowrap;
+    line-height: 1;
+    overflow: hidden;
+}
+
+.copy-btn svg {
+    flex-shrink: 0;
+}
+
+.copy-btn .copy-label {
+    display: block;
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    transition: max-width .25s ease, opacity .25s ease, margin .25s ease;
+    margin-left: 0;
+}
+
+.copy-btn:hover {
+    color: rgba(255, 255, 255, .7);
+}
+
+.copy-btn:hover .copy-label {
+    max-width: 50px;
+    opacity: 1;
+    margin-left: 5px;
+}
+
+.copy-btn.copied {
+    color: #28c840;
+}
+
+.copy-btn.copied .copy-label {
+    max-width: 60px;
+    opacity: 1;
+    margin-left: 5px;
 }
 
 .code-header .dots {
@@ -285,6 +345,22 @@ pre {
     line-height: 1.8;
     color: var(--text);
     white-space: pre;
+    margin: 0;
+    border: none;
+    outline: none;
+}
+
+pre[contenteditable="true"] {
+    cursor: text;
+    caret-color: #fff;
+    outline: none !important;
+}
+
+pre[contenteditable="true"]:focus,
+pre[contenteditable="true"]:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 /* ─── Syntax colours ─── */

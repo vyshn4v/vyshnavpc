@@ -9,11 +9,11 @@
         {{hero.eyebrow_icon}}
         {{hero.eyebrow}}
       </div>
-      <p class="hero-role-label">{{hero.role_label}}</p>
+      <p class="hero-role-label">{{#if hero.role_label}}{{hero.role_label}}{{else}}FREELANCE FULLSTACK DEVELOPER{{/if}}</p>
       <h1 class="hero-h1"><em>{{hero.name}}</em><br />
-        <span class="hero-tagline">{{hero.tagline}}</span>
+        <span class="hero-tagline">{{#if hero.tagline}}{{hero.tagline}}{{else}}React JS & Node.js Expert{{/if}}</span>
       </h1>
-      <p class="hero-sub">{{hero.sub}}</p>
+      <p class="hero-sub">{{#if hero.sub}}{{hero.sub}}{{else}}I build high-performance web applications as a freelance developer. Specializing in MongoDB, Express, React, Node.js, and cloud architectures.{{/if}}</p>
       <div class="hero-actions">
         <a
           href="{{hero.cta_primary.href}}"

@@ -96,3 +96,40 @@
     }
   };
 })();
+
+// ─── Copy code button ───
+function copyCode(btn) {
+  const codeBlock = btn.closest('.code-block');
+  const pre = codeBlock.querySelector('pre');
+  const text = pre.textContent;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const label = btn.querySelector('.copy-label');
+    const originalText = label.textContent;
+    label.textContent = 'Copied!';
+    btn.classList.add('copied');
+
+    setTimeout(() => {
+      label.textContent = originalText;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    // Fallback for older browsers
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    const label = btn.querySelector('.copy-label');
+    label.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      label.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}

@@ -144,6 +144,17 @@ router.get("/", async (req, res, next) => {
         renderData = {};
       }
     }
+    
+    // Fallback overrides for SEO rankings
+    if (renderData.hero) {
+      renderData.hero.role_label = 'FREELANCE FULLSTACK DEVELOPER';
+      renderData.hero.tagline = 'React JS & Node.js Expert';
+      renderData.hero.sub = 'I build high-performance web applications as a freelance developer. Specializing in MongoDB, Express, React, Node.js, and cloud architectures.';
+    }
+    if (renderData.about && renderData.about.bio_paragraphs) {
+      renderData.about.bio_paragraphs[0] = 'I am Vyshnav P C, a passionate freelance fullstack developer specializing in the MERN stack (MongoDB, Express, React, Node.js). I help businesses build scalable, performant web applications.';
+      renderData.about.bio_paragraphs[1] = 'With expertise in both frontend React JS development and robust Node.js backend architectures, I deliver complete, end-to-end solutions as a dedicated freelancer.';
+    }
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;
     renderData.meta = buildMeta(renderData.site);

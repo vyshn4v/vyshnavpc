@@ -1,11 +1,11 @@
 {{!-- views/post.hbs --}}
  {{#section "styles"}}
-  <link rel="stylesheet" href="/css/post.css" />
-  <link rel="stylesheet" href="/css/blogs.css" />
+  <link rel="stylesheet" href="/css/post.css?v=2" />
+  <link rel="stylesheet" href="/css/blogs.css?v=2" />
 {{/section}}
  {{#section "scripts"}}
-  <script src="/js/post.js"></script>
-  <script src="/js/main.js"></script>
+  <script src="/js/post.js?v=2"></script>
+  <script src="/js/main.js?v=2"></script>
 {{/section}}
 {{!-- ── Hero ── --}}
 <header class="post-hero">
@@ -239,7 +239,7 @@
               </div>
               <p class="topic-desc">{{{desc}}}</p>
               {{#if codeBlock}}
-                {{> code-block codeBlock}}
+{{> code-block codeBlock}}
               {{/if}}
               {{#if bullets}}
                 <ul class="topic-bullets">
@@ -258,7 +258,7 @@
 
       {{!-- ── Code block ── --}}
       {{#if codeBlock}}
-        {{> code-block codeBlock}}
+{{> code-block codeBlock}}
       {{/if}}
 
       {{!-- ── Callout ── --}}
