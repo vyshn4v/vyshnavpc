@@ -227,10 +227,10 @@ router.get("/sitemap.xml", async (req, res) => {
 
   // Dynamically add all blog posts
   try {
-    const blogs = await getBlogModel().find({}, { _id: 1, updatedAt: 1 }).lean();
+    const blogs = await getBlogModel().find({}, { _id: 1, slug: 1, updatedAt: 1 }).lean();
     blogs.forEach((blog) => {
       urls.push({
-        loc: `${base}/blogs/${blog._id}`,
+        loc: `${base}/blogs/${blog.slug || blog._id}`,
         priority: "0.7",
         changefreq: "weekly",
         lastmod: blog.updatedAt

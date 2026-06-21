@@ -70,11 +70,34 @@ router.get("/", async (req, res) => {
   );
   res.render("blogs", data);
 });
-router.get("/:blogId", async (req, res, next) => {
+router.get("/:slugOrId", async (req, res, next) => {
   try {
+    const slugOrId = req.params.slugOrId;
     const redis = getRedisClient();
+    
+    // Check if it's a valid object ID
+    const isObjectId = mongoose.Types.ObjectId.isValid(slugOrId);
+    
+    let blogDoc = null;
+    if (isObjectId) {
+      blogDoc = await getBlogModel().findById(slugOrId).lean();
+      if (blogDoc && blogDoc.slug) {
+        // 301 Redirect to the slug version for SEO
+        return res.redirect(301, `/blogs/${blogDoc.slug}`);
+      }
+    } else {
+      blogDoc = await getBlogModel().findOne({ slug: slugOrId }).lean();
+    }
+
+    if (!blogDoc) {
+      throw new Error("Post not found");
+    }
+
+    const actualBlogId = blogDoc._id.toString();
+    const finalSlug = blogDoc.slug || actualBlogId;
+
     const cachedData = await redis.get(
-      `${process.env.REDIS_CACHE_KEY}:blog:${req.params.blogId}`,
+      `${process.env.REDIS_CACHE_KEY}:blog:${actualBlogId}`,
     );
     if (cachedData) {
       return res.render("post", JSON.parse(cachedData));
@@ -82,7 +105,7 @@ router.get("/:blogId", async (req, res, next) => {
     const postData = await getBlogContentModel().aggregate([
       {
         $match: {
-          blogId: new mongoose.Types.ObjectId(req.params.blogId),
+          blogId: new mongoose.Types.ObjectId(actualBlogId),
         },
       },
       {
@@ -127,7 +150,7 @@ router.get("/:blogId", async (req, res, next) => {
       throw new Error("Post not found");
     }
     const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
-    const postUrl = `${base}/blogs/${req.params.blogId}`;
+    const postUrl = `${base}/blogs/${finalSlug}`;
     const postImage = data.coverImage || `${base}/og-preview.png`;
     const postDescription = data.description || data.overview?.summary || "Read this post on MERN stack, fullstack development, DevOps, and software engineering by Vyshnav.";
     data.meta = {
@@ -168,11 +191,11 @@ router.get("/:blogId", async (req, res, next) => {
     data.breadcrumbs = [
       { name: "Home", url: "/", position: 1 },
       { name: "DevBlog", url: `${base}/blogs`, position: 2 },
-      { name: data.title || "Blog Post", url: `${base}/blogs/${req.params.blogId}`, position: 3 }
+      { name: data.title || "Blog Post", url: postUrl, position: 3 }
     ];
 
     redis.set(
-      `${process.env.REDIS_CACHE_KEY}:blog:${req.params.blogId}`,
+      `${process.env.REDIS_CACHE_KEY}:blog:${actualBlogId}`,
       JSON.stringify(data),
       { EX: process.env.REDIS_CACHE_TIME },
     );
@@ -181,12 +204,28 @@ router.get("/:blogId", async (req, res, next) => {
     next(); // fall through to 404
   }
 });
-router.get("/:blogId/json", async (req, res, next) => {
+router.get("/:slugOrId/json", async (req, res, next) => {
   try {
+    const slugOrId = req.params.slugOrId;
+    const isObjectId = mongoose.Types.ObjectId.isValid(slugOrId);
+    
+    let blogDoc = null;
+    if (isObjectId) {
+      blogDoc = await getBlogModel().findById(slugOrId).lean();
+    } else {
+      blogDoc = await getBlogModel().findOne({ slug: slugOrId }).lean();
+    }
+
+    if (!blogDoc) {
+      throw new Error("Post not found");
+    }
+
+    const actualBlogId = blogDoc._id.toString();
+
     const postData = await getBlogContentModel().aggregate([
       {
         $match: {
-          blogId: new mongoose.Types.ObjectId(req.params.blogId),
+          blogId: new mongoose.Types.ObjectId(actualBlogId),
         },
       },
       {
