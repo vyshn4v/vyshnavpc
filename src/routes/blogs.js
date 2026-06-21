@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
   let categories = await getCategoryModel().find();
   categories = categories.map((c) => c?.toObject());
   const featured = allPosts.find((p) => p.featured) || null;
-  const rest = allPosts.filter((p) => !p.featured);
+  const rest = allPosts.filter((p) => p !== featured);
   const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
   const data = {
     pageTitle: "DevBlog",
