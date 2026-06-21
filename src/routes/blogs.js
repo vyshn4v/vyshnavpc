@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { getRedisClient } from "../config/initializeRedis.js";
 import { getCategoryModel } from "../schema/categories.js";
 import { getBlogModel } from "../schema/blogs.js";
+import { getDbConnection } from "../config/initializeDevDb.js";
 const router = express.Router();
 router.get("/", async (req, res) => {
   const redis = getRedisClient();
@@ -70,6 +71,63 @@ router.get("/", async (req, res) => {
   );
   res.render("blogs", data);
 });
+
+// Secure API endpoint to create a new blog
+router.post("/create", async (req, res, next) => {
+  try {
+    // 1. Auth check
+    const authHeader = req.headers.authorization;
+    if (!authHeader || authHeader !== (process.env.ADMIN_SECRET || "supersecret123")) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const { blog, content, overview, sections } = req.body;
+    if (!blog || !content) {
+      return res.status(400).json({ error: "Missing required fields: blog, content" });
+    }
+
+    const conn = getDbConnection();
+    const db = conn.db;
+    if (!db) throw new Error("Native db object is not available yet");
+    const blogId = new mongoose.Types.ObjectId();
+
+    // 2. Insert into blogs collection
+    await getBlogModel().create({
+      ...blog,
+      _id: blogId
+    });
+
+    // 3. Insert into blog-contents collection
+    await getBlogContentModel().create({
+      ...content,
+      blogId: blogId
+    });
+
+    // 4. Insert into blog-overviews
+    if (overview) {
+      await db.collection("blog-overviews").insertOne({
+        ...overview,
+        blogId: blogId
+      });
+    }
+
+    // 5. Insert into blog-sections
+    if (sections && Array.isArray(sections) && sections.length > 0) {
+      const sectionsWithId = sections.map(s => ({ ...s, blogId: blogId }));
+      await db.collection("blog-sections").insertMany(sectionsWithId);
+    }
+
+    // 6. Clear the Redis cache for the index page so the new blog shows up instantly
+    const redis = getRedisClient();
+    await redis.del(process.env.REDIS_CACHE_KEY + ":blogIndexPage");
+
+    res.status(201).json({ success: true, message: "Blog created successfully", blogId, slug: blog.slug });
+  } catch (err) {
+    console.error("Error creating blog:", err);
+    res.status(500).json({ error: "Failed to create blog", details: err.message });
+  }
+});
+
 router.get("/:slugOrId", async (req, res, next) => {
   try {
     const slugOrId = req.params.slugOrId;
