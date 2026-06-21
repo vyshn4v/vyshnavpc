@@ -107,6 +107,18 @@ function buildMeta(site = {}) {
       "url": url,
       "description": desc,
       "isPartOf": { "@type": "WebSite", "name": "Vyshnav P C", "url": url }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "@id": `${url}/#service`,
+      "name": `Vyshnav P C - Freelance Fullstack Developer`,
+      "description": "Freelance fullstack development services specializing in React JS and Node.js. Available for hire.",
+      "provider": {
+        "@type": "Person",
+        "name": "Vyshnav P C"
+      },
+      "url": url
     }
   ]);
 
