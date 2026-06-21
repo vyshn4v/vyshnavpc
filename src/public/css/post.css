@@ -233,6 +233,7 @@
     border-radius: var(--radius-md);
     margin: 28px 0;
     overflow: hidden;
+    position: relative;
 }
 
 .code-header {
@@ -242,6 +243,39 @@
     padding: 12px 18px;
     border-bottom: 1px solid var(--border);
     background: rgba(255, 255, 255, .02);
+}
+
+.code-header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.copy-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .1);
+    color: var(--text3);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, .12);
+    color: var(--text);
+    border-color: rgba(255, 255, 255, .2);
+}
+
+.copy-btn.copied {
+    background: rgba(40, 200, 64, .15);
+    border-color: rgba(40, 200, 64, .3);
+    color: #28c840;
 }
 
 .code-header .dots {
@@ -285,6 +319,7 @@ pre {
     line-height: 1.8;
     color: var(--text);
     white-space: pre;
+    margin: 0;
 }
 
 /* ─── Syntax colours ─── */
