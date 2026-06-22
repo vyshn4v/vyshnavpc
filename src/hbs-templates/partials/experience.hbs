@@ -1,14 +1,18 @@
 <div class="timeline-container">
-  {{#each experience.roles}}
+  {{#each experience}}
   <div class="timeline-item">
     <div class="timeline-header">
       <div>
         <div class="timeline-title">{{this.role}}</div>
         <div class="timeline-subtitle">{{this.company}}</div>
       </div>
-      <div class="timeline-date">{{this.duration}}</div>
+      <div class="timeline-date">{{this.period}}</div>
     </div>
-    <p class="timeline-desc">{{this.description}}</p>
+    <ul class="timeline-desc" style="list-style-type: disc; padding-left: 1.25rem;">
+      {{#each this.highlights}}
+        <li style="margin-bottom: 0.25rem;">{{this}}</li>
+      {{/each}}
+    </ul>
   </div>
   {{/each}}
 </div>

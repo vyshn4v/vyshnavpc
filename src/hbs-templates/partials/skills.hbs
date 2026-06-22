@@ -1,7 +1,7 @@
 <div>
-  {{#each skills.categories}}
+  {{#each skills.groups}}
   <div class="pill-group">
-    <div class="pill-group-title">{{this.title}}</div>
+    <div class="pill-group-title">{{this.label}}</div>
     <div class="pill-container">
       {{#each this.items}}
       <span class="pill">{{this.name}}</span>
