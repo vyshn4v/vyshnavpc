@@ -1,28 +1,12 @@
-<section class="section section--alt" id="projects">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="section-eyebrow">// 06 — projects</div>
-      <h2 class="section-title"><em>Projects</em></h2>
-      <p class="section-sub">A collection of things I've built recently.</p>
-    </div>
-    {{#if hasManyProjects}}
-    <div class="projects__marquee">
-      <div class="projects__track">
-        {{#each projects}}
-          {{> project-card}}
-        {{/each}}
-        <!-- Duplicate for infinite seamless scroll -->
-        {{#each projects}}
-          {{> project-card}}
-        {{/each}}
-      </div>
-    </div>
-    {{else}}
-    <div class="projects__grid">
+<div class="premium-projects-section" id="projects">
+  <div class="premium-card">
+    <h2 class="premium-card-title">Featured Projects</h2>
+    
+    <div class="projects-grid">
       {{#each projects}}
         {{> project-card}}
       {{/each}}
     </div>
-    {{/if}}
+    
   </div>
-</section>
+</div>

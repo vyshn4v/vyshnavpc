@@ -357,4 +357,252 @@ ul {
   .timeline-date {
     margin-top: 0.5rem;
   }
+  .premium-nav-links {
+    display: none;
+  }
+}
+
+/* Premium Navbar */
+.premium-navbar {
+  background: white;
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+
+.premium-nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.premium-nav-logo {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  letter-spacing: -0.025em;
+}
+
+.premium-nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.premium-nav-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+}
+
+.premium-nav-links a:hover {
+  color: var(--color-primary);
+}
+
+/* Premium Footer */
+.premium-footer {
+  background-color: var(--color-bg-card);
+  border-top: 1px solid var(--color-border);
+  padding: 2rem 0;
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.premium-footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.premium-footer-name {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--color-text-title);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.premium-footer-copy {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.premium-footer-tag {
+  font-size: 0.8rem;
+  color: var(--color-primary);
+}
+
+/* Premium Projects */
+.premium-projects-section {
+  margin-top: 1.5rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.premium-project-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.premium-project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.project-img-wrapper {
+  height: 160px;
+  overflow: hidden;
+  background-color: var(--color-bg-page);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.project-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.project-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-title);
+  margin-bottom: 0.5rem;
+}
+
+.project-desc {
+  font-size: 0.875rem;
+  color: var(--color-text-main);
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.project-links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Premium Modal */
+.premium-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.premium-modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.premium-modal {
+  background-color: var(--color-bg-card);
+  width: 100%;
+  max-width: 500px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  margin: 1rem;
+}
+
+.premium-modal-backdrop.is-open .premium-modal {
+  transform: translateY(0);
+}
+
+.modal-head {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-title);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.625rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.field-error {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: none;
 }

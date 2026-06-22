@@ -1,49 +1,41 @@
-<article class="project-card">
+<article class="premium-project-card">
   {{#if this.image}}
-  <div class="project-card__image-wrapper">
-    <img src="{{this.image}}" alt="Screenshot of {{this.title}} project by Vyshnav" class="project-card__image" loading="lazy">
+  <div class="project-img-wrapper">
+    <img src="{{this.image}}" alt="{{this.title}}" loading="lazy">
   </div>
   {{/if}}
-  <div class="project-card__content">
-    <div class="project-card__header">
-      <h3 class="project-card__title">{{this.title}}</h3>
-      <div class="project-card__links">
-        {{#if this.github}}
-        <a href="{{this.github}}" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="GitHub Repository">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-        </a>
-        {{/if}}
-        {{#if this.live}}
-        <a href="{{this.live}}" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Live Demo">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-        </a>
-        {{else if this.live_link}}
-        <a href="{{this.live_link}}" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Live Demo">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-        </a>
-        {{/if}}
-        {{#if this.link}}
-          {{#if (isGithubUrl this.link)}}
-          <a href="{{this.link}}" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="GitHub Repository">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          </a>
-          {{else}}
-          <a href="{{this.link}}" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Project Link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          </a>
-          {{/if}}
-        {{/if}}
-      </div>
-    </div>
-    
-    <p class="project-card__desc">{{this.description}}</p>
+  <div class="project-content">
+    <h3 class="project-title">{{this.title}}</h3>
+    <p class="project-desc">{{this.description}}</p>
     
     {{#if this.technologies}}
-    <ul class="project-card__tech">
+    <div class="pill-container" style="margin-top: 1rem; margin-bottom: 1.5rem;">
       {{#each this.technologies}}
-      <li>{{this}}</li>
+      <span class="pill" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">{{this}}</span>
       {{/each}}
-    </ul>
+    </div>
     {{/if}}
+
+    <div class="project-links">
+      {{#if this.github}}
+      <a href="{{this.github}}" target="_blank" rel="noopener noreferrer" class="btn-premium outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        Code
+      </a>
+      {{/if}}
+      {{#if this.live}}
+      <a href="{{this.live}}" target="_blank" rel="noopener noreferrer" class="btn-premium" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">
+        View Demo
+      </a>
+      {{else if this.live_link}}
+      <a href="{{this.live_link}}" target="_blank" rel="noopener noreferrer" class="btn-premium" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">
+        View Demo
+      </a>
+      {{else if this.link}}
+      <a href="{{this.link}}" target="_blank" rel="noopener noreferrer" class="btn-premium outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">
+        View Link
+      </a>
+      {{/if}}
+    </div>
   </div>
 </article>
