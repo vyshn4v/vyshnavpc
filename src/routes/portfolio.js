@@ -186,6 +186,59 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/projects", async (req, res, next) => {
+  try {
+    const redis = getRedisClient();
+    const cacheKey = process.env.REDIS_CACHE_KEY + ":landingPage";
+    const cachedData = await redis.get(cacheKey);
+    let renderData;
+
+    if (cachedData) {
+      renderData = JSON.parse(cachedData);
+    } else {
+      try {
+        const portfolio = await getLandingPageModel().findOne();
+        renderData = portfolio?.data || {};
+        redis.set(cacheKey, JSON.stringify(renderData), {
+          EX: parseInt(process.env.REDIS_CACHE_TIME) || 60,
+        });
+      } catch (dbErr) {
+        console.error("[DB] Failed to fetch projects data:", dbErr.message);
+        renderData = {};
+      }
+    }
+    
+    const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
+    const projectsMeta = {
+      title: "Projects | Vyshnav",
+      description: "A collection of web applications, tools, and projects built by Vyshnav P C.",
+      keywords: "Vyshnav projects, web development portfolio, MERN stack projects, React applications",
+      author: "Vyshnav",
+      canonical: `${base}/projects`,
+      siteName: "Vyshnav",
+      ogImage: `${base}/og-preview.webp`,
+      schemaJSON: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Vyshnav's Projects",
+        "description": "A collection of web applications, tools, and projects built by Vyshnav P C.",
+        "url": `${base}/projects`,
+        "isPartOf": { "@type": "WebSite", "name": "Vyshnav P C", "url": base }
+      }),
+    };
+    
+    const breadcrumbs = [
+      { name: "Home", url: "/", position: 1 },
+      { name: "Projects", url: `${base}/projects`, position: 2 }
+    ];
+
+    res.render("projects-page", { projects: renderData.projects, hasManyProjects: renderData.projects && renderData.projects.length >= 4, meta: projectsMeta, breadcrumbs });
+  } catch (err) {
+    console.error("Error in projects route:", err);
+    next();
+  }
+});
+
 router.get("/journey", async (req, res, next) => {
   try {
     const redis = getRedisClient();

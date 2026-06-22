@@ -1,4 +1,10 @@
-<article class="project-card">
+<article class="project-card project-card--clickable" 
+  data-title="{{this.title}}" 
+  data-desc="{{this.description}}" 
+  data-image="{{this.image}}" 
+  data-github="{{#if this.github}}{{this.github}}{{else}}{{#if (isGithubUrl this.link)}}{{this.link}}{{/if}}{{/if}}" 
+  data-live="{{#if this.live}}{{this.live}}{{else}}{{#if this.live_link}}{{this.live_link}}{{else}}{{^if (isGithubUrl this.link)}}{{this.link}}{{/if}}{{/if}}{{/if}}"
+  data-tech="{{#if this.technologies}}{{#each this.technologies}}{{this}}{{#unless @last}},{{/unless}}{{/each}}{{/if}}">
   {{#if this.image}}
   <div class="project-card__image-wrapper">
     <img src="{{this.image}}" alt="Screenshot of {{this.title}} project by Vyshnav" class="project-card__image" loading="lazy">
