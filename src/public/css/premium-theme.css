@@ -95,6 +95,10 @@ ul {
   align-items: start;
 }
 
+.layout-grid > div {
+  min-width: 0; /* Prevent flexbox/grid blowout */
+}
+
 /* Premium Cards */
 .premium-card {
   background-color: var(--color-bg-card);
