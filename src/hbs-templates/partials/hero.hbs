@@ -1,79 +1,52 @@
-<section class="hero" id="home">
-  <div class="hero-glow hero-glow--1"></div>
-  <div class="hero-glow hero-glow--2"></div>
-  <div class="hero-inner">
+<div class="profile-header">
+  <div class="profile-info">
+    <h1 class="profile-name">{{hero.name}}</h1>
+    <p class="profile-role">{{#if hero.role_label}}{{hero.role_label}}{{else}}Software Engineer{{/if}} | {{hero.tagline}}</p>
 
-    <div class="hero-text">
-      <div class="eyebrow">
-        <span class="eyebrow-dot"></span>
-        {{hero.eyebrow_icon}}
-        {{hero.eyebrow}}
+    <div class="profile-meta-grid">
+      {{#each hero_stats}}
+      <div class="meta-item">
+        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span class="meta-text">{{this.value}} {{this.label}}</span>
       </div>
-      <p class="hero-role-label">{{#if hero.role_label}}{{hero.role_label}}{{else}}FREELANCE FULLSTACK DEVELOPER{{/if}}</p>
-      <h1 class="hero-h1"><em>{{hero.name}}</em><br />
-        <span class="hero-tagline">{{#if hero.tagline}}{{hero.tagline}}{{else}}React JS & Node.js Expert{{/if}}</span>
-      </h1>
-      <p class="hero-sub">{{#if hero.sub}}{{hero.sub}}{{else}}I build high-performance web applications as a freelance developer. Specializing in MongoDB, Express, React, Node.js, and cloud architectures.{{/if}}</p>
-      <div class="hero-actions">
-        <a
-          href="{{hero.cta_primary.href}}"
-          class="btn btn--primary"
-        >{{hero.cta_primary.label}}</a>
-        <a
-          href="{{hero.cta_secondary.href}}"
-          class="btn btn--ghost"
-        >{{hero.cta_secondary.label}}</a>
-        <a
-          href="https://drive.google.com/file/d/19BkWajPKTkyPcSyFoE9tRYra6omK77Hx/view?usp=sharing"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn--ghost"
-        >Download Resume</a>
+      {{/each}}
+      
+      {{#if site.email}}
+      <div class="meta-item">
+        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        <span class="meta-text">{{site.email}}</span>
       </div>
-      <div class="hero-inline-stats">
-        {{#each hero_stats}}
-          <div class="his">
-            <span class="his-val">{{this.value}}</span>
-            <span class="his-label">{{this.label}}</span>
-          </div>
-        {{/each}}
-      </div>
+      {{/if}}
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="terminal">
-        <div class="terminal-bar">
-          <span class="tb tb--red"></span>
-          <span class="tb tb--yellow"></span>
-          <span class="tb tb--green"></span>
-          <span class="terminal-title">vyshnav — zsh — 120×36</span>
-        </div>
-        <div class="terminal-body">
+    <p style="color: var(--color-text-main); margin-bottom: 1.5rem; max-width: 600px;">
+      {{#if hero.sub}}{{hero.sub}}{{else}}Building scalable, high-performance web applications.{{/if}}
+    </p>
 
-          <p class="mt"><span class="tk-prompt">❯</span>
-            <span class="tk-str">~/cat profile.json</span></p>
-          <p>{</p>
-          <p class="indent"><span class="tk-key">"name"</span>:
-            <span class="tk-str">"{{site.name}}"</span>,</p>
-          <p class="indent"><span class="tk-key">"role"</span>:
-            <span class="tk-str">"{{hero.role_label}}"</span>,</p>
-          <p class="indent"><span class="tk-key">"exp"</span>:
-            <span class="tk-str">"{{terminal.exp}}"</span>,</p>
-          <p class="indent"><span class="tk-key">"focus"</span>: [<span
-              class="tk-str"
-            >"APIs"</span>,<span class="tk-str">"DevOps"</span>,<span
-              class="tk-str"
-            >"Cloud"</span>],</p>
-          <p class="indent"><span class="tk-key">"loc"</span>:
-            <span class="tk-str">"{{site.location}}"</span>,</p>
-          <p class="indent"><span class="tk-key">"status"</span>:
-            <span class="tk-str">"{{terminal.status}}"</span></p>
-          <p>}</p>
-          <p class="mt"><span class="tk-prompt">❯</span>
-            <span class="cursor">▋</span></p>
-        </div>
-      </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      {{#if hero.cta_primary}}
+      <a href="{{hero.cta_primary.href}}" class="btn-premium">
+        {{hero.cta_primary.label}}
+      </a>
+      {{/if}}
+      
+      <a href="https://drive.google.com/file/d/19BkWajPKTkyPcSyFoE9tRYra6omK77Hx/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-premium outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download Resume
+      </a>
+
+      {{#if site.github}}
+      <a href="{{site.github}}" target="_blank" rel="noopener noreferrer" class="btn-premium outline" style="padding: 0.625rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      </a>
+      {{/if}}
+      {{#if site.linkedin}}
+      <a href="{{site.linkedin}}" target="_blank" rel="noopener noreferrer" class="btn-premium outline" style="padding: 0.625rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+      </a>
+      {{/if}}
     </div>
-
   </div>
-</section>
+
+  <img src="{{#if site.authorImage}}{{site.authorImage}}{{else}}https://avatars.githubusercontent.com/u/84687701?v=4{{/if}}" alt="{{hero.name}}" class="profile-avatar">
+</div>

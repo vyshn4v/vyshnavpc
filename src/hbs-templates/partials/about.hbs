@@ -1,45 +1,5 @@
-<section class="section" id="about">
-  <div class="container">
-
-    <div class="section-head reveal">
-      <div class="section-eyebrow">// 01 — about</div>
-      <h2 class="section-title">Hello <em>There!</em></h2>
-    </div>
-
-    <div class="about-grid">
-
-      <div class="about-text reveal">
-        {{#if about.bio_paragraphs.length}}
-          {{#each about.bio_paragraphs}}
-            <p class="about-bio">{{this}}</p>
-          {{/each}}
-        {{else}}
-          <p class="about-bio">I am Vyshnav P C, a passionate freelance fullstack developer specializing in the MERN stack (MongoDB, Express, React, Node.js). I help businesses build scalable, performant web applications.</p>
-          <p class="about-bio">With expertise in both frontend React JS development and robust Node.js backend architectures, I deliver complete, end-to-end solutions as a dedicated freelancer.</p>
-        {{/if}}
-        <div class="about-details">
-          {{#each about.details}}
-            <div class="about-row">
-              <span class="about-key">{{this.label}}</span>
-              <span class="about-val">{{this.value}}</span>
-            </div>
-          {{/each}}
-        </div>
-      </div>
-
-      <div class="about-right reveal">
-        <div class="section-eyebrow mb-16">// achievements</div>
-        {{#each about.achievements}}
-          <div class="achievement-card">
-            <span class="achievement-icon">{{this.icon}}</span>
-            <div>
-              <div class="achievement-title">{{this.title}}</div>
-              <div class="achievement-desc">{{this.desc}}</div>
-            </div>
-          </div>
-        {{/each}}
-      </div>
-
-    </div>
-  </div>
-</section>
+<div style="color: var(--color-text-main); font-size: 1rem; line-height: 1.7;">
+  {{#each about.paragraphs}}
+    <p style="margin-bottom: 1rem;">{{this}}</p>
+  {{/each}}
+</div>

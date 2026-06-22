@@ -1,25 +1,45 @@
-{{#section "styles"}}
-  <link rel="stylesheet" href="/css/landing-page.css" />
-  <link rel="stylesheet" href="/css/projects.css" />
-  <link rel="stylesheet" href="/css/know-more.css" />
-{{/section}}
+<div class="layout-container">
+  <div class="layout-grid">
+    
+    <!-- Left Column: Main Content -->
+    <div>
+      <div class="premium-card">
+        {{> hero}}
+      </div>
 
-{{#section "scripts"}}
-  <script defer src="/js/landing-page.js"></script>
-{{/section}}
+      <div class="premium-card">
+        <h2 class="premium-card-title">Profile Summary</h2>
+        {{> about}}
+      </div>
 
-  <div class="noise"></div>
-  <div class="grid-bg"></div>
+      <div class="premium-card">
+        <h2 class="premium-card-title">Work Experience</h2>
+        {{> experience}}
+      </div>
 
+      <div class="premium-card">
+        <h2 class="premium-card-title">Education</h2>
+        {{> education}}
+      </div>
+    </div>
 
-  {{> hero}}
-  {{> about}}
-  {{> experience}}
-  {{> certificates}}
-  {{> education}}
-  {{> skills}}
-  {{> projects}}
-  {{> know-more}}
-  {{> contact}}
-  {{> footer}}
+    <!-- Right Column: Sidebar -->
+    <div>
+      <div class="premium-card">
+        <h2 class="premium-card-title">Top Skills</h2>
+        {{> skills}}
+      </div>
 
+      <div class="premium-card">
+        <h2 class="premium-card-title">Certifications</h2>
+        {{> certificates}}
+      </div>
+
+      <div class="premium-card">
+        <h2 class="premium-card-title">Contact</h2>
+        {{> contact}}
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,52 +1,20 @@
-<section class="section" id="certificates">
-  <div class="container">
-
-    <div class="section-head reveal">
-      <div class="section-eyebrow">// 03 — certificates</div>
-      <h2 class="section-title">Certifi<em>cations</em></h2>
-      <p class="section-sub">Industry-recognised credentials validating
-        expertise across cloud, DevOps, and software engineering.</p>
+<div class="timeline-container">
+  {{#each certificates.items}}
+  <div class="timeline-item">
+    <div class="timeline-header">
+      <div>
+        <div class="timeline-title" style="font-size: 1rem;">{{this.title}}</div>
+        <div class="timeline-subtitle" style="font-size: 0.85rem;">{{this.issuer}}</div>
+      </div>
     </div>
-
-    <div class="cert-grid">
-      {{#each certificates}}
-        <div class="cert-card reveal" style="--clr: {{this.color}}">
-          <div class="cert-glow"></div>
-          <div class="cert-header">
-            <div class="cert-issuer-badge">{{this.issuerAbbr}}</div>
-            <div class="cert-meta">
-              <span class="cert-issued">Issued {{this.issued}}</span>
-              {{#if this.expires}}
-                <span class="cert-expires">Expires {{this.expires}}</span>
-              {{else}}
-                <span class="cert-expires cert-no-exp">No Expiry</span>
-              {{/if}}
-            </div>
-          </div>
-          <div class="cert-body">
-            <h3 class="cert-title">{{this.name}}</h3>
-            <p class="cert-issuer">{{this.issuer}}</p>
-            <p class="cert-desc">{{this.description}}</p>
-          </div>
-          <div class="cert-footer">
-            <div class="cert-tags">
-              {{#each this.tags}}
-                <span class="ptag">{{this}}</span>
-              {{/each}}
-            </div>
-            {{#if this.credentialUrl}}
-              <a
-                href="{{this.credentialUrl}}"
-                target="_blank"
-                class="cert-link"
-              >
-                View credential →
-              </a>
-            {{/if}}
-          </div>
-        </div>
-      {{/each}}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem;">
+      <span class="timeline-date">{{this.date}}</span>
+      {{#if this.link}}
+        <a href="{{this.link}}" target="_blank" rel="noopener noreferrer" style="font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+          View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+      {{/if}}
     </div>
-
   </div>
-</section>
+  {{/each}}
+</div>

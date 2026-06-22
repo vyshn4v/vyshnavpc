@@ -1,121 +1,22 @@
-<section class="section" id="contact">
-  <div class="container">
+<div class="contact-list">
+  {{#if site.email}}
+  <a href="mailto:{{site.email}}">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    {{site.email}}
+  </a>
+  {{/if}}
 
-    <div class="section-head reveal">
-      <div class="section-eyebrow">// 05 — contact</div>
-      <h2 class="section-title">Hire <em>Me!</em></h2>
-    </div>
-
-    <div class="contact-layout">
-      <div class="contact-left reveal">
-        <p class="contact-lead">{{contact.lead}}</p>
-        <p class="contact-sub">{{contact.sub}}</p>
-        <button class="btn btn--primary contact-modal-btn" id="openContact">✉
-          Send a Message →</button>
-        <div class="contact-links">
-          {{#each contact.links}}
-            <a
-              href="{{this.href}}"
-              target="_blank"
-              rel="noopener"
-              class="clink"
-            >
-              <span class="clink-label">{{this.label}}</span>
-              <span class="clink-handle">{{this.handle}}</span>
-              <span class="clink-arrow">↗</span>
-            </a>
-          {{/each}}
-        </div>
-      </div>
-
-      <div class="contact-right reveal">
-        <div class="terminal terminal--contact">
-          <div class="terminal-bar">
-            <span class="tb tb--red"></span>
-            <span class="tb tb--yellow"></span>
-            <span class="tb tb--green"></span>
-            <span class="terminal-title">contact — node — 80×24</span>
-          </div>
-          <div class="terminal-body">
-
-            <p class="mt"><span class="tk-prompt">❯</span><span class="tk-str">
-                node hire-me.js</span></p>
-            <p class="mt"><span class="tk-bool">✓</span>
-              Ready for new challenges</p>
-            <p><span class="tk-bool">✓</span> ~2 yrs production experience</p>
-            <p><span class="tk-bool">✓</span> MERN Stack + DevOps + Cloud</p>
-            <p><span class="tk-bool">✓</span> Full-time / contract available</p>
-            <p class="mt tk-str">Awaiting your message...</p>
-            <p class="mt"><span class="tk-prompt">❯</span></p>
-            <p class="mt"><span class="tk-prompt">❯</span><span class="tk-str">
-                cat contact.json</span></p>
-            <p>{</p>
-            <p class="indent"><span class="tk-key">"name"</span>:
-              <span class="tk-str">"{{site.name}}"</span>,</p>
-            <p class="indent"><span class="tk-key">"phone"</span>:
-              <span class="tk-str">"{{site.phone}}"</span>,</p>
-            <p class="indent"><span class="tk-key">"email"</span>:
-              <span class="tk-str">"{{site.email}}"</span>,</p>
-            <p class="indent"><span class="tk-key">"location"</span>:
-              <span class="tk-str">"{{site.location}}, India"</span>,</p>
-            <p class="indent"><span class="tk-key">"status"</span>:
-              <span class="tk-str">"open_to_work"</span></p>
-            <p>}</p>
-            <p class="mt"><span class="tk-prompt">❯</span>
-              <span class="cursor">▋</span></p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-{{! ── Contact modal ── }}
-<div class="modal-backdrop" id="modalBackdrop">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>Let's work together 🚀</h3>
-      <p>Fill in the details and I'll get back to you within 24 hours.</p>
-      <button class="modal-close" id="closeContact">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label>First name</label>
-          <input type="text" id="fname" placeholder="John" />
-          <div class="field-error" id="err-fname"></div>
-        </div>
-        <div class="form-group">
-          <label>Last name</label>
-          <input type="text" id="lname" placeholder="Doe" />
-          <div class="field-error" id="err-lname"></div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="femail" placeholder="john@example.com" />
-        <div class="field-error" id="err-femail"></div>
-      </div>
-      <div class="form-group">
-        <label>Subject</label>
-        <input type="text" id="fsubject" placeholder="Project inquiry" />
-        <div class="field-error" id="err-fsubject"></div>
-      </div>
-      <div class="form-group">
-        <label>Message</label>
-        <textarea
-          id="fmessage"
-          rows="4"
-          placeholder="Tell me about your project..."
-        ></textarea>
-        <div class="field-error" id="err-fmessage"></div>
-      </div>
-      <div class="cf-turnstile" data-sitekey="{{turnstileSiteKey}}" data-theme="dark"></div>
-      <div class="modal-actions">
-        <button class="btn btn--ghost" id="cancelContact">Cancel</button>
-        <button class="btn btn--primary" id="sendContact">✉ Send Message</button>
-      </div>
-    </div>
-  </div>
+  {{#if site.github}}
+  <a href="{{site.github}}" target="_blank" rel="noopener noreferrer">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+    GitHub Profile
+  </a>
+  {{/if}}
+  
+  {{#if site.linkedin}}
+  <a href="{{site.linkedin}}" target="_blank" rel="noopener noreferrer">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    LinkedIn Profile
+  </a>
+  {{/if}}
 </div>

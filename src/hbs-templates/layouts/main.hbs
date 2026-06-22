@@ -67,36 +67,11 @@
       }
       </script>
     {{/if}}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap"
-    />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="author" href="/humans.txt" />
-    <link rel="alternate" type="text/markdown" href="/llms.txt" />
-    <!-- Preload critical render-blocking CSS -->
-    <link rel="preload" href="/css/navbar.css" as="style" />
-    <link rel="preload" href="/css/scroll-bar.css" as="style" />
-    <link rel="preload" href="/css/breadcrumbs.css" as="style" />
-
-    <link rel="stylesheet" href="/css/navbar.css" />
-    <link rel="stylesheet" href="/css/scroll-bar.css" />
-    <link rel="stylesheet" href="/css/breadcrumbs.css" />
-
-    <style>
-      :root {
-        --nav-h: 64px; /* match the height in navbar.css */
-      }
-
-      main {
-        padding-top: var(--nav-h);
-      }
-    </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Premium Theme -->
+    <link rel="stylesheet" href="/css/premium-theme.css" />
 
     {{{_sections.styles}}}
 
@@ -106,13 +81,16 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T4R9GT7H"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    {{> nav}}
+    <!-- Premium Gradient Header -->
+    <div class="premium-banner">
+      <h1>Employer's View Of My Profile</h1>
+      <p>This is how the employer sees your profile while searching for candidates</p>
+    </div>
+
     <main>
-      {{> breadcrumbs}}
       {{{body}}}
     </main>
     {{{_sections.scripts}}}
-    <script defer src="/js/navbar.js"></script>
     <script>
       // Lazy-load heavy third-party scripts to boost Mobile PageSpeed
       (function() {
