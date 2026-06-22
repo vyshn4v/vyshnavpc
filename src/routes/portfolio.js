@@ -179,6 +179,7 @@ router.get("/", async (req, res, next) => {
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;
     renderData.meta = buildMeta(renderData.site);
+    renderData.isProjectsPage = false;
     res.render("landing-page", renderData);
   } catch (err) {
     console.error("Error in portfolio route:", err);
@@ -232,7 +233,7 @@ router.get("/projects", async (req, res, next) => {
       { name: "Projects", url: `${base}/projects`, position: 2 }
     ];
 
-    res.render("projects-page", { projects: renderData.projects, hasManyProjects: renderData.projects && renderData.projects.length >= 4, meta: projectsMeta, breadcrumbs });
+    res.render("projects-page", { isProjectsPage: true, projects: renderData.projects, hasManyProjects: renderData.projects && renderData.projects.length >= 4, meta: projectsMeta, breadcrumbs });
   } catch (err) {
     console.error("Error in projects route:", err);
     next();
