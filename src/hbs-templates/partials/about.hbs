@@ -3,3 +3,18 @@
     <p style="margin-bottom: 1rem;">{{this}}</p>
   {{/each}}
 </div>
+
+{{#if about.achievements}}
+<div style="margin-top: 1.5rem; display: grid; gap: 1rem;">
+  <h3 style="font-size: 1rem; font-weight: 700; color: var(--color-text-title); text-transform: uppercase; letter-spacing: 0.05em;">Achievements</h3>
+  {{#each about.achievements}}
+  <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; background: var(--color-bg-page); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+    <span style="font-size: 1.5rem;">{{this.icon}}</span>
+    <div>
+      <div style="font-size: 0.95rem; font-weight: 700; color: var(--color-text-title);">{{this.title}}</div>
+      <div style="font-size: 0.85rem; color: var(--color-text-main);">{{this.desc}}</div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{/if}}

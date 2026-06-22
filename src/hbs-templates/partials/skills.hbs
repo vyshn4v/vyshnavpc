@@ -2,9 +2,19 @@
   {{#each skills.groups}}
   <div class="pill-group">
     <div class="pill-group-title">{{this.label}}</div>
-    <div class="pill-container">
+    <div class="pill-container" style="display: grid; grid-template-columns: 1fr; gap: 0.5rem;">
       {{#each this.items}}
-      <span class="pill">{{this.name}}</span>
+      <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg-card);">
+        <div style="width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: {{this.color}};">
+          {{{this.icon}}}
+        </div>
+        <div>
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--color-text-title);">{{this.name}}</div>
+          {{#if this.desc}}
+          <div style="font-size: 0.75rem; color: var(--color-text-muted);">{{this.desc}}</div>
+          {{/if}}
+        </div>
+      </div>
       {{/each}}
     </div>
   </div>

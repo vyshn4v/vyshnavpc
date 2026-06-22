@@ -11,6 +11,13 @@
     {{#if this.subtitle}}
       <p class="timeline-desc">{{this.subtitle}}</p>
     {{/if}}
+    {{#if this.tags}}
+    <div class="pill-container" style="margin-top: 0.5rem;">
+      {{#each this.tags}}
+      <span class="pill" style="font-size: 0.7rem; padding: 0.2rem 0.4rem; background: var(--color-border); color: var(--color-text-main); border: none;">{{this}}</span>
+      {{/each}}
+    </div>
+    {{/if}}
   </div>
   {{/each}}
 </div>

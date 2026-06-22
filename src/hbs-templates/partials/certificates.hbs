@@ -7,7 +7,17 @@
         <div class="timeline-subtitle" style="font-size: 0.85rem;">{{this.issuer}}</div>
       </div>
     </div>
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem;">
+    {{#if this.description}}
+      <p style="font-size: 0.85rem; color: var(--color-text-main); margin-top: 0.5rem; margin-bottom: 0.5rem;">{{this.description}}</p>
+    {{/if}}
+    {{#if this.tags}}
+    <div class="pill-container" style="margin-top: 0.25rem; margin-bottom: 0.5rem;">
+      {{#each this.tags}}
+      <span class="pill" style="font-size: 0.65rem; padding: 0.15rem 0.3rem; background: var(--color-bg-page); color: var(--color-text-muted); border: 1px solid var(--color-border);">{{this}}</span>
+      {{/each}}
+    </div>
+    {{/if}}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--color-bg-page);">
       <span class="timeline-date">{{this.issued}}</span>
       {{#if this.credentialUrl}}
         <a href="{{this.credentialUrl}}" target="_blank" rel="noopener noreferrer" style="font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
