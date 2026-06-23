@@ -39,6 +39,24 @@
   --radius-full: 9999px;
 }
 
+:root[data-theme="dark"] {
+  --color-primary: #60a5fa;
+  --color-primary-hover: #93c5fd;
+  --color-bg-page: #0f172a;
+  --color-bg-card: #1e293b;
+  --color-text-title: #f8fafc;
+  --color-text-main: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+  --color-pill-bg: #1e3a8a;
+  --color-pill-text: #bfdbfe;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+}
+
+
+
 * {
   margin: 0;
   padding: 0;
@@ -179,6 +197,20 @@ ul {
   flex: 1;
 }
 
+.premium-nav-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-decoration: none;
+  letter-spacing: -0.05em;
+}
+
+:root[data-theme="dark"] .premium-nav-logo {
+  color: #ffffff;
+}
+
+
+
 .profile-name {
   font-size: 1.75rem;
   font-weight: 800;
@@ -294,6 +326,17 @@ ul {
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
+
+:root[data-theme="dark"] .btn-premium {
+  color: #0f172a;
+}
+
+:root[data-theme="dark"] .btn-premium.outline {
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+
 
 .btn-premium.outline {
   background-color: transparent;
@@ -540,7 +583,7 @@ ul {
 
 /* Premium Navbar */
 .premium-navbar {
-  background: white;
+  background: var(--color-bg-card);
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
@@ -619,6 +662,23 @@ ul {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--radius-full);
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
 }
 
 .nav-social-icon {
@@ -1261,7 +1321,7 @@ body.modal-open {
 .premium-timeline .timeline-node {
   width: 16px;
   height: 16px;
-  background-color: white;
+  background-color: var(--color-bg-card);
   border: 3px solid var(--color-primary);
   border-radius: 50%;
   z-index: 2;
@@ -1559,6 +1619,12 @@ body.modal-open {
   transform: translateY(-4px) scale(1.05);
   box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
 }
+
+:root[data-theme="dark"] .floating-contact-btn {
+  color: #0f172a;
+}
+
+
 
 .contact-modal-overlay {
   position: fixed;
