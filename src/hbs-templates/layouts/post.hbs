@@ -1,19 +1,14 @@
 {{!-- views/post.hbs --}}
- {{#section "styles"}}
-  <link rel="stylesheet" href="/css/post.css?v=2" />
-  <link rel="stylesheet" href="/css/blogs.css?v=2" />
+{{#section "styles"}}
+  <link rel="stylesheet" href="/css/post.css?v=3" />
 {{/section}}
- {{#section "scripts"}}
+{{#section "scripts"}}
   <script src="/js/post.js?v=2"></script>
-  <script src="/js/main.js?v=2"></script>
 {{/section}}
-{{!-- ── Hero ── --}}
-<header class="post-hero">
-  <div class="hero-glow"></div>
+{{!-- ── Post Hero (blog post title, meta, etc.) ── --}}
+<div class="premium-banner">
   <div class="post-hero__inner">
-    {{!-- <a href="/" class="back-link">← All posts</a> --}}
-
-    <div class="hero-tag" style="--cat-color:{{category.color}};--cat-bg:{{category.bg}}">
+    <div class="hero-tag post-hero-tag" style="--cat-color:{{category.color}};--cat-bg:{{category.bg}}">
       <span class="dot"></span> {{category.icon}} {{category.label}}
     </div>
 
@@ -26,294 +21,303 @@
     </h1>
 
     <div class="post-hero__meta">
-      <span>📅 {{date}}</span>
+      <span class="meta-date">{{date}}</span>
       <span class="sep"></span>
-      <span>⏱ {{readTime}}</span>
+      <span class="meta-readtime">{{readTime}}</span>
       <span class="sep"></span>
-      <span>🏷 {{meta.tags}}</span>
+      <span class="meta-tags">{{meta.tags}}</span>
     </div>
 
-    <p class="post-hero__lead">{{lead}}</p>
   </div>
-</header>
+</div>
 
 {{!-- ── Article body ── --}}
-<article class="post-article">
+<div class="layout-container">
+  <main class="main-column" style="max-width: 900px; margin: 0 auto;">
+    <div class="premium-card">
+      <article class="post-article">
 
-  {{!-- Overview section --}}
-  {{#if overview}}
-    <section id="overview">
-      <h2>{{overview.heading}}</h2>
-      {{#each overview.paragraphs}}
-        <p>{{{this}}}</p>
-      {{/each}}
+        {{#if lead}}
+          <p class="post-article__lead">{{lead}}</p>
+        {{/if}}
 
-      {{#if overview.callout}}
-        {{> callout overview.callout}}
-      {{/if}}
-
-      {{#if overview.closing}}
-        <p>{{{overview.closing}}}</p>
-      {{/if}}
-    </section>
-  {{/if}}
-
-  {{!-- Dynamic sections --}}
-  {{#each sections}}
-    <section {{#if id}}id="{{id}}"{{/if}}>
-      {{#if heading}}<h2>{{heading}}</h2>{{/if}}
-      {{#if intro}}<p class="section-intro">{{intro}}</p>{{/if}}
-
-      {{!-- ── Phase cards grid (Node.js Event Loop) ── --}}
-      {{#if phases}}
-        <div class="phases-grid">
-          {{#each phases}}
-            <div class="phase-card" style="--card-accent:{{accent}};--card-color:{{color}}">
-              <div class="phase-num">Phase {{num}}</div>
-              <div class="phase-title">{{icon}} {{title}}</div>
-              <p>{{{desc}}}</p>
-              <span class="tag">{{tag}}</span>
-            </div>
+        {{!-- Overview section --}}
+      {{#if overview}}
+        <section id="overview">
+          <h2>{{overview.heading}}</h2>
+          {{#each overview.paragraphs}}
+            <p>{{{this}}}</p>
           {{/each}}
-        </div>
+
+          {{#if overview.callout}}
+            {{> callout overview.callout}}
+          {{/if}}
+
+          {{#if overview.closing}}
+            <p>{{{overview.closing}}}</p>
+          {{/if}}
+        </section>
       {{/if}}
 
-      {{!-- ── Interactive loop diagram ── --}}
-      {{#if loopDiagram}}
-        <div class="diagram-wrap">
-          <div class="diagram-label">// {{loopDiagram.label}}</div>
-          <div class="loop-tabs">
-            {{#each loopDiagram.phases}}
-              <input type="radio" name="loop-phase" id="ph-{{@index}}"{{#if @first}} checked{{/if}}>
-            {{/each}}
+      {{!-- Dynamic sections --}}
+      {{#each sections}}
+        <section {{#if id}}id="{{id}}"{{/if}}>
+          {{#if heading}}<h2>{{heading}}</h2>{{/if}}
+          {{#if intro}}<p class="section-intro">{{intro}}</p>{{/if}}
 
-            <div class="loop-ring">
-              {{#each loopDiagram.phases}}
-                <label for="ph-{{@index}}" class="lp"
-                  style="left:{{pos.x}}px;top:{{pos.y}}px;background:{{bg}};border-color:{{border}};">
-                  <span class="lp-icon">{{icon}}</span>
-                  <span class="lp-name" style="color:{{color}}">{{shortName}}</span>
-                </label>
-              {{/each}}
-              <div class="loop-center">
-                <div class="loop-center-title">Event Loop</div>
-                <div class="loop-center-sub">↻ repeats</div>
-              </div>
-            </div>
-
-            <div class="loop-tabs-body">
-              {{#each loopDiagram.phases}}
-                <div class="detail-panel" id="dp-{{@index}}">
-                  <div class="detail-phase-name" style="color:{{color}}">{{name}}</div>
-                  <div class="detail-phase-desc">{{detailDesc}}</div>
-                  <ul class="detail-bullets">
-                    {{#each bullets}}
-                      <li>
-                        <span class="bullet-dot" style="background:{{../color}}"></span>
-                        <span>{{this}}</span>
-                      </li>
-                    {{/each}}
-                  </ul>
+          {{!-- ── Phase cards grid (Node.js Event Loop) ── --}}
+          {{#if phases}}
+            <div class="phases-grid">
+              {{#each phases}}
+                <div class="phase-card" style="--card-accent:{{accent}};--card-color:{{color}}">
+                  <div class="phase-num">Phase {{num}}</div>
+                  <div class="phase-title">{{icon}} {{title}}</div>
+                  <p>{{{desc}}}</p>
+                  <span class="tag">{{tag}}</span>
                 </div>
               {{/each}}
             </div>
+          {{/if}}
 
-            <div class="phase-nav">
-              <button id="btn-prev" onclick="stepPhase(-1)">← Prev</button>
-              <div class="phase-dots">
+          {{!-- ── Interactive loop diagram ── --}}
+          {{#if loopDiagram}}
+            <div class="diagram-wrap">
+              <div class="diagram-label">// {{loopDiagram.label}}</div>
+              <div class="loop-tabs">
                 {{#each loopDiagram.phases}}
-                  <label for="ph-{{@index}}" class="phase-dot" title="{{name}}"></label>
+                  <input type="radio" name="loop-phase" id="ph-{{@index}}"{{#if @first}} checked{{/if}}>
                 {{/each}}
-              </div>
-              <button id="btn-next" onclick="stepPhase(1)">Next →</button>
-            </div>
-          </div>
-        </div>
-      {{/if}}
 
-      {{!-- ── Steps list (Level 1 — Setup) ── --}}
-      {{#if steps}}
-        <div class="steps-list">
-          {{#each steps}}
-            <div class="step-item">
-              <div class="step-number"></div>
-              <div class="step-body">
-                <h3 class="step-title">{{title}}</h3>
-                <p class="step-content">{{{content}}}</p>
-              </div>
-            </div>
-          {{/each}}
-        </div>
-      {{/if}}
-
-      {{!-- ── CRUD operation cards (Level 2) ── --}}
-      {{#if operations}}
-        <div class="operations-grid">
-          {{#each operations}}
-            <div class="op-card" style="--op-accent:{{accent}}">
-              <div class="op-header">
-                <div class="op-header-top">
-                  <span class="op-icon">{{icon}}</span>
-                  <span class="op-name">{{op}}</span>
-                </div>
-                <div class="op-methods">
-                  {{#each methods}}
-                    <code class="op-method">{{this}}</code>
+                <div class="loop-ring">
+                  {{#each loopDiagram.phases}}
+                    <label for="ph-{{@index}}" class="lp"
+                      style="left:{{pos.x}}px;top:{{pos.y}}px;background:{{bg}};border-color:{{border}};">
+                      <span class="lp-icon">{{icon}}</span>
+                      <span class="lp-name" style="color:{{color}}">{{shortName}}</span>
+                    </label>
                   {{/each}}
-                </div>
-              </div>
-              <p class="op-desc">{{{desc}}}</p>
-              <div class="op-code"><pre>{{{example}}}</pre></div>
-            </div>
-          {{/each}}
-        </div>
-      {{/if}}
-
-      {{!-- ── Operator categories (Level 3 — Querying) ── --}}
-      {{#if categories}}
-        <div class="operator-categories">
-          {{#each categories}}
-            <div class="op-category">
-              <h3 class="op-category-title">{{category}}</h3>
-              <div class="op-table">
-                {{#each operators}}
-                  <div class="op-row">
-                    <code class="op-key">{{op}}</code>
-                    <span class="op-def">{{desc}}</span>
+                  <div class="loop-center">
+                    <div class="loop-center-title">Event Loop</div>
+                    <div class="loop-center-sub">↻ repeats</div>
                   </div>
-                {{/each}}
-              </div>
-            </div>
-          {{/each}}
-        </div>
-      {{/if}}
-
-      {{!-- ── Index type cards (Level 4 — Indexing) ── --}}
-      {{#if indexTypes}}
-        <div class="index-grid">
-          {{#each indexTypes}}
-            <div class="index-card">
-              <div class="index-icon">{{icon}}</div>
-              <div class="index-body">
-                <div class="index-type">{{type}}</div>
-                <p class="index-desc">{{{desc}}}</p>
-                <pre class="index-cmd">{{{cmd}}}</pre>
-              </div>
-            </div>
-          {{/each}}
-        </div>
-      {{/if}}
-
-      {{!-- ── Aggregation pipeline stages (Level 5) ── --}}
-      {{#if stages}}
-        <div class="pipeline-stages">
-          {{#each stages}}
-            <div class="pipeline-stage">
-              <div class="pipeline-connector">
-                {{#unless @first}}<div class="pipe-line"></div>{{/unless}}
-                <div class="stage-badge">
-                  <span class="stage-icon">{{icon}}</span>
                 </div>
-                {{#unless @last}}<div class="pipe-line"></div>{{/unless}}
-              </div>
-              <div class="stage-body">
-                <code class="stage-name">{{stage}}</code>
-                <p class="stage-desc">{{{desc}}}</p>
-                {{#if example}}
-                  <div class="stage-example"><pre>{{{example}}}</pre></div>
-                {{/if}}
+
+                <div class="loop-tabs-body">
+                  {{#each loopDiagram.phases}}
+                    <div class="detail-panel" id="dp-{{@index}}">
+                      <div class="detail-phase-name" style="color:{{color}}">{{name}}</div>
+                      <div class="detail-phase-desc">{{detailDesc}}</div>
+                      <ul class="detail-bullets">
+                        {{#each bullets}}
+                          <li>
+                            <span class="bullet-dot" style="background:{{../color}}"></span>
+                            <span>{{this}}</span>
+                          </li>
+                        {{/each}}
+                      </ul>
+                    </div>
+                  {{/each}}
+                </div>
+
+                <div class="phase-nav">
+                  <button id="btn-prev" onclick="stepPhase(-1)">← Prev</button>
+                  <div class="phase-dots">
+                    {{#each loopDiagram.phases}}
+                      <label for="ph-{{@index}}" class="phase-dot" title="{{name}}"></label>
+                    {{/each}}
+                  </div>
+                  <button id="btn-next" onclick="stepPhase(1)">Next →</button>
+                </div>
               </div>
             </div>
-          {{/each}}
-        </div>
-      {{/if}}
+          {{/if}}
 
-      {{!-- ── Advanced topic cards (Level 6) ── --}}
-      {{#if topics}}
-        <div class="topics-list">
-          {{#each topics}}
-            <div class="topic-card" style="--topic-accent:{{accent}}">
-              <div class="topic-header">
-                <span class="topic-icon">{{icon}}</span>
-                <h3 class="topic-title">{{title}}</h3>
-              </div>
-              <p class="topic-desc">{{{desc}}}</p>
-              {{#if codeBlock}}
-{{> code-block codeBlock}}
-              {{/if}}
-              {{#if bullets}}
-                <ul class="topic-bullets">
-                  {{#each bullets}}
-                    <li>
-                      <span class="topic-bullet-dot"></span>
-                      <span>{{this}}</span>
-                    </li>
-                  {{/each}}
-                </ul>
-              {{/if}}
-            </div>
-          {{/each}}
-        </div>
-      {{/if}}
-
-      {{!-- ── Code block ── --}}
-      {{#if codeBlock}}
-{{> code-block codeBlock}}
-      {{/if}}
-
-      {{!-- ── Callout ── --}}
-      {{#if callout}}
-        {{> callout callout}}
-      {{/if}}
-
-      {{!-- ── Comparison table — cells pre-typed in JSON, no helpers needed ── --}}
-      {{#if table}}
-        <div class="table-wrap">
-          <table class="compare-table">
-            <thead>
-              <tr>
-                {{#each table.columns}}
-                  <th>{{this}}</th>
-                {{/each}}
-              </tr>
-            </thead>
-            <tbody>
-              {{#each table.rows}}
-                <tr>
-                  {{#each cells}}
-                    <td>
-                      {{#if code}}<span class="fn-name">{{value}}</span>{{/if}}
-                      {{#if badge}}<span class="badge {{badgeClass}}">{{value}}</span>{{/if}}
-                      {{#if text}}{{value}}{{/if}}
-                    </td>
-                  {{/each}}
-                </tr>
+          {{!-- ── Steps list (Level 1 — Setup) ── --}}
+          {{#if steps}}
+            <div class="steps-list">
+              {{#each steps}}
+                <div class="step-item">
+                  <div class="step-number"></div>
+                  <div class="step-body">
+                    <h3 class="step-title">{{title}}</h3>
+                    <p class="step-content">{{{content}}}</p>
+                  </div>
+                </div>
               {{/each}}
-            </tbody>
-          </table>
-        </div>
-      {{/if}}
+            </div>
+          {{/if}}
 
-      {{!-- ── Microtask banner ── --}}
-      {{#if banner}}
-        <div class="microtask-banner">
-          <div class="icon">{{banner.icon}}</div>
-          <div>
-            <h3>{{banner.title}}</h3>
-            <p>{{{banner.text}}}</p>
-          </div>
-        </div>
-      {{/if}}
+          {{!-- ── CRUD operation cards (Level 2) ── --}}
+          {{#if operations}}
+            <div class="operations-grid">
+              {{#each operations}}
+                <div class="op-card" style="--op-accent:{{accent}}">
+                  <div class="op-header">
+                    <div class="op-header-top">
+                      <span class="op-icon">{{icon}}</span>
+                      <span class="op-name">{{op}}</span>
+                    </div>
+                    <div class="op-methods">
+                      {{#each methods}}
+                        <code class="op-method">{{this}}</code>
+                      {{/each}}
+                    </div>
+                  </div>
+                  <p class="op-desc">{{{desc}}}</p>
+                  <div class="op-code"><pre>{{{example}}}</pre></div>
+                </div>
+              {{/each}}
+            </div>
+          {{/if}}
 
-      {{!-- ── Paragraphs ── --}}
-      {{#each paragraphs}}
-        <p>{{{this}}}</p>
+          {{!-- ── Operator categories (Level 3 — Querying) ── --}}
+          {{#if categories}}
+            <div class="operator-categories">
+              {{#each categories}}
+                <div class="op-category">
+                  <h3 class="op-category-title">{{category}}</h3>
+                  <div class="op-table">
+                    {{#each operators}}
+                      <div class="op-row">
+                        <code class="op-key">{{op}}</code>
+                        <span class="op-def">{{desc}}</span>
+                      </div>
+                    {{/each}}
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          {{/if}}
+
+          {{!-- ── Index type cards (Level 4 — Indexing) ── --}}
+          {{#if indexTypes}}
+            <div class="index-grid">
+              {{#each indexTypes}}
+                <div class="index-card">
+                  <div class="index-icon">{{icon}}</div>
+                  <div class="index-body">
+                    <div class="index-type">{{type}}</div>
+                    <p class="index-desc">{{{desc}}}</p>
+                    <pre class="index-cmd">{{{cmd}}}</pre>
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          {{/if}}
+
+          {{!-- ── Aggregation pipeline stages (Level 5) ── --}}
+          {{#if stages}}
+            <div class="pipeline-stages">
+              {{#each stages}}
+                <div class="pipeline-stage">
+                  <div class="pipeline-connector">
+                    {{#unless @first}}<div class="pipe-line"></div>{{/unless}}
+                    <div class="stage-badge">
+                      <span class="stage-icon">{{icon}}</span>
+                    </div>
+                    {{#unless @last}}<div class="pipe-line"></div>{{/unless}}
+                  </div>
+                  <div class="stage-body">
+                    <code class="stage-name">{{stage}}</code>
+                    <p class="stage-desc">{{{desc}}}</p>
+                    {{#if example}}
+                      <div class="stage-example"><pre>{{{example}}}</pre></div>
+                    {{/if}}
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          {{/if}}
+
+          {{!-- ── Advanced topic cards (Level 6) ── --}}
+          {{#if topics}}
+            <div class="topics-list">
+              {{#each topics}}
+                <div class="topic-card" style="--topic-accent:{{accent}}">
+                  <div class="topic-header">
+                    <span class="topic-icon">{{icon}}</span>
+                    <h3 class="topic-title">{{title}}</h3>
+                  </div>
+                  <p class="topic-desc">{{{desc}}}</p>
+                  {{#if codeBlock}}
+        {{> code-block codeBlock}}
+                  {{/if}}
+                  {{#if bullets}}
+                    <ul class="topic-bullets">
+                      {{#each bullets}}
+                        <li>
+                          <span class="topic-bullet-dot"></span>
+                          <span>{{this}}</span>
+                        </li>
+                      {{/each}}
+                    </ul>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          {{/if}}
+
+          {{!-- ── Code block ── --}}
+          {{#if codeBlock}}
+        {{> code-block codeBlock}}
+          {{/if}}
+
+          {{!-- ── Callout ── --}}
+          {{#if callout}}
+            {{> callout callout}}
+          {{/if}}
+
+          {{!-- ── Comparison table — cells pre-typed in JSON, no helpers needed ── --}}
+          {{#if table}}
+            <div class="table-wrap">
+              <table class="compare-table">
+                <thead>
+                  <tr>
+                    {{#each table.columns}}
+                      <th>{{this}}</th>
+                    {{/each}}
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each table.rows}}
+                    <tr>
+                      {{#each cells}}
+                        <td>
+                          {{#if code}}<span class="fn-name">{{value}}</span>{{/if}}
+                          {{#if badge}}<span class="badge {{badgeClass}}">{{value}}</span>{{/if}}
+                          {{#if text}}{{value}}{{/if}}
+                        </td>
+                      {{/each}}
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          {{/if}}
+
+          {{!-- ── Microtask banner ── --}}
+          {{#if banner}}
+            <div class="microtask-banner">
+              <div class="icon">{{banner.icon}}</div>
+              <div>
+                <h3>{{banner.title}}</h3>
+                <p>{{{banner.text}}}</p>
+              </div>
+            </div>
+          {{/if}}
+
+          {{!-- ── Paragraphs ── --}}
+          {{#each paragraphs}}
+            <p>{{{this}}}</p>
+          {{/each}}
+
+        </section>
       {{/each}}
 
-    </section>
-  {{/each}}
-
-</article>
+    </article>
+    </div>
+  </main>
+</div>
 
 {{!-- ── Post footer ── --}}
 <div class="post-footer">

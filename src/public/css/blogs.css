@@ -1358,8 +1358,14 @@ pre {
     }
 
     .loop-ring {
-        transform: scale(.85);
-        transform-origin: top center;
+        transform: scale(1);
         margin-bottom: 0;
     }
+
+    .loop-ring .lp:nth-child(1) { left: 116px !important; top: 24px !important; }
+    .loop-ring .lp:nth-child(2) { left: 211px !important; top: 79px !important; }
+    .loop-ring .lp:nth-child(3) { left: 211px !important; top: 189px !important; }
+    .loop-ring .lp:nth-child(4) { left: 116px !important; top: 244px !important; }
+    .loop-ring .lp:nth-child(5) { left: 21px !important; top: 189px !important; }
+    .loop-ring .lp:nth-child(6) { left: 21px !important; top: 79px !important; }
 }
