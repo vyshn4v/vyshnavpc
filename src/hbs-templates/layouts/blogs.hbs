@@ -1,10 +1,16 @@
- {{#section "styles"}}
-  <link rel="stylesheet" href="/css/view-blog.css" />
+{{#section "scripts"}}
+  <script src="/js/blogs.js?v=2"></script>
 {{/section}}
 
-{{#section "scripts"}}
-  <script src="/js/main.js"></script>
-  <script src="/js/blogs.js"></script>
-{{/section}}
-  {{> view-blog-home}}
-  {{> view-blogs-footer}}
+<div class="premium-banner">
+  <h1>Engineering Blog</h1>
+  <p>Practical write-ups on JavaScript, Node.js internals, CSS, and modern web tools.</p>
+</div>
+
+<div class="layout-container">
+  <main class="main-column">
+    <section class="premium-card blog-home-section">
+      {{> view-blog-home}}
+    </section>
+  </main>
+</div>

@@ -35,12 +35,16 @@ export default function initializeHbsEngine(express, app) {
       //     year: "numeric",
       //   });
       // },
-      // lowerCase: function (str) {
-      //   return (str || "").toLowerCase();
-      // },
-      // eq: function (a, b) {
-      //   return a === b;
-      // },
+      lowercase: function (str) {
+        return (str || "").toLowerCase();
+      },
+      eq: function (a, b) {
+        return a === b;
+      },
+      ifeq: function (a, b, options) {
+        if (a === b) { return options.fn(this); }
+        return options.inverse(this);
+      },
       // skillIcon: function (name, color) {
       //   return new Handlebars.SafeString(skillIcon(name, color));
       // },
@@ -56,4 +60,8 @@ export default function initializeHbsEngine(express, app) {
   // Expose env variables globally to all handlebars templates
   app.locals.siteEmail = process.env.MAIL_TO || "vyshnavpcnaravoor@gmail.com";
   app.locals.turnstileSiteKey = process.env.TURNSTILE_SITE_KEY || "";
+  app.locals.footer = {
+    year: new Date().getFullYear(),
+    tagline: "Modern web experiences with Node.js",
+  };
 }

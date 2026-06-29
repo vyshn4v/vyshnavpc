@@ -275,7 +275,7 @@ router.get("/:slugOrId", async (req, res, next) => {
     }
     const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
     const postUrl = `${base}/blogs/${finalSlug}`;
-    const postImage = data.coverImage || `${base}/og-preview.webp`;
+    const postImage = data.coverImage || `${base}/og-preview.png`;
     const postDescription = data.description || data.overview?.summary || "Read this post on MERN stack, fullstack development, DevOps, and software engineering by Vyshnav.";
     data.meta = {
       title: `${data.title || "Blog Post"} | Vyshnav`,

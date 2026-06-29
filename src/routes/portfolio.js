@@ -11,8 +11,8 @@ const BASE_URL = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
 function buildMeta(site = {}) {
   const dbName = site.name || "Vyshnav";
   const name   = "Vyshnav"; // Force the primary keyword
-  const role   = site.role   || "MERN / Fullstack Developer";
-  const desc   = site.description || `Hi, I am Vyshnav — a ${role} specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.`;
+  const role   = site.role   || "Freelance Fullstack & Cloud Architect";
+  const desc   = site.description || `Expert Freelance Fullstack Developer specializing in MongoDB, Express, React, Node.js, and Cloud Architectures from Kannur, Kerala.`;
   const url    = site.url    || BASE_URL;
   const image  = site.ogImage || `${BASE_URL}/og-preview.webp`;
   const twitter = site.twitter || "";
@@ -112,8 +112,8 @@ function buildMeta(site = {}) {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
       "@id": `${url}/#service`,
-      "name": `Vyshnav P C - Freelance Fullstack Developer`,
-      "description": "Freelance fullstack development services specializing in React JS and Node.js. Available for hire.",
+      "name": `Vyshnav P C - Freelance MERN Stack Developer`,
+      "description": "Freelance MERN stack development services specializing in React JS and Node.js. Available for hire.",
       "telephone": "+918086064478",
       "priceRange": "$$",
       "image": image,
@@ -132,9 +132,9 @@ function buildMeta(site = {}) {
   ]);
 
   return {
-    title:          `Vyshnav | ${role} Portfolio`,
+    title:          `Vyshnav P C | ${role}`,
     description:    desc,
-    keywords:       site.keywords || `Vyshnav, vyshnav pc, fullstack developer, MERN stack, React, Node.js, DevOps, cloud, APIs, software engineer`,
+    keywords:       site.keywords || `Vyshnav, vyshnav pc, freelancer, MERN stack developer, React JS, Node.js, freelance web developer`,
     author:         name,
     canonical:      url,
     siteName:       name,
@@ -168,13 +168,14 @@ router.get("/", async (req, res, next) => {
     
     // Fallback overrides for SEO rankings
     if (renderData.hero) {
-      renderData.hero.role_label = 'FREELANCE FULLSTACK DEVELOPER';
-      renderData.hero.tagline = 'React JS & Node.js Expert';
-      renderData.hero.sub = 'I build high-performance web applications as a freelance developer. Specializing in MongoDB, Express, React, Node.js, and cloud architectures.';
+      renderData.hero.role_label = 'FREELANCE MERN STACK DEVELOPER';
+      renderData.hero.tagline = 'Freelancer | MERN Stack Developer & Cloud Architect';
+      renderData.hero.sub = "I didn't just learn to code; I learned to solve complex puzzles. As a full-stack engineer and award-winning developer, I specialize in the MERN stack and cloud-native architectures to build robust, scalable web applications. My goal is simple: deliver end-to-end solutions that perform flawlessly under pressure.";
     }
     if (renderData.about && renderData.about.bio_paragraphs) {
-      renderData.about.bio_paragraphs[0] = 'I am Vyshnav P C, a passionate freelance fullstack developer specializing in the MERN stack (MongoDB, Express, React, Node.js). I help businesses build scalable, performant web applications.';
-      renderData.about.bio_paragraphs[1] = 'With expertise in both frontend React JS development and robust Node.js backend architectures, I deliver complete, end-to-end solutions as a dedicated freelancer.';
+      renderData.about.bio_paragraphs[0] = "I'm Vyshnav P C — a builder at heart, an award-winning developer, and a passionate freelance fullstack engineer. I don't just write code; I craft digital experiences. Specializing in the MERN stack (MongoDB, Express, React, Node.js), I help forward-thinking businesses build scalable, lightning-fast web applications.";
+      renderData.about.bio_paragraphs[1] = "My philosophy is simple: clean architecture, exceptional user experience, and relentless innovation. With deep expertise in both frontend React JS development and robust Node.js backend architectures, I take ownership of projects from concept to deployment.";
+      renderData.about.bio_paragraphs[2] = "Beyond writing code, I'm passionate about building cloud-native applications and orchestrating distributed systems with Kubernetes and Docker. Whether I'm resolving critical production issues or optimizing system reliability, I thrive in environments that challenge me to push the boundaries of what's possible.";
     }
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;

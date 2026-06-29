@@ -1,0 +1,360 @@
+<!-- Floating Left Sidebar Toggle -->
+<button class="left-drawer-toggle" id="mobileDrawerToggle" title="Open Menu">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</button>
+
+<!-- Mobile Overlay (Moved outside container to guarantee fixed positioning) -->
+<div class="mobile-sidebar-overlay" id="mobileSidebarOverlay"></div>
+
+<!-- Sidebar Navigation (Moved outside container to guarantee fixed positioning) -->
+<aside class="docs-sidebar" id="docsSidebar">
+  <button id="closeDrawerBtn" class="close-drawer-btn" aria-label="Close Sidebar">&times;</button>
+  <div class="sidebar-header">
+    <div class="sidebar-header-top" style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 0.75rem;">
+      <select class="tech-selector" onchange="window.location.href='/docs/' + this.value">
+        <option value="general" {{#if (eq technology "general")}}selected{{/if}}>General Docs</option>
+        <option value="react" {{#if (eq technology "react")}}selected{{/if}}>React.js Docs</option>
+      </select>
+      <button class="btn-sidebar-toggle" id="toggleSidebarPos" title="Move Sidebar (Left/Right)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+      </button>
+    </div>
+    <div class="desktop-only-title">
+      <h3>{{title}}</h3>
+    </div>
+  </div>
+  <div class="docs-nav-scroll-area" id="docsNavScrollArea">
+    <ul class="docs-nav-list" id="docsNavList">
+      {{#each topics}}
+        <li>
+          <button class="docs-nav-btn" data-slug="{{this.slug}}">{{this.title}}</button>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</aside>
+
+<div class="docs-container" id="docsContainer">
+
+  <!-- Resizer Handle -->
+  <div class="docs-resizer" id="docsResizer"></div>
+
+  <!-- Main Content -->
+  <div class="docs-content-wrapper" id="docsScrollArea">
+    <article class="docs-content">
+      <div class="docs-content-inner" id="docsContentArea">
+        <!-- Content injected by JS -->
+        <h2>Loading...</h2>
+      </div>
+
+      <!-- Pagination Nav -->
+      <div class="docs-pagination" id="docsPagination" style="display: none;">
+        <button id="docsPrevBtn" class="docs-page-btn prev">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <div class="btn-text">
+            <small>Previous</small>
+            <span id="prevTopicTitle">Topic</span>
+          </div>
+        </button>
+        <button id="docsNextBtn" class="docs-page-btn next">
+          <div class="btn-text">
+            <small>Next</small>
+            <span id="nextTopicTitle">Topic</span>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </article>
+    
+    <div style="margin-top: 2rem;">
+      {{> footer}}
+    </div>
+  </div>
+</div>
+
+{{#section 'scripts'}}
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const contentArea = document.getElementById("docsContentArea");
+    const navButtons = document.querySelectorAll(".docs-nav-btn");
+    const scrollArea = document.getElementById("docsScrollArea");
+    const pagination = document.getElementById("docsPagination");
+    const prevBtn = document.getElementById("docsPrevBtn");
+    const nextBtn = document.getElementById("docsNextBtn");
+    const prevTitle = document.getElementById("prevTopicTitle");
+    const nextTitle = document.getElementById("nextTopicTitle");
+    
+    let topics = [];
+
+    // 1. Fetch data from REST API instead of injecting JSON
+    try {
+      const response = await fetch("/docs/api/{{technology}}");
+      if (!response.ok) throw new Error("Network response was not ok");
+      const data = await response.json();
+      topics = data.topics || [];
+    } catch (e) {
+      console.error("Failed to fetch topics:", e);
+      contentArea.innerHTML = "<h2>Error loading documentation. Please try again later.</h2>";
+      return;
+    }
+
+    // 2. Render logic
+    function renderTopic(slug) {
+      const index = topics.findIndex(t => t.slug === slug);
+      const topic = topics[index];
+      
+      if (topic) {
+        let fullHtml = marked.parse(topic.content);
+        
+        // Render Interview Prep
+        if (topic.interviewQuestions && topic.interviewQuestions.length > 0) {
+          fullHtml += `
+            <div class="interview-prep-section">
+              <h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 0.5rem; color: var(--color-primary);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Senior Interview Prep</h3>
+              <div class="accordion-container">
+          `;
+          topic.interviewQuestions.forEach((q, i) => {
+            fullHtml += `
+                <details class="interview-accordion">
+                  <summary>${q.question}</summary>
+                  <div class="accordion-content">
+                    ${marked.parse(q.answer)}
+                  </div>
+                </details>
+            `;
+          });
+          fullHtml += `</div></div>`;
+        }
+        
+        // Render Practical Task
+        if (topic.practicalTask && topic.practicalTask.scenario) {
+          fullHtml += `
+            <div class="practical-task-section">
+              <h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 0.5rem; color: var(--color-secondary);"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg> Practical Challenge</h3>
+              <div class="task-card">
+                <h4>Scenario</h4>
+                ${marked.parse(topic.practicalTask.scenario)}
+                <h4>Task</h4>
+                ${marked.parse(topic.practicalTask.task)}
+                <details class="solution-accordion">
+                  <summary>View Solution Code</summary>
+                  <div class="accordion-content">
+                    <pre><code class="language-javascript">${topic.practicalTask.solutionCode}</code></pre>
+                  </div>
+                </details>
+              </div>
+            </div>
+          `;
+        }
+
+        contentArea.innerHTML = fullHtml;
+        
+        // Highlight active nav
+        navButtons.forEach(btn => btn.classList.remove("active"));
+        const activeBtn = document.querySelector(`.docs-nav-btn[data-slug="${slug}"]`);
+        if (activeBtn) {
+          activeBtn.classList.add("active");
+          activeBtn.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+
+        // Setup Pagination
+        pagination.style.display = "flex";
+        
+        if (index > 0) {
+          prevBtn.style.display = "flex";
+          prevTitle.textContent = topics[index - 1].title;
+          prevBtn.onclick = () => {
+            renderTopic(topics[index - 1].slug);
+            scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+        } else {
+          prevBtn.style.display = "none";
+        }
+
+        if (index < topics.length - 1) {
+          nextBtn.style.display = "flex";
+          nextTitle.textContent = topics[index + 1].title;
+          nextBtn.onclick = () => {
+            renderTopic(topics[index + 1].slug);
+            scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+        } else {
+          nextBtn.style.display = "none";
+        }
+
+        if (window.Prism) {
+          Prism.highlightAllUnder(contentArea);
+        }
+        window.history.replaceState(null, null, "#" + slug);
+      }
+    }
+
+    navButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        renderTopic(btn.dataset.slug);
+        scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    if (topics.length > 0) {
+      const hash = window.location.hash.replace("#", "");
+      if (hash && topics.some(t => t.slug === hash)) {
+        renderTopic(hash);
+      } else {
+        renderTopic(topics[0].slug);
+      }
+    }
+
+    // Mobile toggle logic (Drawer)
+    const closeBtn = document.getElementById("closeDrawerBtn");
+    const docsSidebar = document.getElementById("docsSidebar");
+    const mobileSidebarOverlay = document.getElementById("mobileSidebarOverlay");
+    const mobileDrawerToggle = document.getElementById("mobileDrawerToggle");
+
+    function openDrawer() {
+      docsSidebar.classList.add("show");
+      mobileSidebarOverlay.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDrawer() {
+      docsSidebar.classList.remove("show");
+      mobileSidebarOverlay.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    if (mobileDrawerToggle) {
+      let isDraggingToggle = false;
+      let startYToggle, startTopToggle;
+
+      function onToggleDragStart(e) {
+        isDraggingToggle = false;
+        const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        startYToggle = clientY;
+        const rect = mobileDrawerToggle.getBoundingClientRect();
+        startTopToggle = rect.top;
+        
+        document.addEventListener('mousemove', onToggleDragMove);
+        document.addEventListener('mouseup', onToggleDragEnd);
+        document.addEventListener('touchmove', onToggleDragMove, {passive: false});
+        document.addEventListener('touchend', onToggleDragEnd);
+      }
+
+      function onToggleDragMove(e) {
+        const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        const deltaY = clientY - startYToggle;
+        
+        if (Math.abs(deltaY) > 5) {
+          isDraggingToggle = true;
+          if(e.cancelable) e.preventDefault(); 
+        }
+
+        if (isDraggingToggle) {
+          let newTop = startTopToggle + deltaY;
+          const maxY = window.innerHeight - mobileDrawerToggle.offsetHeight;
+          newTop = Math.max(0, Math.min(newTop, maxY));
+          
+          mobileDrawerToggle.style.top = newTop + 'px';
+          mobileDrawerToggle.style.transform = 'none';
+        }
+      }
+
+      function onToggleDragEnd() {
+        document.removeEventListener('mousemove', onToggleDragMove);
+        document.removeEventListener('mouseup', onToggleDragEnd);
+        document.removeEventListener('touchmove', onToggleDragMove);
+        document.removeEventListener('touchend', onToggleDragEnd);
+      }
+
+      mobileDrawerToggle.addEventListener('mousedown', onToggleDragStart);
+      mobileDrawerToggle.addEventListener('touchstart', onToggleDragStart, {passive: false});
+      
+      mobileDrawerToggle.addEventListener('click', (e) => {
+        if (isDraggingToggle) {
+          e.preventDefault();
+          e.stopPropagation();
+        } else {
+          openDrawer();
+        }
+      });
+    }
+    if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
+    if (mobileSidebarOverlay) mobileSidebarOverlay.addEventListener("click", closeDrawer);
+
+    // Close drawer when a nav link is clicked on mobile
+    navButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (window.innerWidth <= 992) {
+          docsSidebar.classList.remove("mobile-open");
+          mobileSidebarOverlay.classList.remove("show");
+        }
+      });
+    });
+
+    const savedPos = localStorage.getItem("docs_sidebar_pos") || "left";
+    if (savedPos === "right") {
+      docsContainer.classList.add("sidebar-right");
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      docsContainer.classList.toggle("sidebar-right");
+      if (docsContainer.classList.contains("sidebar-right")) {
+        localStorage.setItem("docs_sidebar_pos", "right");
+      } else {
+        localStorage.setItem("docs_sidebar_pos", "left");
+      }
+    });
+
+    // Sidebar resizing logic
+    const sidebar = document.getElementById("docsSidebar");
+    const resizer = document.getElementById("docsResizer");
+    let isResizing = false;
+
+    // Load saved width
+    const savedWidth = localStorage.getItem("docs_sidebar_width");
+    if (savedWidth) {
+      sidebar.style.width = savedWidth;
+    }
+
+    resizer.addEventListener("mousedown", (e) => {
+      isResizing = true;
+      document.body.style.cursor = "col-resize";
+      document.body.style.userSelect = "none";
+      docsContainer.style.userSelect = "none"; // Prevent text selection while dragging
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!isResizing) return;
+      
+      const isRight = docsContainer.classList.contains("sidebar-right");
+      let newWidth;
+      
+      if (isRight) {
+        newWidth = window.innerWidth - e.clientX;
+      } else {
+        newWidth = e.clientX;
+      }
+      
+      // Clamp width between 200px and 600px
+      if (newWidth < 200) newWidth = 200;
+      if (newWidth > 600) newWidth = 600;
+      
+      sidebar.style.width = newWidth + "px";
+    });
+
+    window.addEventListener("mouseup", () => {
+      if (isResizing) {
+        isResizing = false;
+        document.body.style.cursor = "default";
+        document.body.style.userSelect = "auto";
+        docsContainer.style.userSelect = "auto";
+        localStorage.setItem("docs_sidebar_width", sidebar.style.width);
+      }
+    });
+  });
+</script>
+{{/section}}

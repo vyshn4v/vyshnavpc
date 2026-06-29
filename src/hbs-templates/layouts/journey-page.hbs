@@ -1,9 +1,14 @@
-  {{#section "styles"}}
-  <link rel="stylesheet" href="/css/landing-page.css" />
-  <link rel="stylesheet" href="/css/journey.css" />
+{{#section "styles"}}
+  <link rel="stylesheet" href="/css/journey.css?v=3" />
 {{/section}}
 
-{{#section "scripts"}}
-  <script src="/js/journey.js"></script>
-{{/section}}
-  {{> journey}}
+<div class="premium-banner">
+  <h1>How I Got Here</h1>
+  <p>A path built on curiosity, consistency, and shipping real things.</p>
+</div>
+
+<div class="layout-container">
+  <div class="premium-card">
+    {{> journey}}
+  </div>
+</div>

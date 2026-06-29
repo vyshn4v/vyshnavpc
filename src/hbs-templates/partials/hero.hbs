@@ -1,73 +1,38 @@
-<section class="hero" id="home">
-  <div class="hero-glow hero-glow--1"></div>
-  <div class="hero-glow hero-glow--2"></div>
-  <div class="hero-inner">
-
-    <div class="hero-text">
-      <div class="eyebrow">
-        <span class="eyebrow-dot"></span>
-        {{hero.eyebrow_icon}}
-        {{hero.eyebrow}}
+<div class="profile-header">
+  <div class="profile-info" style="margin-top: 1rem;">
+    <div class="profile-meta-grid">
+      {{#each hero_stats}}
+      <div class="meta-item">
+        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span class="meta-text">{{this.value}} {{this.label}}</span>
       </div>
-      <p class="hero-role-label">{{#if hero.role_label}}{{hero.role_label}}{{else}}FREELANCE FULLSTACK DEVELOPER{{/if}}</p>
-      <h1 class="hero-h1"><em>{{hero.name}}</em><br />
-        <span class="hero-tagline">{{#if hero.tagline}}{{hero.tagline}}{{else}}React JS & Node.js Expert{{/if}}</span>
-      </h1>
-      <p class="hero-sub">{{#if hero.sub}}{{hero.sub}}{{else}}I build high-performance web applications as a freelance developer. Specializing in MongoDB, Express, React, Node.js, and cloud architectures.{{/if}}</p>
-      <div class="hero-actions">
-        <a
-          href="{{hero.cta_primary.href}}"
-          class="btn btn--primary"
-        >{{hero.cta_primary.label}}</a>
-        <a
-          href="{{hero.cta_secondary.href}}"
-          class="btn btn--ghost"
-        >{{hero.cta_secondary.label}}</a>
+      {{/each}}
+      
+      {{#if site.email}}
+      <div class="meta-item">
+        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        <span class="meta-text">{{site.email}}</span>
       </div>
-      <div class="hero-inline-stats">
-        {{#each hero_stats}}
-          <div class="his">
-            <span class="his-val">{{this.value}}</span>
-            <span class="his-label">{{this.label}}</span>
-          </div>
-        {{/each}}
-      </div>
+      {{/if}}
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="terminal">
-        <div class="terminal-bar">
-          <span class="tb tb--red"></span>
-          <span class="tb tb--yellow"></span>
-          <span class="tb tb--green"></span>
-          <span class="terminal-title">vyshnav — zsh — 120×36</span>
-        </div>
-        <div class="terminal-body">
+    <p style="color: var(--color-text-main); margin-bottom: 1.5rem; max-width: 600px;">
+      {{#if hero.sub}}{{hero.sub}}{{else}}Building scalable, high-performance web applications.{{/if}}
+    </p>
 
-          <p class="mt"><span class="tk-prompt">❯</span>
-            <span class="tk-str">~/cat profile.json</span></p>
-          <p>{</p>
-          <p class="indent"><span class="tk-key">"name"</span>:
-            <span class="tk-str">"{{site.name}}"</span>,</p>
-          <p class="indent"><span class="tk-key">"role"</span>:
-            <span class="tk-str">"{{hero.role_label}}"</span>,</p>
-          <p class="indent"><span class="tk-key">"exp"</span>:
-            <span class="tk-str">"{{terminal.exp}}"</span>,</p>
-          <p class="indent"><span class="tk-key">"focus"</span>: [<span
-              class="tk-str"
-            >"APIs"</span>,<span class="tk-str">"DevOps"</span>,<span
-              class="tk-str"
-            >"Cloud"</span>],</p>
-          <p class="indent"><span class="tk-key">"loc"</span>:
-            <span class="tk-str">"{{site.location}}"</span>,</p>
-          <p class="indent"><span class="tk-key">"status"</span>:
-            <span class="tk-str">"{{terminal.status}}"</span></p>
-          <p>}</p>
-          <p class="mt"><span class="tk-prompt">❯</span>
-            <span class="cursor">▋</span></p>
-        </div>
-      </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      {{#if hero.cta_primary}}
+      <a href="#" class="btn-premium trigger-contact-modal">
+        {{hero.cta_primary.label}}
+      </a>
+      {{/if}}
+      
+      <a href="https://drive.google.com/uc?export=download&id=19BkWajPKTkyPcSyFoE9tRYra6omK77Hx" download="Vyshnav_PC_Resume.pdf" class="btn-premium outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download Resume
+      </a>
+
+
     </div>
-
   </div>
-</section>
+</div>

@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "node --env-file=./src/.env.local --watch ./src/index.js",
+    "start:dev": "node --env-file=./src/.env.local --watch ./src/index.js --host",
     "start:prod": "node --env-file=./src/.env ./src/index.js "
   },
   "keywords": [
@@ -17,6 +17,7 @@
   "dependencies": {
     "amqplib": "^2.0.1",
     "compression": "^1.8.1",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-handlebars": "^8.0.1",
     "express-rate-limit": "^8.5.2",
