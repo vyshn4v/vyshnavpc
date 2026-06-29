@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{{title}}} — Documentation</title>
+    <meta name="description" content="{{{description}}}" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/premium-theme.css?v=63" />
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
+    {{{_sections.styles}}}
+
+    <!-- JSON-LD SEO Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "{{{title}}}",
+        "description": "{{{description}}}",
+        "author": {
+          "@type": "Person",
+          "name": "Vyshnav P C"
+        }
+      }
+    </script>
+  </head>
+  <body class="docs-page">
+    <!-- Theme Script Injection (prevents FOUC) -->
+    <script>
+      (function() {
+        var theme = localStorage.getItem('theme');
+        if (!theme) {
+          theme = "light"; // Default
+          localStorage.setItem('theme', theme);
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+    
+    {{> nav}}
+
+    <main class="docs-layout-wrapper">
+      {{{body}}}
+    </main>
+
+    <!-- Global Contact Modal -->
+    <button class="floating-contact-btn" id="openContact" aria-label="Contact Developer">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </button>
+
+    {{> contact}}
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    {{{_sections.scripts}}}
+    
+    <!-- Load Global JS (Nav toggle, Contact Modal, Theme toggle) -->
+    <script src="/js/main.js?v=8"></script>
+  </body>
+</html>

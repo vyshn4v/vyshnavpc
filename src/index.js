@@ -7,6 +7,8 @@ import portfolioRoute from "./routes/portfolio.js";
 import { visitorTracker } from "./middleware/visitorTracker.js";
 import { initializeAmqp } from "./config/amqp.js";
 import contactRouter from "./routes/contact.js";
+import docsRouter from "./routes/docs.js";
+import practiceRouter from "./routes/practice.js";
 import hrRouter from "./routes/hr.js";
 import { startHrWorker } from "./workers/hrWorker.js";
 import { startHrScheduler } from "./cron/hrScheduler.js";
@@ -40,6 +42,9 @@ const limiter = rateLimit({
   skip: (req, res) => {
     // Whitelist root route for Link header scanning
     if (req.path === '/' || req.path === '') return true;
+
+    // Whitelist docs API so the client can fetch content normally
+    if (req.path.startsWith('/docs/api')) return true;
     
     // Whitelist .well-known endpoints and agent markdown requests
     if (req.path.startsWith('/.well-known/')) return true;
@@ -131,6 +136,9 @@ app.get("/.well-known/oauth-protected-resource", (req, res) => {
 });
 
 app.use("/", portfolioRoute);
+app.use("/practice", practiceRouter);
+app.use("/docs/hr", hrRouter);
+app.use("/docs", docsRouter);
 app.use("/blogs", blogsRouter);
 app.use("/contact", contactRouter);
 app.use("/hr-portal", hrRouter); // HR application blasting route
@@ -170,3 +178,5 @@ async function connectWithRetry(attempt = 1) {
 }
 
 connectWithRetry();
+
+// Trigger restart

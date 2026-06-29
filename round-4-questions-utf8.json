@@ -1,0 +1,142 @@
+[
+  {
+    "question": "How do you handle schema design in MongoDB for a highly read-intensive application vs a write-intensive one?",
+    "expectedAnswer": "For read-intensive, data should be embedded to avoid multiple queries (denormalization). For write-intensive, referencing (normalization) is preferred to avoid redundant updates. Indexes should be heavily used for reads but minimized for writes to reduce overhead."
+  },
+  {
+    "question": "Can you explain the ESR (Equality, Sort, Range) rule for creating compound indexes in MongoDB?",
+    "expectedAnswer": "The ESR rule dictates the order of fields in a compound index: First, fields queried for Equality; Second, fields used for Sorting; Third, fields queried for a Range. This ensures the index can be fully utilized to filter, sort, and scan efficiently."
+  },
+  {
+    "question": "Can you explain a complex aggregation pipeline you have built? How did you optimize it?",
+    "expectedAnswer": "Should describe a multi-stage pipeline (e.g., $match, $lookup, $unwind, $group). Optimization includes placing $match and $project early in the pipeline to reduce the working set size, and ensuring indexes are used in the initial $match stage."
+  },
+  {
+    "question": "How do you approach data modeling for 1-to-many relationships in MongoDB? When would you use referencing versus embedding?",
+    "expectedAnswer": "Embedding is used for \"few\" or bounded relationships where the child data is often retrieved with the parent. Referencing is used for \"many\" or unbounded relationships to avoid document size limit (16MB) issues and for data that is queried independently."
+  },
+  {
+    "question": "Describe how to handle transactions in MongoDB. What are the performance implications?",
+    "expectedAnswer": "MongoDB supports multi-document ACID transactions via replica sets. They should be used sparingly due to performance overhead and locking. Best practice is to design schemas (like single document updates) to avoid transactions where possible."
+  },
+  {
+    "question": "In your \"Domain Scanner\" project, you used PostgreSQL for persistence. Why did you choose it over MongoDB for this specific use case?",
+    "expectedAnswer": "Should highlight PostgreSQL's strengths: strong ACID compliance, relational integrity (foreign keys), complex ad-hoc querying via SQL, or perhaps specific data structures required for the risk assessment domain that fit a relational model perfectly."
+  },
+  {
+    "question": "Explain how you manage migrations and schema changes in a production PostgreSQL database without downtime.",
+    "expectedAnswer": "Involves backward-compatible changes. Adding columns with defaults or allowing nulls. Creating a new table and double-writing. Creating indexes concurrently. Running migrations outside of peak hours."
+  },
+  {
+    "question": "What are CTEs (Common Table Expressions) and when would you use them over subqueries?",
+    "expectedAnswer": "CTEs (WITH clauses) provide better readability and maintainability for complex queries by breaking them into logical blocks. Recursive CTEs are specifically used for querying hierarchical data (e.g., trees)."
+  },
+  {
+    "question": "Can you describe how isolation levels work in PostgreSQL and how they prevent dirty reads, non-repeatable reads, and phantom reads?",
+    "expectedAnswer": "PostgreSQL defaults to Read Committed. Explain differences between Read Uncommitted, Read Committed, Repeatable Read, and Serializable. Serializable uses SSI (Serializable Snapshot Isolation) to prevent phantom reads without strict locking."
+  },
+  {
+    "question": "How do you optimize a slow-performing SQL query? What steps do you take when analyzing the output of EXPLAIN ANALYZE?",
+    "expectedAnswer": "Use EXPLAIN ANALYZE to see the execution plan. Look for Sequential Scans (Seq Scan) on large tables, high-cost joins, and whether indexes are actually being used (Index Scan / Bitmap Heap Scan). Add indexes, rewrite queries, or run VACUUM ANALYZE to update statistics."
+  },
+  {
+    "question": "You integrated Redis for high-speed caching in \"Domain Scanner\". What specific caching patterns (e.g., Cache-Aside, Write-Through) did you implement?",
+    "expectedAnswer": "Should describe Cache-Aside (lazy loading) where the app checks cache, then DB, then writes to cache. Or Write-Through where data is written to cache and DB simultaneously. Explain the pros/cons (e.g., stale data vs write latency)."
+  },
+  {
+    "question": "How do you handle cache invalidation, especially in a distributed system where data is updated frequently?",
+    "expectedAnswer": "Strategies include setting TTLs (Time to Live), event-driven invalidation (e.g., publishing a message on RabbitMQ when data changes to clear caches), or versioning cache keys."
+  },
+  {
+    "question": "What data structures in Redis have you used beyond simple key-value strings, and for what use cases?",
+    "expectedAnswer": "Hashes for objects, Lists for queues/timelines, Sets for unique elements (e.g., active users), Sorted Sets for leaderboards or rate limiting, Bitmaps for analytics."
+  },
+  {
+    "question": "Describe the memory eviction policies in Redis. How do you choose the right one for a caching layer?",
+    "expectedAnswer": "Policies include allkeys-lru, volatile-lru, allkeys-lfu, etc. For a pure cache, allkeys-lru (Least Recently Used) or allkeys-lfu (Least Frequently Used) are common. Volatile policies only evict keys with a TTL set."
+  },
+  {
+    "question": "If your Redis instance suddenly goes down, how does your application handle the failure? Do you have fallback mechanisms?",
+    "expectedAnswer": "Application should catch the connection error and gracefully degrade to querying the primary database directly (circuit breaker pattern), logging the issue, and attempting to reconnect."
+  },
+  {
+    "question": "You used RabbitMQ for asynchronous task processing in the \"Domain Scanner\". Can you explain the difference between a direct, topic, and fanout exchange?",
+    "expectedAnswer": "Direct routes based on exact routing key. Topic routes based on wildcard matching in routing key. Fanout routes to all bound queues blindly."
+  },
+  {
+    "question": "How do you handle message retries and dead-letter queues (DLQ) in RabbitMQ for failed domain scanning tasks?",
+    "expectedAnswer": "Configure a DLX (Dead Letter Exchange) for a queue. If a message is rejected (nack) without requeue, or TTL expires, it moves to the DLQ. Consumers process the DLQ for retries (often with exponential backoff) or manual inspection."
+  },
+  {
+    "question": "What happens if a consumer crashes while processing a message? How does RabbitMQ ensure message durability and delivery?",
+    "expectedAnswer": "Through manual acknowledgments (ack). If the consumer crashes before sending an ack, RabbitMQ will requeue the message and deliver it to another consumer. Messages and queues must also be marked as durable to survive a broker restart."
+  },
+  {
+    "question": "How do you scale consumers in RabbitMQ when the queue starts building up rapidly?",
+    "expectedAnswer": "Add more consumer instances (competing consumers pattern). RabbitMQ will round-robin messages among active consumers. Monitor queue depth and scale horizontally using auto-scaling groups or Kubernetes HPAs."
+  },
+  {
+    "question": "Explain the concept of prefetch count (QoS) in RabbitMQ and how it impacts consumer performance and load balancing.",
+    "expectedAnswer": "Prefetch count limits the number of unacknowledged messages a consumer can hold. Setting it too high leads to poor load balancing (one fast consumer might grab all messages, leaving others idle). Setting it to 1 is fair but adds network latency overhead. A moderate value balances throughput and fairness."
+  },
+  {
+    "question": "How do you choose between RDB and AOF in Redis for a high-write throughput cache that occasionally needs disaster recovery?",
+    "expectedAnswer": "RDB provides point-in-time snapshots and is faster for disaster recovery but risks data loss between snapshots. AOF logs every write, ensuring high durability but can grow large and slow down restarts. For high-write throughput with occasional DR, a hybrid approach (Redis 4.0+) using RDB snapshots with AOF incremental logging is optimal."
+  },
+  {
+    "question": "Explain what happens when Redis runs out of memory, and how different eviction policies affect a distributed lock implementation.",
+    "expectedAnswer": "When maxmemory is reached, Redis relies on the configured maxmemory-policy. If set to noeviction, writes fail. If set to volatile-lru or allkeys-lru, Redis evicts keys. For distributed locks, an eviction policy like allkeys-lru can disastrously evict active lock keys, causing mutual exclusion failures. Locks should have explicit TTLs and ideally reside on a Redis instance configured with noeviction or volatile-* (where locks have expires)."
+  },
+  {
+    "question": "How does Redis replication handle network partitions, and what is the role of the repl-backlog-size?",
+    "expectedAnswer": "During a temporary network partition, the master queues commands in the replication backlog buffer. When the replica reconnects, it attempts a partial resynchronization (PSYNC). If the downtime is too long and the backlog buffer overflows, a full resynchronization (full snapshot transfer) is triggered, which is very I/O intensive. Tuning `repl-backlog-size` based on expected disconnect times prevents full syncs."
+  },
+  {
+    "question": "What are the consequences of choosing a monotonically increasing field (like an ObjectId or timestamp) as a MongoDB shard key?",
+    "expectedAnswer": "A monotonically increasing shard key routes all new inserts to a single chunk on a single shard. This creates a hot spot, eliminating the write-scaling benefits of sharding. The cluster will constantly have to rebalance chunks to other shards, leading to massive background I/O overhead. A hashed shard key or a compound key should be used instead for write distribution."
+  },
+  {
+    "question": "How would you design a MongoDB shard key for a multi-tenant SaaS application where some tenants have 100x more data than others?",
+    "expectedAnswer": "A simple tenant_id shard key will lead to jumbo chunks (chunks that exceed the maximum size and cannot be split or migrated) for massive tenants. A compound shard key like `{ tenant_id: 1, document_id: 1 }` or `{ tenant_id: 1, created_at: 1 }` ensures data for a single tenant is distributed across multiple chunks, while still allowing targeted queries if tenant_id is provided."
+  },
+  {
+    "question": "Explain the role of the mongos router in a sharded cluster and what happens if a query doesn't include the shard key.",
+    "expectedAnswer": "The mongos router acts as an interface between the application and the shards, caching metadata from the config servers to route queries. If a query does not include the shard key, the mongos must perform a 'scatter-gather' query, broadcasting the request to all shards and merging the results. This is inefficient and scales poorly."
+  },
+  {
+    "question": "What is MVCC (Multi-Version Concurrency Control) in Postgres, and what is the 'bloat' problem associated with it?",
+    "expectedAnswer": "MVCC allows multiple transactions to access the database concurrently without locking, by creating new versions of rows on update/delete (dead tuples) rather than overwriting them in place. The 'bloat' problem occurs when dead tuples accumulate faster than the AUTOVACUUM process can clean them up, wasting disk space and slowing down sequential scans."
+  },
+  {
+    "question": "How does Postgres transaction ID (XID) wraparound happen, and what are the catastrophic consequences if not monitored?",
+    "expectedAnswer": "Postgres XIDs are 32-bit integers (~4 billion transactions). To allow infinite transactions, XIDs wrap around, with half the ID space considered 'past' and half 'future'. Vacuuming 'freezes' old tuples to make them permanently visible. If autovacuum fails to keep up and wraparound occurs without freezing, old data suddenly appears to be in the 'future' and becomes invisible (data loss from the application's perspective). The database will forcefully shut down to prevent this if it gets too close."
+  },
+  {
+    "question": "Explain the difference between Read Committed and Serializable isolation levels in PostgreSQL, and how Serializable prevents Phantom Reads.",
+    "expectedAnswer": "Read Committed (the default) sees only data committed before the query started. Serializable guarantees that concurrent transactions yield the same result as if executed sequentially. Postgres implements Serializable using Serializable Snapshot Isolation (SSI), which tracks read/write dependencies (predicate locks) and aborts transactions that would violate serializability (e.g., preventing phantom reads where new rows appear in a range query)."
+  },
+  {
+    "question": "Why should you use a connection pooler like PgBouncer instead of having your application servers connect directly to PostgreSQL?",
+    "expectedAnswer": "Postgres spawns a new OS process (not a lightweight thread) for every connection, consuming significant memory (often 10MB+ per connection) and CPU for context switching. Connection poolers multiplex thousands of application connections onto a small number of actual database connections, preventing memory exhaustion and connection limit errors."
+  },
+  {
+    "question": "What is 'connection starvation' in a microservices architecture, and how can max connection limits cascade into a full system outage?",
+    "expectedAnswer": "If multiple microservices share a database without centralized pooling, a traffic spike in one service can consume all available database connections. Other services attempting to connect will time out. If services wait indefinitely or lack circuit breakers, thread pools on the app side exhaust, causing cascading timeouts and a full system outage."
+  },
+  {
+    "question": "In a Node.js serverless environment (like AWS Lambda) connecting to an RDS instance, how do you handle connection pooling?",
+    "expectedAnswer": "Serverless functions are ephemeral and scale out rapidly, creating massive numbers of concurrent direct connections that easily overwhelm RDS. Standard in-memory poolers (like node-postgres pool) reset per container. The solution is using an external proxy like AWS RDS Proxy or PgBouncer, which maintains long-lived DB connections while Lambda functions rapidly connect/disconnect to the proxy."
+  },
+  {
+    "question": "What is a Dead Letter Queue (DLQ) and what specific scenarios should trigger a message being routed there?",
+    "expectedAnswer": "A DLQ is a secondary queue for messages that cannot be successfully processed. Messages should be routed there after exceeding a maximum retry count, if the message payload is malformed (poison pill), or if the message TTL expires. It prevents unprocessable messages from indefinitely blocking the main queue."
+  },
+  {
+    "question": "How do you handle a 'poison pill' message that crashes the consumer process every time it is parsed?",
+    "expectedAnswer": "A poison pill crashes the consumer before it can explicitly NACK or track the retry count. The message broker detects the disconnect, assumes failure, and redelivers the message to another consumer, crashing it too. To fix this, brokers (like RabbitMQ) track delivery attempts at the broker level, or applications must use strict schema validation before processing to catch bad payloads. The broker then routes it to a DLQ after N failed deliveries."
+  },
+  {
+    "question": "Design an automated replay mechanism for a DLQ where messages failed due to a temporary downstream API outage.",
+    "expectedAnswer": "Messages in the DLQ should include metadata about the failure reason and original timestamp. An automated system (or cron job) reads the DLQ. If the failure was '503 Downstream Unavailable', it can hold the messages and replay them into a 'retry' exchange with exponential backoff, or push them back to the main queue once the downstream API health check passes. Non-transient errors (like 400 Bad Request) stay in the DLQ for manual intervention."
+  }
+]

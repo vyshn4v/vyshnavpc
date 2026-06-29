@@ -170,11 +170,11 @@ router.get("/", async (req, res, next) => {
     if (renderData.hero) {
       renderData.hero.role_label = 'FREELANCE FULLSTACK DEVELOPER';
       renderData.hero.tagline = 'React JS & Node.js Expert';
-      renderData.hero.sub = 'I build high-performance web applications as a freelance developer. Specializing in MongoDB, Express, React, Node.js, and cloud architectures.';
+      renderData.hero.sub = 'Engineer first, problem solver second, builder for life. I craft high-performance web applications as a freelance developer, specializing in MongoDB, Express, React, Node.js, and scalable cloud architectures.';
     }
     if (renderData.about && renderData.about.bio_paragraphs) {
-      renderData.about.bio_paragraphs[0] = 'I am Vyshnav P C, a passionate freelance fullstack developer specializing in the MERN stack (MongoDB, Express, React, Node.js). I help businesses build scalable, performant web applications.';
-      renderData.about.bio_paragraphs[1] = 'With expertise in both frontend React JS development and robust Node.js backend architectures, I deliver complete, end-to-end solutions as a dedicated freelancer.';
+      renderData.about.bio_paragraphs[0] = "I'm Vyshnav P C — a builder at heart and a passionate freelance fullstack developer. I don't just write code; I craft digital experiences. Specializing in the MERN stack (MongoDB, Express, React, Node.js), I help forward-thinking businesses build scalable, lightning-fast web applications.";
+      renderData.about.bio_paragraphs[1] = "My philosophy is simple: clean architecture, exceptional user experience, and relentless innovation. With deep expertise in both frontend React JS development and robust Node.js backend architectures, I take ownership of projects from concept to deployment, delivering complete, end-to-end solutions as a dedicated freelancer.";
     }
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;

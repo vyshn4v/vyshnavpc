@@ -1,0 +1,142 @@
+[
+  {
+    "question": "In Neutrinos, you architected a stage-based decision API to manage complex UI flows. How did you design the React components to dynamically render these different stage-based UIs without tightly coupling the frontend logic to specific stages?",
+    "answer": "Should mention component composition, dynamic imports, HOCs, or render props. Good answer involves a configuration-driven UI approach where the backend API drives the component tree rendering via a mapper or registry of components."
+  },
+  {
+    "question": "How does React's reconciliation algorithm (Fiber) work, and how did you leverage this knowledge to ensure smooth rendering in the Domain Scanner's dynamic dashboards?",
+    "answer": "Should explain the virtual DOM, diffing algorithm, and how Fiber breaks rendering work into chunks. Should mention the importance of keys in dynamic lists to prevent unnecessary re-renders."
+  },
+  {
+    "question": "For role-specific, context-aware decision paths in Neutrinos, how did you handle component composition and avoiding prop drilling before implementing a global state?",
+    "answer": "Should discuss React Context API, using children props, or render props for component composition. Passing down components themselves instead of data."
+  },
+  {
+    "question": "Explain the concept of closures in React hooks. What are some common bugs related to stale closures you might have encountered while building the dynamic dashboards for Domain Scanner?",
+    "answer": "Should explain how hooks like useEffect and useCallback capture variables from their render scope. A stale closure happens when a hook references an old value of a state or prop because the dependency array was missing or incorrect."
+  },
+  {
+    "question": "Can you explain the difference between useMemo and useCallback? In what specific scenarios in Domain Scanner would you use them to optimize rendering, and when might they actually hurt performance?",
+    "answer": "useMemo memoizes a computed value, useCallback memoizes a function reference. Useful when passing props to heavily optimized child components (React.memo) or for expensive calculations. Can hurt performance due to the overhead of dependency tracking and memory usage if used unnecessarily."
+  },
+  {
+    "question": "Given the complex application state logic in Neutrinos, how did you structure your Redux Toolkit slices? Did you normalize your state, and why?",
+    "answer": "Should discuss feature-based slice structure. Should mention state normalization (keeping data flat, using IDs to reference entities) to avoid deeply nested updates and ensure consistency."
+  },
+  {
+    "question": "In Domain Scanner, you integrated Redis and PostgreSQL for backend data. How did you handle asynchronous state and caching on the React frontend using Redux Toolkit?",
+    "answer": "Should discuss RTK Query for data fetching and caching, or createAsyncThunk for complex async logic. Should explain how loading, success, and error states are handled."
+  },
+  {
+    "question": "Redux can sometimes introduce boilerplate. How does Redux Toolkit simplify this, and what are the key differences between createSlice and traditional Redux reducers?",
+    "answer": "RTK uses Immer under the hood, allowing mutating logic in reducers. It auto-generates action creators and action types. It configures the store with good defaults (thunk, devtools)."
+  },
+  {
+    "question": "How do you handle side effects in a Redux Toolkit architecture when dealing with complex multi-stage workflows like in Neutrinos?",
+    "answer": "Can use Redux Thunk (default in RTK) or RTK Listener Middleware for complex side effects responding to state changes. For very complex flows, might mention Redux Saga or Observables, though RTK listener is modern standard."
+  },
+  {
+    "question": "What are the trade-offs of using Redux Toolkit versus the Context API combined with useReducer for managing the state of a dynamic React dashboard?",
+    "answer": "Redux provides better debugging (DevTools), middleware support, and performance for frequent updates (prevents unnecessary re-renders). Context API is good for low-frequency updates (theme, auth) but can cause performance issues if value changes frequently and components are not properly memoized."
+  },
+  {
+    "question": "You used Next.js for building high-performance user interfaces. Can you compare SSG, SSR, ISR, and CSR? Which strategies would you choose for Domain Scanner's dashboards vs. a public-facing risk report page?",
+    "answer": "SSG for static pages. SSR for dynamic pages needing SEO/fresh data per request. ISR for updating static pages in background. CSR for highly interactive private dashboards. Domain Scanner dashboard: CSR or SSR. Public risk report: ISR or SSR."
+  },
+  {
+    "question": "How did you manage authentication state and protect specific routes in Next.js, particularly for the SSO-based authentication framework you architected in Domain Scanner?",
+    "answer": "Should discuss handling auth state on both server and client. Using Next.js middleware for edge-level route protection. Handling tokens (cookies vs local storage) securely (HttpOnly cookies)."
+  },
+  {
+    "question": "Explain the App Router vs. Pages Router in Next.js. What architectural changes would you consider if migrating Domain Scanner from Pages to App Router?",
+    "answer": "App router introduces React Server Components (RSCs), nested layouts, and streaming. Migration involves separating Server Components (data fetching) from Client Components (interactivity), utilizing the new directory structure, and replacing getStaticProps/getServerSideProps with standard fetch calls."
+  },
+  {
+    "question": "For a highly dynamic SaaS application like Domain Scanner, how do you handle hydration mismatches in Next.js, and what are common causes?",
+    "answer": "Hydration mismatches happen when the server-rendered HTML differs from the initial client render (e.g., using window/document before mount, or invalid HTML nesting). Fixed by using useEffect to defer client-only rendering or dynamically importing components with ssr: false."
+  },
+  {
+    "question": "How would you architect a reusable UI component library for Neutrinos to ensure consistency across different role-specific UI flows?",
+    "answer": "Should mention creating isolated, accessible components. Using a tool like Storybook for documentation. Implementing a design system with CSS variables or a utility framework. Using an atomic design pattern."
+  },
+  {
+    "question": "For the complex UI flows in Neutrinos, how did you ensure the CSS remained maintainable? Did you use CSS Modules, Styled Components, or Tailwind, and what are the pros/cons of your approach?",
+    "answer": "Expect a solid comparison. CSS Modules provide local scoping without runtime cost. Styled Components provide dynamic styling but have runtime overhead. Tailwind provides utility classes for rapid development but can clutter markup."
+  },
+  {
+    "question": "How do you analyze and improve the First Contentful Paint (FCP) and Largest Contentful Paint (LCP) in a Next.js application like Domain Scanner?",
+    "answer": "Analyze using Lighthouse/Core Web Vitals. Improve FCP by reducing server response time, minimizing blocking resources (CSS/JS). Improve LCP by prioritizing the critical image (Next/Image priority prop), preloading fonts, and deferring non-critical scripts."
+  },
+  {
+    "question": "How do you implement code splitting and lazy loading in React/Next.js to reduce the initial bundle size of a complex application?",
+    "answer": "In React, using React.lazy and Suspense. In Next.js, using next/dynamic. Should split by routes automatically (Next.js does this), and split large, non-critical components or heavy third-party libraries (e.g., charts on the dashboard)."
+  },
+  {
+    "question": "Explain how you would handle complex CSS animations for the stage-based decision paths in Neutrinos without causing layout thrashing or jank.",
+    "answer": "Should emphasize animating only composite properties (transform and opacity) to utilize the GPU. Avoid animating layout properties (width, height, margin) which trigger reflows. Use requestAnimationFrame for complex JS animations."
+  },
+  {
+    "question": "What strategies do you use for optimizing images and other media assets in a high-performance Next.js frontend?",
+    "answer": "Using the next/image component for automatic WebP/AVIF format conversion, responsive resizing, and lazy loading. Using a CDN for asset delivery."
+  },
+  {
+    "question": "How do React Server Components differ fundamentally from traditional SSR, and how does the serialization of the RSC payload impact the types of props you can pass between Server and Client Components?",
+    "answer": "RSCs stream a specialized JSON-like format representing UI rather than HTML. They execute entirely on the server and do not add to the client-side JavaScript bundle. Because they serialize data across the network boundary, you cannot pass non-serializable objects (like functions, classes, or DOM elements) directly as props from a Server Component to a Client Component."
+  },
+  {
+    "question": "Describe a scenario where a Client Component is nested inside a Server Component, which is itself nested inside another Client Component. How does React handle the render tree and module graph resolution in this interwoven structure?",
+    "answer": "A Server Component cannot be imported and rendered directly inside a Client Component. However, a Server Component can be passed as a `children` prop to a Client Component. The Server Component is rendered on the server, its output is serialized into the RSC payload, and the Client Component slots that pre-rendered UI into its own render tree."
+  },
+  {
+    "question": "When implementing streaming SSR with React Suspense, how does the HTML response actually stream to the browser? How are fallback boundaries replaced with the actual content once resolved?",
+    "answer": "The server sends the initial shell HTML immediately along with Suspense fallbacks. As asynchronous data resolves, React streams additional HTML chunks and inline `<script>` tags over the same HTTP response. These scripts inject the resolved HTML into the correct DOM nodes, replacing the fallback UI, before the main JS bundle fully hydrates."
+  },
+  {
+    "question": "In WebGL, what is the role of the Vertex Shader versus the Fragment Shader, and how does data flow between them via varyings?",
+    "answer": "The Vertex Shader computes the position of each vertex in clip space, executed once per vertex. The Fragment Shader computes the color of each pixel (fragment), executed once per rasterized pixel. Data is passed from the CPU to the Vertex Shader via attributes, and then interpolated across the primitive and passed to the Fragment Shader via varyings."
+  },
+  {
+    "question": "Describe a technique to efficiently render 100,000 instances of the same 3D mesh in WebGL without overwhelming the CPU with draw calls.",
+    "answer": "Use Instanced Rendering (ANGLE_instanced_arrays in WebGL 1, or native gl.drawArraysInstanced in WebGL 2). Instead of issuing a draw call per object, you issue one draw call. Instance-specific data (like position, rotation) is passed via an instanced buffer attribute, and the vertex shader correctly positions each mesh."
+  },
+  {
+    "question": "What causes \"WebGL Context Loss\", how can it be simulated, and what is the proper architectural approach to recover from it in a large-scale graphics application?",
+    "answer": "Context loss occurs when the OS reclaims GPU resources. The application must listen for webglcontextlost and webglcontextrestored events. Upon recovery, all WebGL resources (buffers, textures, shaders) are destroyed and must be completely recreated by the application before rendering can resume."
+  },
+  {
+    "question": "How does memory management work in WebAssembly when interoperating with JavaScript, and what are the specific challenges regarding passing complex objects (like strings or JSON) across the JS-Wasm boundary?",
+    "answer": "Wasm operates on a contiguous linear memory buffer (a JS ArrayBuffer) and only understands primitive numeric types. To pass strings or objects, JS must serialize the data, write it into the Wasm memory buffer at a specific offset, and pass the pointer and length to Wasm. Wasm then reads the bytes and reconstructs the data."
+  },
+  {
+    "question": "Explain the security model of WebAssembly. Can a malicious Wasm module execute arbitrary code on the host machine or access the browser's DOM directly?",
+    "answer": "Wasm runs in a secure, sandboxed environment. It cannot access the DOM, network, or filesystem directly unless the host JavaScript environment explicitly imports and exposes those functions to the Wasm module. Its execution is restricted by the browser's same-origin policy."
+  },
+  {
+    "question": "What is the WebAssembly System Interface (WASI), and why is it significant for the future of Wasm outside the browser?",
+    "answer": "WASI is a standardized API that provides Wasm modules with secure, capability-based access to underlying OS features like files, network, and time. It allows Wasm to run on servers or Edge functions consistently without depending on a specific host environment's proprietary bindings."
+  },
+  {
+    "question": "Compare Module Federation (Webpack/Rspack) with iframe-based micro-frontends. What are the specific trade-offs regarding state sharing, routing, and CSS isolation?",
+    "answer": "Iframes offer perfect CSS/JS isolation but make state sharing difficult (postMessage), disrupt routing, and cause performance issues. Module Federation allows dynamic loading of remote modules into a single host application, sharing dependencies and routing, but requires strict CSS scoping to avoid global conflicts."
+  },
+  {
+    "question": "In a Module Federation setup, how do you handle dependency version conflicts when Remote A requires React 17 and Remote B requires React 18, both loaded into Host H?",
+    "answer": "Module Federation allows specifying dependencies as singletons with required versions. If a strict mismatch occurs, it throws an error. Teams must either align on the major React version, or the architecture must fall back to running multiple React instances (which breaks the singleton rule) or using Web Components as a wrapper boundary."
+  },
+  {
+    "question": "How do you implement robust error handling and fallback UI boundaries when dynamically loading a remote micro-frontend that might be offline or failing to parse?",
+    "answer": "The host application must wrap the dynamically imported remote component in an Error Boundary and a Suspense boundary. If the network request fails or the module crashes, the Error Boundary catches the error and displays a localized fallback UI without crashing the host shell."
+  },
+  {
+    "question": "While profiling a React application in the Chrome Performance tab, you notice long \"Recalculate Style\" and \"Layout\" blocks causing dropped frames. What causes this, and how do you trace it back to the offending code?",
+    "answer": "This is \"Layout Thrashing\" or \"Forced Synchronous Layout,\" caused by JavaScript writing to the DOM and then immediately reading a layout-dependent property (like offsetWidth). This forces a synchronous layout calculation. Trace it in the Call Tree by finding the JS function executing right before the Layout task and looking for warnings."
+  },
+  {
+    "question": "Explain the difference between Time to Interactive (TTI), Total Blocking Time (TBT), and Interaction to Next Paint (INP). Why is INP replacing FID as a Core Web Vital?",
+    "answer": "TTI is when the page is fully interactive. TBT is the sum of time between FCP and TTI where the main thread was blocked >50ms. INP measures the latency of the worst interaction throughout the entire lifespan of the page. INP replaces FID because FID only measured the first interaction's delay, whereas INP captures overall responsiveness reliably."
+  },
+  {
+    "question": "You have a massive Redux store and notice that dispatching a single action causes significant input lag, even though the reducer is fast. What profiling techniques and optimizations do you apply?",
+    "answer": "The issue is excessive component re-rendering triggered by state subscriptions. Use the React DevTools Profiler to identify components rendering unnecessarily. Optimize by ensuring useSelector hooks are granular, using memoized selectors (Reselect), and wrapping expensive components in React.memo with custom comparison functions if needed."
+  }
+]

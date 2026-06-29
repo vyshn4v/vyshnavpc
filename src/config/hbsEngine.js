@@ -35,12 +35,16 @@ export default function initializeHbsEngine(express, app) {
       //     year: "numeric",
       //   });
       // },
-      // lowerCase: function (str) {
-      //   return (str || "").toLowerCase();
-      // },
-      // eq: function (a, b) {
-      //   return a === b;
-      // },
+      lowercase: function (str) {
+        return (str || "").toLowerCase();
+      },
+      eq: function (a, b) {
+        return a === b;
+      },
+      ifeq: function (a, b, options) {
+        if (a === b) { return options.fn(this); }
+        return options.inverse(this);
+      },
       // skillIcon: function (name, color) {
       //   return new Handlebars.SafeString(skillIcon(name, color));
       // },
