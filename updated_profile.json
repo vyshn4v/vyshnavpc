@@ -55,8 +55,8 @@
       "eyebrow_icon": "⚡",
       "role_label": "MERN / Fullstack Developer",
       "name": "Vyshnav P C",
-      "tagline": "Fullstack Engineer & Cloud Native Builder",
-      "sub": "Fullstack-focused software engineer from Kannur, Kerala with ~2 years of experience building scalable web applications. Specializing in the MERN Stack, REST APIs, authentication systems, and Kubernetes-based deployments.",
+      "tagline": "Freelance Fullstack Engineer | MERN & Cloud Architect",
+      "sub": "I didn't just learn to code; I learned to solve complex puzzles. As a full-stack engineer and award-winning developer, I specialize in the MERN stack and cloud-native architectures to build robust, scalable web applications. My goal is simple: deliver end-to-end solutions that perform flawlessly under pressure.",
       "cta_primary": {
         "label": "Hire Me →",
         "href": "#contact"
@@ -76,8 +76,8 @@
         "label": "Location"
       },
       {
-        "value": "SDE 1",
-        "label": "Current Role"
+        "value": "Available for Freelance",
+        "label": "Status"
       }
     ],
     "terminal": {
@@ -88,12 +88,13 @@
         "Cloud"
       ],
       "loc": "Kannur, Kerala",
-      "status": "open_to_work"
+      "status": "Available for Freelance"
     },
     "about": {
       "bio_paragraphs": [
-        "Backend-focused full-stack software engineer with 2 years of professional experience specializing in the MERN stack (MongoDB, Express.js, React.js, Node.js). Proven expertise in designing modern backend architectures, building secure RESTful APIs, and developing distributed systems.",
-        "Adept at managing cloud deployments, handling MongoDB Atlas clusters, and utilizing Next.js for high-performance user interfaces. Committed to leveraging Docker, Kubernetes, and cloud-native technologies to build reliable, scalable applications that meet business objectives."
+        "I'm Vyshnav P C — a builder at heart, an award-winning developer, and a passionate freelance fullstack engineer. I don't just write code; I craft digital experiences. Specializing in the MERN stack (MongoDB, Express, React, Node.js), I help forward-thinking businesses build scalable, lightning-fast web applications.",
+        "My philosophy is simple: clean architecture, exceptional user experience, and relentless innovation. With deep expertise in both frontend React JS development and robust Node.js backend architectures, I take ownership of projects from concept to deployment.",
+        "Beyond writing code, I'm passionate about building cloud-native applications and orchestrating distributed systems with Kubernetes and Docker. Whether I'm resolving critical production issues or optimizing system reliability, I thrive in environments that challenge me to push the boundaries of what's possible."
       ],
       "details": [
         {
@@ -129,11 +130,13 @@
         "role": "Software Development Engineer - I (SDE 1)",
         "type": "work",
         "highlights": [
-          "Engineered and deployed 15+ high-performance RESTful APIs utilizing Node.js and Strapi CMS for enterprise clients (Sunlife PH, HNI), automating core insurance workflows such as policy generation and system communications.",
-          "Architected a dynamic, stage-based decision API to manage complex application state logic, ensuring role-specific, context-aware decision paths (e.g., tailored UI flows for Reviewers).",
-          "Contributed to robust policy lifecycle automation systems, streamlining underwriting and complex processing workflows for large-scale implementations.",
-          "Collaborated with cross-functional agile teams to troubleshoot and resolve critical production issues, optimizing API logic to enhance backend reliability and reduce response times.",
-          "Participated actively in application deployment, release management, and cloud environment configuration to ensure continuous delivery and system stability."
+          "Engineered scalable full-stack services and REST APIs using the MERN stack, accelerating the delivery of complex insurance workflow applications.",
+          "Architected key components of policy lifecycle automation systems, significantly reducing manual processing time for presales engineering pipelines.",
+          "Implemented robust, secure authentication flows and third-party API integrations, ensuring enterprise-grade data protection.",
+          "Spearheaded the rapid resolution of critical production issues, collaborating seamlessly across cross-functional teams to minimize system downtime.",
+          "Streamlined application deployment and release management processes, improving deployment frequency and system reliability.",
+          "Optimized API performance across distributed systems, reducing latency and improving overall application throughput.",
+          "Provided technical guidance in a presales engineering environment, translating complex business requirements into scalable architectural designs."
         ]
       }
     ],
@@ -574,7 +577,8 @@
         ],
         "github": "https://github.com/vyshn4v/domainScannerModule.git",
         "live_link": "https://domainscanner.vyshnavpc.com",
-        "color": "#7c6ef7"
+        "color": "#7c6ef7",
+        "desc": "A high-performance security tool that analyzes domains for vulnerabilities and configuration risks. Built with an Express and Redis backend for rapid, distributed scanning, providing actionable insights to secure web infrastructure."
       },
       {
         "title": "SSO",
@@ -586,7 +590,8 @@
           "MongoDB"
         ],
         "live_link": "https://sso.vyshnavpc.com",
-        "color": "#7c6ef7"
+        "color": "#7c6ef7",
+        "desc": "A custom Single Sign-On (SSO) authentication server managing secure, centralized access across multiple applications. Engineered with a robust Node.js and MongoDB backend to ensure sub-millisecond token validation and enterprise-grade security."
       }
     ]
   },
