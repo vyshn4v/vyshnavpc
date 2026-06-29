@@ -112,8 +112,8 @@ function buildMeta(site = {}) {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
       "@id": `${url}/#service`,
-      "name": `Vyshnav P C - Freelance Fullstack Developer`,
-      "description": "Freelance fullstack development services specializing in React JS and Node.js. Available for hire.",
+      "name": `Vyshnav P C - Freelance MERN Stack Developer`,
+      "description": "Freelance MERN stack development services specializing in React JS and Node.js. Available for hire.",
       "telephone": "+918086064478",
       "priceRange": "$$",
       "image": image,
@@ -134,7 +134,7 @@ function buildMeta(site = {}) {
   return {
     title:          `Vyshnav P C | ${role}`,
     description:    desc,
-    keywords:       site.keywords || `Vyshnav, vyshnav pc, fullstack developer, MERN stack, React, Node.js, DevOps, cloud, APIs, software engineer`,
+    keywords:       site.keywords || `Vyshnav, vyshnav pc, freelancer, MERN stack developer, React JS, Node.js, freelance web developer`,
     author:         name,
     canonical:      url,
     siteName:       name,
@@ -168,8 +168,8 @@ router.get("/", async (req, res, next) => {
     
     // Fallback overrides for SEO rankings
     if (renderData.hero) {
-      renderData.hero.role_label = 'FREELANCE FULLSTACK DEVELOPER';
-      renderData.hero.tagline = 'Freelance Fullstack Engineer | MERN & Cloud Architect';
+      renderData.hero.role_label = 'FREELANCE MERN STACK DEVELOPER';
+      renderData.hero.tagline = 'Freelancer | MERN Stack Developer & Cloud Architect';
       renderData.hero.sub = "I didn't just learn to code; I learned to solve complex puzzles. As a full-stack engineer and award-winning developer, I specialize in the MERN stack and cloud-native architectures to build robust, scalable web applications. My goal is simple: deliver end-to-end solutions that perform flawlessly under pressure.";
     }
     if (renderData.about && renderData.about.bio_paragraphs) {

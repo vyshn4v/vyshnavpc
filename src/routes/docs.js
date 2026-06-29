@@ -32,12 +32,14 @@ router.get("/:technology", async (req, res) => {
     // Sort topics by order
     const sortedTopics = docData.topics.sort((a, b) => a.order - b.order);
 
+    const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
     res.render("docs-view", {
       layout: "docs", 
       technology: docData.technology,
       title: docData.title,
       description: docData.description,
-      topics: sortedTopics // Only pass topics for SSR Sidebar, no JSON injection!
+      topics: sortedTopics, // Only pass topics for SSR Sidebar, no JSON injection!
+      canonical: `${base}/docs/${technology}`
     });
   } catch (err) {
     console.error("Error fetching docs:", err);
