@@ -72,7 +72,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Premium Theme -->
-    <link rel="stylesheet" href="/css/premium-theme.css?v=44" />
+    <link rel="stylesheet" href="/css/premium-theme.css?v=45" />
 
     {{{_sections.styles}}}
 
@@ -118,13 +118,47 @@
     </script>
 
     <script src="/js/main.js?v=6"></script>
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsentBanner" class="cookie-consent-banner">
+      <div class="cookie-consent-content">
+        <p class="cookie-consent-text">
+          This website uses Google Analytics and Microsoft Clarity to understand how visitors interact with the site and improve the experience. 
+          By continuing to use the site, you agree to these data collection policies. 
+          <a href="https://www.microsoft.com/privacy/privacystatement" target="_blank" rel="noopener noreferrer">Learn more</a>.
+        </p>
+        <div class="cookie-consent-actions">
+          <button id="acceptCookies" class="btn btn-primary cookie-btn">Got it</button>
+        </div>
+      </div>
+    </div>
+
     <script>
-      // Lazy-load heavy third-party scripts to boost Mobile PageSpeed
+      // Lazy-load all scripts on interaction (Informational consent mode)
       (function() {
-        let loaded = false;
-        function loadScripts() {
-          if (loaded) return;
-          loaded = true;
+        let essentialLoaded = false;
+        
+        function loadEssentialScripts() {
+          if (essentialLoaded) return;
+          essentialLoaded = true;
+          
+          // Turnstile
+          const ts = document.createElement('script');
+          ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+          ts.async = true;
+          ts.defer = true;
+          document.head.appendChild(ts);
+        }
+        
+        ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function(e) {
+          window.addEventListener(e, loadEssentialScripts, { once: true, passive: true });
+        });
+
+        // Tracking Scripts Logic
+        let trackingLoaded = false;
+        
+        function loadTrackingScripts() {
+          if (trackingLoaded) return;
+          trackingLoaded = true;
           
           // GA4
           const ga = document.createElement('script');
@@ -143,13 +177,6 @@
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-T4R9GT7H');
 
-          // Turnstile
-          const ts = document.createElement('script');
-          ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-          ts.async = true;
-          ts.defer = true;
-          document.head.appendChild(ts);
-
           {{#if clarityId}}
           // Microsoft Clarity
           (function(c,l,a,r,i,t,y){
@@ -159,10 +186,27 @@
           })(window, document, "clarity", "script", "{{clarityId}}");
           {{/if}}
         }
-        
+
+        // Always load tracking scripts on interaction, since consent is informational only
         ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function(e) {
-          window.addEventListener(e, loadScripts, { once: true, passive: true });
+          window.addEventListener(e, loadTrackingScripts, { once: true, passive: true });
         });
+
+        const consentBanner = document.getElementById('cookieConsentBanner');
+        const acceptBtn = document.getElementById('acceptCookies');
+        
+        // Check if user previously acknowledged the banner
+        const consentStatus = localStorage.getItem('cookieConsent');
+        
+        if (consentStatus !== 'acknowledged') {
+          // Show banner
+          consentBanner.classList.add('show');
+          
+          acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'acknowledged');
+            consentBanner.classList.remove('show');
+          });
+        }
       })();
     </script>
     <script>
