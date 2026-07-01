@@ -170,13 +170,11 @@ router.get("/", async (req, res, next) => {
     if (renderData.hero) {
       renderData.hero.role_label = 'Software Engineer — Actively seeking full-time roles';
       renderData.hero.tagline = 'I build fullstack products end-to-end — from infrastructure to interface.';
-      renderData.hero.sub = 'MERN stack developer based in Kannur, Kerala. Two years shipping production systems at Neutrinos, now seeking a new full-time role with a team that wants someone who owns a problem, not just a ticket.';
+      renderData.hero.sub = 'MERN Stack Software Engineer with 2+ years of experience engineering scalable, enterprise-grade applications at Neutrinos. Passionate about cloud architecture, performance optimization, and delivering robust full-stack solutions.';
     }
     if (renderData.about && renderData.about.bio_paragraphs) {
-      renderData.about.bio_paragraphs[0] = "I'm Vyshnav — a fullstack software engineer seeking new opportunities after two years as an SDE at Neutrinos. I want to join a team where I can own projects fully instead of just my slice of the sprint. I work primarily in the MERN stack, but the part I actually enjoy is the connective tissue: getting deployment, auth, and infrastructure right so the product layer just works. I've picked up Docker, Kubernetes, Terraform, and Azure along the way — not because a job required it, but because \"it works on my machine\" stopped being good enough for me. When I'm not building for clients, I'm usually improving my own tools, like a domain risk scanner and an SSO auth server I built to actually understand OAuth instead of just importing a library for it.";
-      if (renderData.about.bio_paragraphs.length > 1) {
-        renderData.about.bio_paragraphs.pop();
-      }
+      renderData.about.bio_paragraphs[0] = "I am a results-oriented Software Engineer specializing in the MERN stack, with a proven track record of architecting and deploying high-performance web applications. During my tenure as an SDE at Neutrinos, I led the end-to-end development of critical system features, optimized backend performance to handle enterprise-level traffic, and modernized deployment workflows using Docker, Kubernetes, and Terraform.";
+      renderData.about.bio_paragraphs[1] = "Driven by a deep engineering curiosity, I thrive on solving complex technical challenges—from designing resilient database schemas to implementing secure, cross-domain OAuth authentication flows. I am actively seeking full-time opportunities where I can leverage my expertise in full-stack development and cloud infrastructure to drive impactful technical solutions for a forward-thinking engineering team.";
     }
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;
