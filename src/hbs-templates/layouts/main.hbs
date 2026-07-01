@@ -118,19 +118,6 @@
     </script>
 
     <script src="/js/main.js?v=6"></script>
-    <!-- Cookie Consent Banner -->
-    <div id="cookieConsentBanner" class="cookie-consent-banner">
-      <div class="cookie-consent-content">
-        <p class="cookie-consent-text">
-          We use Google Analytics and Microsoft Clarity to understand how you use our website and improve your experience. 
-          By continuing to use our site, you agree to our data collection policies. 
-          <a href="https://www.microsoft.com/privacy/privacystatement" target="_blank" rel="noopener noreferrer">Learn more</a>.
-        </p>
-        <div class="cookie-consent-actions">
-          <button id="acceptCookies" class="btn btn-primary cookie-btn">Got it</button>
-        </div>
-      </div>
-    </div>
 
     <script>
       // Lazy-load all scripts on interaction (Informational consent mode)
@@ -191,22 +178,6 @@
         ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function(e) {
           window.addEventListener(e, loadTrackingScripts, { once: true, passive: true });
         });
-
-        const consentBanner = document.getElementById('cookieConsentBanner');
-        const acceptBtn = document.getElementById('acceptCookies');
-        
-        // Check if user previously acknowledged the banner
-        const consentStatus = localStorage.getItem('cookieConsent');
-        
-        if (consentStatus !== 'acknowledged') {
-          // Show banner
-          consentBanner.classList.add('show');
-          
-          acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('cookieConsent', 'acknowledged');
-            consentBanner.classList.remove('show');
-          });
-        }
       })();
     </script>
     <script>
