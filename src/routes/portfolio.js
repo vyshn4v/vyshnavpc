@@ -12,9 +12,9 @@ function buildMeta(site = {}) {
   const dbName = site.name || "Vyshnav";
   const name   = "Vyshnav"; // Force the primary keyword
   const role   = site.role   || "MERN / Fullstack Developer";
-  const desc   = site.description || `Hi, I am Vyshnav — a ${role} specialising in MongoDB, Express, React, Node.js, and cloud infrastructure.`;
+  const desc   = site.description || `Vyshnav P C — Fullstack MERN Software Engineer in Kannur, Kerala. Two years at Neutrinos, now actively seeking full-time roles to build end-to-end products.`;
   const url    = site.url    || BASE_URL;
-  const image  = site.ogImage || `${BASE_URL}/og-preview.webp`;
+  const image  = site.ogImage || `${BASE_URL}/vyshnav_p_c.jpg`;
   const twitter = site.twitter || "";
 
   const schema = JSON.stringify({
@@ -134,7 +134,7 @@ function buildMeta(site = {}) {
   return {
     title:          `Vyshnav | ${role} Portfolio`,
     description:    desc,
-    keywords:       site.keywords || `Vyshnav, vyshnav pc, fullstack developer, MERN stack, React, Node.js, DevOps, cloud, APIs, software engineer`,
+    keywords:       site.keywords || `Vyshnav, vyshnav pc, software engineer, MERN stack developer, React JS, Node.js, DevOps, full-time, seeking roles, APIs`,
     author:         name,
     canonical:      url,
     siteName:       name,
@@ -168,13 +168,13 @@ router.get("/", async (req, res, next) => {
     
     // Fallback overrides for SEO rankings
     if (renderData.hero) {
-      renderData.hero.role_label = 'FREELANCE FULLSTACK DEVELOPER';
-      renderData.hero.tagline = 'React JS & Node.js Expert';
-      renderData.hero.sub = 'I build high-performance web applications as a freelance developer. Specializing in MongoDB, Express, React, Node.js, and cloud architectures.';
+      renderData.hero.role_label = 'Software Engineer — Actively seeking full-time roles';
+      renderData.hero.tagline = 'I build fullstack products end-to-end — from infrastructure to interface.';
+      renderData.hero.sub = 'MERN Stack Software Engineer with 2+ years of experience engineering scalable, enterprise-grade applications at Neutrinos. Passionate about cloud architecture, performance optimization, and delivering robust full-stack solutions.';
     }
     if (renderData.about && renderData.about.bio_paragraphs) {
-      renderData.about.bio_paragraphs[0] = 'I am Vyshnav P C, a passionate freelance fullstack developer specializing in the MERN stack (MongoDB, Express, React, Node.js). I help businesses build scalable, performant web applications.';
-      renderData.about.bio_paragraphs[1] = 'With expertise in both frontend React JS development and robust Node.js backend architectures, I deliver complete, end-to-end solutions as a dedicated freelancer.';
+      renderData.about.bio_paragraphs[0] = "I am a results-oriented Software Engineer specializing in the MERN stack, with a proven track record of architecting and deploying high-performance web applications. During my tenure as an SDE at Neutrinos, I led the end-to-end development of critical system features, optimized backend performance to handle enterprise-level traffic, and modernized deployment workflows using Docker, Kubernetes, and Terraform.";
+      renderData.about.bio_paragraphs[1] = "Driven by a deep engineering curiosity, I thrive on solving complex technical challenges—from designing resilient database schemas to implementing secure, cross-domain OAuth authentication flows. I am actively seeking full-time opportunities where I can leverage my expertise in full-stack development and cloud infrastructure to drive impactful technical solutions for a forward-thinking engineering team.";
     }
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;
