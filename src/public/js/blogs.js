@@ -19,7 +19,7 @@
     btn.classList.add("active");
 
     const filter = btn.dataset.filter;
-    const cards = grid.querySelectorAll(".blog-card");
+    const cards = grid.querySelectorAll(".blog-card, .premium-blog-card");
 
     cards.forEach((card) => {
       const match = filter === "all" || card.dataset.category === filter;

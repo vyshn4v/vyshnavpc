@@ -1,29 +1,23 @@
-<section class="section" id="education">
-  <div class="container">
-
-    <div class="section-head reveal">
-      <div class="section-eyebrow">// 03 — education</div>
-      <h2 class="section-title"><em>Education</em></h2>
+<div class="timeline-container">
+  {{#each education}}
+  <div class="timeline-item">
+    <div class="timeline-header">
+      <div>
+        <div class="timeline-title">{{this.title}}</div>
+        <div class="timeline-subtitle">{{this.institution}}</div>
+      </div>
+      <div class="timeline-date">{{this.period}}</div>
     </div>
-
-    <div class="edu-grid">
-      {{#each education}}
-        <div class="edu-card reveal">
-          <div class="edu-abbr" style="--clr:var(--accent2)">{{this.abbr}}</div>
-          <div class="edu-body">
-            <div class="edu-title">{{this.title}}</div>
-            <div class="edu-sub">{{this.subtitle}}</div>
-            <div class="edu-institution">{{this.institution}}</div>
-            <div class="edu-period">{{this.period}}</div>
-            <div class="edu-tags">
-              {{#each this.tags}}
-                <span class="edu-tag">{{this}}</span>
-              {{/each}}
-            </div>
-          </div>
-        </div>
+    {{#if this.subtitle}}
+      <p class="timeline-desc">{{this.subtitle}}</p>
+    {{/if}}
+    {{#if this.tags}}
+    <div class="pill-container" style="margin-top: 0.5rem;">
+      {{#each this.tags}}
+      <span class="pill" style="font-size: 0.7rem; padding: 0.2rem 0.4rem; background: var(--color-border); color: var(--color-text-main); border: none;">{{this}}</span>
       {{/each}}
     </div>
-
+    {{/if}}
   </div>
-</section>
+  {{/each}}
+</div>

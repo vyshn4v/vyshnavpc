@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="google-site-verification" content="cHS1LAjCCb3WtHmnmqgW7OsVMOQpwvWcnX_oCgXrUHM" />
-
-
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C | Freelance Fullstack Developer | React & Node.js{{/if}}</title>
     <meta name="description" content="{{#if meta.description}}{{meta.description}}{{else}}Hire Vyshnav P C, a freelance fullstack developer specializing in React JS, Node.js, and modern web applications. Available for freelance projects.{{/if}}" />
     <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, freelance fullstack developer, freelancer, React JS developer, Node.js developer, freelance web developer{{/if}}" />
@@ -21,7 +22,7 @@
     <meta property="og:description" content="{{#if meta.description}}{{meta.description}}{{else}}Hire Vyshnav P C, a freelance fullstack developer specializing in React JS, Node.js, and modern web applications. Available for freelance projects.{{/if}}" />
     {{#if meta.canonical}}<meta property="og:url" content="{{meta.canonical}}" />{{/if}}
     <meta property="og:site_name" content="{{#if meta.siteName}}{{meta.siteName}}{{else}}Vyshnav P C{{/if}}" />
-    <meta property="og:image" content="{{#if meta.ogImage}}{{meta.ogImage}}{{else}}https://portfolio.vyshnavpc.com/og-preview.webp{{/if}}" />
+    <meta property="og:image" content="{{#if meta.ogImage}}{{meta.ogImage}}{{else}}https://portfolio.vyshnavpc.com/og-preview.png{{/if}}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Portfolio{{/if}}" />
@@ -31,7 +32,7 @@
     <meta name="twitter:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C | Freelance Fullstack Developer | React & Node.js{{/if}}" />
     <meta name="twitter:description" content="{{#if meta.description}}{{meta.description}}{{else}}Hire Vyshnav P C, a freelance fullstack developer specializing in React JS, Node.js, and modern web applications. Available for freelance projects.{{/if}}" />
     {{#if meta.twitterHandle}}<meta name="twitter:site" content="{{meta.twitterHandle}}" />{{/if}}
-    <meta name="twitter:image" content="{{#if meta.ogImage}}{{meta.ogImage}}{{else}}https://portfolio.vyshnavpc.com/og-preview.webp{{/if}}" />
+    <meta name="twitter:image" content="{{#if meta.ogImage}}{{meta.ogImage}}{{else}}https://portfolio.vyshnavpc.com/og-preview.png{{/if}}" />
     <meta name="twitter:image:alt" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Portfolio{{/if}}" />
 
     {{!-- JSON-LD Person Schema --}}
@@ -67,36 +68,11 @@
       }
       </script>
     {{/if}}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap"
-    />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="author" href="/humans.txt" />
-    <link rel="alternate" type="text/markdown" href="/llms.txt" />
-    <!-- Preload critical render-blocking CSS -->
-    <link rel="preload" href="/css/navbar.css" as="style" />
-    <link rel="preload" href="/css/scroll-bar.css" as="style" />
-    <link rel="preload" href="/css/breadcrumbs.css" as="style" />
-
-    <link rel="stylesheet" href="/css/navbar.css" />
-    <link rel="stylesheet" href="/css/scroll-bar.css" />
-    <link rel="stylesheet" href="/css/breadcrumbs.css" />
-
-    <style>
-      :root {
-        --nav-h: 64px; /* match the height in navbar.css */
-      }
-
-      main {
-        padding-top: var(--nav-h);
-      }
-    </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Premium Theme -->
+    <link rel="stylesheet" href="/css/premium-theme.css?v=49" />
 
     {{{_sections.styles}}}
 
@@ -106,20 +82,83 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T4R9GT7H"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    
     {{> nav}}
+
     <main>
-      {{> breadcrumbs}}
       {{{body}}}
     </main>
+    {{> footer}}
+
+    <!-- Global Contact Modal -->
+    <button class="floating-contact-btn" id="openContact" aria-label="Contact Developer">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </button>
+
+    {{> contact}}
+
     {{{_sections.scripts}}}
-    <script defer src="/js/navbar.js"></script>
     <script>
-      // Lazy-load heavy third-party scripts to boost Mobile PageSpeed
+      document.addEventListener("DOMContentLoaded", () => {
+        // Handle trigger-contact-modal class for nav links
+        const triggers = document.querySelectorAll(".trigger-contact-modal");
+        const modalBackdrop = document.getElementById("modalBackdrop");
+        
+        if (modalBackdrop) {
+          const openModal = (e) => {
+            if (e) e.preventDefault();
+            modalBackdrop.classList.add("is-open");
+          };
+          
+          triggers.forEach(trigger => {
+            trigger.addEventListener("click", openModal);
+          });
+        }
+      });
+    </script>
+
+    <script src="/js/main.js?v=6"></script>
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsentBanner" class="cookie-consent-banner">
+      <div class="cookie-consent-content">
+        <p class="cookie-consent-text">
+          This website uses Google Analytics and Microsoft Clarity to understand how visitors interact with the site and improve the experience. 
+          By continuing to use the site, you agree to these data collection policies. 
+          <a href="https://www.microsoft.com/privacy/privacystatement" target="_blank" rel="noopener noreferrer">Learn more</a>.
+        </p>
+        <div class="cookie-consent-actions">
+          <button id="acceptCookies" class="btn btn-primary cookie-btn">Got it</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Lazy-load all scripts on interaction (Informational consent mode)
       (function() {
-        let loaded = false;
-        function loadScripts() {
-          if (loaded) return;
-          loaded = true;
+        let essentialLoaded = false;
+        
+        function loadEssentialScripts() {
+          if (essentialLoaded) return;
+          essentialLoaded = true;
+          
+          // Turnstile
+          const ts = document.createElement('script');
+          ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+          ts.async = true;
+          ts.defer = true;
+          document.head.appendChild(ts);
+        }
+        
+        ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function(e) {
+          window.addEventListener(e, loadEssentialScripts, { once: true, passive: true });
+        });
+
+        // Tracking Scripts Logic
+        let trackingLoaded = false;
+        
+        function loadTrackingScripts() {
+          if (trackingLoaded) return;
+          trackingLoaded = true;
           
           // GA4
           const ga = document.createElement('script');
@@ -138,17 +177,36 @@
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-T4R9GT7H');
 
-          // Turnstile
-          const ts = document.createElement('script');
-          ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-          ts.async = true;
-          ts.defer = true;
-          document.head.appendChild(ts);
+          {{#if clarityId}}
+          // Microsoft Clarity
+          (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "{{clarityId}}");
+          {{/if}}
         }
-        
+
+        // Always load tracking scripts on interaction, since consent is informational only
         ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function(e) {
-          window.addEventListener(e, loadScripts, { once: true, passive: true });
+          window.addEventListener(e, loadTrackingScripts, { once: true, passive: true });
         });
+
+        const consentBanner = document.getElementById('cookieConsentBanner');
+        const acceptBtn = document.getElementById('acceptCookies');
+        
+        // Check if user previously acknowledged the banner
+        const consentStatus = localStorage.getItem('cookieConsent');
+        
+        if (consentStatus !== 'acknowledged') {
+          // Show banner
+          consentBanner.classList.add('show');
+          
+          acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'acknowledged');
+            consentBanner.classList.remove('show');
+          });
+        }
       })();
     </script>
     <script>
@@ -165,10 +223,12 @@
               },
               execute: async (args) => {
                 const navOverlay = document.getElementById("navOverlay");
-                const modalBackdrop = document.getElementById("modalBackdrop");
-                if (navOverlay && modalBackdrop) {
+                const modal = document.getElementById("contactModalOverlay");
+                if (navOverlay) {
                   navOverlay.classList.remove("open");
-                  modalBackdrop.classList.add("open");
+                }
+                if (modal) {
+                  modal.classList.add("open");
                   return { success: true, message: "Contact form opened." };
                 }
                 return { success: false, message: "Failed to open contact form." };

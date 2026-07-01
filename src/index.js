@@ -146,8 +146,8 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 3000;
 
 // Start the server immediately — don't wait for DB
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server is running on port ${PORT} across all network interfaces`);
 });
 
 // Connect to DB and AMQP in background with retry

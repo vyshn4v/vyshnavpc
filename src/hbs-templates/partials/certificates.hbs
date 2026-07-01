@@ -1,52 +1,30 @@
-<section class="section" id="certificates">
-  <div class="container">
-
-    <div class="section-head reveal">
-      <div class="section-eyebrow">// 03 — certificates</div>
-      <h2 class="section-title">Certifi<em>cations</em></h2>
-      <p class="section-sub">Industry-recognised credentials validating
-        expertise across cloud, DevOps, and software engineering.</p>
+<div class="cert-list">
+  {{#each certificates}}
+  <article class="cert-card">
+    <div class="cert-head">
+      <div class="cert-title-wrap">
+        <h3 class="cert-title">{{this.name}}</h3>
+        <div class="cert-issuer">{{this.issuer}}</div>
+      </div>
     </div>
-
-    <div class="cert-grid">
-      {{#each certificates}}
-        <div class="cert-card reveal" style="--clr: {{this.color}}">
-          <div class="cert-glow"></div>
-          <div class="cert-header">
-            <div class="cert-issuer-badge">{{this.issuerAbbr}}</div>
-            <div class="cert-meta">
-              <span class="cert-issued">Issued {{this.issued}}</span>
-              {{#if this.expires}}
-                <span class="cert-expires">Expires {{this.expires}}</span>
-              {{else}}
-                <span class="cert-expires cert-no-exp">No Expiry</span>
-              {{/if}}
-            </div>
-          </div>
-          <div class="cert-body">
-            <h3 class="cert-title">{{this.name}}</h3>
-            <p class="cert-issuer">{{this.issuer}}</p>
-            <p class="cert-desc">{{this.description}}</p>
-          </div>
-          <div class="cert-footer">
-            <div class="cert-tags">
-              {{#each this.tags}}
-                <span class="ptag">{{this}}</span>
-              {{/each}}
-            </div>
-            {{#if this.credentialUrl}}
-              <a
-                href="{{this.credentialUrl}}"
-                target="_blank"
-                class="cert-link"
-              >
-                View credential →
-              </a>
-            {{/if}}
-          </div>
-        </div>
+    {{#if this.description}}
+      <p class="cert-desc">{{this.description}}</p>
+    {{/if}}
+    {{#if this.tags}}
+    <div class="cert-tags">
+      {{#each this.tags}}
+      <span class="cert-tag">{{this}}</span>
       {{/each}}
     </div>
-
-  </div>
-</section>
+    {{/if}}
+    <div class="cert-meta">
+      <span class="cert-date">{{this.issued}}</span>
+      {{#if this.credentialUrl}}
+        <a class="cert-link" href="{{this.credentialUrl}}" target="_blank" rel="noopener noreferrer">
+          View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+      {{/if}}
+    </div>
+  </article>
+  {{/each}}
+</div>
