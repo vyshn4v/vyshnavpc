@@ -112,8 +112,8 @@ function buildMeta(site = {}) {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
       "@id": `${url}/#service`,
-      "name": `Vyshnav P C - Freelance Fullstack Developer`,
-      "description": "Freelance fullstack development services specializing in React JS and Node.js. Available for hire.",
+      "name": `Vyshnav P C - Software Engineer`,
+      "description": "Software Engineer specializing in React JS and Node.js. Actively seeking full-time roles.",
       "telephone": "+918086064478",
       "priceRange": "$$",
       "image": image,
@@ -170,11 +170,16 @@ router.get("/", async (req, res, next) => {
     if (renderData.hero) {
       renderData.hero.role_label = 'Software Engineer — Actively seeking full-time roles';
       renderData.hero.tagline = 'I build fullstack products end-to-end — from infrastructure to interface.';
-      renderData.hero.sub = 'MERN Stack Software Engineer with 2+ years of experience engineering scalable, enterprise-grade applications at Neutrinos. Passionate about cloud architecture, performance optimization, and delivering robust full-stack solutions.';
-    }
-    if (renderData.about && renderData.about.bio_paragraphs) {
-      renderData.about.bio_paragraphs[0] = "I am a results-oriented Software Engineer specializing in the MERN stack, with a proven track record of architecting and deploying high-performance web applications. During my tenure as an SDE at Neutrinos, I led the end-to-end development of critical system features, optimized backend performance to handle enterprise-level traffic, and modernized deployment workflows using Docker, Kubernetes, and Terraform.";
-      renderData.about.bio_paragraphs[1] = "Driven by a deep engineering curiosity, I thrive on solving complex technical challenges—from designing resilient database schemas to implementing secure, cross-domain OAuth authentication flows. I am actively seeking full-time opportunities where I can leverage my expertise in full-stack development and cloud infrastructure to drive impactful technical solutions for a forward-thinking engineering team.";
+      renderData.hero.sub = 'I build fullstack products end-to-end...';
+      if (renderData.hero.cta_primary) {
+        renderData.hero.cta_primary.label = 'CONTACT ME';
+      }
+      
+      if (renderData.about && renderData.about.bio_paragraphs) {
+        renderData.about.bio_paragraphs[0] = "I'm Vyshnav, a Software Engineer who spent two years at Neutrinos working across the MERN stack — building features end-to-end, from database schema to deployment. I like being involved in the full lifecycle of a product, not just my slice of a sprint, which is why I've also picked up working knowledge of Docker, Kubernetes, Terraform, and Azure along the way. Right now I'm looking for a full-time role where I can keep growing as an engineer and take on real ownership. Outside of work, I build small projects to actually understand how things work under the hood — like a domain risk scanner I built to learn how security scanning tools operate.";
+        // Force the array to only have 1 paragraph by cutting off the rest
+        renderData.about.bio_paragraphs.length = 1;
+      }
     }
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;

@@ -1,40 +1,37 @@
 {{!-- views/post.hbs --}}
 {{#section "styles"}}
-  <link rel="stylesheet" href="/css/post.css?v=3" />
+  <link rel="stylesheet" href="/css/post.css?v=13" />
 {{/section}}
 {{#section "scripts"}}
   <script src="/js/post.js?v=2"></script>
 {{/section}}
 {{!-- ── Post Hero (blog post title, meta, etc.) ── --}}
-<div class="premium-banner">
-  <div class="post-hero__inner">
-    <div class="hero-tag post-hero-tag" style="--cat-color:{{category.color}};--cat-bg:{{category.bg}}">
-      <span class="dot"></span> {{category.icon}} {{category.label}}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 mt-4">
+  <div class="border-b-4 border-primary pb-4 mb-8">
+    <div class="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-brand-red mb-4" style="color:{{category.color}}">
+      {{category.icon}} <span>{{category.label}}</span>
     </div>
 
-    <h1 class="post-hero__title">
+    <h1 class="text-4xl sm:text-6xl font-head font-black tracking-tighter text-primary leading-[0.9] uppercase mb-6">
       {{#if titleLine2}}
-        {{titleLine1}}<br><span class="highlight">{{titleLine2}}</span>
+        {{titleLine1}}<br><span class="text-slate-700">{{titleLine2}}</span>
       {{else}}
         {{title}}
       {{/if}}
     </h1>
 
-    <div class="post-hero__meta">
-      <span class="meta-date">{{date}}</span>
-      <span class="sep"></span>
-      <span class="meta-readtime">{{readTime}}</span>
-      <span class="sep"></span>
-      <span class="meta-tags">{{meta.tags}}</span>
+    <div class="flex flex-wrap items-center gap-3 text-[10px] font-sans font-bold uppercase tracking-widest text-slate-500">
+      <span>{{date}}</span>
+      <span>•</span>
+      <span>{{readTime}}</span>
+      <span>•</span>
+      <span>{{meta.tags}}</span>
     </div>
-
   </div>
-</div>
 
 {{!-- ── Article body ── --}}
-<div class="layout-container">
-  <main class="main-column" style="max-width: 900px; margin: 0 auto;">
-    <div class="premium-card">
+  <main>
+    <div class="bg-white">
       <article class="post-article">
 
         {{#if lead}}
@@ -320,23 +317,25 @@
 </div>
 
 {{!-- ── Post footer ── --}}
-<div class="post-footer">
-  <p>{{footer.credit}}</p>
-  <div class="tags">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 border-t-2 border-primary pt-6 mt-12 mb-12 flex flex-col md:flex-row justify-between items-center gap-4">
+  <p class="text-sm font-serif font-bold text-slate-700 italic">{{footer.credit}}</p>
+  <div class="flex flex-wrap gap-2 text-[9px] font-sans font-bold uppercase tracking-widest text-white">
     {{#each footer.tags}}
-      <span class="tag-pill">{{this}}</span>
+      <span class="bg-primary px-2 py-1">{{this}}</span>
     {{/each}}
   </div>
 </div>
 
 {{!-- ── Related posts ── --}}
 {{#if related}}
-  <section class="related-posts">
-    <h3 class="related-posts__heading">Related posts</h3>
-    <div class="related-posts__grid">
-      {{#each related}}
-        {{> blog-card this}}
-      {{/each}}
-    </div>
-  </section>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+    <section class="border-t-4 border-primary pt-8">
+      <h3 class="text-3xl font-head font-black text-primary mb-6 tracking-tighter uppercase">Related Coverage</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {{#each related}}
+          {{> blog-card this}}
+        {{/each}}
+      </div>
+    </section>
+  </div>
 {{/if}}

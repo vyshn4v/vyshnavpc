@@ -1,47 +1,69 @@
+<!-- Contact Modal (Editorial Theme) -->
+<div class="fixed inset-0 z-[100] hidden bg-slate-900/40 backdrop-blur-sm transition-opacity" id="modalBackdrop" aria-hidden="true">
+  <div class="flex min-h-screen items-center justify-center p-4 text-center sm:p-0">
+    <div class="relative transform overflow-hidden bg-background text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-background-border news-modal-container">
+      
+      <!-- Header -->
+      <div class="border-b border-background-border bg-slate-50 px-6 py-5 flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-serif font-bold text-primary">Let's work together</h3>
+          <p class="text-sm text-slate-500 font-serif italic mt-1">Fill in the details and I'll get back to you within 24 hours.</p>
+        </div>
+        <button type="button" class="text-slate-400 hover:text-slate-600 transition-colors" id="closeContact" aria-label="Close">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
 
-<!-- Premium Contact Modal -->
-<div class="premium-modal-backdrop" id="modalBackdrop">
-  <div class="premium-modal">
-    <div class="modal-head">
-      <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--color-text-title);">Let's work together</h3>
-      <p style="font-size: 0.875rem; color: var(--color-text-muted);">Fill in the details and I'll get back to you within 24 hours.</p>
-      <button class="modal-close" id="closeContact" aria-label="Close contact form">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label>First name</label>
-          <input type="text" id="fname" placeholder="John" />
-          <div class="field-error" id="err-fname"></div>
+      <!-- Body -->
+      <div class="px-6 py-6 flex flex-col gap-5">
+        <div class="flex flex-col sm:flex-row gap-5">
+          <div class="flex-1">
+            <label class="block text-xs font-semibold tracking-wider uppercase text-slate-600 mb-1.5" for="fname">First name</label>
+            <input type="text" id="fname" class="w-full border border-background-border bg-white px-3 py-2 text-sm text-primary focus:border-slate-500 focus:outline-none transition-colors" placeholder="John" />
+            <div class="text-red-500 text-[10px] uppercase tracking-wider font-semibold mt-1 hidden" id="err-fname"></div>
+          </div>
+          <div class="flex-1">
+            <label class="block text-xs font-semibold tracking-wider uppercase text-slate-600 mb-1.5" for="lname">Last name</label>
+            <input type="text" id="lname" class="w-full border border-background-border bg-white px-3 py-2 text-sm text-primary focus:border-slate-500 focus:outline-none transition-colors" placeholder="Doe" />
+            <div class="text-red-500 text-[10px] uppercase tracking-wider font-semibold mt-1 hidden" id="err-lname"></div>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Last name</label>
-          <input type="text" id="lname" placeholder="Doe" />
-          <div class="field-error" id="err-lname"></div>
+
+        <div>
+          <label class="block text-xs font-semibold tracking-wider uppercase text-slate-600 mb-1.5" for="femail">Email</label>
+          <input type="email" id="femail" class="w-full border border-background-border bg-white px-3 py-2 text-sm text-primary focus:border-slate-500 focus:outline-none transition-colors" placeholder="john@example.com" />
+          <div class="text-red-500 text-[10px] uppercase tracking-wider font-semibold mt-1 hidden" id="err-femail"></div>
         </div>
+
+        <div>
+          <label class="block text-xs font-semibold tracking-wider uppercase text-slate-600 mb-1.5" for="fsubject">Subject</label>
+          <input type="text" id="fsubject" class="w-full border border-background-border bg-white px-3 py-2 text-sm text-primary focus:border-slate-500 focus:outline-none transition-colors" placeholder="Project inquiry" />
+          <div class="text-red-500 text-[10px] uppercase tracking-wider font-semibold mt-1 hidden" id="err-fsubject"></div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold tracking-wider uppercase text-slate-600 mb-1.5" for="fmessage">Message</label>
+          <textarea id="fmessage" rows="4" class="w-full border border-background-border bg-white px-3 py-2 text-sm text-primary focus:border-slate-500 focus:outline-none transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
+          <div class="text-red-500 text-[10px] uppercase tracking-wider font-semibold mt-1 hidden" id="err-fmessage"></div>
+        </div>
+
+        {{#if turnstileSiteKey}}
+        <div class="cf-turnstile" data-sitekey="{{turnstileSiteKey}}" data-theme="light"></div>
+        {{/if}}
       </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="femail" placeholder="john@example.com" />
-        <div class="field-error" id="err-femail"></div>
+
+      <!-- Actions -->
+      <div class="border-t border-background-border bg-slate-50 px-6 py-4 flex items-center justify-end gap-3">
+        <button type="button" class="bg-transparent text-primary hover:bg-slate-200 font-semibold uppercase tracking-wider py-2.5 px-6 text-xs transition-colors border border-primary" id="cancelContact">
+          Cancel
+        </button>
+        <button type="button" class="bg-primary text-white hover:bg-slate-700 font-semibold uppercase tracking-wider py-2.5 px-6 text-xs transition-colors border border-primary" id="sendContact">
+          Send Message
+        </button>
       </div>
-      <div class="form-group">
-        <label>Subject</label>
-        <input type="text" id="fsubject" placeholder="Project inquiry" />
-        <div class="field-error" id="err-fsubject"></div>
-      </div>
-      <div class="form-group">
-        <label>Message</label>
-        <textarea id="fmessage" rows="4" placeholder="Tell me about your project..."></textarea>
-        <div class="field-error" id="err-fmessage"></div>
-      </div>
-      {{#if turnstileSiteKey}}
-      <div class="cf-turnstile" data-sitekey="{{turnstileSiteKey}}" data-theme="light"></div>
-      {{/if}}
-      <div class="modal-actions">
-        <button class="btn-premium outline" id="cancelContact" style="flex: 1; justify-content: center;">Cancel</button>
-        <button class="btn-premium" id="sendContact" style="flex: 1; justify-content: center;">Send Message</button>
-      </div>
+
     </div>
   </div>
 </div>

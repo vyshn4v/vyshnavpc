@@ -1,9 +1,70 @@
-    /* ── Post page premium styles ── */
+    /* ── Post page premium styles (Overridden for Newspaper Theme) ── */
+    :root {
+      --color-primary: #000000;
+      --color-text-title: #000000;
+      --color-text-main: #111111;
+      --color-bg-page: #ffffff;
+      --color-bg-card: #ffffff;
+      --color-border: #000000;
+      --radius-lg: 0px;
+      --radius-md: 0px;
+      --radius-full: 0px;
+    }
+    
+    .post-article {
+      font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    }
+    
+    /* Ensure elements have top/bottom margins */
+    .diagram-wrap, .code-block, .phases-grid, .operations-grid, .index-grid, 
+    .pipeline-stages, .topics-list, .table-wrap, .steps-list, .callout, .microtask-banner {
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    .post-article p {
+      text-align: justify;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      color: #111;
+    }
+    
+    .post-article h2 {
+      font-family: "Playfair Display", ui-serif, Georgia, serif;
+      font-weight: 900;
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+      margin: 2rem 0 1rem;
+      text-transform: uppercase;
+      border-bottom: 2px solid #000;
+      padding-bottom: 0.5rem;
+      column-span: all;
+    }
+    
+    .post-article h3 {
+      font-family: "Playfair Display", ui-serif, Georgia, serif;
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: -0.01em;
+      margin: 1.5rem 0 0.75rem;
+      font-style: italic;
+    }
+    
+    /* First paragraph drop cap */
+    .post-article > p:first-of-type::first-letter {
+      float: left;
+      font-size: 4rem;
+      line-height: 0.8;
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 900;
+      padding-right: 0.5rem;
+      padding-top: 0.2rem;
+      color: #000;
+    }
+    
     .post-banner {
       padding: 3.5rem 1.5rem 5.5rem;
-      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-      position: relative;
-      overflow: hidden;
     }
     .post-banner::after {
       content: '';
@@ -487,10 +548,11 @@
     .topic-bullets { list-style: none; padding: 0; }
     .topic-bullets li { display: flex; gap: 0.5rem; font-size: 0.85rem; color: var(--color-text-main); margin-bottom: 0.3rem; }
     .topic-bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-primary); margin-top: 0.4rem; flex-shrink: 0; }
-    /* Code blocks */
+    /* Code blocks (Newspaper Style) */
     .code-block {
-      background: #1e293b;
-      border-radius: var(--radius-lg);
+      background: #f8fafc;
+      border: 2px solid #000;
+      border-radius: 0;
       overflow: hidden;
       margin: 1.5rem 0;
     }
@@ -499,15 +561,11 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.6rem 1rem;
-      background: rgba(255,255,255,0.05);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: #fff;
+      border-bottom: 2px solid #000;
     }
-    .code-header .dots { display: flex; gap: 6px; }
-    .code-header .dots span { width: 10px; height: 10px; border-radius: 50%; }
-    .code-header .dots span:nth-child(1) { background: #ff5f57; }
-    .code-header .dots span:nth-child(2) { background: #febc2e; }
-    .code-header .dots span:nth-child(3) { background: #28c840; }
-    .code-header .lang { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
+    .code-header .dots { display: none; }
+    .code-header .lang { font-size: 0.75rem; color: #000; font-family: "Playfair Display", serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
     
     .copy-btn {
       display: inline-flex;
@@ -516,7 +574,7 @@
       gap: 0;
       background: transparent;
       border: none;
-      color: rgba(255, 255, 255, .35);
+      color: #000;
       padding: 4px;
       border-radius: 4px;
       cursor: pointer;
@@ -536,13 +594,13 @@
       transition: max-width .25s ease, opacity .25s ease, margin .25s ease;
       margin-left: 0;
     }
-    .copy-btn:hover { color: rgba(255, 255, 255, .7); }
+    .copy-btn:hover { color: #555; }
     .copy-btn:hover .copy-label {
       max-width: 50px;
       opacity: 1;
       margin-left: 5px;
     }
-    .copy-btn.copied { color: #28c840; }
+    .copy-btn.copied { color: #000; font-weight: bold; }
     .copy-btn.copied .copy-label {
       max-width: 60px;
       opacity: 1;
@@ -550,36 +608,37 @@
     }
 
     .code-body { padding: 1rem; overflow-x: auto; }
-    .code-body pre { font-size: 0.85rem; color: #e2e8f0; line-height: 1.7; }
-    /* Syntax highlighting (light on dark) */
-    .kw { color: #c792ea; } .fn { color: #82aaff; } .str { color: #c3e88d; }
-    .num { color: #f78c6c; } .cm { color: rgba(255,255,255,0.4); font-style: italic; }
-    .punc { color: rgba(255,255,255,0.6); } .tag-c { color: #2dd4bf; }
-    /* Callouts */
+    .code-body pre { font-size: 0.85rem; color: #000; line-height: 1.7; font-family: monospace; }
+    /* Syntax highlighting (Print Style) */
+    .kw { color: #000; font-weight: bold; } 
+    .fn { color: #333; font-weight: bold; } 
+    .str { color: #333; font-style: italic; }
+    .num { color: #000; } 
+    .cm { color: #666; font-style: italic; }
+    .punc { color: #000; } 
+    .tag-c { color: #000; font-weight: bold; }
+    /* Callouts (Newspaper Style) */
     .callout {
-      border-radius: var(--radius-lg);
+      border-radius: 0;
       padding: 1rem 1.25rem;
       margin: 1.5rem 0;
       display: flex;
       gap: 0.75rem;
       align-items: flex-start;
-      border: 1px solid;
+      border: 2px solid #000;
+      border-top: 4px solid #000;
+      background: #fff;
     }
-    .callout.info { background: #eff6ff; border-color: #bfdbfe; }
-    .callout.warn { background: #fffbeb; border-color: #fde68a; }
-    .callout.tip { background: #f0fdf4; border-color: #bbf7d0; }
     .callout-icon { font-size: 1.2rem; flex-shrink: 0; }
     .callout-body { min-width: 0; }
     .callout-body p { 
       margin: 0; 
-      font-size: 0.9rem; 
+      font-size: 0.95rem; 
+      color: #000 !important;
       overflow-wrap: anywhere;
       word-break: break-word;
     }
-    .callout.info .callout-body p { color: #1e40af; }
-    .callout.warn .callout-body p { color: #92400e; }
-    .callout.tip .callout-body p { color: #166534; }
-    .callout-body strong { color: var(--color-text-title); }
+    .callout-body strong { color: #000; font-family: "Playfair Display", serif; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
     /* Comparison table */
     .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
     .compare-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }

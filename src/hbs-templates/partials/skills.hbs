@@ -1,22 +1,12 @@
-<div>
+<div class="flex flex-col gap-6">
   {{#each skills.groups}}
-  <div class="pill-group">
-    <div class="pill-group-title">{{this.label}}</div>
-    <div class="pill-container" style="display: grid; grid-template-columns: 1fr; gap: 0.5rem;">
+  <article class="flex flex-col gap-3 pb-4 border-b border-gray-300 last:border-0 last:pb-0">
+    <h3 class="text-sm font-bold font-serif text-brand-red uppercase tracking-wide">{{this.label}}</h3>
+    <div class="text-xs font-serif text-slate-800 leading-relaxed text-justify">
       {{#each this.items}}
-      <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg-card);">
-        <div style="width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: {{this.color}};">
-          {{{this.icon}}}
-        </div>
-        <div style="min-width: 0;">
-          <div style="font-size: 0.85rem; font-weight: 700; color: var(--color-text-title);">{{this.name}}</div>
-          {{#if this.desc}}
-          <div style="font-size: 0.75rem; color: var(--color-text-muted);">{{this.desc}}</div>
-          {{/if}}
-        </div>
-      </div>
+        <span class="inline-block mr-2 mb-1 border-b border-dotted border-slate-400 pb-0.5">{{this.name}}</span>
       {{/each}}
     </div>
-  </div>
+  </article>
   {{/each}}
 </div>

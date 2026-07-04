@@ -1,39 +1,40 @@
-<article class="premium-project-card">
+<article class="flex flex-col group border-t-2 border-background-border pt-6">
   {{#if this.image}}
-  <div class="project-img-wrapper">
-    <img src="{{this.image}}" alt="{{this.title}}" loading="lazy">
+  <div class="aspect-video w-full overflow-hidden mb-6 bg-slate-100 border border-slate-200">
+    <img src="{{this.image}}" alt="{{this.title}}" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
   </div>
   {{/if}}
-  <div class="project-content">
-    <h3 class="project-title">{{this.title}}</h3>
-    <p class="project-desc">{{this.description}}</p>
+  
+  <div class="flex flex-col flex-grow">
+    <h3 class="text-xl font-serif font-bold text-primary mb-3 group-hover:text-slate-600 transition-colors">{{this.title}}</h3>
+    <p class="text-sm text-slate-600 mb-6 flex-grow line-clamp-4 leading-relaxed">{{this.description}}</p>
     
     {{#if this.technologies}}
-    <div class="pill-container" style="margin-top: 1rem; margin-bottom: 1.5rem;">
+    <div class="flex flex-wrap gap-2 mb-8">
       {{#each this.technologies}}
-      <span class="pill" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">{{this}}</span>
+      <span class="px-3 py-1 text-[11px] font-semibold tracking-wide text-slate-600 border border-slate-200 bg-slate-50">{{this}}</span>
       {{/each}}
     </div>
     {{/if}}
 
-    <div class="project-links">
+    <div class="flex items-center gap-4 mt-auto border-t border-slate-200 pt-6">
       {{#if this.github}}
-      <a href="{{this.github}}" target="_blank" rel="noopener noreferrer" class="btn-premium outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      <a href="{{this.github}}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-transparent text-primary hover:bg-slate-50 font-semibold uppercase tracking-wider py-2 px-6 text-xs transition-colors border border-primary flex-1">
         Code
       </a>
       {{/if}}
+      
       {{#if this.live}}
-      <a href="{{this.live}}" target="_blank" rel="noopener noreferrer" class="btn-premium" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">
-        View Demo
+      <a href="{{this.live}}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-primary text-white hover:bg-slate-700 font-semibold uppercase tracking-wider py-2 px-6 text-xs transition-colors border border-primary flex-1">
+        Demo
       </a>
       {{else if this.live_link}}
-      <a href="{{this.live_link}}" target="_blank" rel="noopener noreferrer" class="btn-premium" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">
-        View Demo
+      <a href="{{this.live_link}}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-primary text-white hover:bg-slate-700 font-semibold uppercase tracking-wider py-2 px-6 text-xs transition-colors border border-primary flex-1">
+        Demo
       </a>
       {{else if this.link}}
-      <a href="{{this.link}}" target="_blank" rel="noopener noreferrer" class="btn-premium outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">
-        View Link
+      <a href="{{this.link}}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-transparent text-primary hover:bg-slate-50 font-semibold uppercase tracking-wider py-2 px-6 text-xs transition-colors border border-primary flex-1">
+        Link
       </a>
       {{/if}}
     </div>

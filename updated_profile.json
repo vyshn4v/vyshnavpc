@@ -58,7 +58,7 @@
       "tagline": "Fullstack Engineer & Cloud Native Builder",
       "sub": "Fullstack-focused software engineer from Kannur, Kerala with ~2 years of experience building scalable web applications. Specializing in the MERN Stack, REST APIs, authentication systems, and Kubernetes-based deployments.",
       "cta_primary": {
-        "label": "Hire Me →",
+        "label": "Contact Me",
         "href": "#contact"
       },
       "cta_secondary": {
@@ -129,11 +129,12 @@
         "role": "Software Development Engineer - I (SDE 1)",
         "type": "work",
         "highlights": [
-          "Engineered and deployed 15+ high-performance RESTful APIs utilizing Node.js and Strapi CMS for enterprise clients (Sunlife PH, HNI), automating core insurance workflows such as policy generation and system communications.",
-          "Architected a dynamic, stage-based decision API to manage complex application state logic, ensuring role-specific, context-aware decision paths (e.g., tailored UI flows for Reviewers).",
-          "Contributed to robust policy lifecycle automation systems, streamlining underwriting and complex processing workflows for large-scale implementations.",
-          "Collaborated with cross-functional agile teams to troubleshoot and resolve critical production issues, optimizing API logic to enhance backend reliability and reduce response times.",
-          "Participated actively in application deployment, release management, and cloud environment configuration to ensure continuous delivery and system stability."
+          "Built and maintained fullstack features and REST APIs using the MERN stack for insurance workflow applications",
+          "Contributed to policy lifecycle automation systems supporting underwriting and policy processing workflows",
+          "Implemented secure authentication flows and integrated APIs between frontend and backend services",
+          "Worked with cross-functional teams to resolve production issues and maintain system stability",
+          "Supported application deployment, release management, and environment configuration",
+          "Debugged and optimized API performance across distributed systems in production"
         ]
       }
     ],

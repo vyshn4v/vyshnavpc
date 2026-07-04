@@ -1,18 +1,22 @@
-<div class="timeline-container">
+<div class="flex flex-col gap-6">
   {{#each experience}}
-  <div class="timeline-item">
-    <div class="timeline-header">
-      <div>
-        <div class="timeline-title">{{this.role}}</div>
-        <div class="timeline-subtitle">{{this.company}}</div>
-      </div>
-      <div class="timeline-date">{{this.period}}</div>
+  <article class="flex flex-col border-b border-gray-300 pb-6 last:border-0 last:pb-0">
+    
+    <div class="flex items-baseline justify-between mb-1">
+      <h3 class="text-lg font-serif font-bold text-primary">{{this.company}}</h3>
+      <span class="text-[9px] font-bold tracking-widest uppercase text-slate-500">{{this.period}}</span>
     </div>
-    <ul class="timeline-desc" style="list-style-type: disc; padding-left: 1.25rem;">
-      {{#each this.highlights}}
-        <li style="margin-bottom: 0.25rem;">{{this}}</li>
-      {{/each}}
-    </ul>
-  </div>
+    
+    <div class="text-sm font-bold text-brand-red uppercase tracking-wide mb-3">{{this.role}}</div>
+    
+    <div class="text-xs font-serif text-slate-800 leading-relaxed text-justify columns-1">
+      <ul class="list-disc pl-4 space-y-2">
+        {{#each this.highlights}}
+        <li class="pl-1">{{this}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    
+  </article>
   {{/each}}
 </div>

@@ -6,7 +6,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "node --env-file=./src/.env.local --watch ./src/index.js",
+    "tailwind": "tailwindcss -i ./src/public/css/input.css -o ./src/public/css/tailwind-output.css --watch",
+    "server": "node --env-file=./src/.env.local --watch ./src/index.js",
+    "start:dev": "concurrently \"npm run server\" \"npm run tailwind\"",
+    "build:css": "tailwindcss -i ./src/public/css/input.css -o ./src/public/css/tailwind-output.css --minify",
     "start:prod": "node --env-file=./src/.env ./src/index.js "
   },
   "keywords": [
@@ -29,5 +32,9 @@
     "sharp": "^0.35.2",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.3",
+    "tailwindcss": "^3.4.17"
   }
 }

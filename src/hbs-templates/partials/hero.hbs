@@ -1,42 +1,41 @@
-<div class="profile-header">
-  <div class="profile-info" style="margin-top: 1rem;">
-    <div class="profile-meta-grid">
-      {{#each hero_stats}}
-      <div class="meta-item">
-        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        <span class="meta-text">{{this.value}} {{this.label}}</span>
-      </div>
-      {{/each}}
-      
-      {{#if site.email}}
-      <div class="meta-item">
-        <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-        <span class="meta-text">{{site.email}}</span>
-      </div>
-      {{/if}}
+<div class="flex flex-col items-center text-center w-full max-w-4xl mx-auto">
+  <!-- Article Headline -->
+  <h1 class="text-5xl sm:text-6xl font-serif font-black text-primary leading-none tracking-tighter w-full mb-4">
+    {{#if hero.role_label}}{{hero.role_label}}{{else}}Software Engineer seeking full-time roles in India{{/if}}
+  </h1>
+  
+  <!-- Subheadline / Lead -->
+  <h2 class="text-xl sm:text-2xl font-serif font-bold text-slate-700 leading-tight mb-6">
+    {{#if hero.tagline}}{{hero.tagline}}{{else}}I build fullstack products end-to-end — from infrastructure to interface.{{/if}}
+  </h2>
+  
+  <!-- Reporter Byline & Actions -->
+  <div class="flex flex-col sm:flex-row items-center gap-6 w-full justify-center">
+    
+    <div class="text-center sm:text-right">
+      <div class="text-[10px] uppercase font-bold tracking-widest text-brand-red">Special Report</div>
+      <div class="font-serif font-bold text-sm text-primary leading-tight">By Vyshnav P C</div>
+      <div class="text-[10px] text-slate-600 uppercase font-sans tracking-widest mt-1">Kannur</div>
     </div>
-
-    <p style="color: var(--color-text-main); margin-bottom: 1.5rem; max-width: 600px;">
-      {{#if hero.sub}}{{hero.sub}}{{else}}Building scalable, high-performance web applications.{{/if}}
-    </p>
-
-    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+    
+    <!-- Vertical divider only visible on larger screens -->
+    <div class="hidden sm:block w-[1px] h-12 bg-gray-300"></div>
+    
+    <div class="flex flex-wrap justify-center gap-4">
       {{#if hero.cta_primary}}
-      <a href="#" class="btn-premium trigger-contact-modal">
+      <button class="trigger-contact-modal bg-primary text-white hover:bg-slate-700 font-bold uppercase tracking-wider py-2 px-6 text-[10px] transition-colors shadow-sm">
         {{hero.cta_primary.label}}
-      </a>
+      </button>
       {{/if}}
       
       {{#if hero.resume_link}}
-      <a href="{{hero.resume_link}}" download="Vyshnav_PC_Resume.pdf" class="btn-premium outline">
+      <a href="{{hero.resume_link}}" download="Vyshnav_PC_Resume.pdf" class="flex items-center gap-2 bg-white text-primary hover:bg-slate-50 font-bold uppercase tracking-wider py-2 px-4 text-[10px] transition-colors border border-gray-300 shadow-sm">
       {{else}}
-      <a href="https://drive.google.com/uc?export=download&id=19BkWajPKTkyPcSyFoE9tRYra6omK77Hx" download="Vyshnav_PC_Resume.pdf" class="btn-premium outline">
+      <a href="https://drive.google.com/uc?export=download&id=19BkWajPKTkyPcSyFoE9tRYra6omK77Hx" download="Vyshnav_PC_Resume.pdf" class="flex items-center gap-2 bg-white text-primary hover:bg-slate-50 font-bold uppercase tracking-wider py-2 px-4 text-[10px] transition-colors border border-gray-300 shadow-sm">
       {{/if}}
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
         Download Resume
       </a>
-
-
     </div>
   </div>
 </div>

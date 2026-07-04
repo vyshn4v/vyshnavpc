@@ -48,7 +48,10 @@ router.post("/", async (req, res) => {
     const turnstileToken = req.body["cf-turnstile-response"];
     const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
 
-    if (turnstileSecret) {
+    const ip = extractIp(req);
+    const isLocalIP = ip === "127.0.0.1" || ip === "::1" || ip.startsWith("192.168.") || ip.startsWith("10.");
+    
+    if (turnstileSecret && !isLocalIP) {
       if (!turnstileToken) {
         return res.status(400).json({ ok: false, error: "Captcha verification is required." });
       }
@@ -73,7 +76,6 @@ router.post("/", async (req, res) => {
     }
 
     // ── 2. Enrich with geo + device data (best-effort, non-blocking) ──────
-    const ip      = extractIp(req);
     const uaData  = parseUserAgent(req.headers["user-agent"] || "");
     const geo     = await fetchGeoInfo(ip);
 

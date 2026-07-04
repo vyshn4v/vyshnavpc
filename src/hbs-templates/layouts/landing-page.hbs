@@ -1,60 +1,55 @@
-<div class="premium-banner">
-  <img src="/vyshnav_p_c.jpg" alt="Vyshnav P C" class="profile-avatar" style="margin: 0 auto 1.5rem auto; display: block; border-radius: 50%; width: clamp(150px, 20vw, 240px); height: clamp(150px, 20vw, 240px); object-position: top center;" />
-  <h1>{{hero.name}}</h1>
-  <p>{{#if hero.role_label}}{{hero.role_label}}{{else}}Software Engineer{{/if}} | {{hero.tagline}}</p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 mt-4">
   
-  <div class="banner-socials" style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center;">
-    {{#if site.github}}
-    <a href="{{site.github}}" target="_blank" rel="noopener noreferrer" aria-label="GitHub" style="color: rgba(255,255,255,0.9); transition: color 0.2s ease, transform 0.2s ease;">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-    </a>
-    {{/if}}
-    {{#if site.linkedin}}
-    <a href="{{site.linkedin}}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="color: rgba(255,255,255,0.9); transition: color 0.2s ease, transform 0.2s ease;">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-    </a>
-    {{/if}}
-  </div>
-</div>
+  <!-- Hero Section (Full Width Headline) -->
+  <section id="home" class="mb-8 text-center lg:text-left border-b-4 border-primary pb-6">
+    {{> hero}}
+  </section>
 
-<div class="layout-container">
-  <div class="layout-grid">
-    <main class="main-column">
-      <section id="home" class="premium-card hero-card">
-        {{> hero}}
-      </section>
+  <!-- Main Newspaper Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8">
+    
+    <!-- Main Left Content (About, Projects, etc) -->
+    <main class="lg:col-span-8 flex flex-col lg:pr-6 lg:border-r border-gray-300">
 
-      <section id="about" class="premium-card">
-        <h2 class="premium-card-title">Professional Summary</h2>
+      <section id="about" class="mb-8">
         {{> about}}
       </section>
 
-      {{> projects}}
+      <div class="w-full h-[1px] bg-gray-300 mb-6"></div>
 
-      <section id="experience" class="premium-card">
-        <h2 class="premium-card-title">Work Experience</h2>
+      <section id="projects" class="mb-8">
+        <h2 class="text-3xl font-head font-black text-primary mb-6 tracking-tighter border-b-2 border-primary pb-2">Latest Development Reports</h2>
+        {{> projects}}
+      </section>
+
+      <div class="w-full h-[1px] bg-gray-300 mb-6"></div>
+
+      <section id="certificates" class="mb-8">
+        <h2 class="text-3xl font-head font-black text-primary mb-6 tracking-tighter border-b-2 border-primary pb-2">Certifications</h2>
+        {{> certificates}}
+      </section>
+      
+    </main>
+
+    <!-- Side Content (Experience, Skills, Education) -->
+    <aside class="lg:col-span-4 flex flex-col">
+      <section id="experience" class="mb-8">
+        <h2 class="text-2xl font-head font-black text-primary mb-4 tracking-tighter border-b-2 border-primary pb-2">Professional Career</h2>
         {{> experience}}
       </section>
 
-      <section id="education" class="premium-card">
-        <h2 class="premium-card-title">Education</h2>
-        {{> education}}
-      </section>
+      <div class="w-full h-[1px] bg-gray-300 mb-6"></div>
 
-      <div id="journey-block">
-        {{> know-more}}
-      </div>
-    </main>
-
-    <aside class="sidebar-column">
-      <section id="skills" class="premium-card">
-        <h2 class="premium-card-title">Top Skills</h2>
+      <section id="skills" class="mb-8">
+        <h2 class="text-2xl font-head font-black text-primary mb-4 tracking-tighter border-b-2 border-primary pb-2">Technical Arsenal</h2>
         {{> skills}}
       </section>
 
-      <section id="certificates" class="premium-card">
-        <h2 class="premium-card-title">Certifications</h2>
-        {{> certificates}}
+      <div class="w-full h-[1px] bg-gray-300 mb-6"></div>
+
+      <section id="education" class="mb-8">
+        <h2 class="text-2xl font-head font-black text-primary mb-4 tracking-tighter border-b-2 border-primary pb-2">Academic Record</h2>
+        {{> education}}
       </section>
     </aside>
   </div>

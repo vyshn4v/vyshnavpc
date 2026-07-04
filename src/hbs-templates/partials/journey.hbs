@@ -1,46 +1,37 @@
-<div class="journey__timeline">
+<div class="flex flex-col border-t-2 border-primary pt-6">
   {{#each journey.steps}}
-    <div class="journey__item">
-      <div class="journey__left">
-        <div class="journey__year">{{this.year}}</div>
-        <div class="journey__dot"><div class="journey__dot-inner"></div></div>
+    <article class="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-6 mb-8 border-b border-gray-300 pb-8 last:border-0 last:pb-0">
+      
+      <!-- Year/Date Column -->
+      <div class="text-[10px] font-bold tracking-widest text-brand-red flex flex-col pt-1 border-b md:border-b-0 md:border-r border-gray-300 pb-4 md:pb-0 md:pr-4 mb-4 md:mb-0">
+        <span class="text-3xl font-head font-black text-primary">{{this.year}}</span>
+        <div class="mt-2 text-slate-500 uppercase">{{this.tag}}</div>
       </div>
-
-      <div class="journey__line-col"></div>
-
-      <div class="journey__box">
-        <div class="journey__box-top">
-          <span class="journey__icon">{{this.icon}}</span>
-          <span class="journey__tag">{{this.tag}}</span>
-        </div>
-        <h3 class="journey__box-title">{{this.title}}</h3>
-        <p class="journey__box-desc">{{this.description}}</p>
-
+      
+      <!-- Content Column -->
+      <div class="flex flex-col">
+        <h3 class="text-2xl font-serif font-bold text-primary mb-3 leading-tight">{{this.title}}</h3>
+        <p class="text-sm font-serif text-slate-800 leading-relaxed text-justify mb-4">{{this.description}}</p>
+        
         {{#if this.metrics}}
-          <ul class="journey__metrics">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 border-y border-gray-200 py-3">
             {{#each this.metrics}}
-              <li class="journey__metric">
-                <span class="journey__metric-value">{{this.value}}</span>
-                <span class="journey__metric-label">{{this.label}}</span>
-              </li>
+              <div class="flex flex-col">
+                <span class="text-lg font-bold font-serif text-primary">{{this.value}}</span>
+                <span class="text-[9px] uppercase tracking-widest text-slate-500">{{this.label}}</span>
+              </div>
             {{/each}}
-          </ul>
+          </div>
         {{/if}}
 
         {{#if this.skills}}
-          <div class="journey__skills">
+          <div class="text-[9px] font-sans font-bold uppercase tracking-widest text-slate-500 flex flex-wrap gap-x-3 gap-y-1 mt-2">
             {{#each this.skills}}
-              <span class="journey__skill-tag">{{this}}</span>
+              <span>{{this}}</span>
             {{/each}}
           </div>
         {{/if}}
       </div>
-    </div>
+    </article>
   {{/each}}
-
-  <div class="journey__end">
-    <div class="journey__end-dot"></div>
-    <span class="journey__end-label">Present
-      <span class="journey__cursor">|</span></span>
-  </div>
 </div>

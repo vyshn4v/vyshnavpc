@@ -21,7 +21,13 @@
   const themeToggle = document.getElementById('themeToggle');
   const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
-  const currentTheme = localStorage.getItem("theme");
+  let currentTheme = null;
+  try {
+    currentTheme = localStorage.getItem("theme");
+  } catch (e) {
+    console.warn("localStorage access denied", e);
+  }
+
   if (currentTheme == "dark") {
     document.documentElement.setAttribute("data-theme", "dark");
   } else {
@@ -44,10 +50,10 @@
     themeToggle.addEventListener("click", function() {
       if (document.documentElement.getAttribute("data-theme") === "dark") {
         document.documentElement.setAttribute("data-theme", "light");
-        localStorage.setItem("theme", "light");
+        try { localStorage.setItem("theme", "light"); } catch(e){}
       } else {
         document.documentElement.setAttribute("data-theme", "dark");
-        localStorage.setItem("theme", "dark");
+        try { localStorage.setItem("theme", "dark"); } catch(e){}
       }
       updateIcon();
     });
@@ -62,16 +68,22 @@
 
   const setModalOpen = (open) => {
     if (!modalBackdrop) return;
-    modalBackdrop.classList.toggle("is-open", open);
-    document.body.classList.toggle("modal-open", open);
+    if (open) {
+      modalBackdrop.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+    } else {
+      modalBackdrop.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+    }
   };
 
   const clearContactErrors = () => {
     contactFields.forEach((id) => {
-      qs(`#${id}`)?.classList.remove("error");
+      const field = qs(`#${id}`);
+      if (field) field.classList.remove("border-red-500");
       const error = qs(`#err-${id}`);
       if (error) {
-        error.classList.remove("show");
+        error.classList.add("hidden");
         error.textContent = "";
       }
     });
@@ -100,11 +112,14 @@
   });
 
   const showFieldError = (id, message) => {
-    qs(`#${id}`)?.classList.add("error");
+    const field = qs(`#${id}`);
+    if (field) {
+      field.classList.add("border-red-500");
+    }
     const error = qs(`#err-${id}`);
     if (error) {
       error.textContent = message;
-      error.classList.add("show");
+      error.classList.remove("hidden");
     }
   };
 
@@ -165,7 +180,11 @@
       qs('[name="cf-turnstile-response"]')?.value ||
       "";
 
-    if (cfContainer && !turnstileToken) {
+    const isLocal = window.location.hostname === "localhost" || 
+                    window.location.hostname === "127.0.0.1" || 
+                    window.location.hostname.startsWith("192.168.");
+
+    if (cfContainer && !turnstileToken && !isLocal) {
       showFieldError("fmessage", "Please complete the captcha.");
       hasError = true;
     }

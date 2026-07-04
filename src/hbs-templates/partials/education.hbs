@@ -1,23 +1,26 @@
-<div class="timeline-container">
+<div class="flex flex-col gap-6">
   {{#each education}}
-  <div class="timeline-item">
-    <div class="timeline-header">
-      <div>
-        <div class="timeline-title">{{this.title}}</div>
-        <div class="timeline-subtitle">{{this.institution}}</div>
-      </div>
-      <div class="timeline-date">{{this.period}}</div>
+  <article class="flex flex-col border-b border-gray-300 pb-6 last:border-0 last:pb-0">
+    
+    <div class="flex items-baseline justify-between mb-1">
+      <h3 class="text-lg font-serif font-bold text-primary">{{this.institution}}</h3>
+      <span class="text-[9px] font-bold tracking-widest uppercase text-slate-500">{{this.period}}</span>
     </div>
+    
+    <div class="text-sm font-bold text-brand-red uppercase tracking-wide mb-2">{{this.title}}</div>
+    
     {{#if this.subtitle}}
-      <p class="timeline-desc">{{this.subtitle}}</p>
+      <p class="text-xs font-serif text-slate-800 leading-relaxed text-justify mb-3">{{this.subtitle}}</p>
     {{/if}}
+    
     {{#if this.tags}}
-    <div class="pill-container" style="margin-top: 0.5rem;">
+    <div class="text-[10px] font-sans font-bold uppercase tracking-widest text-slate-500">
       {{#each this.tags}}
-      <span class="pill" style="font-size: 0.7rem; padding: 0.2rem 0.4rem; background: var(--color-border); color: var(--color-text-main); border: none;">{{this}}</span>
+      <span class="mr-2">{{this}}</span>
       {{/each}}
     </div>
     {{/if}}
-  </div>
+    
+  </article>
   {{/each}}
 </div>

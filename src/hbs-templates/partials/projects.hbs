@@ -1,12 +1,9 @@
-<div class="premium-projects-section" id="projects">
-  <div class="premium-card">
-    <h2 class="premium-card-title">Projects</h2>
-    
-    <div class="projects-grid">
-      {{#each projects}}
-        {{> project-card}}
-      {{/each}}
-    </div>
-    
+<div id="projects">
+  <h2 class="text-2xl font-serif font-bold text-primary mb-8 tracking-tight">Featured Projects</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+    {{#each projects}}
+      {{> project-card}}
+    {{/each}}
   </div>
 </div>

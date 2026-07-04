@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -7,9 +7,9 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <title>{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C | Freelance Fullstack Developer | React & Node.js{{/if}}</title>
-    <meta name="description" content="{{#if meta.description}}{{meta.description}}{{else}}Hire Vyshnav P C, a freelance fullstack developer specializing in React JS, Node.js, and modern web applications. Available for freelance projects.{{/if}}" />
-    <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, freelance fullstack developer, freelancer, React JS developer, Node.js developer, freelance web developer{{/if}}" />
+    <title>{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C | Software Engineer | React & Node.js{{/if}}</title>
+    <meta name="description" content="{{#if meta.description}}{{meta.description}}{{else}}Vyshnav P C is a Software Engineer specializing in React JS, Node.js, and modern web applications. Actively seeking full-time roles.{{/if}}" />
+    <meta name="keywords" content="{{#if meta.keywords}}{{meta.keywords}}{{else}}Vyshnav PC, Software Engineer, fullstack developer, React JS developer, Node.js developer{{/if}}" />
     <meta name="author" content="{{#if meta.author}}{{meta.author}}{{else}}Vyshnav P C{{/if}}" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#00d4aa" />
@@ -18,8 +18,8 @@
     {{!-- Open Graph --}}
     <meta property="og:type" content="{{#if meta.ogType}}{{meta.ogType}}{{else}}website{{/if}}" />
     <meta property="og:locale" content="en_IN" />
-    <meta property="og:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C | Freelance Fullstack Developer | React & Node.js{{/if}}" />
-    <meta property="og:description" content="{{#if meta.description}}{{meta.description}}{{else}}Hire Vyshnav P C, a freelance fullstack developer specializing in React JS, Node.js, and modern web applications. Available for freelance projects.{{/if}}" />
+    <meta property="og:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C | Software Engineer | React & Node.js{{/if}}" />
+    <meta property="og:description" content="{{#if meta.description}}{{meta.description}}{{else}}Vyshnav P C is a Software Engineer specializing in React JS, Node.js, and modern web applications. Actively seeking full-time roles.{{/if}}" />
     {{#if meta.canonical}}<meta property="og:url" content="{{meta.canonical}}" />{{/if}}
     <meta property="og:site_name" content="{{#if meta.siteName}}{{meta.siteName}}{{else}}Vyshnav P C{{/if}}" />
     <meta property="og:image" content="{{#if meta.ogImage}}{{meta.ogImage}}{{else}}https://portfolio.vyshnavpc.com/og-preview.png{{/if}}" />
@@ -29,8 +29,8 @@
 
     {{!-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C | Freelance Fullstack Developer | React & Node.js{{/if}}" />
-    <meta name="twitter:description" content="{{#if meta.description}}{{meta.description}}{{else}}Hire Vyshnav P C, a freelance fullstack developer specializing in React JS, Node.js, and modern web applications. Available for freelance projects.{{/if}}" />
+    <meta name="twitter:title" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C | Software Engineer | React & Node.js{{/if}}" />
+    <meta name="twitter:description" content="{{#if meta.description}}{{meta.description}}{{else}}Vyshnav P C is a Software Engineer specializing in React JS, Node.js, and modern web applications. Actively seeking full-time roles.{{/if}}" />
     {{#if meta.twitterHandle}}<meta name="twitter:site" content="{{meta.twitterHandle}}" />{{/if}}
     <meta name="twitter:image" content="{{#if meta.ogImage}}{{meta.ogImage}}{{else}}https://portfolio.vyshnavpc.com/og-preview.png{{/if}}" />
     <meta name="twitter:image:alt" content="{{#if meta.title}}{{meta.title}}{{else}}Vyshnav P C — Portfolio{{/if}}" />
@@ -47,7 +47,7 @@
             "@type": "Person",
             "@id": "https://portfolio.vyshnavpc.com/#person",
             "name": "Vyshnav P C",
-            "jobTitle": "Freelance Fullstack Developer",
+            "jobTitle": "Software Engineer",
             "url": "https://portfolio.vyshnavpc.com/",
             "sameAs": [
               "https://github.com/vyshn4v",
@@ -57,8 +57,8 @@
           {
             "@type": "ProfessionalService",
             "@id": "https://portfolio.vyshnavpc.com/#service",
-            "name": "Vyshnav P C - Freelance Fullstack Developer",
-            "description": "Freelance fullstack development services specializing in React JS and Node.js. Available for hire.",
+            "name": "Vyshnav P C - Software Engineer",
+            "description": "Software Engineer specializing in React JS and Node.js. Actively seeking full-time roles.",
             "provider": {
               "@id": "https://portfolio.vyshnavpc.com/#person"
             },
@@ -71,8 +71,13 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Premium Theme -->
-    <link rel="stylesheet" href="/css/premium-theme.css?v=49" />
+    {{#if is_post}}
+    <link rel="stylesheet" href="/css/post.css?v=6" />
+    <link rel="stylesheet" href="/css/post-mongo.css?v=6" />
+    {{/if}}
+
+    <!-- Tailwind CSS Output (Cache-busted) -->
+    <link rel="stylesheet" href="/css/tailwind-output.css?v=14" />
 
     {{{_sections.styles}}}
 
@@ -91,13 +96,15 @@
     {{> footer}}
 
     <!-- Global Contact Modal -->
-    <button class="floating-contact-btn" id="openContact" aria-label="Contact Developer">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-    </button>
 
     {{> contact}}
 
     {{{_sections.scripts}}}
+    
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         // Handle trigger-contact-modal class for nav links
@@ -107,7 +114,8 @@
         if (modalBackdrop) {
           const openModal = (e) => {
             if (e) e.preventDefault();
-            modalBackdrop.classList.add("is-open");
+            modalBackdrop.classList.remove("hidden");
+            document.body.classList.add("overflow-hidden");
           };
           
           triggers.forEach(trigger => {
@@ -117,20 +125,22 @@
       });
     </script>
 
-    <script src="/js/main.js?v=6"></script>
     <!-- Cookie Consent Banner -->
-    <div id="cookieConsentBanner" class="cookie-consent-banner">
-      <div class="cookie-consent-content">
-        <p class="cookie-consent-text">
+    <div id="cookieConsentBanner" class="fixed bottom-4 left-4 max-w-sm bg-[#111118] border border-white/10 shadow-2xl rounded-xl p-6 z-[9999] transform translate-y-8 opacity-0 pointer-events-none transition-all duration-500">
+      <div>
+        <p class="text-xs text-slate-300 mb-4 leading-relaxed font-serif">
           This website uses Google Analytics and Microsoft Clarity to understand how visitors interact with the site and improve the experience. 
           By continuing to use the site, you agree to these data collection policies. 
-          <a href="https://www.microsoft.com/privacy/privacystatement" target="_blank" rel="noopener noreferrer">Learn more</a>.
+          <a href="https://www.microsoft.com/privacy/privacystatement" target="_blank" rel="noopener noreferrer" class="text-primary underline hover:text-white transition-colors">Learn more</a>.
         </p>
-        <div class="cookie-consent-actions">
-          <button id="acceptCookies" class="btn btn-primary cookie-btn">Got it</button>
+        <div class="flex gap-3">
+          <button id="acceptCookies" class="w-full bg-primary hover:bg-primary/80 text-white font-bold py-2.5 px-4 rounded-lg text-sm transition-colors font-sans">Got it</button>
         </div>
       </div>
     </div>
+
+    <script src="/js/main.js?v=9"></script>
+    <script src="/js/gsap-animations.js?v=1"></script>
 
     <script>
       // Lazy-load all scripts on interaction (Informational consent mode)
@@ -192,20 +202,30 @@
           window.addEventListener(e, loadTrackingScripts, { once: true, passive: true });
         });
 
+
         const consentBanner = document.getElementById('cookieConsentBanner');
         const acceptBtn = document.getElementById('acceptCookies');
         
-        // Check if user previously acknowledged the banner
-        const consentStatus = localStorage.getItem('cookieConsent');
-        
-        if (consentStatus !== 'acknowledged') {
-          // Show banner
-          consentBanner.classList.add('show');
+        if (consentBanner && acceptBtn) {
+          let consentStatus = null;
+          try {
+            consentStatus = localStorage.getItem('cookieConsent');
+          } catch(e){}
           
-          acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('cookieConsent', 'acknowledged');
-            consentBanner.classList.remove('show');
-          });
+          if (consentStatus !== 'acknowledged') {
+            // Show banner (remove hidden state classes, add visible state classes)
+            setTimeout(() => {
+              consentBanner.classList.remove('translate-y-8', 'opacity-0', 'pointer-events-none');
+              consentBanner.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+            }, 500); // small delay to allow smooth transition on load
+            
+            acceptBtn.addEventListener('click', () => {
+              try { localStorage.setItem('cookieConsent', 'acknowledged'); } catch(e){}
+              // Hide banner
+              consentBanner.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+              consentBanner.classList.add('translate-y-8', 'opacity-0', 'pointer-events-none');
+            });
+          }
         }
       })();
     </script>
