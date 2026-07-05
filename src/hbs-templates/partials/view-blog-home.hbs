@@ -1,6 +1,7 @@
 <div class="border-y-2 border-primary py-2 mb-8" id="filterBar">
   <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[10px] font-sans font-bold uppercase tracking-widest text-primary divide-x divide-primary">
-    <li class="pl-4 first:pl-0 first:border-none"><button class="filter-btn active hover:text-slate-500" data-filter="all">All posts</button></li>
+    <li class="pl-4 first:pl-0 first:border-none"><a href="/" class="hover:text-slate-500">🏠 Home</a></li>
+    <li class="pl-4"><button class="filter-btn active hover:text-slate-500" data-filter="all">All posts</button></li>
     {{#each categories}}
       <li class="pl-4"><button class="filter-btn hover:text-slate-500" data-filter="{{slug}}">{{icon}} {{label}}</button></li>
     {{/each}}
