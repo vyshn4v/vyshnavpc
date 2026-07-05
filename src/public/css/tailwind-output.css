@@ -1687,6 +1687,10 @@ body::selection {
   margin-top: 0.5rem;
 }
 
+.first-letter\:mr-1\.5::first-letter {
+  margin-right: 0.375rem;
+}
+
 .first-letter\:text-6xl::first-letter {
   font-size: 3.75rem;
   line-height: 1;
