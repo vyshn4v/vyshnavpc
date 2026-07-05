@@ -901,6 +901,10 @@ body::selection {
   width: 9rem;
 }
 
+.w-40 {
+  width: 10rem;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -1791,6 +1795,10 @@ body::selection {
 
   .sm\:w-40 {
     width: 10rem;
+  }
+
+  .sm\:w-44 {
+    width: 11rem;
   }
 
   .sm\:max-w-lg {
