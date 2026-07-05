@@ -889,6 +889,10 @@ body::selection {
   width: 12rem;
 }
 
+.w-32 {
+  width: 8rem;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -1239,6 +1243,10 @@ body::selection {
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
 }
 
 .px-2 {
@@ -1854,6 +1862,10 @@ body::selection {
     width: 16rem;
   }
 
+  .md\:w-40 {
+    width: 10rem;
+  }
+
   .md\:max-w-\[240px\] {
     max-width: 240px;
   }
@@ -1905,6 +1917,10 @@ body::selection {
 
   .md\:p-12 {
     padding: 3rem;
+  }
+
+  .md\:p-2 {
+    padding: 0.5rem;
   }
 
   .md\:pb-0 {
