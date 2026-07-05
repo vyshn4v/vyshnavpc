@@ -1800,6 +1800,10 @@ body::selection {
     flex-direction: row;
   }
 
+  .sm\:items-center {
+    align-items: center;
+  }
+
   .sm\:p-0 {
     padding: 0px;
   }

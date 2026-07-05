@@ -13,21 +13,21 @@
       </h2>
       
       <!-- Reporter Byline & Actions -->
-      <div class="flex flex-col gap-6 w-full">
-        <div class="text-left border-y-2 border-gray-300 py-3 w-full">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-y-2 border-gray-300 py-3 w-full gap-4">
+        <div class="text-left">
           <div class="text-[10px] uppercase font-bold tracking-widest text-brand-red mb-1">Special Report</div>
           <div class="font-serif font-bold text-sm text-primary leading-tight">By Vyshnav P C</div>
           <div class="text-[10px] text-slate-600 uppercase font-sans tracking-widest mt-1">Kannur</div>
         </div>
         
-        <div class="flex flex-wrap gap-4 w-full">
+        <div class="flex flex-wrap gap-4">
           {{#if hero.cta_primary}}
-          <button class="trigger-contact-modal bg-primary text-white hover:bg-slate-700 font-bold uppercase tracking-wider py-2 px-6 text-[10px] transition-colors shadow-sm">
+          <button class="trigger-contact-modal bg-primary text-white hover:bg-slate-700 font-bold uppercase tracking-wider py-2 px-6 text-[10px] transition-colors shadow-sm shrink-0">
             {{hero.cta_primary.label}}
           </button>
           {{/if}}
           
-          <a href="{{#if hero.resume_link}}{{hero.resume_link}}{{else}}https://drive.google.com/uc?export=download&id=19BkWajPKTkyPcSyFoE9tRYra6omK77Hx{{/if}}" download="Vyshnav_PC_Resume.pdf" class="flex items-center gap-2 bg-white text-primary hover:bg-slate-50 font-bold uppercase tracking-wider py-2 px-4 text-[10px] transition-colors border border-gray-300 shadow-sm">
+          <a href="{{#if hero.resume_link}}{{hero.resume_link}}{{else}}https://drive.google.com/uc?export=download&id=19BkWajPKTkyPcSyFoE9tRYra6omK77Hx{{/if}}" download="Vyshnav_PC_Resume.pdf" class="flex items-center gap-2 bg-white text-primary hover:bg-slate-50 font-bold uppercase tracking-wider py-2 px-4 text-[10px] transition-colors border border-gray-300 shadow-sm shrink-0">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             Download Resume
           </a>
