@@ -1,6 +1,6 @@
 {{!-- views/post.hbs --}}
 {{#section "styles"}}
-  <link rel="stylesheet" href="/css/post.css?v=20" />
+  <link rel="stylesheet" href="/css/post.css?v=21" />
 {{/section}}
 {{#section "scripts"}}
   <script src="/js/post.js?v=2"></script>
@@ -30,8 +30,9 @@
   </div>
 
 {{!-- ── Article body ── --}}
-  <main>
-    <div class="bg-white">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
+    <main class="lg:col-span-8 flex flex-col lg:pr-8 lg:border-r-[2px] border-gray-300">
+      <div class="bg-white">
       <article class="post-article">
 
         {{#if lead}}
@@ -312,12 +313,30 @@
       {{/each}}
 
     </article>
-    </div>
-  </main>
+      </div>
+    </main>
+    <aside class="lg:col-span-4 flex flex-col pl-2">
+      <div class="sticky top-8">
+        <h2 class="text-3xl font-head font-black text-primary mb-4 tracking-tighter border-b-[4px] border-primary pb-2 uppercase">Author</h2>
+        <div class="border-[2px] border-primary p-6 mb-8 bg-gray-50">
+          <p class="font-sans text-lg font-black uppercase tracking-widest text-primary mb-2">Vyshnav P C</p>
+          <p class="font-serif text-sm text-gray-800 leading-relaxed text-justify mb-4">Software Engineer specializing in React JS and Node.js. Obsessed with building scalable, beautiful web applications.</p>
+          <a href="/#contact" class="inline-block bg-primary text-white font-sans font-bold uppercase tracking-widest text-xs px-6 py-3 hover:bg-brand-red transition-colors">Contact Me</a>
+        </div>
+        
+        <h2 class="text-3xl font-head font-black text-primary mb-4 tracking-tighter border-b-[4px] border-primary pb-2 uppercase">Share</h2>
+        <div class="flex flex-wrap gap-4">
+          <a href="#" class="border-[2px] border-primary text-primary px-4 py-2 font-sans font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">Twitter</a>
+          <a href="#" class="border-[2px] border-primary text-primary px-4 py-2 font-sans font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">LinkedIn</a>
+          <a href="#" class="border-[2px] border-primary text-primary px-4 py-2 font-sans font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">Copy Link</a>
+        </div>
+      </div>
+    </aside>
+  </div>
 </div>
 
 {{!-- ── Post footer ── --}}
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 border-t-2 border-primary pt-6 mt-12 mb-12 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 border-t-[6px] border-primary pt-6 mt-12 mb-12 flex flex-col md:flex-row justify-between items-center gap-4">
   <p class="text-sm font-serif font-bold text-slate-700 italic">{{footer.credit}}</p>
   <div class="flex flex-wrap gap-2 text-[9px] font-sans font-bold uppercase tracking-widest text-white">
     {{#each footer.tags}}
@@ -328,7 +347,7 @@
 
 {{!-- ── Related posts ── --}}
 {{#if related}}
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mb-12">
     <section class="border-t-4 border-primary pt-8">
       <h3 class="text-3xl font-head font-black text-primary mb-6 tracking-tighter uppercase">Related Coverage</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
