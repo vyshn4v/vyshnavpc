@@ -26,6 +26,11 @@ const hrJobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    targetAudience: {
+      type: String,
+      enum: ["india", "india_startup", "uae"],
+      default: "india",
+    },
     status: {
       type: String,
       enum: ["active", "paused", "completed"],

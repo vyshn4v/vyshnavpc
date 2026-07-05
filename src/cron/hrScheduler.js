@@ -115,18 +115,17 @@ async function sendDailySummary(jobIds) {
 export const triggerSummaryEmail = (jobIds) => sendDailySummary(jobIds);
 
 export const startHrScheduler = () => {
-  // Every day at 09:00 AM
-  cron.schedule("0 9 * * *", async () => {
-    console.log("[HR Scheduler] Running daily 9 AM job...");
+  // Common function to execute a schedule block
+  const runSchedule = async (audiences, label) => {
+    console.log(`[HR Scheduler] Running ${label} job...`);
     try {
       const HrJob = getHrJobModel();
-
-      // Only pick jobs that are active AND have NOT been run today already
       const todayStart = new Date();
       todayStart.setHours(0, 0, 0, 0);
 
       const activeJobs = await HrJob.find({
         status: "active",
+        targetAudience: { $in: audiences },
         $or: [
           { lastRunAt: null },
           { lastRunAt: { $lt: todayStart } }
@@ -134,12 +133,11 @@ export const startHrScheduler = () => {
       });
 
       if (activeJobs.length === 0) {
-        console.log("[HR Scheduler] No active jobs found.");
+        console.log(`[HR Scheduler] No active jobs found for ${label}.`);
         return;
       }
 
-      console.log(`[HR Scheduler] Found ${activeJobs.length} active jobs. Queueing...`);
-
+      console.log(`[HR Scheduler] Found ${activeJobs.length} active jobs for ${label}. Queueing...`);
       const jobIds = [];
       for (const job of activeJobs) {
         publishHrJob({
@@ -157,13 +155,25 @@ export const startHrScheduler = () => {
         jobIds.push(job._id.toString());
       }
 
-      // Fire and forget — send ONE summary email after workers finish
       sendDailySummary(jobIds);
-
     } catch (err) {
-      console.error("[HR Scheduler] Error running cron job:", err);
+      console.error(`[HR Scheduler] Error running ${label} job:`, err);
     }
-  });
+  };
 
-  console.log("[HR Scheduler] Initialized: Waiting for 9 AM...");
+  const tz = { timezone: "Asia/Kolkata" };
+
+  // Mon 10:30 AM -> india, india_startup
+  cron.schedule("30 10 * * 1", () => runSchedule(["india", "india_startup"], "Monday 10:30 AM (India)"), tz);
+
+  // Mon 11:00 AM -> uae
+  cron.schedule("0 11 * * 1", () => runSchedule(["uae"], "Monday 11:00 AM (UAE)"), tz);
+
+  // Tue-Fri 9:30 AM -> ALL
+  cron.schedule("30 9 * * 2-5", () => runSchedule(["india", "india_startup", "uae"], "Tue-Fri 9:30 AM (All)"), tz);
+
+  // Sat 10:00 AM -> india_startup ONLY
+  cron.schedule("0 10 * * 6", () => runSchedule(["india_startup"], "Saturday 10:00 AM (India Startups)"), tz);
+
+  console.log("[HR Scheduler] Initialized dynamic regional schedules (IST timezone)...");
 };

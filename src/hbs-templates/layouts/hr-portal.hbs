@@ -234,6 +234,15 @@ textarea:-webkit-autofill:focus {
           <input type="url" id="driveLink" class="saas-input" placeholder="https://drive.google.com/file/d/ID/view" autocomplete="off" />
         </div>
 
+        <div class="form-group">
+          <label for="targetAudience">Target Audience (Scheduling)</label>
+          <select id="targetAudience" class="saas-input" style="appearance: auto;" required>
+            <option value="india">India (Corporate / MNC)</option>
+            <option value="india_startup">India (Startups)</option>
+            <option value="uae">UAE (Dubai / Abu Dhabi)</option>
+          </select>
+        </div>
+
         <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
           <label for="content">Email Body</label>
           <textarea id="content" class="saas-input" style="flex: 1; min-height: 200px;" required placeholder="Hi Team,\n\nI am writing to express my interest..." autocomplete="off"></textarea>
@@ -400,7 +409,8 @@ document.getElementById('hrForm').addEventListener('submit', async (e) => {
       bcc: bccChips.getValues(),
       subject: document.getElementById('subject').value,
       driveLink: document.getElementById('driveLink').value,
-      content: document.getElementById('content').value
+      content: document.getElementById('content').value,
+      targetAudience: document.getElementById('targetAudience').value
     };
     
     const res = await fetch('/hr-portal/schedule', {
@@ -415,7 +425,7 @@ document.getElementById('hrForm').addEventListener('submit', async (e) => {
     if (res.ok && data.ok) {
       statusBox.innerHTML = `
         <strong style="color: #2dd4bf;">✅ Campaign Scheduled!</strong><br/><br/>
-        <span style="color: #fff;">This campaign will automatically run every day at 9:00 AM.</span><br/>
+        <span style="color: #fff;">This campaign will automatically run based on the specific audience activity schedule.</span><br/>
       `;
       statusBox.style.borderColor = 'rgba(45, 212, 191, 0.3)';
       document.getElementById('dashboardSection').style.display = 'block';

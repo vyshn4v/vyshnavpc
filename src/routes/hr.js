@@ -82,7 +82,7 @@ router.get("/", (req, res) => {
  */
 router.post("/schedule", async (req, res) => {
   try {
-    const { to, cc, bcc, subject, content, driveLink, adminKey } = req.body;
+    const { to, cc, bcc, subject, content, driveLink, adminKey, targetAudience } = req.body;
 
     if (!adminKey || adminKey !== process.env.HR_ADMIN_KEY) {
       return res.status(403).json({ ok: false, error: "Unauthorized. Invalid Admin Key." });
@@ -100,6 +100,7 @@ router.post("/schedule", async (req, res) => {
       subject,
       content,
       driveLink: driveLink || "",
+      targetAudience: targetAudience || "india",
       status: "active"
     });
 
