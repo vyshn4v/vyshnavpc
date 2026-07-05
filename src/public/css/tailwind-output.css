@@ -791,6 +791,10 @@ body::selection {
   margin-top: auto;
 }
 
+.mb-0 {
+  margin-bottom: 0px;
+}
+
 .line-clamp-3 {
   overflow: hidden;
   display: -webkit-box;
