@@ -15,27 +15,11 @@
       font-family: Georgia, Cambria, "Times New Roman", Times, serif;
     }
     
-    @media (min-width: 768px) {
-      .post-article {
-        column-count: 2;
-        column-gap: 2rem;
-        column-rule: 1px solid #ddd;
-      }
-    }
-    
-    @media (min-width: 1024px) {
-      .post-article {
-        column-count: 3;
-        column-gap: 3rem;
-      }
-    }
-    
-    /* Ensure elements have top/bottom margins and fit inside columns without breaking */
+    /* Ensure elements have top/bottom margins */
     .diagram-wrap, .code-block, .phases-grid, .operations-grid, .index-grid, 
     .pipeline-stages, .topics-list, .table-wrap, .steps-list, .callout, .microtask-banner {
       margin-top: 1.5rem;
       margin-bottom: 1.5rem;
-      break-inside: avoid;
     }
     
     .post-article p {
@@ -55,7 +39,6 @@
       text-transform: uppercase;
       border-bottom: 2px solid #000;
       padding-bottom: 0.25rem;
-      column-span: all;
     }
     
     .post-article h3 {
@@ -65,7 +48,6 @@
       letter-spacing: -0.01em;
       margin: 0.75rem 0 0.25rem;
       font-style: italic;
-      column-span: all;
     }
     
     /* First paragraph drop cap */
@@ -161,7 +143,6 @@
       border-left: 3px solid var(--color-primary);
       padding-left: 1.15rem;
       margin-bottom: 1rem;
-      column-span: all;
     }
     .post-article h2 {
       font-size: 1.75rem;
