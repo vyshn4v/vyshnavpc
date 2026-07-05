@@ -1851,6 +1851,10 @@ body::selection {
     margin-right: 0px;
   }
 
+  .md\:block {
+    display: block;
+  }
+
   .md\:w-48 {
     width: 12rem;
   }
