@@ -714,10 +714,6 @@ body::selection {
   float: right;
 }
 
-.float-left {
-  float: left;
-}
-
 .clear-both {
   clear: both;
 }
@@ -725,6 +721,10 @@ body::selection {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
 }
 
 .mb-0\.5 {
@@ -763,12 +763,12 @@ body::selection {
   margin-bottom: 2rem;
 }
 
-.mr-2 {
-  margin-right: 0.5rem;
+.ml-4 {
+  margin-left: 1rem;
 }
 
-.mr-4 {
-  margin-right: 1rem;
+.mr-2 {
+  margin-right: 0.5rem;
 }
 
 .mt-1 {
@@ -797,14 +797,6 @@ body::selection {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.mb-0 {
-  margin-bottom: 0px;
-}
-
-.ml-4 {
-  margin-left: 1rem;
 }
 
 .line-clamp-3 {
@@ -885,12 +877,12 @@ body::selection {
   min-height: 100vh;
 }
 
-.w-3 {
-  width: 0.75rem;
+.w-28 {
+  width: 7rem;
 }
 
-.w-32 {
-  width: 8rem;
+.w-3 {
+  width: 0.75rem;
 }
 
 .w-4 {
@@ -905,8 +897,8 @@ body::selection {
   width: 100%;
 }
 
-.w-28 {
-  width: 7rem;
+.w-36 {
+  width: 9rem;
 }
 
 .max-w-2xl {
@@ -915,10 +907,6 @@ body::selection {
 
 .max-w-4xl {
   max-width: 56rem;
-}
-
-.max-w-6xl {
-  max-width: 72rem;
 }
 
 .max-w-7xl {
@@ -976,21 +964,12 @@ body::selection {
        columns: 1;
 }
 
-.break-inside-avoid {
-  -moz-column-break-inside: avoid;
-       break-inside: avoid;
-}
-
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.flex-row {
-  flex-direction: row;
 }
 
 .flex-col {
@@ -1073,12 +1052,6 @@ body::selection {
 
 .gap-y-2 {
   row-gap: 0.5rem;
-}
-
-.space-y-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
 .space-y-1 > :not([hidden]) ~ :not([hidden]) {
@@ -1212,11 +1185,6 @@ body::selection {
 .bg-brand-red {
   --tw-bg-opacity: 1;
   background-color: rgb(201 42 42 / var(--tw-bg-opacity, 1));
-}
-
-.bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
 }
 
 .bg-primary {
@@ -1359,6 +1327,10 @@ body::selection {
   padding-bottom: 0.5rem;
 }
 
+.pb-3 {
+  padding-bottom: 0.75rem;
+}
+
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -1393,10 +1365,6 @@ body::selection {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pb-3 {
-  padding-bottom: 0.75rem;
 }
 
 .text-left {
@@ -1703,25 +1671,12 @@ body::selection {
   float: left;
 }
 
-.first-letter\:mr-2::first-letter {
-  margin-right: 0.5rem;
-}
-
 .first-letter\:mr-3::first-letter {
   margin-right: 0.75rem;
 }
 
-.first-letter\:mt-1::first-letter {
-  margin-top: 0.25rem;
-}
-
 .first-letter\:mt-2::first-letter {
   margin-top: 0.5rem;
-}
-
-.first-letter\:text-4xl::first-letter {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 
 .first-letter\:text-6xl::first-letter {
@@ -1826,12 +1781,16 @@ body::selection {
     margin-left: 1.5rem;
   }
 
+  .sm\:w-32 {
+    width: 8rem;
+  }
+
   .sm\:w-full {
     width: 100%;
   }
 
-  .sm\:w-32 {
-    width: 8rem;
+  .sm\:w-40 {
+    width: 10rem;
   }
 
   .sm\:max-w-lg {
@@ -1844,10 +1803,6 @@ body::selection {
 
   .sm\:items-center {
     align-items: center;
-  }
-
-  .sm\:gap-6 {
-    gap: 1.5rem;
   }
 
   .sm\:p-0 {
@@ -1885,37 +1840,16 @@ body::selection {
     grid-column: span 1 / span 1;
   }
 
-  .md\:float-right {
-    float: right;
-  }
-
   .md\:mb-0 {
     margin-bottom: 0px;
-  }
-
-  .md\:ml-4 {
-    margin-left: 1rem;
-  }
-
-  .md\:mr-0 {
-    margin-right: 0px;
   }
 
   .md\:ml-8 {
     margin-left: 2rem;
   }
 
-  .md\:block {
-    display: block;
-  }
-
   .md\:w-48 {
     width: 12rem;
-  }
-
-  .md\:columns-2 {
-    -moz-columns: 2;
-         columns: 2;
   }
 
   .md\:grid-cols-2 {
@@ -1936,10 +1870,6 @@ body::selection {
 
   .md\:flex-row {
     flex-direction: row;
-  }
-
-  .md\:gap-8 {
-    gap: 2rem;
   }
 
   .md\:border-b-0 {
@@ -1974,6 +1904,11 @@ body::selection {
     padding-top: 0.5rem;
   }
 
+  .md\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
   .md\:text-5xl {
     font-size: 3rem;
     line-height: 1;
@@ -1986,11 +1921,6 @@ body::selection {
   .md\:text-\[9px\] {
     font-size: 9px;
   }
-
-  .md\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
 }
 
 @media (min-width: 1024px) {
@@ -2000,10 +1930,6 @@ body::selection {
 
   .lg\:col-span-8 {
     grid-column: span 8 / span 8;
-  }
-
-  .lg\:block {
-    display: block;
   }
 
   .lg\:flex {
