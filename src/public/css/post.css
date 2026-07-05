@@ -15,22 +15,6 @@
       font-family: Georgia, Cambria, "Times New Roman", Times, serif;
     }
     
-    @media (min-width: 768px) {
-      .post-article {
-        column-count: 2;
-        column-gap: 2rem;
-        column-rule: 1px solid #222;
-      }
-    }
-    
-    @media (min-width: 1024px) {
-      .post-article {
-        column-count: 4;
-        column-gap: 1.5rem;
-        column-rule: 1px solid #222;
-      }
-    }
-    
     /* Ensure large widgets have space */
     .diagram-wrap, .code-block, .phases-grid, .operations-grid, .index-grid, 
     .pipeline-stages, .topics-list, .table-wrap, .steps-list, .microtask-banner {
