@@ -905,6 +905,10 @@ body::selection {
   width: 10rem;
 }
 
+.w-48 {
+  width: 12rem;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
