@@ -23,12 +23,19 @@
       }
     }
     
-    /* Ensure elements have top/bottom margins and span across columns to prevent awkward gaps */
+    @media (min-width: 1024px) {
+      .post-article {
+        column-count: 3;
+        column-gap: 3rem;
+      }
+    }
+    
+    /* Ensure elements have top/bottom margins and fit inside columns without breaking */
     .diagram-wrap, .code-block, .phases-grid, .operations-grid, .index-grid, 
     .pipeline-stages, .topics-list, .table-wrap, .steps-list, .callout, .microtask-banner {
       margin-top: 1.5rem;
       margin-bottom: 1.5rem;
-      column-span: all;
+      break-inside: avoid;
     }
     
     .post-article p {
