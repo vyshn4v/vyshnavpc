@@ -15,11 +15,19 @@
       font-family: Georgia, Cambria, "Times New Roman", Times, serif;
     }
     
-    /* Ensure elements have top/bottom margins */
+    @media (min-width: 768px) {
+      .post-article {
+        column-count: 2;
+        column-gap: 2.5rem;
+      }
+    }
+    
+    /* Ensure elements have top/bottom margins and don't break awkwardly across columns */
     .diagram-wrap, .code-block, .phases-grid, .operations-grid, .index-grid, 
     .pipeline-stages, .topics-list, .table-wrap, .steps-list, .callout, .microtask-banner {
       margin-top: 1rem;
       margin-bottom: 1rem;
+      break-inside: avoid;
     }
     
     .post-article p {
@@ -144,6 +152,7 @@
       border-left: 3px solid var(--color-primary);
       padding-left: 1.15rem;
       margin-bottom: 1rem;
+      column-span: all;
     }
     .post-article h2 {
       font-size: 1.75rem;
