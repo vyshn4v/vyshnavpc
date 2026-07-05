@@ -1,12 +1,18 @@
 {{!-- views/post.hbs --}}
 {{#section "styles"}}
-  <link rel="stylesheet" href="/css/post.css?v=23" />
+  <link rel="stylesheet" href="/css/post.css?v=24" />
 {{/section}}
 {{#section "scripts"}}
   <script src="/js/post.js?v=2"></script>
 {{/section}}
 {{!-- ── Post Hero (blog post title, meta, etc.) ── --}}
 <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12 mt-4">
+  <div class="mb-4">
+    <a href="/blogs" class="inline-flex items-center gap-2 text-xs font-sans font-black uppercase tracking-widest text-primary hover:text-brand-red transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      Return to Index
+    </a>
+  </div>
   <div class="border-b-[6px] border-primary pb-2 mb-4 border-t-[6px] pt-4">
     <div class="flex items-center gap-2 text-xs uppercase font-black tracking-widest text-brand-red mb-2" style="color:{{category.color}}">
       {{category.icon}} <span>{{category.label}}</span>
