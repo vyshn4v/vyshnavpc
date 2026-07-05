@@ -893,6 +893,10 @@ body::selection {
   width: 100%;
 }
 
+.w-28 {
+  width: 7rem;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -971,6 +975,10 @@ body::selection {
 
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .flex-col {
@@ -1806,6 +1814,10 @@ body::selection {
     width: 100%;
   }
 
+  .sm\:w-32 {
+    width: 8rem;
+  }
+
   .sm\:max-w-lg {
     max-width: 32rem;
   }
@@ -1816,6 +1828,10 @@ body::selection {
 
   .sm\:items-center {
     align-items: center;
+  }
+
+  .sm\:gap-6 {
+    gap: 1.5rem;
   }
 
   .sm\:p-0 {
@@ -1900,6 +1916,10 @@ body::selection {
 
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:gap-8 {
+    gap: 2rem;
   }
 
   .md\:border-b-0 {
