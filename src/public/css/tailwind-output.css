@@ -1260,6 +1260,11 @@ body::selection {
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
 }
 
+.bg-\[\#0a0a0f\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(10 10 15 / var(--tw-bg-opacity, 1));
+}
+
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;

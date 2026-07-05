@@ -6,7 +6,7 @@ import { triggerSummaryEmail } from "../cron/hrScheduler.js";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("hr-portal", { title: "HR Application Portal" });
+  res.render("hr-portal", { title: "HR Application Portal", layout: "blank-layout" });
 });
 
 /**
