@@ -1,18 +1,18 @@
 {{!-- views/post.hbs --}}
 {{#section "styles"}}
-  <link rel="stylesheet" href="/css/post.css?v=13" />
+  <link rel="stylesheet" href="/css/post.css?v=14" />
 {{/section}}
 {{#section "scripts"}}
   <script src="/js/post.js?v=2"></script>
 {{/section}}
 {{!-- ── Post Hero (blog post title, meta, etc.) ── --}}
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 mt-4">
-  <div class="border-b-4 border-primary pb-4 mb-8">
-    <div class="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-brand-red mb-4" style="color:{{category.color}}">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-12 mt-4">
+  <div class="border-b-4 border-primary pb-2 mb-4">
+    <div class="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-brand-red mb-2" style="color:{{category.color}}">
       {{category.icon}} <span>{{category.label}}</span>
     </div>
 
-    <h1 class="text-4xl sm:text-6xl font-head font-black tracking-tighter text-primary leading-[0.9] uppercase mb-6">
+    <h1 class="text-4xl sm:text-6xl font-head font-black tracking-tighter text-primary leading-[0.9] uppercase mb-4">
       {{#if titleLine2}}
         {{titleLine1}}<br><span class="text-slate-700">{{titleLine2}}</span>
       {{else}}
