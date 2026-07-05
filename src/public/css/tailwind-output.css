@@ -710,8 +710,16 @@ body::selection {
   z-index: 9999;
 }
 
+.float-right {
+  float: right;
+}
+
 .float-left {
   float: left;
+}
+
+.clear-both {
+  clear: both;
 }
 
 .mx-auto {
@@ -793,6 +801,10 @@ body::selection {
 
 .mb-0 {
   margin-bottom: 0px;
+}
+
+.ml-4 {
+  margin-left: 1rem;
 }
 
 .line-clamp-3 {
@@ -1810,6 +1822,10 @@ body::selection {
     margin-bottom: 2rem;
   }
 
+  .sm\:ml-6 {
+    margin-left: 1.5rem;
+  }
+
   .sm\:w-full {
     width: 100%;
   }
@@ -1883,6 +1899,10 @@ body::selection {
 
   .md\:mr-0 {
     margin-right: 0px;
+  }
+
+  .md\:ml-8 {
+    margin-left: 2rem;
   }
 
   .md\:block {
