@@ -4,9 +4,9 @@
     {{#if hero.role_label}}{{hero.role_label}}{{else}}Software Engineer seeking full-time roles in India{{/if}}
   </h1>
   
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+  <div class="flex flex-col md:flex-row gap-8 items-start mt-6 w-full">
     <!-- Left: Main Copy & Byline -->
-    <div class="lg:col-span-8 flex flex-col text-left lg:pr-6">
+    <div class="flex-1 flex flex-col text-left w-full">
       <!-- Subheadline / Lead -->
       <h2 class="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-slate-800 leading-tight mb-6">
         {{#if hero.tagline}}{{hero.tagline}}{{else}}I build fullstack products end-to-end — from infrastructure to interface.{{/if}}
@@ -14,13 +14,13 @@
       
       <!-- Reporter Byline & Actions -->
       <div class="flex flex-col gap-6 w-full mb-6">
-        <div class="text-left border-y-2 border-gray-300 py-3">
+        <div class="text-left border-y-2 border-gray-300 py-3 w-full">
           <div class="text-[10px] uppercase font-bold tracking-widest text-brand-red mb-1">Special Report</div>
           <div class="font-serif font-bold text-sm text-primary leading-tight">By Vyshnav P C</div>
           <div class="text-[10px] text-slate-600 uppercase font-sans tracking-widest mt-1">Kannur</div>
         </div>
         
-        <div class="flex flex-wrap gap-4">
+        <div class="flex flex-wrap gap-4 w-full">
           {{#if hero.cta_primary}}
           <button class="trigger-contact-modal bg-primary text-white hover:bg-slate-700 font-bold uppercase tracking-wider py-2 px-6 text-[10px] transition-colors shadow-sm">
             {{hero.cta_primary.label}}
@@ -34,8 +34,5 @@
         </div>
       </div>
     </div>
-    
-    <!-- Right: Invisible Spacer to align with the sidebar in landing-page.hbs -->
-    <div class="hidden lg:block lg:col-span-4"></div>
   </div>
 </div>
