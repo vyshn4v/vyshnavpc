@@ -1,48 +1,54 @@
-<div class="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start mb-8 pb-4">
-  <!-- Left: Main Copy -->
-  <div class="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-    <!-- Article Headline -->
-    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-serif font-black text-primary leading-none tracking-tighter w-full mb-4">
-      {{#if hero.role_label}}{{hero.role_label}}{{else}}Software Engineer seeking full-time roles in India{{/if}}
-    </h1>
-    
-    <!-- Subheadline / Lead -->
-    <h2 class="text-xl sm:text-2xl font-serif font-bold text-slate-700 leading-tight mb-8">
-      {{#if hero.tagline}}{{hero.tagline}}{{else}}I build fullstack products end-to-end — from infrastructure to interface.{{/if}}
-    </h2>
-    
-    <!-- Reporter Byline & Actions -->
-    <div class="flex flex-wrap items-center justify-center md:justify-start gap-6 w-full">
-      <div class="text-left">
-        <div class="text-[10px] uppercase font-bold tracking-widest text-brand-red">Special Report</div>
-        <div class="font-serif font-bold text-sm text-primary leading-tight">By Vyshnav P C</div>
-        <div class="text-[10px] text-slate-600 uppercase font-sans tracking-widest mt-1">Kannur</div>
-      </div>
+<div class="w-full max-w-6xl mx-auto mb-12">
+  <!-- Article Headline (Full Width) -->
+  <h1 class="text-5xl sm:text-6xl lg:text-7xl font-serif font-black text-primary leading-none tracking-tighter w-full text-center mb-6 border-b-4 border-primary pb-6 uppercase">
+    {{#if hero.role_label}}{{hero.role_label}}{{else}}Software Engineer seeking full-time roles in India{{/if}}
+  </h1>
+  
+  <div class="flex flex-col md:flex-row gap-8 lg:gap-12 items-start mt-6">
+    <!-- Left: Main Copy & Byline -->
+    <div class="flex-1 flex flex-col text-left">
+      <!-- Subheadline / Lead -->
+      <h2 class="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-slate-800 leading-tight mb-6">
+        {{#if hero.tagline}}{{hero.tagline}}{{else}}I build fullstack products end-to-end — from infrastructure to interface.{{/if}}
+      </h2>
       
-      <!-- Vertical divider -->
-      <div class="hidden sm:block w-[1px] h-12 bg-gray-300"></div>
-      
-      <div class="flex flex-wrap gap-4">
-        {{#if hero.cta_primary}}
-        <button class="trigger-contact-modal bg-primary text-white hover:bg-slate-700 font-bold uppercase tracking-wider py-2 px-6 text-[10px] transition-colors shadow-sm">
-          {{hero.cta_primary.label}}
-        </button>
-        {{/if}}
+      <!-- Reporter Byline & Actions -->
+      <div class="flex flex-col gap-6 w-full mb-6">
+        <div class="text-left border-y-2 border-gray-300 py-3">
+          <div class="text-[10px] uppercase font-bold tracking-widest text-brand-red mb-1">Special Report</div>
+          <div class="font-serif font-bold text-sm text-primary leading-tight">By Vyshnav P C</div>
+          <div class="text-[10px] text-slate-600 uppercase font-sans tracking-widest mt-1">Kannur</div>
+        </div>
         
-        <a href="{{#if hero.resume_link}}{{hero.resume_link}}{{else}}https://drive.google.com/uc?export=download&id=19BkWajPKTkyPcSyFoE9tRYra6omK77Hx{{/if}}" download="Vyshnav_PC_Resume.pdf" class="flex items-center gap-2 bg-white text-primary hover:bg-slate-50 font-bold uppercase tracking-wider py-2 px-4 text-[10px] transition-colors border border-gray-300 shadow-sm">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          Download Resume
-        </a>
+        <div class="flex flex-wrap gap-4">
+          {{#if hero.cta_primary}}
+          <button class="trigger-contact-modal bg-primary text-white hover:bg-slate-700 font-bold uppercase tracking-wider py-2 px-6 text-[10px] transition-colors shadow-sm">
+            {{hero.cta_primary.label}}
+          </button>
+          {{/if}}
+          
+          <a href="{{#if hero.resume_link}}{{hero.resume_link}}{{else}}https://drive.google.com/uc?export=download&id=19BkWajPKTkyPcSyFoE9tRYra6omK77Hx{{/if}}" download="Vyshnav_PC_Resume.pdf" class="flex items-center gap-2 bg-white text-primary hover:bg-slate-50 font-bold uppercase tracking-wider py-2 px-4 text-[10px] transition-colors border border-gray-300 shadow-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Resume
+          </a>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Right: Feature Photo -->
-  <div class="w-32 md:w-40 shrink-0 flex flex-col border border-gray-300 bg-white p-1 md:p-2 shadow-sm mx-auto md:mx-0">
-    <img src="/vyshnav_p_c.jpg" alt="Vyshnav P C" class="w-full h-auto object-cover pb-2">
-    <div class="border-t border-gray-300 pt-2 pb-1 px-1">
-      <div class="text-[9px] font-sans text-slate-600 uppercase tracking-widest leading-tight">
-        <span class="font-bold text-primary">PORTRAIT:</span> Fullstack developer Vyshnav P C.
+      {{#if hero.sub}}
+      <!-- Optional Hero Body Text -->
+      <p class="font-serif text-slate-800 text-sm leading-relaxed text-justify mt-2 first-letter:text-4xl first-letter:font-black first-letter:float-left first-letter:mr-2 first-letter:mt-1">
+        {{hero.sub}}
+      </p>
+      {{/if}}
+    </div>
+
+    <!-- Right: Feature Photo Inline -->
+    <div class="w-full md:w-1/2 lg:w-5/12 shrink-0 flex flex-col border border-gray-300 bg-white p-2 shadow-sm">
+      <img src="/vyshnav_p_c.jpg" alt="Vyshnav P C" class="w-full h-auto object-cover pb-2 grayscale-0">
+      <div class="border-t border-gray-300 pt-2 pb-1 px-1">
+        <div class="text-[9px] font-sans text-slate-600 uppercase tracking-widest leading-tight text-justify">
+          <span class="font-bold text-primary">PORTRAIT:</span> Fullstack developer Vyshnav P C, pictured locally. Specializing in MERN stack, Docker, and Azure cloud infrastructure.
+        </div>
       </div>
     </div>
   </div>
