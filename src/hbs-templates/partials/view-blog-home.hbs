@@ -1,4 +1,4 @@
-<div class="border-y-2 border-primary py-2 mb-8" id="filterBar">
+<div class="border-y-2 border-primary py-2 mb-6" id="filterBar">
   <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[10px] font-sans font-bold uppercase tracking-widest text-primary divide-x divide-primary">
     <li class="pl-4 first:pl-0 first:border-none"><a href="/" class="hover:text-slate-500">🏠 Home</a></li>
     <li class="pl-4"><button class="filter-btn active hover:text-slate-500" data-filter="all">All posts</button></li>
@@ -9,8 +9,8 @@
 </div>
 
 {{#if featured}}
-  <section class="mb-12 border-b-2 border-gray-300 pb-8">
-    <h2 class="text-2xl font-head font-black text-primary mb-6 tracking-tighter border-b-2 border-primary pb-2">Featured Column</h2>
+  <section class="mb-6 border-b-2 border-gray-300 pb-6">
+    <h2 class="text-2xl font-head font-black text-primary mb-4 tracking-tighter border-b-2 border-primary pb-2">Featured Column</h2>
     <div class="featured-post-wrap">
       {{> blog-card featured}}
     </div>
@@ -18,8 +18,8 @@
 {{/if}}
 
 <section class="all-posts-card">
-  <h2 class="text-2xl font-head font-black text-primary mb-6 tracking-tighter border-b-2 border-primary pb-2">Latest Articles</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12" id="postsGrid">
+  <h2 class="text-2xl font-head font-black text-primary mb-4 tracking-tighter border-b-2 border-primary pb-2">Latest Articles</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="postsGrid">
     {{#each posts}}
       {{> blog-card this}}
     {{/each}}
