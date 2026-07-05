@@ -176,9 +176,10 @@ router.get("/", async (req, res, next) => {
       }
       
       if (renderData.about && renderData.about.bio_paragraphs) {
-        renderData.about.bio_paragraphs[0] = "I'm Vyshnav, a Software Engineer who spent two years at Neutrinos working across the MERN stack — building features end-to-end, from database schema to deployment. I like being involved in the full lifecycle of a product, not just my slice of a sprint, which is why I've also picked up working knowledge of Docker, Kubernetes, Terraform, and Azure along the way. Right now I'm looking for a full-time role where I can keep growing as an engineer and take on real ownership. Outside of work, I build small projects to actually understand how things work under the hood — like a domain risk scanner I built to learn how security scanning tools operate.";
-        // Force the array to only have 1 paragraph by cutting off the rest
-        renderData.about.bio_paragraphs.length = 1;
+        renderData.about.bio_paragraphs = [
+          "I'm Vyshnav, a Software Engineer who spent two years at Neutrinos working across the MERN stack — building features end-to-end, from database schema to deployment. I like being involved in the full lifecycle of a product, not just my slice of a sprint, which is why I've also picked up working knowledge of Docker, Kubernetes, Terraform, and Azure along the way.",
+          "Right now I'm looking for a full-time role where I can keep growing as an engineer and take on real ownership. Outside of work, I build small projects to actually understand how things work under the hood — like a domain risk scanner I built to learn how security scanning tools operate."
+        ];
       }
     }
 
