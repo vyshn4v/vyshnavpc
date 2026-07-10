@@ -1,8 +1,9 @@
 <header class="w-full bg-background pb-2 pt-6">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- Top Meta Row -->
     {{#unless isSubpage}}
+    {{#unless isJourneyPage}}
+    <!-- Top Meta Row (Landing page only) -->
     <div class="relative flex justify-center items-end mb-2 pt-4">
       <!-- Left Metadata -->
       <div class="absolute left-0 bottom-0 text-[10px] font-sans text-primary uppercase tracking-tight hidden lg:flex flex-col items-start">
@@ -33,9 +34,10 @@
       </div>
     </div>
     {{/unless}}
+    {{/unless}}
 
     {{#if isSubpage}}
-    <!-- Subpage Header -->
+    <!-- Subpage Header (Blogs) -->
     <div class="flex items-end justify-between w-full mb-1 pt-4">
       <div>
         <div class="text-xs uppercase font-bold tracking-widest text-brand-red mb-1">Editorial Section</div>
@@ -46,7 +48,8 @@
     {{/if}}
 
     {{#unless isSubpage}}
-    <!-- Ticker (Nav Links) -->
+    {{#unless isJourneyPage}}
+    <!-- Ticker (Section Nav Links) -->
     <div class="border-y-2 border-primary py-1 mt-4">
       <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[10px] font-sans font-bold uppercase tracking-widest text-primary divide-x divide-primary">
         <li class="pl-4 first:pl-0 first:border-none"><a href="/#home" class="hover:text-slate-500">Home</a></li>
@@ -60,6 +63,7 @@
         <li class="pl-4"><a href="#" class="trigger-contact-modal hover:text-slate-500">Contact</a></li>
       </ul>
     </div>
+    {{/unless}}
     {{/unless}}
   </div>
 </header>

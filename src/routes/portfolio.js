@@ -11,8 +11,8 @@ const BASE_URL = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
 function buildMeta(site = {}) {
   const dbName = site.name || "Vyshnav";
   const name   = "Vyshnav"; // Force the primary keyword
-  const role   = site.role   || "MERN / Fullstack Developer";
-  const desc   = site.description || `Vyshnav P C — Fullstack MERN Software Engineer in Kannur, Kerala. Two years at Neutrinos, now actively seeking full-time roles to build end-to-end products.`;
+  const role   = site.role   || "MERN / Full Stack Developer";
+  const desc   = site.description || `Vyshnav P C — Full-stack developer with ~2 years of experience building scalable backend systems in Node.js and Express.js, plus dynamic React/Redux frontends. Skilled in integrating PostgreSQL, MongoDB, and Redis. Actively seeking full-time roles.`;
   const url    = site.url    || BASE_URL;
   const image  = site.ogImage || `${BASE_URL}/vyshnav_p_c.jpg`;
   const twitter = site.twitter || "";
@@ -43,7 +43,7 @@ function buildMeta(site = {}) {
     "description": desc,
     "worksFor": {
       "@type": "Organization",
-      "name": "Neutrinos"
+      "name": "Freelance / Open to work"
     },
     "alumniOf": [
       {
@@ -88,7 +88,7 @@ function buildMeta(site = {}) {
         }
       }
     ],
-    "knowsAbout": ["MERN Stack", "React.js", "Node.js", "MongoDB", "Express.js", "Kubernetes", "Docker", "DevOps"]
+    "knowsAbout": ["MERN Stack", "React.js", "Node.js", "MongoDB", "Express.js", "PostgreSQL", "Redis", "RabbitMQ", "Kubernetes", "Docker", "AWS", "DevOps"]
   });
 
   const schemaArray = JSON.stringify([
@@ -167,21 +167,18 @@ router.get("/", async (req, res, next) => {
     }
     
     // Fallback overrides for SEO rankings
-    if (renderData.hero) {
-      renderData.hero.role_label = 'Software Engineer — Actively seeking full-time roles';
-      renderData.hero.tagline = 'I build fullstack products end-to-end — from infrastructure to interface.';
-      renderData.hero.sub = 'I build fullstack products end-to-end...';
-      if (renderData.hero.cta_primary) {
-        renderData.hero.cta_primary.label = 'CONTACT ME';
-      }
-      
-      if (renderData.about && renderData.about.bio_paragraphs) {
-        renderData.about.bio_paragraphs = [
-          "I'm Vyshnav, a Software Engineer who spent two years at Neutrinos working across the MERN stack — building features end-to-end, from database schema to deployment. I like being involved in the full lifecycle of a product, not just my slice of a sprint, which is why I've also picked up working knowledge of Docker, Kubernetes, Terraform, and Azure along the way.",
-          "Right now I'm looking for a full-time role where I can keep growing as an engineer and take on real ownership. Outside of work, I build small projects to actually understand how things work under the hood — like a domain risk scanner I built to learn how security scanning tools operate."
-        ];
-      }
-    }
+    if (!renderData.hero) renderData.hero = {};
+    renderData.hero.role_label = 'MERN/Full Stack Developer — Actively seeking full-time roles';
+    renderData.hero.tagline = 'I build fullstack products end-to-end — from infrastructure to interface.';
+    renderData.hero.sub = 'I build fullstack products end-to-end...';
+    if (!renderData.hero.cta_primary) renderData.hero.cta_primary = {};
+    renderData.hero.cta_primary.label = 'CONTACT ME';
+    
+    if (!renderData.about) renderData.about = {};
+    renderData.about.bio_paragraphs = [
+      "I'm Vyshnav, a Freelance Fullstack Developer who spent ~2 years as an SDE 1 at Neutrinos working across the MERN stack — building features end-to-end, from database schema to deployment. I like being involved in the full lifecycle of a product, not just my slice of a sprint, which is why I've also picked up working knowledge of Docker, Kubernetes, AWS, and Azure along the way.",
+      "Right now I'm looking for a full-time role where I can keep growing as an engineer and take on real ownership. I specialize in React JS and Node.js. Outside of work, I build complex projects to actually understand how things work under the hood — like a distributed domain risk scanner I built with RabbitMQ, Redis, and PostgreSQL."
+    ];
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;
     renderData.meta = buildMeta(renderData.site);
@@ -199,7 +196,7 @@ router.get("/journey", async (req, res, next) => {
       process.env.REDIS_CACHE_KEY + ":journeyPage",
     );
     if (cachedData) {
-      return res.render("journey-page", { journey: JSON.parse(cachedData) });
+      return res.render("journey-page", { journey: JSON.parse(cachedData), isJourneyPage: true });
     }
     const journeyData = await getJourneyModel().findOne();
     let journeyObj = journeyData ? journeyData.toObject() : {};
@@ -247,7 +244,7 @@ router.get("/journey", async (req, res, next) => {
       { name: "Journey", url: `${base}/journey`, position: 2 }
     ];
 
-    res.render("journey-page", { journey: journeyObj, meta: journeyMeta, breadcrumbs });
+    res.render("journey-page", { journey: journeyObj, meta: journeyMeta, breadcrumbs, isJourneyPage: true });
   } catch (err) {
     next();
   }
