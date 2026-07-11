@@ -9,15 +9,14 @@ import dsaQuestions from "./dsa.questions.js";
 const BASE_URL = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
 
 function buildMeta(site = {}) {
-  const dbName = site.name || "Vyshnav";
-  const name   = "Vyshnav"; // Force the primary keyword
+  const name   = "Vyshnav";
   const role   = site.role   || "MERN / Full Stack Developer";
   const desc   = site.description || `Vyshnav P C — Full-stack developer with ~2 years of experience building scalable backend systems in Node.js and Express.js, plus dynamic React/Redux frontends. Skilled in integrating PostgreSQL, MongoDB, and Redis. Actively seeking full-time roles.`;
   const url    = site.url    || BASE_URL;
   const image  = site.ogImage || `${BASE_URL}/vyshnav_p_c.jpg`;
   const twitter = site.twitter || "";
 
-  const schema = JSON.stringify({
+  const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Vyshnav P C",
@@ -26,12 +25,7 @@ function buildMeta(site = {}) {
     "jobTitle": role,
     "email": "vyshnavpcnaravoor@gmail.com",
     "telephone": "+918086064478",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Kannur",
-      "addressRegion": "Kerala",
-      "addressCountry": "IN"
-    },
+    "address": { "@type": "PostalAddress", "addressLocality": "Kannur", "addressRegion": "Kerala", "addressCountry": "IN" },
     "sameAs": [
       site.github || "https://github.com/vyshn4v",
       site.linkedin || "https://www.linkedin.com/in/vyshnav-p-c-5567ba242/",
@@ -41,94 +35,25 @@ function buildMeta(site = {}) {
     ].filter(Boolean),
     "image": image,
     "description": desc,
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Freelance / Open to work"
-    },
+    "worksFor": { "@type": "Organization", "name": "Freelance / Open to work" },
     "alumniOf": [
-      {
-        "@type": "EducationalOrganization",
-        "name": "Packapeer Academy"
-      },
-      {
-        "@type": "EducationalOrganization",
-        "name": "Sree Sankaracharya Institute"
-      },
-      {
-        "@type": "EducationalOrganization",
-        "name": "GVHSS Kadirur"
-      }
+      { "@type": "EducationalOrganization", "name": "Packapeer Academy" },
+      { "@type": "EducationalOrganization", "name": "Sree Sankaracharya Institute" },
+      { "@type": "EducationalOrganization", "name": "GVHSS Kadirur" }
     ],
     "hasCredential": [
-      {
-        "@type": "EducationalOccupationalCredential",
-        "credentialCategory": "Bootcamp",
-        "name": "MERN Stack Development",
-        "recognizedBy": {
-          "@type": "EducationalOrganization",
-          "name": "Packapeer Academy"
-        }
-      },
-      {
-        "@type": "EducationalOccupationalCredential",
-        "credentialCategory": "Diploma",
-        "name": "Diploma in Graphic Design",
-        "recognizedBy": {
-          "@type": "EducationalOrganization",
-          "name": "Sree Sankaracharya Institute"
-        }
-      },
-      {
-        "@type": "EducationalOccupationalCredential",
-        "credentialCategory": "High School",
-        "name": "Electrical & Electronics Technology",
-        "recognizedBy": {
-          "@type": "EducationalOrganization",
-          "name": "GVHSS Kadirur"
-        }
-      }
+      { "@type": "EducationalOccupationalCredential", "credentialCategory": "Bootcamp", "name": "MERN Stack Development", "recognizedBy": { "@type": "EducationalOrganization", "name": "Packapeer Academy" } },
+      { "@type": "EducationalOccupationalCredential", "credentialCategory": "Diploma", "name": "Diploma in Graphic Design", "recognizedBy": { "@type": "EducationalOrganization", "name": "Sree Sankaracharya Institute" } },
+      { "@type": "EducationalOccupationalCredential", "credentialCategory": "High School", "name": "Electrical & Electronics Technology", "recognizedBy": { "@type": "EducationalOrganization", "name": "GVHSS Kadirur" } }
     ],
     "knowsAbout": ["MERN Stack", "React.js", "Node.js", "MongoDB", "Express.js", "PostgreSQL", "Redis", "RabbitMQ", "Kubernetes", "Docker", "AWS", "DevOps"]
-  });
+  };
 
   const schemaArray = JSON.stringify([
-    JSON.parse(schema),
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Vyshnav P C",
-      "url": url,
-      "description": desc
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": `Vyshnav | ${role} Portfolio`,
-      "url": url,
-      "description": desc,
-      "isPartOf": { "@type": "WebSite", "name": "Vyshnav P C", "url": url }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "@id": `${url}/#service`,
-      "name": `Vyshnav P C - Software Engineer`,
-      "description": "Software Engineer specializing in React JS and Node.js. Actively seeking full-time roles.",
-      "telephone": "+918086064478",
-      "priceRange": "$$",
-      "image": image,
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kannur",
-        "addressRegion": "Kerala",
-        "addressCountry": "IN"
-      },
-      "provider": {
-        "@type": "Person",
-        "name": "Vyshnav P C"
-      },
-      "url": url
-    }
+    personSchema,
+    { "@context": "https://schema.org", "@type": "WebSite", "name": "Vyshnav P C", "url": url, "description": desc },
+    { "@context": "https://schema.org", "@type": "WebPage", "name": `Vyshnav | ${role} Portfolio`, "url": url, "description": desc, "isPartOf": { "@type": "WebSite", "name": "Vyshnav P C", "url": url } },
+    { "@context": "https://schema.org", "@type": "ProfessionalService", "@id": `${url}/#service`, "name": "Vyshnav P C - Software Engineer", "description": "Software Engineer specializing in React JS and Node.js. Actively seeking full-time roles.", "telephone": "+918086064478", "priceRange": "$$", "image": image, "address": { "@type": "PostalAddress", "addressLocality": "Kannur", "addressRegion": "Kerala", "addressCountry": "IN" }, "provider": { "@type": "Person", "name": "Vyshnav P C" }, "url": url }
   ]);
 
   return {
@@ -143,6 +68,35 @@ function buildMeta(site = {}) {
     schemaJSON:     schemaArray,
   };
 }
+
+// Cache the default meta at module level — recomputed only on server restart
+let _cachedMeta = null;
+function getCachedMeta(site) {
+  if (!_cachedMeta) _cachedMeta = buildMeta(site);
+  return _cachedMeta;
+}
+
+// Static journey page meta — built once
+const _journeyMeta = {
+  title: "Vyshnav — My Career Journey",
+  description: "A timeline of Vyshnav's career journey — education, projects, milestones, and growth as a MERN / Fullstack Developer.",
+  keywords: "Vyshnav journey, Vyshnav career timeline, fullstack developer, software engineering journey",
+  author: "Vyshnav",
+  canonical: `${BASE_URL}/journey`,
+  siteName: "Vyshnav",
+  ogImage: `${BASE_URL}/og-preview.webp`,
+  schemaJSON: JSON.stringify({
+    "@context": "https://schema.org", "@type": "WebPage",
+    "name": "Vyshnav — My Career Journey",
+    "description": "A timeline of Vyshnav's career journey — education, projects, milestones, and growth as a MERN / Fullstack Developer.",
+    "url": `${BASE_URL}/journey`,
+    "isPartOf": { "@type": "WebSite", "name": "Vyshnav P C", "url": BASE_URL }
+  }),
+};
+const _journeyBreadcrumbs = [
+  { name: "Home", url: "/", position: 1 },
+  { name: "Journey", url: `${BASE_URL}/journey`, position: 2 }
+];
 
 router.get("/", async (req, res, next) => {
   try {
@@ -166,22 +120,24 @@ router.get("/", async (req, res, next) => {
       }
     }
     
-    // Fallback overrides for SEO rankings
+    // SEO fallbacks — only applied when the DB value is missing
     if (!renderData.hero) renderData.hero = {};
-    renderData.hero.role_label = 'MERN/Full Stack Developer — Actively seeking full-time roles';
-    renderData.hero.tagline = 'I build fullstack products end-to-end — from infrastructure to interface.';
-    renderData.hero.sub = 'I build fullstack products end-to-end...';
+    renderData.hero.role_label = renderData.hero.role_label || 'MERN/Full Stack Developer — Actively seeking full-time roles';
+    renderData.hero.tagline = renderData.hero.tagline || 'I build fullstack products end-to-end — from infrastructure to interface.';
+    renderData.hero.sub = renderData.hero.sub || 'Full-stack developer with ~2 years of experience building scalable backend systems in Node.js and Express.js, plus dynamic React/Redux frontends.';
     if (!renderData.hero.cta_primary) renderData.hero.cta_primary = {};
-    renderData.hero.cta_primary.label = 'CONTACT ME';
+    renderData.hero.cta_primary.label = renderData.hero.cta_primary.label || 'CONTACT ME';
     
     if (!renderData.about) renderData.about = {};
-    renderData.about.bio_paragraphs = [
-      "I'm Vyshnav, a Freelance Fullstack Developer who spent ~2 years as an SDE 1 at Neutrinos working across the MERN stack — building features end-to-end, from database schema to deployment. I like being involved in the full lifecycle of a product, not just my slice of a sprint, which is why I've also picked up working knowledge of Docker, Kubernetes, AWS, and Azure along the way.",
-      "Right now I'm looking for a full-time role where I can keep growing as an engineer and take on real ownership. I specialize in React JS and Node.js. Outside of work, I build complex projects to actually understand how things work under the hood — like a distributed domain risk scanner I built with RabbitMQ, Redis, and PostgreSQL."
-    ];
+    if (!renderData.about.bio_paragraphs || !renderData.about.bio_paragraphs.length) {
+      renderData.about.bio_paragraphs = [
+        "I'm Vyshnav, a Freelance Fullstack Developer who spent ~2 years as an SDE 1 at Neutrinos working across the MERN stack — building features end-to-end, from database schema to deployment.",
+        "Right now I'm looking for a full-time role where I can keep growing as an engineer and take on real ownership. I specialize in React JS and Node.js."
+      ];
+    }
 
     renderData.hasManyProjects = renderData.projects && renderData.projects.length >= 4;
-    renderData.meta = buildMeta(renderData.site);
+    renderData.meta = getCachedMeta(renderData.site);
     res.render("landing-page", renderData);
   } catch (err) {
     console.error("Error in portfolio route:", err);
@@ -216,35 +172,10 @@ router.get("/journey", async (req, res, next) => {
       process.env.REDIS_CACHE_KEY + ":journeyPage",
       JSON.stringify(journeyObj),
       {
-        EX: parseInt(process.env.REDIS_CACHE_TIME) || 60, // Cache for 60 seconds
+        EX: parseInt(process.env.REDIS_CACHE_TIME) || 60,
       },
     );
-    // res.json({ journey: journeyData });
-    const base = process.env.SITE_URL || "https://portfolio.vyshnavpc.com";
-    const journeyMeta = {
-      title: "Vyshnav — My Career Journey",
-      description: "A timeline of Vyshnav's career journey — education, projects, milestones, and growth as a MERN / Fullstack Developer.",
-      keywords: "Vyshnav journey, Vyshnav career timeline, fullstack developer, software engineering journey",
-      author: "Vyshnav",
-      canonical: `${base}/journey`,
-      siteName: "Vyshnav",
-      ogImage: `${base}/og-preview.webp`,
-      schemaJSON: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "Vyshnav — My Career Journey",
-        "description": "A timeline of Vyshnav's career journey — education, projects, milestones, and growth as a MERN / Fullstack Developer.",
-        "url": `${base}/journey`,
-        "isPartOf": { "@type": "WebSite", "name": "Vyshnav P C", "url": base }
-      }),
-    };
-    
-    const breadcrumbs = [
-      { name: "Home", url: "/", position: 1 },
-      { name: "Journey", url: `${base}/journey`, position: 2 }
-    ];
-
-    res.render("journey-page", { journey: journeyObj, meta: journeyMeta, breadcrumbs, isJourneyPage: true });
+    res.render("journey-page", { journey: journeyObj, meta: _journeyMeta, breadcrumbs: _journeyBreadcrumbs, isJourneyPage: true });
   } catch (err) {
     next();
   }
