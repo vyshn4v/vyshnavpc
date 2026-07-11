@@ -109,7 +109,7 @@ router.get("/", async (req, res, next) => {
       renderData = JSON.parse(cachedData);
     } else {
       try {
-        const portfolio = await getLandingPageModel().findOne();
+        const portfolio = await getLandingPageModel().findOne().lean();
         renderData = portfolio?.data || {};
         redis.set(cacheKey, JSON.stringify(renderData), {
           EX: parseInt(process.env.REDIS_CACHE_TIME) || 60,
@@ -154,8 +154,7 @@ router.get("/journey", async (req, res, next) => {
     if (cachedData) {
       return res.render("journey-page", { journey: JSON.parse(cachedData), isJourneyPage: true });
     }
-    const journeyData = await getJourneyModel().findOne();
-    let journeyObj = journeyData ? journeyData.toObject() : {};
+    const journeyObj = await getJourneyModel().findOne().lean() || {};
     
     // Normalization 1: If the user named the array "journey" instead of "steps" in the DB
     if (journeyObj.journey && !journeyObj.steps) {
@@ -164,8 +163,8 @@ router.get("/journey", async (req, res, next) => {
     
     // Normalization 2: If the user seeded the DB with multiple flat documents instead of one array document
     if (!journeyObj.steps && journeyObj.year) {
-      const allDocs = await getJourneyModel().find().sort({ order: 1 });
-      journeyObj = { steps: allDocs.map(d => d.toObject()) };
+      const allDocs = await getJourneyModel().find().sort({ order: 1 }).lean();
+      journeyObj.steps = allDocs;
     }
 
     redis.set(

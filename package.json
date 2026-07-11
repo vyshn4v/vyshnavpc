@@ -10,7 +10,7 @@
     "server": "node --env-file=./src/.env.local --watch ./src/index.js",
     "start:dev": "concurrently \"npm run server\" \"npm run tailwind\"",
     "build:css": "tailwindcss -i ./src/public/css/input.css -o ./src/public/css/tailwind-output.css --minify",
-    "start:prod": "node --env-file=./src/.env ./src/index.js "
+    "start:prod": "node --env-file=./src/.env --max-old-space-size=96 --optimize-for-size ./src/index.js"
   },
   "keywords": [
     "personal-website"
@@ -29,7 +29,6 @@
     "nodemailer": "^8.0.10",
     "rate-limit-redis": "^5.0.0",
     "redis": "^5.12.1",
-    "sharp": "^0.35.2",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1"
   },

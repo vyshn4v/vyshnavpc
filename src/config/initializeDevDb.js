@@ -9,6 +9,9 @@ async function connectDb() {
     tls: true,
     tlsAllowInvalidCertificates: true,
     serverSelectionTimeoutMS: 10000,
+    maxPoolSize: 5,
+    minPoolSize: 1,
+    maxIdleTimeMS: 30000,
   }).asPromise();
   db.on("connected", () => {
     console.log("Connected to MongoDB successfully");

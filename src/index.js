@@ -5,15 +5,10 @@ import initializeHbsEngine from "./config/hbsEngine.js";
 import blogsRouter from "./routes/blogs.js";
 import portfolioRoute from "./routes/portfolio.js";
 import { visitorTracker } from "./middleware/visitorTracker.js";
-import { initializeAmqp } from "./config/amqp.js";
 import contactRouter from "./routes/contact.js";
 import hrRouter from "./routes/hr.js";
-import { startHrWorker } from "./workers/hrWorker.js";
-import { startHrScheduler } from "./cron/hrScheduler.js";
 import rateLimit from "express-rate-limit";
 import { RedisStore } from "rate-limit-redis";
-import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./config/swagger.js";
 import helmet from "helmet";
 import compression from "compression";
 initializeRedis();
@@ -134,10 +129,19 @@ app.use("/", portfolioRoute);
 app.use("/blogs", blogsRouter);
 app.use("/contact", contactRouter);
 app.use("/hr-portal", hrRouter); // HR application blasting route
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-  customSiteTitle: "Vyshnav PC — API Docs",
-  customCss: `.swagger-ui .topbar { background: #0a0a0f; } .swagger-ui .topbar-wrapper img { content: none; } .swagger-ui .info .title { color: #7c6ef7; }`,
-}));
+// Swagger: only load in development to save ~10 MB in production
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    const swaggerUi = await import("swagger-ui-express");
+    const { swaggerSpec } = await import("./config/swagger.js");
+    app.use("/api-docs", swaggerUi.default.serve, swaggerUi.default.setup(swaggerSpec, {
+      customSiteTitle: "Vyshnav PC — API Docs",
+      customCss: `.swagger-ui .topbar { background: #0a0a0f; }`,
+    }));
+  } catch (err) {
+    console.error("[Swagger] Failed to load:", err.message);
+  }
+}
 // handling 404 errors for undefined routes
 app.use((req, res) => {
   return res.status(404).json({ error: "Route not found" });
@@ -150,17 +154,23 @@ app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT} across all network interfaces`);
 });
 
-// Connect to DB and AMQP in background with retry
+// Connect to DB in background with retry; AMQP/HR system is opt-in via env flag
 async function connectWithRetry(attempt = 1) {
   try {
     await connectDb();
     console.log("[DB] Connected to MongoDB successfully");
-    try {
-      await initializeAmqp();
-      startHrWorker(); // Initialize the worker
-      startHrScheduler(); // Initialize the cron job
-    } catch (err) {
-      console.error("[AMQP] Failed to connect:", err.message);
+    // HR/AMQP system — only load when explicitly enabled (saves ~5-8 MB)
+    if (process.env.ENABLE_HR_SYSTEM === 'true') {
+      try {
+        const { initializeAmqp } = await import("./config/amqp.js");
+        const { startHrWorker } = await import("./workers/hrWorker.js");
+        const { startHrScheduler } = await import("./cron/hrScheduler.js");
+        await initializeAmqp();
+        startHrWorker();
+        startHrScheduler();
+      } catch (err) {
+        console.error("[AMQP] Failed to connect:", err.message);
+      }
     }
   } catch (error) {
     const delay = Math.min(5000 * attempt, 30000);

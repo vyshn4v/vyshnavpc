@@ -168,7 +168,12 @@ function generateVisitorId(ip, ua) {
  *
  * A sorted-set key keeps an index of all visitors for easy retrieval.
  */
+const STATIC_EXT_RE = /\.(js|css|png|jpg|jpeg|webp|ico|svg|gif|woff2?|ttf|eot|map|json|xml|txt)$/i;
+
 export async function visitorTracker(req, res, next) {
+  // Skip static assets — no need to track file requests
+  if (STATIC_EXT_RE.test(req.path)) return next();
+
   // Fire-and-forget — never block the request
   trackVisitor(req).catch((err) => {
     console.error("[visitorTracker] Error:", err?.message ?? err);
