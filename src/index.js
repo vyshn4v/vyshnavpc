@@ -6,7 +6,6 @@ import blogsRouter from "./routes/blogs.js";
 import portfolioRoute from "./routes/portfolio.js";
 import { visitorTracker } from "./middleware/visitorTracker.js";
 import contactRouter from "./routes/contact.js";
-import hrRouter from "./routes/hr.js";
 import rateLimit from "express-rate-limit";
 import { RedisStore } from "rate-limit-redis";
 import helmet from "helmet";
@@ -128,7 +127,6 @@ app.get("/.well-known/oauth-protected-resource", (req, res) => {
 app.use("/", portfolioRoute);
 app.use("/blogs", blogsRouter);
 app.use("/contact", contactRouter);
-app.use("/hr-portal", hrRouter); // HR application blasting route
 // Swagger: only load in development to save ~10 MB in production
 if (process.env.NODE_ENV !== 'production') {
   try {
@@ -159,18 +157,13 @@ async function connectWithRetry(attempt = 1) {
   try {
     await connectDb();
     console.log("[DB] Connected to MongoDB successfully");
-    // HR/AMQP system — only load when explicitly enabled (saves ~5-8 MB)
-    if (process.env.ENABLE_HR_SYSTEM === 'true') {
-      try {
-        const { initializeAmqp } = await import("./config/amqp.js");
-        const { startHrWorker } = await import("./workers/hrWorker.js");
-        const { startHrScheduler } = await import("./cron/hrScheduler.js");
-        await initializeAmqp();
-        startHrWorker();
-        startHrScheduler();
-      } catch (err) {
-        console.error("[AMQP] Failed to connect:", err.message);
-      }
+
+    // Initialize AMQP for contact queue
+    try {
+      const { initializeAmqp } = await import("./config/amqp.js");
+      await initializeAmqp();
+    } catch (err) {
+      console.error("[AMQP] Failed to connect:", err.message);
     }
   } catch (error) {
     const delay = Math.min(5000 * attempt, 30000);
