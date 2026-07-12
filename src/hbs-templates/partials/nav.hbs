@@ -38,12 +38,10 @@
 
     {{#if isSubpage}}
     <!-- Subpage Header -->
-    <div class="flex items-end justify-between w-full mb-1 pt-4 border-b-2 border-primary pb-2">
-      <div>
-        <div class="text-xs uppercase font-bold tracking-widest text-brand-red mb-1">{{#if subpageCategory}}{{subpageCategory}}{{else}}Editorial Section{{/if}}</div>
-        <h1 class="text-4xl sm:text-5xl font-head font-black tracking-tighter text-primary leading-none uppercase">{{#if subpageTitle}}{{subpageTitle}}{{else}}Dev Blogs{{/if}}</h1>
-      </div>
-      <div class="text-[10px] font-sans text-slate-600 font-bold uppercase pb-1 hidden sm:block">Page {{#if subpageNum}}{{subpageNum}}{{else}}2{{/if}}</div>
+    <div class="relative flex flex-col items-center text-center w-full mb-1 pt-4 border-b-2 border-primary pb-2">
+      <div class="text-xs uppercase font-bold tracking-widest text-brand-red mb-1">{{#if subpageCategory}}{{subpageCategory}}{{else}}Editorial Section{{/if}}</div>
+      <h1 class="text-4xl sm:text-5xl font-head font-black tracking-tighter text-primary leading-none uppercase">{{#if subpageTitle}}{{subpageTitle}}{{else}}Dev Blogs{{/if}}</h1>
+      <div class="absolute right-0 bottom-2 text-[10px] font-sans text-slate-600 font-bold uppercase hidden sm:block">Page {{#if subpageNum}}{{subpageNum}}{{else}}2{{/if}}</div>
     </div>
     {{/if}}
 
