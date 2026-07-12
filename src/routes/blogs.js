@@ -15,6 +15,7 @@ router.get("/", async (req, res) => {
   if (cachedData) {
     const cachedObj = JSON.parse(cachedData);
     cachedObj.isSubpage = true;
+    cachedObj.hideMainTicker = true;
     return res.render("blogs", cachedObj);
   }
   const allPosts = await getBlogModel().aggregate([
@@ -71,6 +72,7 @@ router.get("/", async (req, res) => {
     { EX: process.env.REDIS_CACHE_TIME },
   );
   data.isSubpage = true;
+  data.hideMainTicker = true;
   res.render("blogs", data);
 });
 
@@ -228,6 +230,7 @@ router.get("/:slugOrId", async (req, res, next) => {
     if (cachedData) {
       const cachedObj = JSON.parse(cachedData);
       cachedObj.isSubpage = true;
+      cachedObj.hideMainTicker = true;
       return res.render("post", cachedObj);
     }
     const postData = await getBlogContentModel().aggregate([
@@ -328,6 +331,7 @@ router.get("/:slugOrId", async (req, res, next) => {
       { EX: process.env.REDIS_CACHE_TIME },
     );
     data.isSubpage = true;
+    data.hideMainTicker = true;
     res.render("post", data);
   } catch (err) {
     next(); // fall through to 404

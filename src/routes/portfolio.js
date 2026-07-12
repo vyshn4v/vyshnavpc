@@ -152,7 +152,13 @@ router.get("/journey", async (req, res, next) => {
       process.env.REDIS_CACHE_KEY + ":journeyPage",
     );
     if (cachedData) {
-      return res.render("journey-page", { journey: JSON.parse(cachedData), isJourneyPage: true });
+      return res.render("journey-page", { 
+        journey: JSON.parse(cachedData), 
+        isSubpage: true,
+        subpageCategory: 'Special Feature',
+        subpageTitle: "The Developer's Journey",
+        subpageNum: 3
+      });
     }
     const journeyObj = await getJourneyModel().findOne().lean() || {};
     
@@ -174,7 +180,15 @@ router.get("/journey", async (req, res, next) => {
         EX: parseInt(process.env.REDIS_CACHE_TIME) || 60,
       },
     );
-    res.render("journey-page", { journey: journeyObj, meta: _journeyMeta, breadcrumbs: _journeyBreadcrumbs, isJourneyPage: true });
+    res.render("journey-page", { 
+      journey: journeyObj, 
+      meta: _journeyMeta, 
+      breadcrumbs: _journeyBreadcrumbs, 
+      isSubpage: true,
+      subpageCategory: 'Special Feature',
+      subpageTitle: "The Developer's Journey",
+      subpageNum: 3 
+    });
   } catch (err) {
     next();
   }
