@@ -152,19 +152,16 @@ app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT} across all network interfaces`);
 });
 
-// Connect to DB in background with retry; AMQP/HR system is opt-in via env flag
+// Initialize AMQP for contact queue immediately
+import("./config/amqp.js")
+  .then(({ initializeAmqp }) => initializeAmqp())
+  .catch(err => console.error("[AMQP] Failed to import/connect:", err.message));
+
+// Connect to DB in background with retry
 async function connectWithRetry(attempt = 1) {
   try {
     await connectDb();
     console.log("[DB] Connected to MongoDB successfully");
-
-    // Initialize AMQP for contact queue
-    try {
-      const { initializeAmqp } = await import("./config/amqp.js");
-      await initializeAmqp();
-    } catch (err) {
-      console.error("[AMQP] Failed to connect:", err.message);
-    }
   } catch (error) {
     const delay = Math.min(5000 * attempt, 30000);
     console.error(`[DB] Connection failed (attempt ${attempt}), retrying in ${delay / 1000}s...`, error.message);
