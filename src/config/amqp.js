@@ -6,6 +6,16 @@ export const initializeAmqp = async () => {
   try {
     const amqpUrl = process.env.AMQP_URL || "amqp://localhost";
     const connection = await amqp.connect(amqpUrl);
+    
+    connection.on("error", (err) => {
+      console.error("[AMQP] Connection error:", err.message);
+    });
+    
+    connection.on("close", () => {
+      console.error("[AMQP] Connection closed. Restarting may be required if channel is lost.");
+      channel = null;
+    });
+
     channel = await connection.createChannel();
 
     const queue = process.env.CONTACT_QUEUE || "contact_messages";
